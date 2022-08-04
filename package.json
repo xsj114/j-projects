@@ -26,6 +26,8 @@
         "ts-node": "^10.9.1"
     },
     "config": {
-        "commitizen": "cz-conventional-changelog"
+        "commitizen": {
+            "path": "cz-conventional-changelog"
+        }
     }
 }
