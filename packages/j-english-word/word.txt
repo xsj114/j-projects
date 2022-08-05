@@ -2163,7 +2163,6 @@ landscape    景观,风景
 lane         车道
 laser        激光
 laugh        嘲笑
-laundry      洗衣店
 lawsuit      诉讼
 lawyer       律师
 leaf         叶子
@@ -2275,7 +2274,6 @@ planet       行星,地球
 plant        事业
 plate        盘子
 plea         恳求
-plenty       丰富
 plot         情节,密谋
 poem         诗歌
 offhand      临时,不加思索
@@ -2366,7 +2364,6 @@ rescue       拯救
 research     研究
 resign       辞职
 resist       抵抗
-resort       娱乐场,采取
 resume       恢复
 retail       零售
 revenue      收入
@@ -3117,3 +3114,10 @@ carry        携带
 statistics   统计
 flaunt       炫耀
 badge        徽章,证章
+announce     宣布
+dry          干燥
+laundry      洗衣店
+plenty       丰富
+resort       娱乐场,采取
+calendar     日历
+nexus        关系
