@@ -3115,3 +3115,5 @@ sublime      升华,崇高
 bulky        庞大的,笨重
 carry        携带
 statistics   统计
+flaunt       炫耀
+badge        徽章,证章

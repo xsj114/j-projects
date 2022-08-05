@@ -35,6 +35,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       {\
         "name": "j-is",\
         "reference": "workspace:packages/j-is"\
+      },\
+      {\
+        "name": "j-ui-library",\
+        "reference": "workspace:packages/j-ui-library"\
       }\
     ],\
     "enableTopLevelFallback": true,\
@@ -44,7 +48,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ["j-check-word-server", ["workspace:packages/j-check-word-server"]],\
       ["j-http-code", ["workspace:packages/j-http-code"]],\
       ["j-is", ["workspace:packages/j-is"]],\
-      ["j-projects", ["workspace:."]]\
+      ["j-projects", ["workspace:."]],\
+      ["j-ui-library", ["workspace:packages/j-ui-library"]]\
     ],\
     "fallbackPool": [\
       [\
@@ -2244,6 +2249,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "workspace:packages/j-is"\
       ],\
       [\
+        "j-ui-library",\
+        "workspace:packages/j-ui-library"\
+      ],\
+      [\
         "jest",\
         "virtual:5318c94f1468d1885cf03518d45828bdb03b4d094552774796ca826fafce018d7f14e51ec46904043234f280f30834708839b1b23ea6f6c59fd972f24ccbd06e#npm:28.1.3"\
       ],\
@@ -3647,6 +3656,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@typescript-eslint/eslint-plugin", "virtual:592d31ba185e036e611283c6e831c364c94683d79ea5072f84f3dac3647aff28bcf35d919d8a0fbd45c0a80ad218a07ea889ca8f49ab948be1f201bdf1642a77#npm:5.31.0"],\
             ["@typescript-eslint/parser", "virtual:592d31ba185e036e611283c6e831c364c94683d79ea5072f84f3dac3647aff28bcf35d919d8a0fbd45c0a80ad218a07ea889ca8f49ab948be1f201bdf1642a77#npm:5.31.0"],\
+            ["commitizen", "npm:4.2.5"],\
             ["cz-conventional-changelog", "npm:3.3.0"],\
             ["eslint", "npm:8.21.0"],\
             ["husky", "npm:8.0.1"],\
@@ -12255,6 +12265,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["j-projects", "workspace:."],\
             ["@typescript-eslint/eslint-plugin", "virtual:592d31ba185e036e611283c6e831c364c94683d79ea5072f84f3dac3647aff28bcf35d919d8a0fbd45c0a80ad218a07ea889ca8f49ab948be1f201bdf1642a77#npm:5.31.0"],\
             ["@typescript-eslint/parser", "virtual:592d31ba185e036e611283c6e831c364c94683d79ea5072f84f3dac3647aff28bcf35d919d8a0fbd45c0a80ad218a07ea889ca8f49ab948be1f201bdf1642a77#npm:5.31.0"],\
+            ["commitizen", "npm:4.2.5"],\
             ["cz-conventional-changelog", "npm:3.3.0"],\
             ["eslint", "npm:8.21.0"],\
             ["husky", "npm:8.0.1"],\
@@ -12263,6 +12274,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["ts-jest", "virtual:592d31ba185e036e611283c6e831c364c94683d79ea5072f84f3dac3647aff28bcf35d919d8a0fbd45c0a80ad218a07ea889ca8f49ab948be1f201bdf1642a77#npm:28.0.7"],\
             ["ts-node", "virtual:592d31ba185e036e611283c6e831c364c94683d79ea5072f84f3dac3647aff28bcf35d919d8a0fbd45c0a80ad218a07ea889ca8f49ab948be1f201bdf1642a77#npm:10.9.1"],\
             ["typescript", "patch:typescript@npm%3A4.7.4#~builtin<compat/typescript>::version=4.7.4&hash=7ad353"]\
+          ],\
+          "linkType": "SOFT"\
+        }]\
+      ]],\
+      ["j-ui-library", [\
+        ["workspace:packages/j-ui-library", {\
+          "packageLocation": "./packages/j-ui-library/",\
+          "packageDependencies": [\
+            ["j-ui-library", "workspace:packages/j-ui-library"]\
           ],\
           "linkType": "SOFT"\
         }]\
