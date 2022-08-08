@@ -12288,6 +12288,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./packages/j-stack/",\
           "packageDependencies": [\
             ["j-stack-9a24e6", "workspace:packages/j-stack"],\
+            ["@typescript-eslint/eslint-plugin", "virtual:592d31ba185e036e611283c6e831c364c94683d79ea5072f84f3dac3647aff28bcf35d919d8a0fbd45c0a80ad218a07ea889ca8f49ab948be1f201bdf1642a77#npm:5.31.0"],\
+            ["@typescript-eslint/parser", "virtual:592d31ba185e036e611283c6e831c364c94683d79ea5072f84f3dac3647aff28bcf35d919d8a0fbd45c0a80ad218a07ea889ca8f49ab948be1f201bdf1642a77#npm:5.31.0"],\
+            ["eslint", "npm:8.21.0"],\
+            ["eslint-config-google", "virtual:5318c94f1468d1885cf03518d45828bdb03b4d094552774796ca826fafce018d7f14e51ec46904043234f280f30834708839b1b23ea6f6c59fd972f24ccbd06e#npm:0.14.0"],\
             ["typescript", "patch:typescript@npm%3A4.7.4#~builtin<compat/typescript>::version=4.7.4&hash=f456af"]\
           ],\
           "linkType": "SOFT"\
