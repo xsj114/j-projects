@@ -37,6 +37,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "reference": "workspace:packages/j-is"\
       },\
       {\
+        "name": "j-stack-9a24e6",\
+        "reference": "workspace:packages/j-stack"\
+      },\
+      {\
         "name": "j-ui-library",\
         "reference": "workspace:packages/j-ui-library"\
       }\
@@ -49,6 +53,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ["j-http-code", ["workspace:packages/j-http-code"]],\
       ["j-is", ["workspace:packages/j-is"]],\
       ["j-projects", ["workspace:."]],\
+      ["j-stack-9a24e6", ["workspace:packages/j-stack"]],\
       ["j-ui-library", ["workspace:packages/j-ui-library"]]\
     ],\
     "fallbackPool": [\
@@ -12273,6 +12278,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["pinst", "npm:3.0.0"],\
             ["ts-jest", "virtual:592d31ba185e036e611283c6e831c364c94683d79ea5072f84f3dac3647aff28bcf35d919d8a0fbd45c0a80ad218a07ea889ca8f49ab948be1f201bdf1642a77#npm:28.0.7"],\
             ["ts-node", "virtual:592d31ba185e036e611283c6e831c364c94683d79ea5072f84f3dac3647aff28bcf35d919d8a0fbd45c0a80ad218a07ea889ca8f49ab948be1f201bdf1642a77#npm:10.9.1"],\
+            ["typescript", "patch:typescript@npm%3A4.7.4#~builtin<compat/typescript>::version=4.7.4&hash=f456af"]\
+          ],\
+          "linkType": "SOFT"\
+        }]\
+      ]],\
+      ["j-stack-9a24e6", [\
+        ["workspace:packages/j-stack", {\
+          "packageLocation": "./packages/j-stack/",\
+          "packageDependencies": [\
+            ["j-stack-9a24e6", "workspace:packages/j-stack"],\
             ["typescript", "patch:typescript@npm%3A4.7.4#~builtin<compat/typescript>::version=4.7.4&hash=f456af"]\
           ],\
           "linkType": "SOFT"\

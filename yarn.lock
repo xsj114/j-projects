@@ -6006,6 +6006,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"j-stack-9a24e6@workspace:packages/j-stack":
+  version: 0.0.0-use.local
+  resolution: "j-stack-9a24e6@workspace:packages/j-stack"
+  dependencies:
+    typescript: ^4.7.4
+  languageName: unknown
+  linkType: soft
+
 "j-ui-library@workspace:packages/j-ui-library":
   version: 0.0.0-use.local
   resolution: "j-ui-library@workspace:packages/j-ui-library"
