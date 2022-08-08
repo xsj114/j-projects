@@ -1968,7 +1968,6 @@ debris       废墟
 debt         债务
 decade       年代
 decent       正经,合适
-defeat       击败
 defense      防御
 degree       程度
 delicate     精巧
@@ -3121,3 +3120,5 @@ plenty       丰富
 resort       娱乐场,采取
 calendar     日历
 nexus        关系
+defeat       击败
+stash        窝
