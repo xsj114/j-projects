@@ -1,0 +1,9 @@
+{
+    "packageManager": "yarn@3.2.2",
+    "scripts": {
+        "build": "tsc index.ts" 
+    },
+    "dependencies": {
+        "typescript": "^4.7.4"
+    }
+}

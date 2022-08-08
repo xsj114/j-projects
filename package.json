@@ -1,6 +1,6 @@
 {
     "name": "j-projects",
-    "packageManager": "yarn@3.2.1",
+    "packageManager": "yarn@3.2.2",
     "workspaces": [
         "packages/*"
     ],
