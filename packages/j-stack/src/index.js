@@ -254,6 +254,45 @@ class WeightedQuickUnionUf {
     }
 }
 
+
+// 选择排序
+class Selection {
+    sort( a ) {
+        for ( let i = 0; i < a.length; i++ ) {
+            let min = i;
+            for ( let j = i + 1; j < a.length; j++ ) {
+                if ( this.less( a[ j ], a[ min ] ) ) {
+                    min = j;
+                }
+            }
+            this.exch( a, i, min );
+        }
+    }
+
+    less( v, w ) {
+        return v.compareTo( w ) < 0;
+    }
+
+    exch( a, i, j ) {
+        const t = a[ i ];
+        a[ i ] = a[ j ];
+        a[ j ] = t;
+    }
+
+    show( a ) {
+        for ( let i = 0; i < a.length; i++ ) {
+            console.log( a[ i ] );
+        }
+    }
+
+    isSorted( a ) {
+        for ( let i = 1; i < a.length; i++ ) {
+            if ( this.less( a[ i ], a[ i - 1 ] ) ) return false;
+        }
+        return true;
+    }
+}
+
 console.log( new Bag() );
 console.log( new Queue() );
 console.log( new Stack() );
@@ -261,4 +300,5 @@ console.log( new CustomIterator() );
 console.log( new QuickFind() );
 console.log( new QuickUnion() );
 console.log( new WeightedQuickUnionUf() );
+console.log( new Selection() );
 
