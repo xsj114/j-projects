@@ -1912,7 +1912,6 @@ college      学院
 colony       群体
 comedy       喜剧
 commodity    商品,货物
-companion    伴侣
 comply       执行,实现
 compound     复合
 comprise     包括
@@ -3122,3 +3121,5 @@ calendar     日历
 nexus        关系
 defeat       击败
 stash        窝
+companion    伴侣
+audit        审计
