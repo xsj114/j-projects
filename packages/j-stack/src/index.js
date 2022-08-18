@@ -293,6 +293,49 @@ class Selection {
     }
 }
 
+
+// 希尔排序
+class Shell {
+    sort( a ) {
+        let n = a.length;
+        let h = 1
+        while (h < n/3) {
+            h = 3 *h +1 
+        }
+        while (h>=1) {
+            for (let i = h; i < n; i++) {
+                for (let j = h; j >=h && this.less(a[j], a[j-h]); j-=h) {
+                    this.exch(a, j , j-h) 
+                } 
+            } 
+            h = h/3
+        }
+    }
+
+    less( v, w ) {
+        return v.compareTo( w ) < 0;
+    }
+
+    exch( a, i, j ) {
+        const t = a[ i ];
+        a[ i ] = a[ j ];
+        a[ j ] = t;
+    }
+
+    show( a ) {
+        for ( let i = 0; i < a.length; i++ ) {
+            console.log( a[ i ] );
+        }
+    }
+
+    isSorted( a ) {
+        for ( let i = 1; i < a.length; i++ ) {
+            if ( this.less( a[ i ], a[ i - 1 ] ) ) return false;
+        }
+        return true;
+    }
+}
+
 console.log( new Bag() );
 console.log( new Queue() );
 console.log( new Stack() );
@@ -301,4 +344,5 @@ console.log( new QuickFind() );
 console.log( new QuickUnion() );
 console.log( new WeightedQuickUnionUf() );
 console.log( new Selection() );
+console.log( new Shell() );
 
