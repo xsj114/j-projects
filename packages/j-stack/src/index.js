@@ -297,18 +297,18 @@ class Selection {
 // 希尔排序
 class Shell {
     sort( a ) {
-        let n = a.length;
-        let h = 1
-        while (h < n/3) {
-            h = 3 *h +1 
+        const n = a.length;
+        let h = 1;
+        while ( h < n / 3 ) {
+            h = 3 * h + 1;
         }
-        while (h>=1) {
-            for (let i = h; i < n; i++) {
-                for (let j = h; j >=h && this.less(a[j], a[j-h]); j-=h) {
-                    this.exch(a, j , j-h) 
-                } 
-            } 
-            h = h/3
+        while ( h >= 1 ) {
+            for ( let i = h; i < n; i++ ) {
+                for ( let j = h; j >= h && this.less( a[ j ], a[ j - h ] ); j -= h ) {
+                    this.exch( a, j, j - h );
+                }
+            }
+            h = h / 3;
         }
     }
 
