@@ -1,0 +1,13 @@
+{
+    "name": "j-docs",
+    "packageManager": "yarn@3.2.2",
+    "scripts": {
+        "docs:dev": "vitepress dev projects",
+        "docs:build": "vitepress build projects",
+        "docs:serve": "vitepress serve projects"
+    },
+    "devDependencies": {
+        "vitepress": "^1.0.0-alpha.8",
+        "vue": "^3.2.37"
+    }
+}

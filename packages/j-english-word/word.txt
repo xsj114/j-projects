@@ -1885,7 +1885,6 @@ hair         头发
 charity      丰富,和蔼
 charm        魅力
 chase        追逐
-cheap        廉价
 cheat        作弊,欺骗
 cheer        欢呼,鼓舞
 chemical     化学的
@@ -1949,7 +1948,6 @@ crucial      关键
 cruel        残忍
 crush        粉碎
 cure         治愈
-curious      好奇
 fellow       同伴
 currency     货币
 curtain      窗帘
@@ -2120,7 +2118,6 @@ humor        幽默
 hunger       饥饿
 hurry        匆忙
 impose       强加
-incident     事件
 income       收入,收益
 infant       婴儿
 infect       传染
@@ -3123,3 +3120,8 @@ defeat       击败
 stash        窝
 companion    伴侣
 audit        审计
+beat         击败,打败
+incident     事件
+cheap        廉价
+curious      好奇
+mustache     胡子
