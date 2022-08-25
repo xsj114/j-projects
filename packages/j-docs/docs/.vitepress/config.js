@@ -4,8 +4,11 @@ export default {
         toc: true
     },
     themeConfig: {
-        siteTitle: 'My Custom Title',
         nav: [
+            { 
+                text: '介绍', 
+                link: '/introduce/'
+            },
             { 
                 text: '项目', 
                 items: [
@@ -25,12 +28,12 @@ export default {
             },
             { 
                 text: '常见问题', 
-                link: 'problem' 
+                link: '/problems' 
             },
             {
                 text: 'GitHub',
                 link: 'https://github.com/xsj114/j-projects'
             }
-        ]
+        ],
     }
 }

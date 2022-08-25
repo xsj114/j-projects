@@ -3126,3 +3126,5 @@ cheap        廉价
 curious      好奇
 mustache     胡子
 social       群居
+enumerate    枚举
+swallow      吞
