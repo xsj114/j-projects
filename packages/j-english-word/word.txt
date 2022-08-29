@@ -1972,7 +1972,6 @@ delight      乐趣
 democracy    民主
 denial       拒绝
 dense        稠密
-deny         拒绝
 deposit      存款,沉积
 deputy       副,代表
 desert       沙漠
@@ -2311,7 +2310,6 @@ premise      前提
 premium      奖金,独特的
 president    总统
 pretend      假装
-prevail      战胜
 pride        自豪
 prison       监狱
 proclaim     宣布
@@ -3128,3 +3126,9 @@ mustache     胡子
 social       群居
 enumerate    枚举
 swallow      吞
+deny         拒绝
+downgrade    下坡
+prevail      战胜
+unplug       拔
+snake        蛇
+sparing      保守的
