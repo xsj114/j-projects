@@ -1,3 +1,9 @@
+---
+title: j-is
+titleTemplate: false
+lastUpdated: true
+---
+
 # j-is
 
 ## Install

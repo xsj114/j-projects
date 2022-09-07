@@ -1,19 +1,24 @@
+---
+title: front page 
+titleTemplate: false
+lastUpdated: true
+layout: home
+aside: false
+hero:
+    name: 许仕杰
+    text: 前端开发工程师
+    tagline: 5年工作经验
+    actions:
+        - theme: brand
+          text: 个人简历
+          link: /introduce/
+---
+
+
 <script setup>
-import ListProjects from './components/ListProjects.vue'
+import ListProjects from './.vitepress/components/ListProjects.vue'
 </script>
 
-# Hello VitePress
-
-<LisrProjects/>
+<ListProjects/>
 
 
-{{ 1 + 1 }}
-
-
-```
-declare module '*.vue' {
-    import type { DefineComponent } from 'vue'
-    const component: DefineComponent<{}, {}, any>
-    export default component
-}
-```

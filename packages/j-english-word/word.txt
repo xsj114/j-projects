@@ -3132,3 +3132,6 @@ prevail      战胜
 unplug       拔
 snake        蛇
 sparing      保守的
+brand        商标,牌子
+carbon       碳
+dark         黑暗

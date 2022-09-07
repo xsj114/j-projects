@@ -1,3 +1,8 @@
+---
+title: j-http-code
+titleTemplate: false
+---
+
 # j-http-code
 
 ## Install
