@@ -1,24 +1,22 @@
 [toc]
-# React源码笔记
+# React源码
 
 > [参考文献](https://react.jokcy.me/)
 
 ## JSX到JAVASCRIPT的转换
+
 ### 分析
-```
-jsx语法
-    
+
+```jsx
+// jsx语法
 <div id="div" key="key">text</div>
     
-转换为javascript
-    
+// 转换为javascript
 React.createElement("div",{id: "div",key:"key"},"test")
-    
 ```
    
-``` 
-jsx语法
-    
+```jsx 
+// jsx语法
 function Comp(){
     return <a>测试</a>
 }
@@ -27,8 +25,7 @@ function Comp(){
     <span>2</span>
 </Comp>
     
-转换为javascript
-    
+// 转换为javascript
 React.createElement(Comp,
     {id:"div",key:"key"},
     React.createElement("span",null,"1"),
@@ -38,13 +35,12 @@ React.createElement(Comp,
 
 > React.createElement()
 
-第一个参数，是元素的标签
-    <li>如果第一个元素是组件，首字母必须大写，会将组件做为变量传入，标签则是字符串</li>
-第二个参数是在`react`中称为`prop`的所有键值对
+第一个参数是元素的标签（如果第一个元素是组件，首字母必须大写，会将组件做为变量传入，标签则是字符串）<br/>
+第二个参数是在`react`中称为`prop`的所有键值对<br/>
 第三个参数是会将第三个参数后(含第三个)的所有参数拿出来变为一个数组，作为这个节点的一个`children`来处理
 
 ### 源码摘要
-```
+```js
 export function createElement(type, config, children) {
   let propName;
 
@@ -111,7 +107,8 @@ export function createElement(type, config, children) {
   );
 }
 ```
-```
+
+```js
 const ReactElement = function(type, key, ref, self, source, owner, props) {
   const element = {
     // This tag allows us to uniquely identify this as a React Element
@@ -129,13 +126,20 @@ const ReactElement = function(type, key, ref, self, source, owner, props) {
   return element;
 };
 ```
-> 可以看到，createElement最终返回的是一个名为element的对象，值得一提的是此对象中有一个名为\$\$typeof的属性，它是用来标识我们的element是什么类型的，我们在写jsx的时候，所有的节点都是通过createElement创建的，那么它的\$\$typeof，都是REACT_ELEMENT_TYPE
+
+::: tip
+可以看到，createElement最终返回的是一个名为element的对象，值得一提的是此对象中有一个名为\$\$typeof的属性，它是用来标识我们的element是什么类型的，我们在写jsx的时候，所有的节点都是通过createElement创建的，那么它的\$\$typeof，都是REACT_ELEMENT_TYPE
+:::
+
 
 ## React中的Component
+
 ### 分析
 React中有两个基类，一个是Component，一个是PureComponent，PureComponent本质上继承Component，唯一的区别是提供给我们简便的shouldComponentUpdate的实现，保证了我们的组件在props没有任何变化的情况下，能够减少不必要的更新
+
 ### 源码摘要
-```
+
+```js
 const emptyObject = {};
 
 function Component(props, context, updater) {
@@ -166,7 +170,7 @@ Component.prototype.forceUpdate = function(callback) {
 };
 ```
 
-```
+```js
 function PureComponent(props, context, updater) {
   this.props = props;
   this.context = context;
@@ -184,36 +188,51 @@ pureComponentPrototype.constructor = PureComponent;
 Object.assign(pureComponentPrototype, Component.prototype);
 pureComponentPrototype.isPureReactComponent = true;
 ```
-> 可以看到在原型上增加了`isPureReactComponent`属性，通过这个属性，来标识继承自这个类的组件，它是一个PureComponent，然后在后续更新过程中，ReactDom会主动的去判断是不是一个PureComponent,然后根据props是否更新，来判断这个组件是否需要更新
+
+::: tip
+可以看到在原型上增加了`isPureReactComponent`属性，通过这个属性，来标识继承自这个类的组件，它是一个PureComponent，然后在后续更新过程中，ReactDom会主动的去判断是不是一个PureComponent,然后根据props是否更新，来判断这个组件是否需要更新
+:::
+
 
 ## React中的Ref
+
 ### React中三种使用ref的方式
+
 #### string ref
-```
-声明
+
+```js
+// 声明
 <p ref="stringRef"></p>
     
-使用
+// 使用
 this.refs.stringRef
 ```
-> 在想要获取的那个节点的props上面，使用ref属性传入一个字符串，react在完成这个节点的渲染之后，会在`this.refs`这个对象上面，挂载这个string对应的key，这个key指向的是这个节点的实例对象
+
+::: tip
+在想要获取的那个节点的props上面，使用ref属性传入一个字符串，react在完成这个节点的渲染之后，会在`this.refs`这个对象上面，挂载这个string对应的key，这个key指向的是这个节点的实例对象
+:::
+
 
 #### function
-```
-声明
+
+```js
+// 声明
 <p ref={ ele => (this.methodRef = ele)}></p>
     
-使用
+// 使用
 this.methodRef
 ```
-> ref传入的是一个方法，这个方法会接收一个参数，这个参数就是这个节点对应的实例
+
+
+::: tip
+ref传入的是一个方法，这个方法会接收一个参数，这个参数就是这个节点对应的实例
+:::
+
 
 #### createRef
 
-
-
-```
-声明
+```js
+// 声明
 export default class RefDemo extends React.Component {
     constructor () {
         super()
@@ -228,13 +247,19 @@ export default class RefDemo extends React.Component {
     }
 }
     
-使用
+// 使用
 this.objRef.current
 ```
-> react提供给我们的api，首先调用api创建对象，对象为`{current: null}`，把这个对象传给某一个节点，然后在组件渲染完成之后，会把节点对应的实例挂载到这个对象的current属性上面
+
+
+::: tip
+react提供给我们的api，首先调用api创建对象，对象为`{current: null}`，把这个对象传给某一个节点，然后在组件渲染完成之后，会把节点对应的实例挂载到这个对象的current属性上面
+:::
+ 
 
 #### 源码摘要
-```
+
+```js
 export function createRef(): RefObject {
   const refObject = {
     current: null,
@@ -243,10 +268,13 @@ export function createRef(): RefObject {
 }
 ```
 
->  可以看到，createRef的源码非常简单，返回了一个`{current: null}`
+::: tip
+可以看到，createRef的源码非常简单，返回了一个`{current: null}`
+:::
 
 
-```
+
+```js
 function reconcileSingleElement(
     returnFiber: Fiber,
     currentFirstChild: Fiber | null,
@@ -284,11 +312,12 @@ function reconcileSingleElement(
 }
 ```
 
-> 创建Fiber的时候处理ref
+::: tip
+创建Fiber的时候处理ref
+:::
 
 
-
-```
+```js
 function coerceRef(
     returnFiber: Fiber,
     current: Fiber | null,
@@ -365,7 +394,7 @@ function coerceRef(
 ```
 
 
-```
+```js
 function commitAllHostEffects() {
   while (nextEffect !== null) {
 
@@ -388,9 +417,11 @@ function commitAllHostEffects() {
 }
 ```
 
-> commit开始先detach
+::: tip
+commit开始先detach
+:::
 
-```
+```js
 function commitDetachRef(current: Fiber) {
   const currentRef = current.ref;
   if (currentRef !== null) {
@@ -403,7 +434,7 @@ function commitDetachRef(current: Fiber) {
 }
 ```
 
-```
+```js
 function commitAllLifeCycles(
     finishedRoot: FiberRoot,
     committedExpirationTime: ExpirationTime,
@@ -441,7 +472,7 @@ function commitAllLifeCycles(
 }
 ```
 
-```
+```js
 function commitAttachRef(finishedWork: Fiber) {
     const ref = finishedWork.ref;
     if (ref !== null) {
@@ -466,12 +497,13 @@ function commitAttachRef(finishedWork: Fiber) {
 
 ## React中的forwardRef
 
-###forwardRef用途
-在React中如果定义的是一个`function Component`,这个组件是没有实例的，因为它是一个`PureComponent`
-在设想，如果我们引入了redux，connect方法返回的是一个被包装过的组件，我们想拿到未被包装过的组件实例，该如何做
+### forwardRef用途
+在React中如果定义的是一个`function Component`,这个组件是没有实例的，因为它是一个`PureComponent`<br/>
+在设想，如果我们引入了redux，connect方法返回的是一个被包装过的组件，我们想拿到未被包装过的组件实例该如何做
 
 ### forwardRef使用
-```
+
+```js
 export default class Comp extends React.Component{
     
     constructor () {
@@ -492,10 +524,14 @@ const TargetComponent = React.forwardRef( (props,ref) => ( <input type="text" re
 const TargetComponent =  (props) => ( <input type="text" ref={ref} /> ) 
 ```
 
-> 上面的例子中，可以清晰的看到，不使用forwardRef的情况下，我们无法拿到ref，因为ref不属于props里面，我们也没有任何办法拿到，因为从上层组件传递过来的只有props，有了forwardRef后，我们的`function Component`可以增加第二个参数，也就是ref这个参数
+::: tip
+上面的例子中，可以清晰的看到，不使用forwardRef的情况下，我们无法拿到ref，因为ref不属于props里面，我们也没有任何办法拿到，因为从上层组件传递过来的只有props，有了forwardRef后，我们的`function Component`可以增加第二个参数，也就是ref这个参数
+:::
+
 
 ### 源码摘要
-```
+
+```js
 export default function forwardRef<Props, ElementType: React$ElementType>(
   render: (props: Props, ref: React$Ref<ElementType>) => React$Node,
 ) {
@@ -505,7 +541,11 @@ export default function forwardRef<Props, ElementType: React$ElementType>(
   };
 }
 ```
-> 可以看到，forwardRef函数返回的是一个对象，其中render是我们传递进来的`function Component`，创建的元素或组件的$$typeof还是REACT_ELEMENT_TYPE，而创建的元素或组件的type为返回的对象
+
+::: tip
+可以看到，forwardRef函数返回的是一个对象，其中render是我们传递进来的`function Component`，创建的元素或组件的$$typeof还是REACT_ELEMENT_TYPE，而创建的元素或组件的type为返回的对象
+::: 
+
 
 ## React中的Context
 
@@ -513,13 +553,13 @@ export default function forwardRef<Props, ElementType: React$ElementType>(
 
 #### childContextType
 
-会影响整个子树
-嵌套的context提供者需要进行合并
+会影响整个子树<br/>
+嵌套的context提供者需要进行合并<br/>
 对性能影响较大
 
 ##### 代码示例
 
-```
+```js
 class Parent extends React.Component{
     
     state = {
@@ -549,14 +589,18 @@ Child.contextTypes = {
     value: PropTypes.string
 }
 ```
-> 上面的例子中，展示了childContextType的使用，需要注意的就是PropTypes的声明，子组件中，需要用到几个，就要声明几个
+
+::: tip
+上面的例子中，展示了childContextType的使用，需要注意的就是PropTypes的声明，子组件中，需要用到几个，就要声明几个
+:::
+
 
 
 ##### 源码摘要
 
 ###### 设置context
 
-```
+```js
 function beginWork(
   current: Fiber | null,
   workInProgress: Fiber,
@@ -619,11 +663,13 @@ function beginWork(
   }
 }
 ```
+::: tip
+上面有个hasLegacyContextChanged方法，可以看到它直接影响了更新的所有组件它是否可以调用bailoutOnAlreadyFinishedWork来直接跳过这个组件的更新，所以这就是为什么说，老的context对性能的影响比较大
+:::
 
-> 上面有个hasLegacyContextChanged方法，可以看到它直接影响了更新的所有组件它是否可以调用bailoutOnAlreadyFinishedWork来直接跳过这个组件的更新，所以这就是为什么说，老的context对性能的影响比较大
 
 
-```
+```js
 // A cursor to a boolean indicating whether the context has changed.
 let didPerformWorkStackCursor: StackCursor<boolean> = createCursor(false);
 
@@ -664,12 +710,14 @@ function pushContextProvider(workInProgress: Fiber): boolean {
   return true;
 }
 ```
+::: tip
+这是可以跳出当前组件的更新的一个情况
+::: 
 
-> 这是可以跳出当前组件的更新的一个情况
 
 
 
-```
+```js
 function updateClassComponent(
   current: Fiber | null,
   workInProgress: Fiber,
@@ -729,7 +777,7 @@ function finishClassComponent(
 }
 ```
 
-```
+```js
 // didChange表示我们这个context对象是否有变化
 function invalidateContextProvider(
   workInProgress: Fiber,
@@ -768,7 +816,7 @@ function invalidateContextProvider(
 }
 ```
 
-```
+```js
 function processChildContext(
   fiber: Fiber,
   type: any,
@@ -802,7 +850,7 @@ function processChildContext(
 
 ###### 获取context
 
-```
+```js
 function updateClassInstance(
   current: Fiber,
   workInProgress: Fiber,
@@ -829,7 +877,7 @@ function updateClassInstance(
 }
 ```
 
-```
+```js
 function getUnmaskedContext(
   workInProgress: Fiber,
   Component: Function,
@@ -846,7 +894,7 @@ function getUnmaskedContext(
 }
 ```
 
-```
+```js
 function getMaskedContext(
   workInProgress: Fiber,
   unmaskedContext: Object,
@@ -886,7 +934,7 @@ function getMaskedContext(
 
 ###### popContext
 
-```
+```js
 function completeWork(
   current: Fiber | null,
   workInProgress: Fiber,
@@ -1652,7 +1700,7 @@ console.log(custFlatArr(arr))
 
 ### 源码流程图
 
-```flow
+```
     st=>start: 开始
     para=>parallel: mapIntoWithKeyPrefixInternal
     op1=>operation: traverseAllChildren

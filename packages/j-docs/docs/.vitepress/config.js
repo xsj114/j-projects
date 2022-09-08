@@ -59,6 +59,10 @@ export default {
                             link: '/notes/javascript'
                         },
                         {
+                            text: 'REACT',
+                            link: '/notes/react'
+                        },
+                        {
                             text: 'TYPESCRIPT',
                             link: '/notes/typescript'
                         },
@@ -70,6 +74,25 @@ export default {
                             text: '数据结构与算法',
                             link: '/notes/data'
                         },
+                        {
+                            text: '计算机基础',
+                            link: '/notes/basis'
+                        },
+                        {
+                            text: 'VIM',
+                            link: '/notes/vim'
+                        }
+                    ]
+                },
+                {
+                    text: '备忘录',
+                    collapsible: true,
+                    collapsed: false,
+                    items: [
+                        {
+                            text: '账号与信息',
+                            link: '/notes/xushijie'
+                        }
                     ]
                 }
             ]
