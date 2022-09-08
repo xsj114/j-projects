@@ -1,12 +1,12 @@
-   [toc]
-   
-# Html学习笔记
+[toc]
 
-## Html5
+# HTML
+
+## HTML5
 
 ### 新增标签
 
-```
+```html
 // 进度标签
 <progress value="100" max="600"></progress>
 
@@ -24,14 +24,14 @@
 
 ### 表单验证与属性
 
-```
+```html
 // formaction属性覆盖form元素的action属性
 <form action="https://www.google.com">
     <input type="submit" value="提交" formaction="http://www.baidu.com">
 </form>
 ```
 
-```
+```html
 <script>
     var oText=document.getElementById('text');
     oText.addEventListener("invalid",fn,false);
@@ -53,7 +53,7 @@
 
 ### 新增选择器
 
-```
+```html
 <script>
     var oDiv=document.querySelector('div');
     oDiv.classList.toggle('box2');
@@ -67,7 +67,7 @@
 
 ### 自定义属性
 
-```
+```html
 <script>
     oDiv=document.getElementById('div');
     console.log(oDiv.dataset)
@@ -82,14 +82,14 @@
 
 ### 内容编辑
 
-```
+```html
 <div contenteditable></div>
 ```
 
 
 ### 拖放属性
 
-```
+```html
 <script>
     var aLi=document.getElementsByTagName('li');
     var oDiv=document.getElementById('div');
@@ -118,7 +118,7 @@
 
 #### 拖拽图片上传示例
 
-```
+```html
 <script>
     oDiv=document.getElementById('div');
     oUl=document.getElementById('ul');
@@ -161,12 +161,9 @@
 
 ### 本地存储Storage
 
-```
-// 窗口的临时存储,页面关闭,本地存储消失,不共享
-sessionStorage
-
-// 永久存储,共享
-localStorage
+```js
+// sessionStorage是窗口的临时存储,页面关闭本地存储消失,不共享
+// localStorage是永久存储,共享
 
 // 存储事件，当数据有修改或删除的情况下,就会触发,当前窗口修改时，不会触发
 window.addEventListener('storage',function(ev){
@@ -185,7 +182,7 @@ window.addEventListener('storage',function(ev){
 
 #### iframe
 
-```
+```html
 
 // 当本页面和包含页面不在同一个域名下的时候，这样操作就会有跨域操作安全限制问题
 
@@ -207,7 +204,7 @@ window.addEventListener('storage',function(ev){
 
 ```
 
-```
+```html
 // 被包含的子级页面要改变父级页面
 // 如果当前页面是顶级，没有被其他页面所包含，那么parent就是当前页面的window对象
 // 如果被包含了则parent就是包含当前页面的父级页面的window对象
@@ -228,7 +225,7 @@ window.addEventListener('storage',function(ev){
     
 #### window.open
 
-```
+```html
 <script type="text/javascript">
     var oBtn=document.getElementById('btn')
     oBtn.onclick = function () {
@@ -243,20 +240,19 @@ window.addEventListener('storage',function(ev){
 
 ```
 
-```
+```html
 <script type="text/javascript">
     // window.opener是通过window.open方法打开当前页面的窗口window
     window.opener.document.body.style.background = 'green'
 </script>
-<body>
-</body>
+<body></body>
 ```
 
 #### postMessage
 
 可以通过postMessage给另外一个窗口发送消息
 
-```
+```html
 // index.html
 <body>
     <script type="text/javascript">
@@ -275,9 +271,8 @@ window.addEventListener('storage',function(ev){
 </body>
 ```
 
-```
+```html
 // iframe.html
-
 <body>
     <script type="text/javascript">
         // 当窗口接收到通过postMessage发送过来的数据的时候触发message事件
@@ -297,7 +292,7 @@ window.addEventListener('storage',function(ev){
 
 为JavaScript创造多线程环境,对多线程的支持非常好,允许主线程创建 Worker线程,在主线程运行的同时,Worker线程在后台运行,两者互不干扰
 
-```
+```js
 var w = new Worker('worker.js')
 w.postMessage('hi')
 w.onmessage = function(ev){
@@ -305,7 +300,7 @@ w.onmessage = function(ev){
 }
 ```
 
-```
+```js
 // worker.js
 // self 代表子线程自身
 self.onmessage=function(ev){
@@ -319,7 +314,7 @@ self.onmessage=function(ev){
 
 地理位置对象
 
-```
+```js
 // 单次定位请求
 // navigator.geolocation.getCurrentPosition()
 
@@ -345,7 +340,7 @@ navigator.geolocation.getCurrentPosition(function(position){
 })
 ```
 
-```
+```js
 // 多次定位请求
 // navigator.geolocation.watchPosition()
 
@@ -372,7 +367,7 @@ navigator.geolocation.watchPosition(function(position){
 })
 ```
 
-```
+```js
 // 关闭定位请求
 // navigator.geolocation.clearWatch()
 
@@ -389,14 +384,3 @@ var timer = navigator.geolocation.watchPosition(function(position){
 })
 ```
 
-
-
-
-
-
-
-
-
-
-    
-    

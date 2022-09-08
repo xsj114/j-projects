@@ -1,10 +1,10 @@
 [toc]
 
-# JAVASCRIPT学习笔记
+# JAVASCRIPT
 
 ## 原生JS拖拽的封装
 
-```
+```html
 <style type="text/css">
 	#div1{
 	   width:100px;
@@ -20,36 +20,28 @@
     
     function drag(obj){
 		obj.onmousedown=function(ev){
-		  var ev=ev||event;
-		  var disX=ev.clientX-this.offsetLeft
-		  var disY=ev.clientY-this.offsetTop
-		  if(obj.setCapture){
-			  obj.setCapture()
-		  }
+		  var ev = ev || event;
+		  var disX = ev.clientX-this.offsetLeft
+		  var disY = ev.clientY-this.offsetTop
+		  if(obj.setCapture){ obj.setCapture() }
 		  document.onmousemove=function(ev){
-			  var ev=ev||event;
-			  var L=ev.clientX-disX
-			  var T=ev.clientY-disY
-			  if(L<0){
-			  	L=0;
+			  var ev = ev||event;
+			  var L = ev.clientX-disX
+			  var T = ev.clientY-disY
+			  if( L < 0 ){ L=0; }
+			  else if( L > document.documentElement.clientWidth-obj.offsetWidth ){
+				  L = document.documentElement.clientWidth-obj.offsetWidth
 			  }
-			  else if(L>document.documentElement.clientWidth-obj.offsetWidth){
-				  L=document.documentElement.clientWidth-obj.offsetWidth
+			  if(T<0){ T=0; }
+			  else if( T > document.documentElement.clientHeight-obj.offsetHeight ){
+				  T = document.documentElement.clientHeight-obj.offsetHeight
 			  }
-			  if(T<0){
-			  	T=0;
-			  }
-			  else if(T>document.documentElement.clientHeight-obj.offsetHeight){
-				  T=document.documentElement.clientHeight-obj.offsetHeight
-			  }
-			  obj.style.left=L+'px'
-			  obj.style.top=T+'px'
+			  obj.style.left = L + 'px'
+			  obj.style.top = T + 'px'
 		  }
-		  document.onmouseup=function(){
-			  document.onmousemove=document.onmouseup=null;
-			  if(obj.releaseCapture){
-				  obj.releaseCapture();
-			  }
+		  document.onmouseup = function () {
+			  document.onmousemove = document.onmouseup=null;
+			  if( obj.releaseCapture ) { obj.releaseCapture(); }
 		  }
 		  return false
 	   }
@@ -61,53 +53,53 @@
 </body>
 ```
 
-```
+```js
 // 面向对象编写拖拽
 
-var d1=new Drag('div1');
+var d1 = new Drag('div1');
 d1.init();
 
 function Drag(id){
-	this.oDiv=document.getElementById(id);
-	this.disX=0;
-	this.disY=0;
+	this.oDiv = document.getElementById(id);
+	this.disX = 0;
+	this.disY = 0;
 }
 
-Drag.prototype.init=function(){
-	var This=this;
-	this.oDiv.onmousedown=function(ev){
+Drag.prototype.init = function(){
+	var This = this;
+	this.oDiv.onmousedown = function(ev){
 		var ev = ev || window.event;
 		This.fnDown(ev);
 		return false;
 	}
 }
 
-Drag.prototype.fnDown=function(ev){
-	var This=this;
-	this.disX=ev.clientX-this.oDiv.offsetLeft;
-	this.disY=ev.clientY-this.oDiv.offsetTop;
-	document.onmousemove=function(ev){
+Drag.prototype.fnDown = function(ev){
+	var This = this;
+	this.disX = ev.clientX - this.oDiv.offsetLeft;
+	this.disY = ev.clientY - this.oDiv.offsetTop;
+	document.onmousemove = function(ev){
 		var ev = ev || window.event;
 		This.fnMove(ev);
 	}
-	document.onmouseup=this.fnUp;				
+	document.onmouseup = this.fnUp;				
 }
 
-Drag.prototype.fnMove=function(ev){
-	this.oDiv.style.left=ev.clientX-this.disX+'px';
-	this.oDiv.style.top=ev.clientY-this.disY+'px';
+Drag.prototype.fnMove = function(ev){
+	this.oDiv.style.left = ev.clientX - this.disX + 'px';
+	this.oDiv.style.top = ev.clientY - this.disY + 'px';
 }
 
-Drag.prototype.fnUp=function(){
-	document.onmousemove=null;
-	document.onmouseup=null;
+Drag.prototype.fnUp = function(){
+	document.onmousemove = null;
+	document.onmouseup = null;
 }
 ```
 
 ## 数据劫持
 
-```
-var data={
+```js
+var data = {
 	title : '新闻',
 	num : 1
 }
@@ -117,18 +109,18 @@ observer(data);
 console.log(data)
 
 function observer(obj){
-	Object.keys(obj).forEach((item)=>{
+	Object.keys(obj).forEach((item) => {
 		defineReactive(obj,item,obj[item]);
 	});
 }
 
 function defineReactive(obj,key,value){
 	Object.defineProperty(obj,key,{
-		get(){
+		get () {
 			return value;
 		},
-		set(newValue){
-			value=newValue;
+		set (newValue) {
+			value = newValue;
 		}
 	})
 }
@@ -138,21 +130,21 @@ function defineReactive(obj,key,value){
 
 ### 面向对象编程的特点
 
-抽象-抓住核心问题
-封装-只能通过对象来访问方法
-继承-从已有对象上继承出新的对象
-多态-多对象的不同形态
+抽象-抓住核心问题<br/>
+封装-只能通过对象来访问方法<br/>
+继承-从已有对象上继承出新的对象<br/>
+多态-多对象的不同形态<br/>
 
 ### 面向对象的语法
 
-对象下面的变量，叫做对象的属性
+对象下面的变量，叫做对象的属性<br/>
 对象下面的函数，叫做对象的方法
 
 ### 面向对象程序
 
-```
+```js
 var obj = new Object();
-obj.name='小明';
+obj.name = '小明';
 obj.showName = function(){
 	console.log(this.name);
 }
@@ -161,13 +153,13 @@ obj.showName();
 
 ### 面向对象中的工厂方式
 
-```
-function CreatePerson(name){
+```js
+function CreatePerson (name) {
 	//原料
-	var obj=new Object();
+	var obj = new Object();
 	//加工
-	obj.name=name;
-	obj.showName=function(){
+	obj.name = name;
+	obj.showName = function(){
 		console.log(this.name);
 	}
 	//出厂
@@ -180,39 +172,37 @@ p1.showName();
 
 ### 面向对象的构造函数
 
-```
+```js
 function CreatePerson(name){
-	this.name=name;
-	this.showName=function(){
+	this.name = name;
+	this.showName = function(){
 		console.log(this.name);
 	}		    	
 }
 
 //当new去调用一个函数，这个时候，函数中的this就是创建出来的对象，而且函数的返回值直接就是this了(隐式返回)
 
-// new后面调用的函数，叫做构造函数
+// new后面调用的函数叫做构造函数
 var p1 = new CreatePerson('小明');
 var p2 = new CreatePerson('小强');
 
 p1.showName();
 p2.showName();
 
-
 console.log(p1.showName==p2.showName); // false
 ```
 
 ### 原型
 
-去改写对象下面公用的方法或者属性，让公用的方法或者属性在内存中只存在一份,提高性能
-
+去改写对象下面公用的方法或者属性，让公用的方法或者属性在内存中只存在一份,提高性能<br/>
 如果属性是变化的就不能放在原型上
 
-```
+```js
 // prototype要写在构造函数的下面
 function CreatePerson(name){
-    this.name=name;		    	
+    this.name = name;		    	
 }
-CreatePerson.prototype.showName=function(){
+CreatePerson.prototype.showName = function(){
 	console.log(this.name);
 }
 var p1 = new CreatePerson('小明');
@@ -243,48 +233,48 @@ p1.showName();
 
 方法的继承采用`for...in...`的形式拷贝继承
 
-```
+```js
 //父类
 function CreatePerson(name,sex){                                    
-    this.name=name;
-    this.sex=sex;
+    this.name = name;
+    this.sex = sex;
 }
-CreatePerson.prototype.showName=function(){
+CreatePerson.prototype.showName = function(){
 	console.log(this.name);
 }
 
-var p1=new CreatePerson('小明','男');
+var p1 = new CreatePerson('小明','男');
 p1.showName();
 
 //子类
 function CreateStar(name,sex,job){                                 
     CreatePerson.call(this,name,sex);
-    this.job=job;
+    this.job = job;
 }
 
-CreateStar.prototype.showJob=function(){
+CreateStar.prototype.showJob = function(){
     console.log(this.job);
 }
 
 extend(CreateStar.prototype,CreatePerson.prototype);
 
-var p2=new CreateStar('黄晓明','男','演员');
+var p2 = new CreateStar('黄晓明','男','演员');
 p2.showName();
 
 function extend(obj1,obj2){
 	for(var attr in obj2){
-		obj1[attr]=obj2[attr];
+		obj1[attr] = obj2[attr];
 	}
 }
 ```
 
 #### 类式继承
 
-利用构造函数（类）继承
+利用构造函数（类）继承<br/>
 做属性和方法继承的时候要分开继承
 
 
-```
+```js
 // 父类
 function A(){                  
     this.name = [1,2,3];
@@ -314,16 +304,16 @@ console.log(b2.name);  // [1,2,3]
 
 #### 原型继承
 
-创建一个构造函数
-构造函数的原型指向对象
-然后调用`new`操作符创建实例并返回这个实例
+创建一个构造函数<br/>
+构造函数的原型指向对象<br/>
+然后调用`new`操作符创建实例并返回这个实例<br/>
 
-```
-var a={
+```js
+var a = {
 	name : '小明'
 }
-var b=cloneObj(a);
-b.name='小强';
+var b = cloneObj(a);
+b.name = '小强';
 
 console.log(b.name); // 小强
 console.log(a.name); // 小明
@@ -338,11 +328,11 @@ function cloneObj (obj) {
 
 ### 包装对象
 
-基本类型会找到对应的包装对象类型
-然后包装对象把所有的属性和方法给了基本类型
+基本类型会找到对应的包装对象类型<br/>
+然后包装对象把所有的属性和方法给了基本类型<br/>
 然后包装对象消失
 
-```
+```js
 // 基本类型都有自己对应的包装对象
 var str = 'hello';
 str.charAt(0);
@@ -352,7 +342,7 @@ str.charAt(0);
 ## 类型的比较
 
 > 对象类型的比较，值和引用都相同才行
-```
+```js
 var a = [1,2,3];
 var b = [1,2,3];
 console.log(a == b);  // false
@@ -366,7 +356,7 @@ console.log(a == b)   // true
 > 基本类型的比较只要值相同就可以
 
 
-```
+```js
 var a = 5;
 var b = 5;
 console.log(a == b); // true
@@ -374,7 +364,7 @@ console.log(a == b); // true
 
 > 基本类型赋值的时候只是值的复制
 
-```
+```js
 var a = 5;
 var b = a;
 b += 3;
@@ -384,7 +374,7 @@ console.log(b);   // 8
 
 > 对象类型赋值不仅是值的复制，而且也是引用的传递
 
-``` 
+```js
 var a = [1,2,3];
 var b = a;
 b.push(4);
@@ -395,7 +385,7 @@ console.log(a);   // [1,2,3,4]
 
 > 只要是赋值就必然会重新生成
 
-```
+```js
 var a = [1,2,3];
 var b = a;
 b = [1,2,3,4];
@@ -409,20 +399,20 @@ console.log(a);     // [1,2,3]
 
 判断是不是对象自身下面的属性
 
-```
+```js
 var arr = [];
 arr.num = 10;
 Array.prototype.num2 = 20;
 
-console.log(arr.hasOwnProperty('num'));  // true
-console.log(arr.hasOwnProperty('num2')); // false
+console.log( arr.hasOwnProperty('num') );  // true
+console.log( arr.hasOwnProperty('num2') ); // false
 ```
 
 ### constructor
 
 查看对象的构造函数
 
-```
+```js
 function Fn () {}
 var f = new Fn();
 console.log(f.constructor);  // ƒ Fn () {}
@@ -432,7 +422,7 @@ console.log(f.constructor);  // ƒ Fn () {}
 
 查看对象与构造函数在原型链上是否有关系
 
-```
+```js
 function Fn () {}
 var f = new Fn();
 console.log(f instanceof Fn);   // true
@@ -443,7 +433,7 @@ console.log(f instanceof Fn);   // true
 
 > 系统对象下面的都是自带的
 
-```
+```js
 var arr = [];
 console.log(arr.toString == Object.prototype.toString);  // false
 ```
@@ -451,7 +441,7 @@ console.log(arr.toString == Object.prototype.toString);  // false
 > 自己写的对象都是通过原型链找`Object`下面的
 
 
-```
+```js
 function Fn () {}
 var f = new Fn();
 console.log(f.toString == Object.prototype.toString);   //true
@@ -459,7 +449,7 @@ console.log(f.toString == Object.prototype.toString);   //true
 
 > 利用`toString`做类型的判断
 
-```
+```js
 var arr = new Array();
 console.log(Object.prototype.toString.call(arr) == '[object Array]');   // true
 ```
@@ -467,12 +457,12 @@ console.log(Object.prototype.toString.call(arr) == '[object Array]');   // true
 
 ## 自定义事件
 
-主要是跟函数有关系
+主要是跟函数有关系<br/>
 就是让函数能够具备事件的某些特性
 
 ### 自定义事件实现
 
-```
+```html
 <script>
     var oSpan=document.getElementById('span1');
     
@@ -513,7 +503,7 @@ console.log(Object.prototype.toString.call(arr) == '[object Array]');   // true
 ```
 
 
-```
+```js
 var	customeEvent = new Event('custome')
 window.addEventListener('custome', function(){
 	console.log('custome');
@@ -524,31 +514,31 @@ window.dispatchEvent(customeEvent);
 ## AJAX
 
 
-```
+```js
 function ajax(method, url, data, success) {
   	var xhr = null;
 	if(window.XMLHttpRequest){
 	  xhr = new XMLHttpRequest();
-	} else{
+	} else {
 	   // IE6以下  new ActiveXObject('Microsoft.XMLHTTP')
 	  xhr = new ActiveXObject('Microsoft.XMLHTTP')
 	}
-	if( method == 'get' && data ){
+	if( method == 'get' && data ) {
 		url += '?' + data; 
 	}
 	xhr.open(method, url, true);
 	if(method == 'get'){
 		xhr.send();
-	} else{
+	} else {
 	   xhr.setRequestHeader('content-type', 'application/x-www-form-urlencoded');
 	   xhr.send(data);
 	}
 	xhr.onreadystatechange = function () {
-	    if(xhr.readyState == 4){
-		    if(xhr.status == 200){
+	    if (xhr.readyState == 4) {
+		    if (xhr.status == 200) {
 				success && success(xhr.responseText);
-		    } else{
-				console.log('出错了，ERR：'+xhr.status);
+		    } else {
+				console.log('出错了，ERR：' + xhr.status);
 			}
 	  	}
 	}
@@ -574,19 +564,19 @@ function ajax(method, url, data, success) {
 
 ### JSONP
 
-```
+```js
 function fn (data) {
     // 数据处理
 }
 
-var oScript=document.createElement('script');
-oScript.src="url?callback=fn";
+var oScript = document.createElement('script');
+oScript.src = "url?callback=fn";
 document.body.appendChild(oScript);
 ```
 
 ### IE实现跨域请求
 
-```
+```js
 var oXDomainRequest = new XDomainRequest();
 oXDomainRequest.onload = function(){
 	// 请求加载完成
@@ -596,7 +586,7 @@ oXDomainRequest.onload = function(){
 
 ### 进度事件
 
-```
+```js
 var xhr = new XMLHttpRequest();
 // 上传进度对象
 var oUpload = xhr.upload;
@@ -613,17 +603,17 @@ oUpload.onprogress = function (ev) {
 
 ## 图片预加载
 
-当我们给`Image`对象的`src`属性赋予一个`url`的时候，这个`Image`对象就会去加载`url`资源
-加载完成以后的资源被保存到了浏览器的缓存文件夹里
+当我们给`Image`对象的`src`属性赋予一个`url`的时候，这个`Image`对象就会去加载`url`资源<br/>
+加载完成以后的资源被保存到了浏览器的缓存文件夹里<br/>
 当我们要去调用这个`url`地址的时候,直接是从缓存文件夹读取到的,所以速度很快
 
 
-```
+```html
 <script type="text/javascript">
-    var oImage=new Image()
-    var oImg=document.getElementById('img')
+    var oImage = new Image()
+    var oImg = document.getElementById('img')
     
-    oImage.src= 'https://test.jpg'
+    oImage.src = 'https://test.jpg'
     
     // 资源加载完成时触发
     oImage.onload = function(){
@@ -653,7 +643,7 @@ oUpload.onprogress = function (ev) {
 
 ### 速度版运动框架
 
-```
+```js
 function getStyle (obj, attr) {
 	if (obj.currentStyle) {
 		return obj.currentStyle[attr]
@@ -681,7 +671,7 @@ function startMove (obj, json, fn) {
 				iBtn = false
 				if(attr === 'opacity' ) {
 					obj.style.opacity = (iCur+iSpeed) / 100
-					obj.style.filter='alpha(opacity='+(iCur+iSpeed)+')'
+					obj.style.filter = 'alpha(opacity=' + (iCur+iSpeed) + ')'
 				} else {
 					obj.style[attr] = iCur + iSpeed + 'px'
 				}
@@ -689,7 +679,7 @@ function startMove (obj, json, fn) {
 		}
 		if(iBtn) {
 			clearInterval(obj.iTimer)
-			fn&&fn.call(obj)
+			fn && fn.call(obj)
 		}
 	},30)
 }
@@ -697,7 +687,7 @@ function startMove (obj, json, fn) {
 
 ### 时间版运动框架
 
-```
+```js
 function getStyle (obj, attr) {
     if (obj.currentStyle) {
     	return obj.currentStyle[attr]
@@ -731,7 +721,7 @@ function startMove (obj, json, times, fx, fn) {
 	clearInterval(obj.timer)
 	obj.timer = setInterval(function(){
 		var changeTime = Date.now();
-		var t = times - Math.max(0,startTime-changeTime+times)
+		var t = times - Math.max(0, startTime - changeTime + times)
 		for(var attr in json){
 			var value = Tween[fx](t, iCur[attr], json[attr]-iCur[attr], times)
 			if (attr === 'opacity') {
@@ -757,49 +747,49 @@ function startMove (obj, json, times, fx, fn) {
 
 ### 正则的写法
 
-```
+```js
 var reg = /a/i                     
 var reg = new RegExp('a','i')
 ```
 
 ### 正则中常用的方法
 
-#### test()
+> test()
 
 正则去匹配字符串，如果匹配成功，就返回真，如果匹配失败，就返回假  
 
-```
+```js
 var str = 'abcdef'
 var reg = /b/
 console.log(reg.test(str))
 ```
 
-#### search()
+> search()
 
 正则去匹配字符串,如果匹配成功,就返回匹配成功的位置,如果匹配失败就返回`-1`
 
-```
+```js
 var str = 'abcdef'
 var reg = /b/
 console.log(str.search(reg)) 
 ```
 
 
-#### match() 
+> match() 
 
 正则去匹配字符串,如果匹配成功,就返回匹配成功的数组,如果匹配不成功,就返回`null`
 
-```
+```js
 var str = 'sdk123sdk'
 var re = /123/
 console.log(str.match(re))
 ```
 
-#### replace()
+> replace()
 
 正则去匹配字符串,匹配成功的字符去替换成新的字符
 
-```
+```js
 var str = 'aaa'
 var reg = /a/
 str = str.replace(reg, 'b')
@@ -808,7 +798,7 @@ console.log(str)
 
 ### 正则中的`[]`
 
-`[]`的整体代表一个字符
+`[]`的整体代表一个字符<br/>
 `^`写在`[]`里面的话就代表排除的意思
 
 ### 转义字符
@@ -847,15 +837,15 @@ console.log(str)
 
 ### 标识符
 
-默认区分大小写，如果不区分大小写,在正则的最后加标识`i`
-想全部查找,要加标识`g`
-`^`在正则最开始位置代表起始的意思
+默认区分大小写，如果不区分大小写,在正则的最后加标识`i`<br/>
+想全部查找,要加标识`g`<br/>
+`^`在正则最开始位置代表起始的意思<br/>
 `$`在正则的最后位置代表结束的意思
 
 
 ### 常用正则表达式
 
-```
+```js
 // 验证中文姓名的正则
 var regCheckCnName = /^([\u4E00-\u9FA5\uF900-\uFA2D\.]){0,}$/;
 
@@ -928,13 +918,11 @@ var checkPassword = /^([a-zA-Z0-9]){0,}$/;
 
 `NodeList`是一种类数组对象,用于保存一组有序的节点, 应该尽量减少访问`NodeList`的次数,因为每次访问`NodeList`,都会运行一次基于文档的查询
 
-```
-// 访问保存在NodeList中的节点
-
-// 通过方括号
+```js
+// 访问保存在NodeList中的节点,通过方括号的方法
 var firstChild = someNode.childNodes[0]
 
-// 通过item方法
+// 访问保存在NodeList中的节点,通过item方法
 var secondChild = someNode.childNodes.item(1)
 ```
 
@@ -969,20 +957,20 @@ var secondChild = someNode.childNodes.item(1)
 ###  文档元素可视区的宽和高
 
 
-```
+```js
 document.documentElement.clientWidth
 document.documentElement.clientHeight
 ```
 
 ### 滚动条滚动距离(可视区顶部到文档顶部的距离)
 
-```
+```js
 // 除谷歌浏览器
 document.documentElement.scrollTop  
 document.documentElement.scrollLeft 
 ```
 
-```
+```js
 // 针对谷歌浏览器
 document.body.scrollTop 
 document.body.scrollLeft
@@ -990,15 +978,12 @@ document.body.scrollLeft
 
 ### 文档高
 
-```
+```js
 // 有兼容问题
 document.documentElement.offsetHeight
 // 没兼容问题
 document.body.offsetHeight
 ```
-
-
-
 
 
 
@@ -1021,7 +1006,7 @@ document.body.offsetHeight
 
 #### 解决
 
-```
+```js
 // 阻止默认事件
 document.addEventListener('touchstart',function(ev){
     ev.preventDefault()
@@ -1030,7 +1015,7 @@ document.addEventListener('touchstart',function(ev){
 
 ### 事件对象
 
-```
+```js
 // 当前位于屏幕上的所有手指的一个列表
 event.touches
 
@@ -1045,7 +1030,7 @@ event.changedTouches
 
 `gesture`相关的事件,只有`IOS`下有,安卓没有这个事件
 
-```
+```html
 <style>
     #box{
     	width: 200px;
@@ -1103,25 +1088,15 @@ window.onload = function(){
 | 当前被点击的元素 |  `event.target` |
  
   
-## []的使用
+## `[]`的使用
 
-如果是系统定义的东西，使用`[]`要加引号
+如果是系统定义的东西，使用`[]`要加引号<br/>
 使用`[]`是因为有可能内容会发生改变
 
 
-```
+```js
 box["style"]["width"]
 ```
 
-
-
-
- 
-
- 
-
-
-
-				     
 
 

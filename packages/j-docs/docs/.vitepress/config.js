@@ -1,11 +1,9 @@
 export default {
     title: '许仕杰',
-    lastUpdated: true,
     markdown: {
-        lineNumbers: true,
-        toc: true
+        toc: { 
+        }
     },
-    appearance: false,
     themeConfig: {
         logo: '/assets/logo.png',
         socialLinks: [
@@ -34,7 +32,7 @@ export default {
             },
             {
                 text: '个人笔记',
-                link: '/notes/'
+                link: '/notes/html'
             },
             { 
                 text: '资源下载', 
@@ -45,18 +43,28 @@ export default {
             '/notes/': [
                 {
                     text: '学习笔记',
+                    collapsible: true,
+                    collapsed: false,
                     items: [
                         {
-                            text: 'html',
+                            text: 'HTML',
                             link: '/notes/html'
                         },
                         {
-                            text: 'css',
+                            text: 'CSS',
                             link: '/notes/css'
                         },
                         {
-                            text: 'javascript',
+                            text: 'JAVASCRIPT',
                             link: '/notes/javascript'
+                        },
+                        {
+                            text: 'TYPESCRIPT',
+                            link: '/notes/typescript'
+                        },
+                        {
+                            text: '设计模式',
+                            link: '/notes/design'
                         },
                         {
                             text: '数据结构与算法',

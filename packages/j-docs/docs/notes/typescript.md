@@ -180,7 +180,7 @@ let strLength:number = (someValue as string).length
 
 
 如果x要兼容y，那么y至少具有与x相同的成员
-```
+```js
 interface Named {
   name: string;
 }

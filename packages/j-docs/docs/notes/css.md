@@ -1,13 +1,16 @@
 [toc]
 
-# CSS学习笔记
+# CSS
+
 
 ## 属性选择器
 
-```
+```html
 // p标签的attr属性等于test
 <style type="text/css">
-    p[attr=test]{background:yellow;}
+    p[attr=test]{
+        background:yellow;
+    }
 </style>
 
 <body>
@@ -15,10 +18,12 @@
 </body>
 ```
 
-```
+```html
 // p标签中attr属性中包含test
 <style type="text/css">
-    p[attr~=test]{background:yellow;}
+    p[attr~=test]{
+        background:yellow;
+    }
 </style>
 
 <body>
@@ -26,20 +31,24 @@
 </body>
 ```
 
-```
+```html
 // p标签中attr属性以t开头
 <style type="text/css">
-    p[attr^=t]{background:yellow;}
+    p[attr^=t]{
+        background:yellow;
+    }
 </style>
 <body>
     <p attr="test"></p>
 </body>
 ```
 
-```
+```html
 // p标签中attr属性以t结尾
 <style type="text/css">
-    p[attr$=t]{background:yellow;}
+    p[attr$=t]{
+        background:yellow;
+    }
 </style>
 
 <body>
@@ -47,10 +56,12 @@
 </body>
 ```
 
-```
+```html
 // p标签中attr属性只要包含t就可以
 <style type="text/css">
-    p[attr*=t]{background:yellow;} 
+    p[attr*=t]{
+        background:yellow;
+    } 
 </style>
 
 <body>
@@ -58,11 +69,13 @@
 </body>
 ```
 
-```
+```html
 // p标签中attr属性以test开头
 // 注意该值必须是整个单词
 <style type="text/css">
-    p[attr|=test]{background:yellow;}  
+    p[attr|=test]{
+        background:yellow;
+    }  
 </style>
 
 <body>
@@ -73,10 +86,21 @@
 
 ## 伪类选择器
 
-```
+| 伪类选择器 |
+| ------ |
+| :nth-last-child() |
+| :nth-of-type() |
+| :nth-last-of-type() |
+| :only-of-type |
+| :only-child |
+
+
+```html
 // 第一个子节点是p的元素
 <style type="text/css">
-    div p:nth-child(1){background:red;}
+    div p:nth-child(1){
+        background:red;
+    }
 </style>
 
 <body>
@@ -86,12 +110,16 @@
 </body>
 ```
 
-```
+```html
 <style type="text/css">
     // 下标是奇数的子元素
-    p:nth-child(odd){background:blue;}
+    p:nth-child(odd){
+        background:blue;
+    }
     // 下标是偶数的子元素
-    p:nth-child(even){background:yellow;}
+    p:nth-child(even){
+        background:yellow;
+    }
 </style>
 
 <body>
@@ -102,24 +130,25 @@
 </body>
 ```
 
-```
-:nth-last-child()
-:nth-of-type()
-:nth-last-of-type()
-:only-of-type
-:only-child
-```
 
 
-```
+```html
 <style type="text/css">
-    input{width:100px;height:30px;color:#000;}
+    input{
+        width:100px;
+        height:30px;
+        color:#000;
+    }
     
     /*input启用时,颜色为red*/
-    input:enabled{color:red;}
+    input:enabled{
+        color:red;
+    }
     
     /*input禁用时,颜色为blue*/
-    input:disabled{color:blue;}
+    input:disabled{
+        color:blue;
+    }
 </style>
 
 <body>
@@ -128,10 +157,13 @@
 ```
 
 
-```
+```html
 <style type="text/css">
     // input被选中时的样式
-    input:checked{width:30px;height:30px;}
+    input:checked{
+        width:30px;
+        height:30px;
+    }
 </style>
 
 <body>
@@ -141,11 +173,14 @@
 ```
 
 
-```
+```html
 <style type="text/css">
     /*p标签之后的所有h1标签的样式*/
-    p~h1{background:red;}
+    p~h1{
+        background:red;
+    }
 </style>
+
 <body>
     <h1>h1</h1>
     <p>p</p>
@@ -154,25 +189,36 @@
 </body>
 ```
 
-```
+```html
 <style type="text/css">
     /*段落的第一个字符的样式*/
-    p:first-letter{font-size:30px;}
+    p:first-letter{
+        font-size:30px;
+    }
     /*段落的首行的样式*/
-    p:first-line{background:red;}
+    p:first-line{
+        background:red;
+    }
     /*选中时的样式*/
-    p::selection{color:yellow;background:blue;}
+    p::selection{
+        color:yellow;
+        background:blue;
+    }
 </style>
+
 <body>
     <p>测试测试</p>
 </body>
 ```
 
-```
+```html
 <style type="text/css">
     // h6标签class不是special的样式
-    h6:not(.special){background:blue;}
+    h6:not(.special){
+        background:blue;
+    }
 </style>
+
 <body>
 	<h6>h6</h6>
 	<h6 class="special">h6</h6>
@@ -190,7 +236,7 @@
 | tv | 电视 |
 | screen | 彩屏设备 |
 
-```
+```css
 @media tv {}
 ```
 
@@ -199,14 +245,14 @@
 > only
 
 
-```
+```css
 // 仅在彩屏设备下识别
 @media only screen{}
 ```
 
 > and
 
-```
+```css
 // 连接媒体类型和媒体特性的
 // 当屏幕宽度大于等于500的时候识别
 @media all and (min-width:500px) {}
@@ -214,7 +260,7 @@
 
 > not
 
-```
+```css
 // 排除掉某种特殊的媒体类型
 @media not tv {}
 ```
@@ -235,7 +281,7 @@
 ### 旧版弹性盒模型
 
 
-`display: box`
+`display: box`<br/>
 `display: inline-box`
 
 | 主轴设置 | 描述 | 值 | 备注|
@@ -257,7 +303,7 @@
     
 ## 移动端视口设置 
 
-```
+```html
 <meta name="viewport" content="width=device-width,user-scalable=no">
 ```
 
@@ -274,7 +320,7 @@
 
 ##  移动端的`rem`适配
 
-```
+```js
 (function(){
     var html = document.documentElement
     var hWidth = html.getBoundingClientRect().width

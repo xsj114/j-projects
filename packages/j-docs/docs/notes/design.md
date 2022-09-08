@@ -2,8 +2,10 @@
 [toc]
     
     
-# 设计模式学习笔记
+# 设计模式
+
 ## 设计原则
+
 ### SOLID五大设计原则
 
 | 类型 | 描述|
@@ -48,8 +50,7 @@
 
 ### 工厂模式
 
-#### 介绍
-将new操作单独封装
+将new操作单独封装<br/>
 遇到new时，就要考虑是否该使用工厂模式
 
 #### UML类图
@@ -66,7 +67,7 @@
 
 #### 代码演示
 
-```
+```js
 class Product {
     
     constructor(name){
@@ -87,7 +88,7 @@ class Product {
 }
 ```
 
-```
+```js
 class Creator {
     
     create (name) {
@@ -97,7 +98,7 @@ class Creator {
 }
 ```
 
-```
+```js
 let creator = new Creator()
 let p = creator.create('p1')
 p.init()
@@ -106,14 +107,13 @@ p.fn1()
 
 ### 单例模式
 
-#### 介绍
 
-系统中被唯一使用
+系统中被唯一使用<br/>
 一个类只有一个实例
 
 #### 代码演示
 
-```
+```js
 class SingleObject {
     login () {
         console.log('login...')
@@ -131,7 +131,7 @@ SingleObject.getInstance = (function(){
 })()
 ```
 
-```
+```js
 let obj1 = SingleObject.getInstance()
 obj1.login()
 
@@ -149,9 +149,8 @@ console.log('obj1===obj3',obj1===obj3)  // false
 
 ### 适配器模式
 
-#### 介绍
 
-旧接口格式和使用者不兼容
+旧接口格式和使用者不兼容<br/>
 中间加一个适配转换接口
 
 #### UML类图
@@ -173,7 +172,7 @@ console.log('obj1===obj3',obj1===obj3)  // false
 
 #### 代码演示
 
-```
+```js
 class Adaptee {
     specificRequest(){
         return  '德国标准插头'
@@ -181,7 +180,7 @@ class Adaptee {
 }
 ```
 
-```
+```js
 class Target {
     constructor () {
         this.adaptee = new Adaptee()
@@ -195,16 +194,15 @@ class Target {
 }
 ```
 
-```
+```js
 let target = new Target()
 target.request()
 ```
 
 ### 装饰器模式
 
-#### 介绍
 
-为对象添加新功能
+为对象添加新功能<br/>
 不改变其原有的结构和功能
 
 #### UML类图
@@ -227,7 +225,7 @@ target.request()
 
 #### 代码演示
 
-```
+```js
 class Circle {
     draw () {
         console.log('draw')
@@ -235,7 +233,7 @@ class Circle {
 }
 ```
 
-```
+```js
 class Decorator {
     
     constructor (circle) {
@@ -254,7 +252,7 @@ class Decorator {
 }
 ```
 
-```
+```js
 let circle = new Circle()
 circle.draw()
     
@@ -264,9 +262,8 @@ dec.draw()
 
 ### 代理模式
 
-#### 介绍
 
-使用者无权访问目标对象
+使用者无权访问目标对象<br/>
 中间加代理，通过代理做授权和控制
 
 #### UML类图
@@ -288,7 +285,7 @@ dec.draw()
 
 #### 代码演示
 
-```
+```js
 class ReadImg {
     
     constructor(fileName){
@@ -307,7 +304,7 @@ class ReadImg {
 }
 ```
 
-```
+```js
 class ProxyImg {
     
     constructor (fileName) {
@@ -321,25 +318,23 @@ class ProxyImg {
 }
 ```
 
-```
+```js
 let proxyImg = new ProxyImg('test.png')
 proxyImg.display()
 ```
 
 ### 外观模式
 
-#### 介绍
 
-为子系统中的一组接口提供了一个高层接口
+为子系统中的一组接口提供了一个高层接口<br/>
 使用者使用这个高层接口
 
 
 
 ### 观察者模式
 
-#### 介绍 
 
-发布&订阅
+发布&订阅<br/>
 一对多
 
 #### UML类图
@@ -357,7 +352,7 @@ proxyImg.display()
 
 #### 代码演示
 
-```
+```js
 class Subject {
     constructor () {
         this.state = 0
@@ -386,7 +381,7 @@ class Subject {
 }
 ```
 
-```
+```js
 class Observer {
     constructor (name,subject) {
         this.name = name
@@ -400,7 +395,7 @@ class Observer {
 }
 ```
 
-```
+```js
 let s = new Subject()
 let o1 = new Observer('o1',s)
 let o2 = new Observer('o2',s)
@@ -409,9 +404,8 @@ s.setState(1)
 
 ### 迭代器模式
 
-#### 介绍
 
-顺序访问一个集合
+顺序访问一个集合<br/>
 使用者无需知道集合的内部结构（封装）
 
 #### UML类图
@@ -428,7 +422,7 @@ s.setState(1)
 
 #### 代码演示
 
-```
+```js
 class Container {
     constructor (list) {
         this.list = list
@@ -463,11 +457,10 @@ class Iterator {
 
 ### 状态模式
 
-#### 介绍
 
-一个对象有状态变化
-每次状态变化都会触发一个逻辑
-不能总是用if...else来控制
+一个对象有状态变化<br/>
+每次状态变化都会触发一个逻辑<br/>
+不能总是用`if...else`来控制
 
 #### UML类图
 
@@ -484,7 +477,7 @@ class Iterator {
 
 #### 代码演示
 
-```
+```js
 class State {
     
     constructor(color){
@@ -529,13 +522,12 @@ console.log(context.getState())
 
 ### 原型模式
 
-#### 介绍
 
-clone自己，生成一个新对象
+clone自己生成一个新对象
 
 #### 代码演示
 
-```
+```js
 const prototype = {
     getName: function () {
         return this.first + ' ' + this.last
@@ -546,7 +538,7 @@ const prototype = {
 }
 ```
 
-```
+```js
 let x = Object.create(prototype)
 x.first = 'A'
 x.last = 'B'
@@ -554,7 +546,7 @@ console.log(x.getName())
 console.log(x.say())
 ```
 
-```
+```js
 let y = Object.create(prototype)
 y.first = 'C'
 y.last = 'D'
@@ -562,56 +554,15 @@ console.log(y.getName())
 console.log(y.say())
 ```
 
-
-### 桥接模式
-
-#### 介绍
-
-用于把抽象化与实现化解耦
-使得二者可以独立变化
-
-
-### 组合模式
-
-#### 介绍
-
-生成树形结构，表示"整体-部分"关系
-让整体和部分都具有一致的操作方式
-
-
-### 享元模式
-
-#### 介绍
-
-共享内存（主要考虑内存，而非效率）
-相同的数据，共享使用
-
-### 策略模式
-
-#### 介绍
-
-不同策略分开处理
-避免出现大量`if...else`或者`switch...case`
-
-
-### 职责链模式
-
-#### 介绍
-
-一步操作可能分为多个职责角色来完成
-把这些角色都分开，然后用一个链串起来
-将发起者和各个处理者进行隔离
-
 ### 命令模式
 
-#### 介绍
 
-执行命令时，发布者和执行者分开
+执行命令时，发布者和执行者分开<br/>
 中间加入命令对象，作为中转站
 
 #### 代码演示
 
-```
+```js
 class Receiver {
     exec () {
         console.log('执行')
@@ -647,14 +598,13 @@ general.invoke()
 
 ### 备忘录模式
 
-#### 介绍
 
-随时记录一个对象的状态变化
+随时记录一个对象的状态变化<br/>
 随时可以恢复之前的某个状态（如撤销功能）
 
 #### 代码演示
 
-```
+```js
 class Memento {
     constructor (content) {
         this.content = content
@@ -697,13 +647,12 @@ class Editor {
 
 ### 中介者模式
 
-#### 背景
 
 多个对象之间相互引用，如果其中一个对象改变了，那其他访问它的对象也需要跟着改变，这时可以用中介者模式，对象和对象之间的访问，都通过一个中介者访问的话，如果其中一个对象改变了，我们只需要改变中介者就可以了
 
 #### 代码演示
 
-```
+```js
 class A {
     constructor () {
         this.number = 0
@@ -744,21 +693,51 @@ class Mediator {
 }
 ```
 
+### 桥接模式
+
+
+用于把抽象化与实现化解耦<br/>
+使得二者可以独立变化
+
+
+### 组合模式
+
+
+生成树形结构，表示"整体-部分"关系<br/>
+让整体和部分都具有一致的操作方式
+
+
+### 享元模式
+
+
+共享内存（主要考虑内存，而非效率）<br/>
+相同的数据，共享使用
+
+### 策略模式
+
+
+不同策略分开处理<br/>
+避免出现大量`if...else`或者`switch...case`
+
+
+### 职责链模式
+
+
+一步操作可能分为多个职责角色来完成<br/>
+把这些角色都分开，然后用一个链串起来<br/>
+将发起者和各个处理者进行隔离
+
+
+
+
 
 ### 访问者模式
 
-#### 介绍
 
 将数据操作和数据结构进行分离
 
 ### 解释器模式
 
-#### 介绍
 
 描述语言语法如何定义，如何解释和编译
-
-
-
-
-
 
