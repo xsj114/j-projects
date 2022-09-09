@@ -1,4 +1,5 @@
 [toc]
+
 # React源码
 
 > [参考文献](https://react.jokcy.me/)
@@ -33,11 +34,13 @@ React.createElement(Comp,
 )
 ```
 
-> React.createElement()
+::: tip
+React.createElement()
 
 第一个参数是元素的标签（如果第一个元素是组件，首字母必须大写，会将组件做为变量传入，标签则是字符串）<br/>
 第二个参数是在`react`中称为`prop`的所有键值对<br/>
 第三个参数是会将第三个参数后(含第三个)的所有参数拿出来变为一个数组，作为这个节点的一个`children`来处理
+:::
 
 ### 源码摘要
 ```js
@@ -135,7 +138,10 @@ const ReactElement = function(type, key, ref, self, source, owner, props) {
 ## React中的Component
 
 ### 分析
+
+::: tip
 React中有两个基类，一个是Component，一个是PureComponent，PureComponent本质上继承Component，唯一的区别是提供给我们简便的shouldComponentUpdate的实现，保证了我们的组件在props没有任何变化的情况下，能够减少不必要的更新
+:::
 
 ### 源码摘要
 
@@ -498,8 +504,11 @@ function commitAttachRef(finishedWork: Fiber) {
 ## React中的forwardRef
 
 ### forwardRef用途
+
+::: tip
 在React中如果定义的是一个`function Component`,这个组件是没有实例的，因为它是一个`PureComponent`<br/>
 在设想，如果我们引入了redux，connect方法返回的是一个被包装过的组件，我们想拿到未被包装过的组件实例该如何做
+:::
 
 ### forwardRef使用
 
@@ -553,9 +562,11 @@ export default function forwardRef<Props, ElementType: React$ElementType>(
 
 #### childContextType
 
+::: tip
 会影响整个子树<br/>
 嵌套的context提供者需要进行合并<br/>
 对性能影响较大
+::: 
 
 ##### 代码示例
 
@@ -957,7 +968,7 @@ function completeWork(
 }
 ```
 
-```
+```js
 function popContext(fiber: Fiber): void {
   pop(didPerformWorkStackCursor, fiber);
   pop(contextStackCursor, fiber);
@@ -968,13 +979,15 @@ function popContext(fiber: Fiber): void {
 
 #### createContext
 
-组件化的使用方式
-context的提供方和订阅方都是独立的
+::: tip
+组件化的使用方式<br/>
+context的提供方和订阅方都是独立的<br/>
 没有什么附带的性能影响
+:::
 
 ##### 代码示例
 
-```
+```js
 const { Provider, Consumer } = React.createContext('default')
     
 class Parent extends React.Component{
@@ -996,12 +1009,16 @@ function Child () {
     return <Consumer>{value => <p>{value}</p>}</Consumer>
 }
 ```
-> 使用了`createContext`后，子组件只需要在想要用到`context`的地方，通过`Consumer`把想要渲染的渲染出来,所以它们是一一对应的关系
+
+::: tip
+使用了`createContext`后，子组件只需要在想要用到`context`的地方，通过`Consumer`把想要渲染的渲染出来,所以它们是一一对应的关系
+:::
+
 
 
 ##### 源码摘要
 
-```
+```js
 export function createContext<T>(
   defaultValue: T,
   calculateChangedBits: ?(a: T, b: T) => number,
@@ -1042,10 +1059,13 @@ export function createContext<T>(
   return context;
 }
 ```
-> 接收两个参数，第一个是`defaultValue`,第二个是一个方法，用来计算新老context的变化，然后声明了一个context对象。其中`_currentValue`是用来记录`Provider`上面提供的value有变化的情况下，它就会更新到这个属性上
+
+::: tip
+接收两个参数，第一个是`defaultValue`,第二个是一个方法，用来计算新老context的变化，然后声明了一个context对象。其中`_currentValue`是用来记录`Provider`上面提供的value有变化的情况下，它就会更新到这个属性上
+:::
 
 
-```
+```js
 function updateContextProvider(
   current: Fiber | null,
   workInProgress: Fiber,
@@ -1095,7 +1115,7 @@ function updateContextProvider(
 }
 ```
 
-```
+```js
 export const isPrimaryRenderer = true;
 
 export function pushProvider<T>(providerFiber: Fiber, nextValue: T): void {
@@ -1114,7 +1134,7 @@ export function pushProvider<T>(providerFiber: Fiber, nextValue: T): void {
 }
 ```
 
-```
+```js
 export function calculateChangedBits<T>(
   context: ReactContext<T>,
   newValue: T,
@@ -1142,7 +1162,7 @@ export function calculateChangedBits<T>(
 }
 ```
 
-```
+```js
 export function propagateContextChange(
   workInProgress: Fiber,
   context: ReactContext<mixed>,
@@ -1265,7 +1285,7 @@ export function propagateContextChange(
 }
 ```
 
-```
+```js
 function updateContextConsumer(
   current: Fiber | null,
   workInProgress: Fiber,
@@ -1299,7 +1319,7 @@ function updateContextConsumer(
 }
 ```
 
-```
+```js
 export function prepareToReadContext(
   workInProgress: Fiber,
   renderExpirationTime: ExpirationTime,
@@ -1313,7 +1333,7 @@ export function prepareToReadContext(
 }
 ```
 
-```
+```js
 export function readContext<T>(
   context: ReactContext<T>,
   observedBits: void | number | boolean,
@@ -1360,14 +1380,16 @@ export function readContext<T>(
 
 
 ## React中的stack
-
-更新节点时相关信息入栈
-完成节点时相关信息出栈
-用不同的cursor记录不同的信息
+ 
+::: tip
+更新节点时相关信息入栈<br/>
+完成节点时相关信息出栈<br/>
+用不同的`cursor`记录不同的信息
+::: 
 
 ### 源码摘要
 
-```
+```js
 const valueStack: Array<any> = [];
 let index = -1;
 
@@ -1401,11 +1423,16 @@ function pop<T>(cursor: StackCursor<T>, fiber: Fiber): void {
 
 
 ## React中的ConcurrentMode
+
 ### ConcurrentMode的目标
-> 让react的整体渲染过程能够进行一个优先级的排比，并且让整体的一个渲染过程是可以中断的，它就可以进行一个任务的调度，提高cpu性能
+
+::: tip
+让react的整体渲染过程能够进行一个优先级的排比，并且让整体的一个渲染过程是可以中断的，它就可以进行一个任务的调度，提高cpu性能
+:::
 
 ### ConcurrentMode示例
-```
+
+```js
 import {ConcurrentMode} from 'react'
 import { flushSync} from 'react-dom'
     
@@ -1486,10 +1513,15 @@ export default () => {
     </ConcurrentMode>
 }
 ```
-> flushSync会强制我们在执行某一个更新操作的时候，使用优先级最高的方式，去进行一个更新，用这个是因为ConcurrentMode有一个特性，在一个子元素中渲染了ConcurrentMode，它下面所有的节点产生的更新，它就是一个低优先级的更新
+
+::: tip
+flushSync会强制我们在执行某一个更新操作的时候，使用优先级最高的方式，去进行一个更新，用这个是因为ConcurrentMode有一个特性，在一个子元素中渲染了ConcurrentMode，它下面所有的节点产生的更新，它就是一个低优先级的更新
+:::
+
 
 ###  源码摘要
-```
+
+```js
 import {
   REACT_CONCURRENT_MODE_TYPE,
   REACT_FRAGMENT_TYPE,
@@ -1511,11 +1543,15 @@ export const REACT_CONCURRENT_MODE_TYPE = hasSymbol
   ? Symbol.for('react.concurrent_mode')
   : 0xeacf;
 ```
-> 可以看出这个组件就是一个`Symbol`
+::: tip
+可以看出这个组件就是一个`Symbol`
+:::
 
 ## React中的Suspense和lazy
+
 ### Suspense和lazy示例
-```
+
+```js
 import {Suspense} from 'react'
 
 let data = ''
@@ -1544,11 +1580,16 @@ export default () => {
     </Suspense>
 }
 ```
-> 第一次渲染时，没有`data`和`promise`，所以`throw promise`报错了，这时我们显示的是`Suspense`组件的`fallback`，过两秒后resolve了，显示出了data
-> 我们在一个`Suspense`组件下面渲染了一个或者多个异步的组件，有任何一个`throw`了一个`promise`后，在这个`promise``resolve`之前，都会显示这个`fallback`
 
+::: tip
+第一次渲染时，没有`data`和`promise`，所以`throw promise`报错了，这时我们显示的是`Suspense`组件的`fallback`，过两秒后resolve了，显示出了data
+:::
 
-```
+::: tip
+我们在一个`Suspense`组件下面渲染了一个或者多个异步的组件，有任何一个`throw`了一个`promise`后，在这个`promise``resolve`之前，都会显示这个`fallback`
+:::
+
+```js
 import {Suspense, lazy} from 'react'
 const LazyComp = lazy(() => import('./lazy.js'))
 // lazy.js
@@ -1562,15 +1603,19 @@ export default () => {
 ```
 
 ### Suspense和lazy源码摘要
-```
+
+```js
 // suspense源码
 export const REACT_SUSPENSE_TYPE = hasSymbol
   ? Symbol.for('react.suspense')
   : 0xead1;
 ```
-> 可以看出这个组件就是一个`Symbol`
 
-```
+::: tip
+可以看出这个组件就是一个`Symbol`
+:::
+
+```js
 // lazy源码
 export function lazy<T, R>(ctor: () => Thenable<T, R>): LazyComponent<T> {
   let lazyType = {
@@ -1584,19 +1629,25 @@ export function lazy<T, R>(ctor: () => Thenable<T, R>): LazyComponent<T> {
   return lazyType;
 }
 ```
-> 它接收一个方法，并且此方法返回一个Thenable(promise这样的对象，具有.then这样的方法)
-> 其中返回的_status属性，用来记录当前的Thenable对象，处于的状态的
-> 其中返回的_result属性,用来记录Thenable对象resolve之后，返回的属性
-> 在lazy里面，最终result出来的组件，会把它放到_result上面，后续我们渲染lazy组件，直接拿_result里面的组件去渲染就可以了，不用在执行promise了
+
+::: tip
+它接收一个方法，并且此方法返回一个Thenable(promise这样的对象，具有.then这样的方法)<br/>
+其中返回的_status属性，用来记录当前的Thenable对象，处于的状态的<br/>
+其中返回的_result属性,用来记录Thenable对象resolve之后，返回的属性<br/>
+在lazy里面，最终result出来的组件，会把它放到_result上面，后续我们渲染lazy组件，直接拿_result里面的组件去渲染就可以了，不用在执行promise了
+:::
 
 ## React中的Hooks
-### Hooks的意义
-> Hooks给`function component`提供了`class component`所具有的能力，在以前`function component`是没有this对象和生命周期方法的，没有`this`对象，就不能有`this.state`
 
+### Hooks的意义
+
+::: tip
+Hooks给`function component`提供了`class component`所具有的能力，在以前`function component`是没有this对象和生命周期方法的，没有`this`对象，就不能有`this.state`
+:::
 
 ### Hooks示例
 
-```
+```js
 import {useState, useEffect} from 'react'
     
 export default () => {
@@ -1622,11 +1673,15 @@ export default () => {
     )
 }
 ```
-> 上面例子中，利用Hooks给我们的组件存储了state,还模拟了生命周期方法
-> 上面数组的结构中，第一项是state对应的变量，第二项是我们去改变state的一个方法
+
+::: tip
+上面例子中，利用Hooks给我们的组件存储了state,还模拟了生命周期方法<br/>
+上面数组的结构中，第一项是state对应的变量，第二项是我们去改变state的一个方法
+::: 
 
 ### Hooks源码摘要
-```
+
+```js
 export function useState<S>(initialState: (() => S) | S) {
   const dispatcher = resolveDispatcher();
   return dispatcher.useState(initialState);
@@ -1651,11 +1706,15 @@ const ReactCurrentDispatcher = {
 }
 ```
 
-> Hooks最终调用的都是dispatcher上面的方法
+::: tip
+Hooks最终调用的都是dispatcher上面的方法
+:::
 
 ## React中的Children
+
 ### 示例
-```
+
+```js
 function ChildrenDemo (props) {
     
     console.log(props.children)
@@ -1671,10 +1730,13 @@ export default () => {
 }
 ```
 
-> 可以看出，不管里面传了多少层嵌套的数组，最终都会展开成一维数组
+::: tip
+可以看出，不管里面传了多少层嵌套的数组，最终都会展开成一维数组
+:::
 
 ### 自实现的多维数组转为一维数组
-```
+
+```js
 let newArr = []
 
 var arr = [1, 2, 3, [4, 5, [6, 7], [8, 9]]]
@@ -1700,38 +1762,20 @@ console.log(custFlatArr(arr))
 
 ### 源码流程图
 
-```
-    st=>start: 开始
-    para=>parallel: mapIntoWithKeyPrefixInternal
-    op1=>operation: traverseAllChildren
-    op2=>operation: traverseAllChildrenImpl
-    op3=>operation: 循环每个节点
-    op4=>operation: mapSingleChildIntoContext
-    op5=>operation: 对每个节点调用map func返回map之后的节点
-    op6=>operation: 往result中推入clone节点并替换key
-    cond1=>condition: 是否多个节点
-    cond2=>condition: isArray
-    sub1=>subroutine: contextPool
-    
-    
-    st->para
-    para(path1,bottom)->op1->op2->cond1
-    para(path2)->sub1->para
-    cond1(yes,right)->op3()->op2
-    cond1(no)->op4->op5->cond2
-    cond2(yes,right)->para
-    cond2(no)->op6
-```
+![An image](../assets/react-children-map.png)
 
-> 上图展示了React.children.map方法的流程，首先调用我们的map方法，会调用mapIntoWithKeyPrefixInternal方法（这时，它会到一个contextPool的地方去获取一个context，到执行完mapIntoWithKeyPrefixInternal方法后，它会把这个context在返回到这个contextPool里面），然后会调用traverseAllChildren，traverseAllChildrenImpl方法，traverseAllChildrenImpl方法会判断是否多个节点，如果是多个节点会循环每个节点，对每个节点在调用traverseAllChildrenImpl方法，如果不是多个节点，会调用mapSingleChildIntoContext方法，在这个方法里面会调用map的第二个参数，然后会判断是否是数组，如果是数组，又会调用mapIntoWithKeyPrefixInternal方法，如果不是，往result中推入clone节点
+::: tip
+上图展示了React.children.map方法的流程，首先调用我们的map方法，会调用mapIntoWithKeyPrefixInternal方法（这时，它会到一个contextPool的地方去获取一个context，到执行完mapIntoWithKeyPrefixInternal方法后，它会把这个context在返回到这个contextPool里面），然后会调用traverseAllChildren，traverseAllChildrenImpl方法，traverseAllChildrenImpl方法会判断是否多个节点，如果是多个节点会循环每个节点，对每个节点在调用traverseAllChildrenImpl方法，如果不是多个节点，会调用mapSingleChildIntoContext方法，在这个方法里面会调用map的第二个参数，然后会判断是否是数组，如果是数组，又会调用mapIntoWithKeyPrefixInternal方法，如果不是，往result中推入clone节点
+:::
 
 ### 源码摘要
-```
+
+```js
 // 全局变量
 const POOL_SIZE = 10;
 const traverseContextPool = [];
 ```
-```
+```js
 function mapChildren(children, func, context) {
   if (children == null) {
     return children;
@@ -1742,7 +1786,7 @@ function mapChildren(children, func, context) {
 }
 ```
 
-```
+```js
 function mapIntoWithKeyPrefixInternal(children, array, prefix, func, context) {
 
   // 处理key开始
@@ -1764,7 +1808,8 @@ function mapIntoWithKeyPrefixInternal(children, array, prefix, func, context) {
   releaseTraverseContext(traverseContext);
 }
 ```
-```
+
+```js
 function getPooledTraverseContext(
   mapResult,
   keyPrefix,
@@ -1803,7 +1848,7 @@ function releaseTraverseContext(traverseContext) {
 ```
 
 
-```
+```js
 function traverseAllChildren(children, callback, traverseContext) {
   if (children == null) {
     return 0;
@@ -1812,7 +1857,7 @@ function traverseAllChildren(children, callback, traverseContext) {
   return traverseAllChildrenImpl(children, '', callback, traverseContext);
 }
 ```
-```
+```js
 function traverseAllChildrenImpl(
   children,
   nameSoFar,
@@ -1908,7 +1953,7 @@ function traverseAllChildrenImpl(
 }
 ```
 
-```
+```js
 function mapSingleChildIntoContext(bookKeeping, child, childKey) {
   const {result, keyPrefix, func, context} = bookKeeping;
 
@@ -1932,7 +1977,7 @@ function mapSingleChildIntoContext(bookKeeping, child, childKey) {
   }
 }
 ```
-```
+```js
 export function cloneAndReplaceKey(oldElement, newKey) {
   const newElement = ReactElement(
     oldElement.type,
@@ -1950,16 +1995,20 @@ export function cloneAndReplaceKey(oldElement, newKey) {
 
 ## React中的更新
 
-> 有三种创建更新的方式
+|  三种创建更新的方式 |
+| ------ |
+| ReactDom.render \|\| hydrate |
+|  setState |
+| forceUpdate |
 
-ReactDom.render || hydrate
-setState
-forceUpdate
 
 ### ReactDom.render || hydrate
+
 #### ReactDom.render
+
 ##### 源码摘要
-```
+
+```js
 const ReactDOM: Object = {
     render(
         element: React$Element<any>,
@@ -1981,9 +2030,11 @@ const ReactDOM: Object = {
       },
 }
 ```
-> 可以看到，接收三个参数，第一个参数是传入的React Element，第二个参数是挂载到哪个Dom节点上面，第三个参数是渲染结束之后，会调用callback，此函数返回的是调用legacyRenderSubtreeIntoContainer方法的结果
+::: tip
+可以看到，接收三个参数，第一个参数是传入的React Element，第二个参数是挂载到哪个Dom节点上面，第三个参数是渲染结束之后，会调用callback，此函数返回的是调用legacyRenderSubtreeIntoContainer方法的结果
+:::
 
-```
+```js
 function legacyRenderSubtreeIntoContainer(
   parentComponent: ?React$Component<any, any>,
   children: ReactNodeList,
@@ -2042,11 +2093,15 @@ function legacyRenderSubtreeIntoContainer(
   return getPublicRootInstance(root._internalRoot);
 }
 ```
-> 此函数开始，声明个Root，第一次渲染，传入的Dom节点不会有_reactRootContainer属性，所以给这个Dom节点的_reactRootContainer属性赋值legacyCreateRootFromDOMContainer函数的返回结果
-> 
-> unbatchedUpdates方法是批量更新的操作
+::: tip  
+此函数开始，声明个Root，第一次渲染，传入的Dom节点不会有_reactRootContainer属性，所以给这个Dom节点的_reactRootContainer属性赋值legacyCreateRootFromDOMContainer函数的返回结果
+:::
+ 
+::: tip  
+unbatchedUpdates方法是批量更新的操作
+:::  
 
-```
+```js
 function legacyCreateRootFromDOMContainer(
   container: DOMContainer,
   forceHydrate: boolean,
@@ -2066,10 +2121,13 @@ function legacyCreateRootFromDOMContainer(
   return new ReactRoot(container, isConcurrent, shouldHydrate);
 }
 ```
-> 对于render方法来说，它的forceHydrate是false,会调用shouldHydrateDueToLegacyHeuristic方法，如果shouldHydrate为false，会把传入进来的DOM节点的所有子节点都删掉，随后返回一个new ReactRoot
+
+::: tip  
+对于render方法来说，它的forceHydrate是false,会调用shouldHydrateDueToLegacyHeuristic方法，如果shouldHydrate为false，会把传入进来的DOM节点的所有子节点都删掉，随后返回一个new ReactRoot
+:::
 
 
-```
+```js
 const ROOT_ATTRIBUTE_NAME = 'data-reactroot';
 const ELEMENT_NODE = 1;
 
@@ -2082,9 +2140,12 @@ function shouldHydrateDueToLegacyHeuristic(container) {
   );
 }
 ```
-> 它会调用getReactRootElementInContainer方法,ROOT_ATTRIBUTE_NAME用来标识，目前应用是有服务端渲染的
 
-```
+::: tip  
+它会调用getReactRootElementInContainer方法,ROOT_ATTRIBUTE_NAME用来标识，目前应用是有服务端渲染的
+:::
+
+```js
 const DOCUMENT_NODE = 9;
 function getReactRootElementInContainer(container: any) {
   if (!container) {
@@ -2098,9 +2159,12 @@ function getReactRootElementInContainer(container: any) {
   }
 }
 ```
-> 判断传入的DOM有没有子节点
 
-```
+::: tip  
+判断传入的DOM有没有子节点
+:::
+
+```js
 function ReactRoot(
   container: DOMContainer,
   isConcurrent: boolean,
@@ -2117,9 +2181,12 @@ let DOMRenderer = {
 }
 
 ```
-> 创建了一个FiberRoot
 
-```
+::: tip  
+创建了一个FiberRoot
+:::
+
+```js
 ReactRoot.prototype.render = function(
   children: ReactNodeList,
   callback: ?() => mixed,
@@ -2136,10 +2203,12 @@ ReactRoot.prototype.render = function(
 };
 ```
 
-> 此函数主要调用了updateContainer方法
+::: tip  
+此函数主要调用了updateContainer方法
+:::
 
 
-```
+```js
 function updateContainer(
   element: ReactNodeList,
   container: OpaqueRoot,
@@ -2159,9 +2228,11 @@ function updateContainer(
 }
 ```
 
-> 其中会计算expirationTime，它是能让我们使用优先级任务更新的一个非常重要的点，并且调用了updateContainerAtExpirationTime
+::: tip  
+其中会计算expirationTime，它是能让我们使用优先级任务更新的一个非常重要的点，并且调用了updateContainerAtExpirationTime
+:::
 
-```
+```js
 function updateContainerAtExpirationTime(
   element: ReactNodeList,
   container: OpaqueRoot,
@@ -2182,10 +2253,12 @@ function updateContainerAtExpirationTime(
   return scheduleRootUpdate(current, element, expirationTime, callback);
 }
 ```
+ 
+::: tip  
+此方法获取了一个context，可暂时忽略
+:::
 
-> 此方法获取了一个context，可暂时忽略
-
-```
+```js
 function scheduleRootUpdate(
   current: Fiber,
   element: ReactNodeList,
@@ -2216,19 +2289,24 @@ function scheduleRootUpdate(
   return expirationTime;
 }
 ```
-
-> 它创建了一个update，update是用来标记react应用当中，应用需要更新的地点的，也是非常重要的一块内容
-> 然后调用了enqueueUpdate方法，是把update加入到我们的Fiber对象上面对应的update queue里面，因为update是可以在一次更新当中某个节点上面有多个更新
-> 最后调用了scheduleWork方法，它意味着开始进行任务调度，它告诉react，我们有更新产生了，然后我们要进行一个更新了
+ 
+::: tip  
+它创建了一个update，update是用来标记react应用当中，应用需要更新的地点的，也是非常重要的一块内容<br/>
+然后调用了enqueueUpdate方法，是把update加入到我们的Fiber对象上面对应的update queue里面，因为update是可以在一次更新当中某个节点上面有多个更新<br/>
+最后调用了scheduleWork方法，它意味着开始进行任务调度，它告诉react，我们有更新产生了，然后我们要进行一个更新了
+:::
 
 #### FiberRoot
 
-整个应用的起点
-包含应用挂载的目标节点
+::: tip
+整个应用的起点<br/>
+包含应用挂载的目标节点<br/>
 记录整个应用更新过程的各种信息
+:::
 
 ##### 源码摘要
-```
+
+```js
 function createFiberRoot(
   containerInfo: any,
   isConcurrent: boolean,
@@ -2322,9 +2400,10 @@ function createFiberRoot(
 
 
 #### Fiber
+
 ##### 源码摘要
 
-```
+```js
 export const HostRoot = 3; 
 export const NoContext = 0b000;
 export function createHostRootFiber(isConcurrent: boolean): Fiber {
@@ -2351,7 +2430,7 @@ const createFiber = function(
 };
 ```
 
-```
+```js
 function FiberNode(
   tag: WorkTag,
   pendingProps: mixed,
@@ -2416,8 +2495,10 @@ function FiberNode(
 }
 ```
 
-> 每一个ReactElement对应一个Fiber对象，记录节点的各种状态，串联整个应用形成树结构
-> sibling,return,child,三个属性能够帮助我们把整个应用的所有节点进行一一串联
+::: tip
+每一个ReactElement对应一个Fiber对象，记录节点的各种状态，串联整个应用形成树结构
+sibling,return,child,三个属性能够帮助我们把整个应用的所有节点进行一一串联
+::: 
 
 |  字段 | 意义 |
 | ---- | ---- |
@@ -2427,8 +2508,10 @@ function FiberNode(
 
 
 #### Update
+
 ##### 源码摘要
-```
+
+```js
 function createUpdate(expirationTime: ExpirationTime): Update<*> {
   return {
     // 对应这一次创建的更新的过期时间
@@ -2450,15 +2533,18 @@ function createUpdate(expirationTime: ExpirationTime): Update<*> {
   };
 }
 ```
-> 用于记录组件状态的改变
-> 存放于UpdateQueue中
-> 多个Update可以同时存在
+::: tip
+用于记录组件状态的改变<br/>
+存放于UpdateQueue中<br/>
+多个Update可以同时存在
+::: 
 
 #### UpdateQueue
+
 ##### 源码摘要
 
 
-```
+```js
 export function createUpdateQueue<State>(baseState: State): UpdateQueue<State> {
   const queue: UpdateQueue<State> = {
     // 每次应用渲染完之后的state
@@ -2479,23 +2565,30 @@ export function createUpdateQueue<State>(baseState: State): UpdateQueue<State> {
   return queue;
 }
 ```
-> UpdateQueue是一个单向链表
+::: tip
+UpdateQueue是一个单向链表
+::: 
 
 #### expirationTime
 
 ##### Sync模式
-> 优先级最高的，更新创建完成之后，立马更新
+
+::: tip
+优先级最高的，更新创建完成之后，立马更新
+:::
 
 ##### 异步模式
 
-> 会进行一个调度，会有一系列复杂的操作在里面，可能会被中断，所以会有一个计算出来的过期时间
+::: tip
+会进行一个调度，会有一系列复杂的操作在里面，可能会被中断，所以会有一个计算出来的过期时间
+:::
 
 ##### 指定context
 
 ##### 源码摘要
 
 
-```
+```js
 export const NoWork = 0;
 export const Never = 1073741823;
 
@@ -2523,19 +2616,16 @@ function requestCurrentTime() {
   return currentSchedulerTime;
 }
 ```
-
-> 可先忽略findHighestPriorityRoot方法
-> 
-> 这里的now方法我们先暂时认为是Date.now()
-> 
-> 然后调用了recomputeCurrentRendererTime方法，并得到了
-currentRendererTime
-
->  将currentRendererTime赋值给了currentSchedulerTime并返回，实际上返回的是一个常量
+::: tip
+可先忽略findHighestPriorityRoot方法<br/>
+这里的now方法我们先暂时认为是Date.now()<br/>
+然后调用了recomputeCurrentRendererTime方法，并得到了currentRendererTime<br/>
+将currentRendererTime赋值给了currentSchedulerTime并返回，实际上返回的是一个常量
+:::
 
 
 
-```
+```js
 let originalStartTimeMs: number = now();
 let currentRendererTime: ExpirationTime = msToExpirationTime(originalStartTimeMs)
 
@@ -2545,13 +2635,13 @@ function recomputeCurrentRendererTime() {
 }
 ```
 
-> currentTimeMs是"目前的时间"减去"js加载完的时间",得到的是一个常量
-> 
-> 然后调用msToExpirationTime方法，得到currentRendererTime，其中currentRendererTime是全局变量，msToExpirationTime函数的返回值给全局变量currentRendererTime赋值，currentRendererTime得到的也是常量
+::: tip
+currentTimeMs是"目前的时间"减去"js加载完的时间",得到的是一个常量<br/>
+然后调用msToExpirationTime方法，得到currentRendererTime，其中currentRendererTime是全局变量，msToExpirationTime函数的返回值给全局变量currentRendererTime赋值，currentRendererTime得到的也是常量
+:::
 
 
-
-```
+```js
 const MAX_SIGNED_31_BIT_INT = 1073741823
 const MAGIC_NUMBER_OFFSET = 2;
 const UNIT_SIZE = 10;
@@ -2560,7 +2650,7 @@ export function msToExpirationTime(ms: number): ExpirationTime {
 }
 ```
 
-```
+```js
 const NoWork = 0;
 const ConcurrentMode = 0b001;
 let expirationContext: ExpirationTime = NoWork;
@@ -2617,7 +2707,7 @@ function computeExpirationForFiber(currentTime: ExpirationTime, fiber: Fiber) {
 
 ##### 两个计算expirationTime的方法
 
-```
+```js
 export const HIGH_PRIORITY_EXPIRATION = __DEV__ ? 500 : 150;
 export const HIGH_PRIORITY_BATCH_SIZE = 100;
 export function computeInteractiveExpiration(currentTime: ExpirationTime) {
@@ -2641,7 +2731,7 @@ export function computeAsyncExpiration(
 }
 ```
 
-```
+```js
 const MAGIC_NUMBER_OFFSET = 2;
 const UNIT_SIZE = 10;
 
@@ -2668,12 +2758,14 @@ function ceiling(num: number, precision: number): number {
 
 ### setState和forceUpdate
 
-> 给节点的Fiber创建更新
-> 更新的类型不同
+::: tip
+给节点的Fiber创建更新<br/>
+更新的类型不同
+::: 
 
 #### 源码摘要
 
-```
+```js
 const classComponentUpdater = {
   isMounted,
   enqueueSetState(inst, payload, callback) {
@@ -2732,48 +2824,56 @@ const classComponentUpdater = {
   },
 };
 ```
-> 这个对象是在我们的`class component`里面，初始化的时候，会拿到的`Updater`对象
+
+::: tip
+这个对象是在我们的`class component`里面，初始化的时候，会拿到的`Updater`对象
+::: 
 
 ## React中的Scheduler
+
 ### Scheduler的整体流程图
 
-![](https://k2facq.dm.files.1drv.com/y4moYVQixfYY02TZJM_jIqaj5ynq3-40CaJedwTfjeVz3H19UKoFIhbFI5ws8RJhCE4KJk73oF_EpFnR56ylk6KI6NYxA0UBIWGNfYceY0hm06ITSqniDIRBF-7LUiut5TUfEMiFvNzepHsF7PAQR4n3uWCsofOouwaIVXuiSlA1YisHyb70dffwYh64SaeYqYC4ENuEWYqm_qjg9KDjCnoTw?width=1763&height=1694&cropmode=none)
+![An image](../assets/scheduler-fiber-scheduler.png)
 
-> 开始有三种情况ReactDOM.render,setState,forceUpdate，它们会产生一个update
-> 
-> 然后进入scheduleWork进行调度
-> 
-> 调度的第一步操作是addRootToScheduler，我们可以预想，在一个React应用中，它不止有一个root节点，addRootToScheduler的作用是维护同一时间可能会有多个root有更新存在
-> 
-> 随后进入到requestWork方法，它判断我们的expirationTime是否是Sync，如果是Sync的模式，代表我们这个更新要立马进行执行，要立马更新到最终的DOM TREE上面，所以我们要调用performSyncWork，如果不是Sync模式的，说明它的优先级不是特别高，我们会调用scheduleCallbackWithExpirationTime方法，进入一个调度的流程，因为它可以不立即更新（它的期望是在expirationTime结束之前，能够被更新完成，就可以了）
-> 
-> 进入调度流程后，首先会执行scheduleDeferredCallback，然后会有一个callbackList，因为我们可能多次调用scheduleDeferredCallback这个方法，去把callback设置进去
-> 
-> 虽然我们想要使用requestIdleCallback这个API，但由于它兼容性不好，React自己模拟了这个API
-> 
-> 我们调用了requestIdleCallback之后，说明浏览器有空了，我们可以去执行React的更新了，因为React的任务，它是有expirationTime的，所以它这里要判断下，我的任务有没有超时，如果已经超时了，我们要把在callbackList队列里面，所有已经超时的任务，都先执行掉，然后执行到第一个非超时的任务之后，如果还有时间，可以继续执行，如果没有时间了，我们要把主动权交还给浏览器
-> 
-> 最终要执行这个任务，调用的是performAsyncWork这个方法，这个方法是调用scheduleCallbackWithExpirationTime方法时，设置到React的Scheduler里面的一个回调函数。在调用performAsyncWork方法时，Scheduler会传给performAsyncWork这个方法一个deadline对象，因为进入到performAsyncWork这个方法时，就进入到React的一个更新流程，React的更新流程，会遍历整个树，会遍历每个树的每个单元，然后对它进行一个更新的操作，每个单元更新完了之后，通过这个deadline对象，判断是否还有javascript运行的一个时间片，因为React的Scheduler给每次调用performAsyncWork的任务一个时间限制，默认情况下是22毫秒，在这个时间片内，可以去执行操作
-> 
-> 调用performSyncWork执行perforWork方法时，没有deadline对象，调用performAsyncWork执行perforWork方法时，有deadline对象
-> 
-> 根据是否有deadline对象，我们会进入一个循环，这个循环就是我们要遍历整棵树，每一个Fiber节点进行更新的操作
-> 
-> 如果符合异步循环条件，进入performWorkOnRoot，找到一个最高优先级的节点之后，对这个节点进行一个更新。对于有deadline的情况，会重新请求一个时间，去判断deadline是否已经过期，如果已经过期了，又会去调用scheduleCallbackWithExpirationTime
-> 
-> 调用performWorkOnRoot之后，在renderRoot里面还会有一个循环，去判断deadline
+::: tip
+开始有三种情况ReactDOM.render,setState,forceUpdate，它们会产生一个update<br/>
 
+然后进入scheduleWork进行调度<br/>
+ 
+调度的第一步操作是addRootToScheduler，我们可以预想，在一个React应用中，它不止有一个root节点，addRootToScheduler的作用是维护同一时间可能会有多个root有更新存在<br/>
+ 
+随后进入到requestWork方法，它判断我们的expirationTime是否是Sync，如果是Sync的模式，代表我们这个更新要立马进行执行，要立马更新到最终的DOM TREE上面，所以我们要调用performSyncWork，如果不是Sync模式的，说明它的优先级不是特别高，我们会调用scheduleCallbackWithExpirationTime方法，进入一个调度的流程，因为它可以不立即更新（它的期望是在expirationTime结束之前，能够被更新完成，就可以了）<br/>
+
+进入调度流程后，首先会执行scheduleDeferredCallback，然后会有一个callbackList，因为我们可能多次调用scheduleDeferredCallback这个方法，去把callback设置进去<br/>
+ 
+虽然我们想要使用requestIdleCallback这个API，但由于它兼容性不好，React自己模拟了这个API<br/>
+ 
+我们调用了requestIdleCallback之后，说明浏览器有空了，我们可以去执行React的更新了，因为React的任务，它是有expirationTime的，所以它这里要判断下，我的任务有没有超时，如果已经超时了，我们要把在callbackList队列里面，所有已经超时的任务，都先执行掉，然后执行到第一个非超时的任务之后，如果还有时间，可以继续执行，如果没有时间了，我们要把主动权交还给浏览器<br/>
+ 
+最终要执行这个任务，调用的是performAsyncWork这个方法，这个方法是调用scheduleCallbackWithExpirationTime方法时，设置到React的Scheduler里面的一个回调函数。在调用performAsyncWork方法时，Scheduler会传给performAsyncWork这个方法一个deadline对象，因为进入到performAsyncWork这个方法时，就进入到React的一个更新流程，React的更新流程，会遍历整个树，会遍历每个树的每个单元，然后对它进行一个更新的操作，每个单元更新完了之后，通过这个deadline对象，判断是否还有javascript运行的一个时间片，因为React的Scheduler给每次调用performAsyncWork的任务一个时间限制，默认情况下是22毫秒，在这个时间片内，可以去执行操作<br/>
+ 
+调用performSyncWork执行perforWork方法时，没有deadline对象，调用performAsyncWork执行perforWork方法时，有deadline对象<br/>
+ 
+根据是否有deadline对象，我们会进入一个循环，这个循环就是我们要遍历整棵树，每一个Fiber节点进行更新的操作<br/>
+ 
+如果符合异步循环条件，进入performWorkOnRoot，找到一个最高优先级的节点之后，对这个节点进行一个更新。对于有deadline的情况，会重新请求一个时间，去判断deadline是否已经过期，如果已经过期了，又会去调用scheduleCallbackWithExpirationTime<br/>
+ 
+调用performWorkOnRoot之后，在renderRoot里面还会有一个循环，去判断deadline<br/>
+::: 
 
 
 ### scheduleWork
 
-> 找到更新对应的FiberRoot节点
-> 如果符合条件重置stack
-> 如果符合条件就请求工作调度
+
+::: tip
+找到更新对应的FiberRoot节点<br/>
+如果符合条件重置stack<br/>
+如果符合条件就请求工作调度
+:::
 
 #### 源码摘要
 
-```
+```js
 // isWorking代表着我们正在进行渲染
 let isWorking: boolean = false;
 let nextRenderExpirationTime: ExpirationTime = NoWork;
@@ -2831,9 +2931,11 @@ function scheduleWork(fiber: Fiber, expirationTime: ExpirationTime) {
   }
 }
 ```
-> markPendingPriorityLevel方法暂时忽略
+::: tip
+markPendingPriorityLevel方法暂时忽略
+:::
 
-```
+```js
 export const NoWork = 0;
 function scheduleWorkToRoot(fiber: Fiber, expirationTime): FiberRoot | null {
   recordScheduleUpdate();
@@ -2934,11 +3036,13 @@ function scheduleWorkToRoot(fiber: Fiber, expirationTime): FiberRoot | null {
   return root;
 }
 ```
-> 此函数的目的是根据我传入进来的Fiber节点，它要去向上寻找，找到对应的rootFiber对象，在找的过程中，进行一系列的操作
-> 此函数首先调用了recordScheduleUpdate方法，这个方法用来记录更新流程当中的时间的，可暂时忽略
+::: tip
+此函数的目的是根据我传入进来的Fiber节点，它要去向上寻找，找到对应的rootFiber对象，在找的过程中，进行一系列的操作<br/>
+此函数首先调用了recordScheduleUpdate方法，这个方法用来记录更新流程当中的时间的，可暂时忽略
+::: 
 
 
-```
+```js
 // nextUnitOfWork用来记录我们遍历整棵子树的时候，执行到了哪个节点的更新，就是下一个即将要更新的节点
 
 let nextUnitOfWork: Fiber | null = null;
@@ -2964,13 +3068,15 @@ function resetStack() {
 
 ### requestWork
 
-> 加入到root调度队列
-> 判断是否批量更新
-> 根据expirationTime判断调度类型
+::: tip
+加入到root调度队列<br/>
+判断是否批量更新<br/>
+根据expirationTime判断调度类型
+:::
 
 #### 源码摘要
 
-```
+```js
 let isBatchingUpdates: boolean = false;
 let isUnbatchingUpdates: boolean = false;
 
@@ -3001,7 +3107,7 @@ function requestWork(root: FiberRoot, expirationTime: ExpirationTime) {
 }
 ```
 
-```
+```js
 // lastScheduledRoot是一个全局变量，它和firstScheduledRoot是一个单向链表的结构，用来存储React应用当中的所有Root，它的一个调度的关系
 
 let firstScheduledRoot: FiberRoot | null = null;
@@ -3036,14 +3142,16 @@ function addRootToSchedule(root: FiberRoot, expirationTime: ExpirationTime) {
   }
 }
 ```
-> 主要是操控了firstScheduledRoot和lastScheduledRoot形成一个单向链表的数据结构
+::: tip
+主要是操控了firstScheduledRoot和lastScheduledRoot形成一个单向链表的数据结构
+::: 
 
 
 ### batchedUpdates
 
 #### 代码示例
 
-```
+```js
 import {unstable_batchedUpdates as batchedUpdates} from 'react-dom'
     
 export default class BatchedDemo extends React.Component{
@@ -3103,11 +3211,13 @@ export default class BatchedDemo extends React.Component{
 }
 ```
 
-> 上面例子中的handleClick是React里面的事件体系产生的一个回调，React事件体系会主动去调用batchedUpdates这种上下文情况，来帮助我们去设置这种上下文，所以在React里面，大部分的事件调用的回调，它都是会帮助我们去做批量更新的
+::: tip
+上面例子中的handleClick是React里面的事件体系产生的一个回调，React事件体系会主动去调用batchedUpdates这种上下文情况，来帮助我们去设置这种上下文，所以在React里面，大部分的事件调用的回调，它都是会帮助我们去做批量更新的
+:::
 
 #### 源码摘要
 
-```
+```js
 function batchedUpdates<A, R>(fn: (a: A) => R, a: A): R {
   const previousIsBatchingUpdates = isBatchingUpdates;
   isBatchingUpdates = true;
@@ -3122,23 +3232,30 @@ function batchedUpdates<A, R>(fn: (a: A) => R, a: A): R {
 }
 ```
 
-> setState本身的方法调用，是同步的，但是调用了setState并不标志着React的state立马就更新了，更新是要根据我们当前的执行环境的上下文来判断的，如果处于批量更新的情况下，那么state不是当前立马更新的，而不处于批量更新的情况下，那么就有可能是立马更新的
+::: tip
+setState本身的方法调用，是同步的，但是调用了setState并不标志着React的state立马就更新了，更新是要根据我们当前的执行环境的上下文来判断的，如果处于批量更新的情况下，那么state不是当前立马更新的，而不处于批量更新的情况下，那么就有可能是立马更新的
+::: 
 
 ### React Scheduler(异步调度)
-> 维护时间片
-> 模拟requestIdleCallback
-> 调度列表和超时判断
 
-> 时间片的概念
-我们要给用户一个很流畅的感觉的时候，我们至少一秒内要渲染30帧以上
-这个帧数实际上是一秒中，页面重新渲染，刷新多少次
+::: tip
+维护时间片<br/>
+模拟requestIdleCallback<br/>
+调度列表和超时判断
+:::
+
+::: tip
+时间片的概念<br/>
+我们要给用户一个很流畅的感觉的时候，我们至少一秒内要渲染30帧以上<br/>
+这个帧数实际上是一秒中，页面重新渲染，刷新多少次<br/>
 它的要求还需要是平均的每33毫秒要刷新一帧
+:::
 
 
 
 #### 源码摘要
 
-```
+```js
 // callbackExpirationTime代表我上一次去调用了React Scheduler,然后去申请了一个callback，这个callback的expirationTime
 let callbackExpirationTime: ExpirationTime = NoWork;
 
@@ -3172,9 +3289,12 @@ function scheduleCallbackWithExpirationTime(
   callbackID = scheduleDeferredCallback(performAsyncWork, {timeout});
 }
 ```
-> startRequestCallbackTimer方法可暂时忽略
 
-```
+::: tip
+startRequestCallbackTimer方法可暂时忽略
+:::
+
+```js
 // 涉及会修改currentEventStartTime的方法，在我们React DOM的平台上不会用到，或者是当前版本不会用到
 var currentEventStartTime = -1;
 var NormalPriority = 3;
@@ -3285,7 +3405,7 @@ if (hasNativePerformanceNow) {
 }
 ```
 
-```
+```js
 var isExecutingCallback = false;
 var firstCallbackNode = null;
 var isHostCallbackScheduled = false;
@@ -3306,7 +3426,7 @@ function ensureHostCallbackIsScheduled() {
 }
 ```
 
-```
+```js
 var requestHostCallback;
 var scheduledHostCallback = null;
 var timeoutTime = -1;
@@ -3327,7 +3447,7 @@ requestHostCallback = function(callback, absoluteTimeout) {
 }
 ```
 
-```
+```js
 var ANIMATION_FRAME_TIMEOUT = 100;
 var rAFID;
 var rAFTimeoutID;
@@ -3343,9 +3463,11 @@ var requestAnimationFrameWithTimeout = function(callback) {
   }, ANIMATION_FRAME_TIMEOUT);
 };
 ```
-> rAFTimeoutID是我们设置的一个timeout，如果我们的localRequestAnimationFrame一直没有调用，超过了一定的时间,它就取消这个localRequestAnimationFrame，并且直接调用
+::: tip
+rAFTimeoutID是我们设置的一个timeout，如果我们的localRequestAnimationFrame一直没有调用，超过了一定的时间,它就取消这个localRequestAnimationFrame，并且直接调用
+::: 
 
-```
+```js
 var frameDeadline = 0;
 var activeFrameTime = 33;
 var previousFrameTime = 33;
@@ -3384,9 +3506,11 @@ var animationTick = function(rafTime) {
 };
 ```
 
-> 通过requestAnimationFrame调用完callback之后，立马会进入到浏览器的动画更新的一个设定，通过`window.postMessage`给任务队列里插了一个任务，在浏览器执行完之后，就调用这个任务队列，从而模拟requestIdleCallback
+::: tip
+通过requestAnimationFrame调用完callback之后，立马会进入到浏览器的动画更新的一个设定，通过`window.postMessage`给任务队列里插了一个任务，在浏览器执行完之后，就调用这个任务队列，从而模拟requestIdleCallback
+:::
 
-```
+```js
 var isMessageEventScheduled = false;
 var scheduledHostCallback = null;
 var timeoutTime = -1;
@@ -3443,7 +3567,7 @@ var idleTick = function(event) {
 };
 ```
 
-```
+```js
 var isExecutingCallback = false;
 var isSchedulerPaused = false;
 var currentDidTimeout = false;
@@ -3504,10 +3628,12 @@ function flushWork(didTimeout) {
 }
 ```
 
-> 此函数是执行callback的流程
+::: tip
+此函数是执行callback的流程
+:::
 
 
-```
+```js
 var firstCallbackNode = null;
 
 function flushFirstCallback() {
@@ -3583,19 +3709,21 @@ function flushFirstCallback() {
 
 ### performWork
 
-> 是否有deadline的区分
-> 循环渲染Root的条件
-> 超过时间片的处理
+::: tip
+是否有deadline的区分<br/>
+循环渲染Root的条件<br/>
+超过时间片的处理
+::: 
 
 #### 源码摘要
 
-```
+```js
 function performSyncWork() {
   performWork(Sync, null);
 }
 ```
 
-```
+```js
 function performAsyncWork(dl) {
   if (dl.didTimeout) {
     // The callback timed out. That means at least one update has expired.
@@ -3629,9 +3757,11 @@ function didExpireAtExpirationTime(
   }
 }
 ```
-> recomputeCurrentRendererTime方法暂时忽略
+::: tip
+recomputeCurrentRendererTime方法暂时忽略
+::: 
 
-```
+```js
 let deadlineDidExpire: boolean = false;
 
 function performWork(minExpirationTime: ExpirationTime, dl: Deadline | null) {
@@ -3707,9 +3837,11 @@ function performWork(minExpirationTime: ExpirationTime, dl: Deadline | null) {
 }
 ```
 
-> enableUserTimingAPI可暂时忽略
+::: tip
+enableUserTimingAPI可暂时忽略
+:::
 
-```
+```js
 let lastScheduledRoot: FiberRoot | null = null;
 let nextFlushedRoot: FiberRoot | null = null;
 let nextFlushedExpirationTime: ExpirationTime = NoWork;
@@ -3782,9 +3914,11 @@ function findHighestPriorityRoot() {
   nextFlushedExpirationTime = highestPriorityWork;
 }
 ```
-> 此方法找更新优先级最高的任务所在的root节点和它的expirationTime
+::: tip
+此方法找更新优先级最高的任务所在的root节点和它的expirationTime
+:::
 
-```
+```js
 function performWorkOnRoot(
   root: FiberRoot,
   expirationTime: ExpirationTime,
@@ -3869,19 +4003,22 @@ function performWorkOnRoot(
 
 ## renderRoot
 
-> 调用workLoop进行循环单元更新
-> 捕获错误并进行处理
-> 走完流程之后进行善后
+::: tip
+调用workLoop进行循环单元更新<br/>
+捕获错误并进行处理<br/>
+走完流程之后进行善后
+::: 
 
 ### renderRoot流程图
 
-![](https://jgfacq.dm.files.1drv.com/y4mlappMlJu85m_1P4H0wcoQBX_N8AyZoYJxw5JT19hm1sJ6dsblS5ZQOmdtHtFklf3l-lRtmX1nGaw31EUda8tOy9116LJPQlOpjHMOssHTq4Xue4eIiG7MSyp5MZ0KOeWP8fxvJCOsoStnEw8rbSlDjxjdO-I9faPAUQtIklI1zA-qvENd8J8D8y8fiks23W2j3Ur-KoxYu__6fsgCbXzHA?width=1923&height=1793&cropmode=none)
+![An image](../assets/scheduler-render-root.png)
+
 
 
 #### 源码摘要
 
 
-```
+```js
 let nextUnitOfWork: Fiber | null = null;
 let nextRenderExpirationTime: ExpirationTime = NoWork;
 
@@ -4178,9 +4315,11 @@ function renderRoot(
 }
 ```
 
-> 首先会有一个while循环，这个while循环就是调用workLoop，workLoop就是对每棵树，每个节点进行一个遍历，并且拿出来单独进行更新。在workLoop的过程当中，nextUnitOfWork是每个节点在遍历的过程当中，他自己更新完之后它会返回它的第一个child，就是nextUnitOfWork。
+::: tip
+首先会有一个while循环，这个while循环就是调用workLoop，workLoop就是对每棵树，每个节点进行一个遍历，并且拿出来单独进行更新。在workLoop的过程当中，nextUnitOfWork是每个节点在遍历的过程当中，他自己更新完之后它会返回它的第一个child，就是nextUnitOfWork。
+::: 
 
-```
+```js
 function workLoop(isYieldy) {
   // 是否可以被中断
   if (!isYieldy) {
@@ -4197,7 +4336,7 @@ function workLoop(isYieldy) {
 }
 ```
 
-```
+```js
 function performUnitOfWork(workInProgress: Fiber): Fiber | null {
   // The current, flushed, state of this fiber is the alternate.
   // Ideally nothing should rely on this, but relying on it here
@@ -4240,11 +4379,13 @@ function performUnitOfWork(workInProgress: Fiber): Fiber | null {
 
 ### renderRoot中对于错误的处理
 
-给报错节点增加`Incomplete`副作用
-给父链上具有`error boundary`的节点增加副作用
+::: tip
+给报错节点增加`Incomplete`副作用<br/>
+给父链上具有`error boundary`的节点增加副作用<br/>
 创建错误相关的更新
+::: 
 
-```
+```js
 function renderRoot () {
     do {
         try {
@@ -4298,7 +4439,7 @@ function renderRoot () {
 }
 ```
 
-```
+```js
 function onUncaughtError(error: mixed) {
   invariant(
     nextFlushedRoot !== null,
@@ -4315,7 +4456,7 @@ function onUncaughtError(error: mixed) {
 }
 ```
 
-```
+```js
 function throwException(
   root: FiberRoot,
   returnFiber: Fiber,
@@ -4387,16 +4528,17 @@ function throwException(
   } while (workInProgress !== null);
 }
 ```
+::: tip
+这个方法就是往上去找第一个可以处理错误的`classComponent`来进行一个错误的`update`的创建并且让它入栈，如果都没有它会到HostRoot上进行错误处理
+:::
 
-> 这个方法就是往上去找第一个可以处理错误的`classComponent`来进行一个错误的`update`的创建并且让它入栈，如果都没有它会到HostRoot上进行错误处理
-
-```
+```js
 function renderDidError() {
   nextRenderDidError = true;
 }
 ```
 
-```
+```js
 export function createCapturedValue<T>(
   value: T,
   source: Fiber,
@@ -4411,7 +4553,7 @@ export function createCapturedValue<T>(
 }
 ```
 
-```
+```js
 export function getStackByFiberInDevAndProd(workInProgress: Fiber): string {
   let info = '';
   let node = workInProgress;
@@ -4423,7 +4565,7 @@ export function getStackByFiberInDevAndProd(workInProgress: Fiber): string {
 }
 ```
 
-```
+```js
 function createRootErrorUpdate(
   fiber: Fiber,
   errorInfo: CapturedValue<mixed>,
@@ -4448,13 +4590,15 @@ function createRootErrorUpdate(
 
 #### beginWork
 
-判断组件更新是否可以优化
-根据节点类型分发处理
+::: tip
+判断组件更新是否可以优化<br/>
+根据节点类型分发处理<br/>
 根据expirationTime等信息判断是否可以跳过
+:::
 
 ##### 源码摘要
 
-```
+```js
 function beginWork(
   current: Fiber | null,
   workInProgress: Fiber,
@@ -4709,10 +4853,12 @@ function beginWork(
 }
 ```
 
-> hasLegacyContextChanged方法暂时忽略
+::: tip
+hasLegacyContextChanged方法暂时忽略
+::: 
 
 
-```
+```js
 function bailoutOnAlreadyFinishedWork(
   current: Fiber | null,
   workInProgress: Fiber,
@@ -4753,14 +4899,16 @@ function bailoutOnAlreadyFinishedWork(
 ``` 
 
 
-> bailoutOnAlreadyFinishedWork这个方法会帮助我们跳过这个节点以及它的所有子节点的一个更新
+::: tip
+bailoutOnAlreadyFinishedWork这个方法会帮助我们跳过这个节点以及它的所有子节点的一个更新
+::: 
 
 
 #### Function Component的更新
 
 ##### 源码摘要
 
-```
+```js
 function beginWork(
     current: Fiber | null,
     workInProgress: Fiber,
@@ -4784,7 +4932,7 @@ function beginWork(
 }
 ```
 
-```
+```js
 function updateFunctionComponent(
   current,
   workInProgress,
@@ -4819,17 +4967,21 @@ function updateFunctionComponent(
 }
 ```
 
-> 首先获取了两个context，暂时忽略
+::: tip
+首先获取了两个context，暂时忽略
+:::
 
 #### reconcileChildren
 
-根据props.children生成Fiber子树
-判断Fiber对象是否可以复用
+::: tip
+根据props.children生成Fiber子树<br/>
+判断Fiber对象是否可以复用<br/>
 列表根据key优化
+::: 
 
 ##### 源码摘要
 
-```
+```js
 function reconcileChildren(
   current: Fiber | null,
   workInProgress: Fiber,
@@ -4865,12 +5017,12 @@ function reconcileChildren(
 }
 ```
 
-```
+```js
 export const reconcileChildFibers = ChildReconciler(true);
 export const mountChildFibers = ChildReconciler(false);
 ```
 
-```
+```js
 function ChildReconciler(shouldTrackSideEffects) {
   
   function placeSingleChild(newFiber: Fiber): Fiber {
@@ -5161,18 +5313,22 @@ function ChildReconciler(shouldTrackSideEffects) {
 }
 ```
 
-> 此函数最终返回了reconcileChildFibers
+::: tip
+此函数最终返回了reconcileChildFibers
+::: 
 
 
 #### reconcileChildrenArray
 
-key的作用
-对比数组children是否可复用
+::: tip
+key的作用<br/>
+对比数组children是否可复用<br/>
 generator和Array的区别
+:::
 
 ##### 源码摘要
 
-```
+```js
 function reconcileChildrenArray(
     returnFiber: Fiber,
     currentFirstChild: Fiber | null,
@@ -5332,7 +5488,7 @@ function reconcileChildrenArray(
   }
 ```
 
-```
+```js
 function updateSlot(
     returnFiber: Fiber,
     oldFiber: Fiber | null,
@@ -5416,9 +5572,11 @@ function updateSlot(
   }
 ```
 
-> 对比了新老的key是否相同，然后来查看它是否可以复用老的Fiber节点
+::: tip
+对比了新老的key是否相同，然后来查看它是否可以复用老的Fiber节点
+::: 
 
-```
+```js
 function updateTextNode(
     returnFiber: Fiber,
     current: Fiber | null,
@@ -5443,7 +5601,7 @@ function updateTextNode(
 }
 ```
 
-```
+```js
 function placeChild(
     newFiber: Fiber,
     lastPlacedIndex: number,
@@ -5475,7 +5633,7 @@ function placeChild(
 }
 ```
 
-```
+```js
 function mapRemainingChildren(
     returnFiber: Fiber,
     currentFirstChild: Fiber,
@@ -5498,7 +5656,7 @@ function mapRemainingChildren(
 }
 ```
 
-```
+```js
 function updateFromMap(
     existingChildren: Map<string | number, Fiber>,
     returnFiber: Fiber,
@@ -5578,7 +5736,7 @@ function updateFromMap(
 
 ##### 源码摘要
 
-```
+```js
 function updateClassComponent(
   current: Fiber | null,
   workInProgress: Fiber,
@@ -5657,7 +5815,7 @@ function updateClassComponent(
 }
 ```
 
-```
+```js
 function constructClassInstance(
   workInProgress: Fiber,
   ctor: any,
@@ -5699,9 +5857,11 @@ function constructClassInstance(
 }
 ```
 
-> 创建instance
+::: tip
+创建instance
+::: 
 
-```
+```js
 function adoptClassInstance(workInProgress: Fiber, instance: any): void {
   instance.updater = classComponentUpdater;
   workInProgress.stateNode = instance;
@@ -5710,7 +5870,7 @@ function adoptClassInstance(workInProgress: Fiber, instance: any): void {
 }
 ```
 
-```
+```js
 // ReactInstanceMap
 export function remove(key) {
   key._reactInternalFiber = undefined;
@@ -5729,7 +5889,7 @@ export function set(key, value) {
 }
 ```
 
-```
+```js
 function mountClassInstance(
   workInProgress: Fiber,
   ctor: any,
@@ -5807,7 +5967,7 @@ function mountClassInstance(
 }
 ```
 
-```
+```js
 export function processUpdateQueue<State>(
   workInProgress: Fiber,
   queue: UpdateQueue<State>,
@@ -5962,7 +6122,7 @@ export function processUpdateQueue<State>(
 }
 ```
 
-```
+```js
 function ensureWorkInProgressQueueIsAClone<State>(
   workInProgress: Fiber,
   queue: UpdateQueue<State>,
@@ -5979,7 +6139,7 @@ function ensureWorkInProgressQueueIsAClone<State>(
 }
 ```
 
-```
+```js
 function getStateFromUpdate<State>(
   workInProgress: Fiber,
   queue: UpdateQueue<State>,
@@ -6029,9 +6189,11 @@ function getStateFromUpdate<State>(
 }
 ```
 
-> 通过update计算出一个新的state的过程
+::: tip
+通过update计算出一个新的state的过程
+::: 
 
-```
+```js
 function resumeMountClassInstance(
   workInProgress: Fiber,
   ctor: any,
@@ -6177,7 +6339,7 @@ function resumeMountClassInstance(
 }
 ```
 
-```
+```js
 export function resetHasForceUpdateBeforeProcessing() {
   hasForceUpdate = false;
 }
@@ -6187,7 +6349,7 @@ export function checkHasForceUpdateAfterProcessing(): boolean {
 }
 ```
 
-```
+```js
 function checkShouldComponentUpdate(
   workInProgress,
   ctor,
@@ -6224,7 +6386,7 @@ function checkShouldComponentUpdate(
 
 ###### 源码摘要
 
-```
+```js
 function finishClassComponent(
   current: Fiber | null,
   workInProgress: Fiber,
@@ -6314,7 +6476,7 @@ function finishClassComponent(
 }
 ```
 
-```
+```js
 function forceUnmountCurrentAndReconcile(
   current: Fiber,
   workInProgress: Fiber,
@@ -6348,18 +6510,22 @@ function forceUnmountCurrentAndReconcile(
 }
 ```
 
-> 强制重新计算新的child 
+::: tip
+强制重新计算新的child 
+::: 
 
 
 #### IndeterminateComponent的更新
 
-对于任何一个我们写的`functional component`,它一开始就是一个`IndeterminateComponent`
+::: tip
+对于任何一个我们写的`functional component`,它一开始就是一个`IndeterminateComponent`<br/>
 
 只有在第一次渲染的时候，才会有`IndeterminateComponent`的情况
+:::
 
 ##### 代码示例
 
-```
+```js
 import React from 'react'
 
 export default function TestIndeterminateComponent() {
@@ -6376,7 +6542,7 @@ export default function TestIndeterminateComponent() {
 
 ##### 源码摘要
 
-```
+```js
 function mountIndeterminateComponent(
   _current,
   workInProgress,
@@ -6464,11 +6630,13 @@ function mountIndeterminateComponent(
 
 #### HostRoot的更新
 
+::: tip
 在一个React应用当中，它只会有一个`HostRoot`，它对应的`Fiber`对象是我们的`RootFiber`对象
+:::
 
 ##### 源码摘要
 
-```
+```js
 function updateHostRoot(current, workInProgress, renderExpirationTime) {
   pushHostRootContext(workInProgress);
   const updateQueue = workInProgress.updateQueue;
@@ -6546,11 +6714,14 @@ function updateHostRoot(current, workInProgress, renderExpirationTime) {
 
 #### HostComponent的更新
 
+
+::: tip
 DOM原生的节点（例如div，p标签这种）
+:::
 
 ##### 源码摘要
 
-```
+```js
 function updateHostComponent(current, workInProgress, renderExpirationTime) {
   pushHostContext(workInProgress);
 
@@ -6601,7 +6772,7 @@ function updateHostComponent(current, workInProgress, renderExpirationTime) {
 }
 ```
 
-```
+```js
 export function shouldSetTextContent(type: string, props: Props): boolean {
   return (
     type === 'textarea' ||
@@ -6616,9 +6787,11 @@ export function shouldSetTextContent(type: string, props: Props): boolean {
 }
 ```
 
-> 用来判断这个节点它的children是否是纯的字符串
+::: tip
+用来判断这个节点它的children是否是纯的字符串
+::: 
 
-```
+```js
 export function shouldDeprioritizeSubtree(type: string, props: Props): boolean {
   return !!props.hidden;
 }
@@ -6628,11 +6801,14 @@ export function shouldDeprioritizeSubtree(type: string, props: Props): boolean {
 
 #### HostText的更新
 
+
+::: tip
 单纯的文本节点
+:::
 
 ##### 源码摘要
 
-```
+```js
 function updateHostText(current, workInProgress) {
   if (current === null) {
     tryToClaimNextHydratableInstance(workInProgress);
@@ -6647,7 +6823,7 @@ function updateHostText(current, workInProgress) {
 
 ##### 源码摘要
 
-```
+```js
 function createPortal(
   children: ReactNodeList,
   container: DOMContainer,
@@ -6662,7 +6838,7 @@ function createPortal(
 }
 ```
 
-```
+```js
 export function createPortal(
   children: ReactNodeList,
   containerInfo: any,
@@ -6681,7 +6857,7 @@ export function createPortal(
 }
 ```
 
-```
+```js
 function ChildReconciler(shouldTrackSideEffects) {
     function reconcileSinglePortal(
         returnFiber: Fiber,
@@ -6739,7 +6915,7 @@ function ChildReconciler(shouldTrackSideEffects) {
 
 ```
 
-```
+```js
 function updatePortalComponent(
   current: Fiber | null,
   workInProgress: Fiber,
@@ -6775,7 +6951,7 @@ function updatePortalComponent(
 
 ##### 源码摘要
 
-```
+```js
 function updateForwardRef(
   current: Fiber | null,
   workInProgress: Fiber,
@@ -6820,13 +6996,15 @@ function updateForwardRef(
 ```
 
 #### Mode组件的更新 
-
+ 
+::: tip
 Mode组件都是React提供给我们的原生组件（ConCurrentmode, StrictMode）
+:::
 
 
 ##### 源码摘要
 
-```
+```js
 function updateMode(
   current: Fiber | null,
   workInProgress: Fiber,
@@ -6847,7 +7025,7 @@ function updateMode(
 
 ##### 源码摘要
 
-```
+```js
 export default function memo<Props>(
   type: React$ElementType,
   compare?: (oldProps: Props, newProps: Props) => boolean,
@@ -6870,7 +7048,7 @@ export default function memo<Props>(
 }
 ```
 
-```
+```js
 function updateMemoComponent(
   current: Fiber | null,
   workInProgress: Fiber,
@@ -6941,7 +7119,7 @@ function updateMemoComponent(
 }
 ```
 
-```
+```js
 export function isSimpleFunctionComponent(type: any) {
   return (
     typeof type === 'function' &&
@@ -6951,7 +7129,7 @@ export function isSimpleFunctionComponent(type: any) {
 }
 ```
 
-```
+```js
 function updateSimpleMemoComponent(
   current: Fiber | null,
   workInProgress: Fiber,
@@ -6990,11 +7168,13 @@ function updateSimpleMemoComponent(
 ### completeUnitOfWork
 
 
-根据是否中断调用不同的处理方法
-判断是否有兄弟节点来执行不同的操作
+::: tip
+根据是否中断调用不同的处理方法<br/>
+判断是否有兄弟节点来执行不同的操作<br/>
 完成节点之后赋值effect链
+::: 
 
-```
+```js
 function completeUnitOfWork(workInProgress: Fiber): Fiber | null {
   // Attempt to complete the current unit of work, then move to the
   // next sibling. If there are no more siblings, return to the
@@ -7159,7 +7339,7 @@ function completeUnitOfWork(workInProgress: Fiber): Fiber | null {
 }   
 ```
 
-```
+```js
 function resetChildExpirationTime(
   workInProgress: Fiber,
   renderTime: ExpirationTime,
@@ -7205,13 +7385,15 @@ function resetChildExpirationTime(
 
 #### completeWork
 
-pop各种context相关的内容
-对于HostComponent执行初始化
+::: tip
+pop各种context相关的内容<br/>
+对于HostComponent执行初始化<br/>
 初始化监听事件
+::: 
 
 ##### 源码摘要
 
-```
+```js
 function completeWork(
   current: Fiber | null,
   workInProgress: Fiber,
@@ -7415,13 +7597,13 @@ function completeWork(
 ```
 
 
-```
+```js
 updateHostContainer = function(workInProgress: Fiber) {
     // Noop
 };
 ```
 
-```
+```js
 export function createInstance(
   type: string,
   props: Props,
@@ -7446,7 +7628,7 @@ export function createInstance(
 }
 ```
 
-```
+```js
 export function createElement(
   type: string,
   props: Object,
@@ -7501,7 +7683,7 @@ export function createElement(
 }
 ```
 
-```
+```js
 function getOwnerDocumentFromRootContainer(
   rootContainerElement: Element | Document,
 ): Document {
@@ -7511,20 +7693,20 @@ function getOwnerDocumentFromRootContainer(
 }
 ```
 
-```
+```js
 export function precacheFiberNode(hostInst, node) {
   node[internalInstanceKey] = hostInst;
 }
 ```
 
-```
+```js
 export function updateFiberProps(node, props) {
   node[internalEventHandlersKey] = props;
 }
 ```
 
 
-```
+```js
 appendAllChildren = function(
     parent: Instance,
     workInProgress: Fiber,
@@ -7561,9 +7743,11 @@ appendAllChildren = function(
 };
 ```
 
-> 这个方法只会把它找到的所有子素当中的第一层DOM节点或者Text节点给它`append`到自己上面，而不会对它的嵌套的DOM节点去进行一个`append`的操作
+::: tip
+这个方法只会把它找到的所有子素当中的第一层DOM节点或者Text节点给它`append`到自己上面，而不会对它的嵌套的DOM节点去进行一个`append`的操作
+::: 
 
-```
+```js
 export function appendInitialChild(
   parentInstance: Instance,
   child: Instance | TextInstance,
@@ -7572,7 +7756,7 @@ export function appendInitialChild(
 }
 ```
 
-```
+```js
 export function finalizeInitialChildren(
   domElement: Instance,
   type: string,
@@ -7585,7 +7769,7 @@ export function finalizeInitialChildren(
 }
 ```
 
-```
+```js
 export function setInitialProperties(
   domElement: Element,
   tag: string,
@@ -7702,7 +7886,7 @@ export function setInitialProperties(
 }
 ```
 
-```
+```js
 function setInitialDOMProperties(
   tag: string,
   domElement: Element,
@@ -7765,7 +7949,7 @@ function setInitialDOMProperties(
 }
 ```
 
-```
+```js
 function shouldAutoFocusHostComponent(type: string, props: Props): boolean {
   switch (type) {
     case 'button':
@@ -7781,12 +7965,14 @@ function shouldAutoFocusHostComponent(type: string, props: Props): boolean {
 
 ##### updateHostComponent
 
-diffProperties计算需要更新的内容
+::: tip
+diffProperties计算需要更新的内容<br/>
 不同的dom property处理方式不同
+::: 
 
 ###### 源码摘要
 
-```
+```js
 updateHostComponent = function(
     current: Fiber,
     workInProgress: Fiber,
@@ -7830,7 +8016,7 @@ updateHostComponent = function(
 };
 ```
 
-```
+```js
 export function prepareUpdate(
   domElement: Instance,
   type: string,
@@ -7849,7 +8035,7 @@ export function prepareUpdate(
 }
 ```
 
-```
+```js
 export function diffProperties(
   domElement: Element,
   tag: string,
@@ -8042,13 +8228,15 @@ export function diffProperties(
 
 #### unwindWork
 
-类似completeWork对不同类型组件进行处理
+::: tip
+类似completeWork对不同类型组件进行处理<br/>
 对于ShouldCapture组件设置DidCapture副作用
+::: 
 
 
 ##### 源码摘要
 
-```
+```js
 function unwindWork(
   workInProgress: Fiber,
   renderExpirationTime: ExpirationTime,
@@ -8135,7 +8323,7 @@ function unwindWork(
 ### 源码摘要
 
 
-```
+```js
 function commitRoot(root: FiberRoot, finishedWork: Fiber): void {
   isWorking = true;
   isCommitting = true;
@@ -8365,7 +8553,7 @@ function commitRoot(root: FiberRoot, finishedWork: Fiber): void {
 
 #### 源码摘要
 
-```
+```js
 let hasError: boolean = false;
 let caughtError: mixed = null;
 
@@ -8395,7 +8583,7 @@ export function invokeGuardedCallback<A, B, C, D, E, F, Context>(
 ```
 
 
-```
+```js
 let invokeGuardedCallbackImpl = function<A, B, C, D, E, F, Context>(
   name: string | null,
   func: (a: A, b: B, c: C, d: D, e: E, f: F) => mixed,
@@ -8416,7 +8604,7 @@ let invokeGuardedCallbackImpl = function<A, B, C, D, E, F, Context>(
 };
 ```
 
-```
+```js
 if (
     typeof window !== 'undefined' &&
     typeof window.dispatchEvent === 'function' &&
@@ -8585,13 +8773,15 @@ if (
 
 ### commitBeforeMutationLifeCycles
 
+::: tip
 获取状态快照，用于componentDidUpdate
+::: 
 
 
 #### 源码摘要
 
 
-```
+```js
 function commitBeforeMutationLifecycles() {
   while (nextEffect !== null) {
 
@@ -8610,7 +8800,7 @@ function commitBeforeMutationLifecycles() {
 }
 ```
 
-```
+```js
 function commitBeforeMutationLifeCycles(
   current: Fiber | null,
   finishedWork: Fiber,
@@ -8657,7 +8847,7 @@ function commitBeforeMutationLifeCycles(
 
 #### 源码摘要
 
-```
+```js
 function commitAllHostEffects() {
   while (nextEffect !== null) {
     recordEffect();
@@ -8720,7 +8910,7 @@ function commitAllHostEffects() {
 }
 ```
 
-```
+```js
 function commitResetTextContent(current: Fiber) {
   if (!supportsMutation) {
     return;
@@ -8729,13 +8919,13 @@ function commitResetTextContent(current: Fiber) {
 }
 ```
 
-```
+```js
 export function resetTextContent(domElement: Instance): void {
   setTextContent(domElement, '');
 }
 ```
 
-```
+```js
 let setTextContent = function(node: Element, text: string): void {
   if (text) {
     let firstChild = node.firstChild;
@@ -8757,7 +8947,7 @@ let setTextContent = function(node: Element, text: string): void {
 
 ##### 源码摘要
 
-```
+```js
 function commitPlacement(finishedWork: Fiber): void {
   if (!supportsMutation) {
     return;
@@ -8840,7 +9030,7 @@ function commitPlacement(finishedWork: Fiber): void {
 }
 ```
 
-```
+```js
 function getHostParentFiber(fiber: Fiber): Fiber {
   let parent = fiber.return;
   while (parent !== null) {
@@ -8857,7 +9047,7 @@ function getHostParentFiber(fiber: Fiber): Fiber {
 }
 ```
 
-```
+```js
 function isHostParent(fiber: Fiber): boolean {
   return (
     fiber.tag === HostComponent ||
@@ -8867,7 +9057,7 @@ function isHostParent(fiber: Fiber): boolean {
 }
 ```
 
-```
+```js
 function getHostSibling(fiber: Fiber): ?Instance {
   // We're going to search forward into the tree until we find a sibling host
   // node. Unfortunately, if multiple insertions are done in a row we have to
@@ -8916,7 +9106,7 @@ function getHostSibling(fiber: Fiber): ?Instance {
 
 ##### 源码摘要
 
-```
+```js
 function commitWork(current: Fiber | null, finishedWork: Fiber): void {
   if (!supportsMutation) {
     commitContainer(finishedWork);
@@ -8992,7 +9182,7 @@ function commitWork(current: Fiber | null, finishedWork: Fiber): void {
 }
 ```
 
-```
+```js
 export function commitUpdate(
   domElement: Instance,
   updatePayload: Array<mixed>,
@@ -9009,13 +9199,13 @@ export function commitUpdate(
 }
 ```
 
-```
+```js
 export function updateFiberProps(node, props) {
   node[internalEventHandlersKey] = props;
 }
 ```
 
-```
+```js
 export function updateProperties(
   domElement: Element,
   updatePayload: Array<any>,
@@ -9065,7 +9255,7 @@ export function updateProperties(
 }
 ```
 
-```
+```js
 function isCustomComponent(tagName: string, props: Object) {
   if (tagName.indexOf('-') === -1) {
     return typeof props.is === 'string';
@@ -9090,7 +9280,7 @@ function isCustomComponent(tagName: string, props: Object) {
 }
 ```
 
-```
+```js
 function updateDOMProperties(
   domElement: Element,
   updatePayload: Array<any>,
@@ -9121,15 +9311,17 @@ function updateDOMProperties(
 
 #### Deletion
 
-遍历子树
-卸载ref
+::: tip
+遍历子树<br/>
+卸载ref<br/>
 如果有组件调用componentWillUnmount
+::: 
 
 
 
 ##### 源码摘要
 
-```
+```js
 function commitDeletion(current: Fiber): void {
   if (supportsMutation) {
     // Recursively delete all host nodes from the parent.
@@ -9143,7 +9335,7 @@ function commitDeletion(current: Fiber): void {
 }
 ```
 
-```
+```js
 function unmountHostComponents(current): void {
   // We only have the top Fiber that was deleted but we need recurse down its
   // children to find all the terminal nodes.
@@ -9235,11 +9427,13 @@ function unmountHostComponents(current): void {
 }
 ```
 
-> 找到所有的HostComponent来调用commitNestedUnmounts
+::: tip
+找到所有的HostComponent来调用commitNestedUnmounts
+::: 
 
 
 
-```
+```js
 function commitNestedUnmounts(root: Fiber): void {
   // While we're inside a removed host node we don't want to call
   // removeChild on the inner nodes because they're removed by the top
@@ -9277,7 +9471,7 @@ function commitNestedUnmounts(root: Fiber): void {
 }
 ```
 
-```
+```js
 function commitUnmount(current: Fiber): void {
   onCommitUnmount(current);
 
@@ -9314,7 +9508,7 @@ function commitUnmount(current: Fiber): void {
 
 #### 源码摘要
 
-```
+```js
 function commitAllLifeCycles(
   finishedRoot: FiberRoot,
   committedExpirationTime: ExpirationTime,
@@ -9353,7 +9547,7 @@ function commitAllLifeCycles(
 ```
 
 
-```
+```js
 function commitLifeCycles(
   finishedRoot: FiberRoot,
   current: Fiber | null,
@@ -9527,7 +9721,7 @@ function commitLifeCycles(
 }
 ```
 
-```
+```js
 export function commitUpdateQueue<State>(
   finishedWork: Fiber,
   finishedQueue: UpdateQueue<State>,
@@ -9559,7 +9753,7 @@ export function commitUpdateQueue<State>(
 ```
 
 
-```
+```js
 function commitUpdateEffects<State>(
   effect: Update<State> | null,
   instance: any,
@@ -9575,7 +9769,7 @@ function commitUpdateEffects<State>(
 }
 ```
 
-```
+```js
 function callCallback(callback, context) {
   invariant(
     typeof callback === 'function',
@@ -9594,7 +9788,7 @@ function callCallback(callback, context) {
 
 #### 在beginWork的流程中
 
-```
+```js
 function updateHostRoot(current, workInProgress, renderExpirationTime) {
     pushHostRootContext(workInProgress);
     const updateQueue = workInProgress.updateQueue;
@@ -9669,7 +9863,7 @@ function updateHostRoot(current, workInProgress, renderExpirationTime) {
 }
 ```
 
-```
+```js
 let hydrationParentFiber: null | Fiber = null;
 let nextHydratableInstance: null | HydratableInstance = null;
 let isHydrating: boolean = false;
@@ -9688,7 +9882,7 @@ function enterHydrationState(fiber: Fiber): boolean {
 }
 ```
 
-```
+```js
 export function getFirstHydratableChild(
   parentInstance: Container | Instance,
 ): null | Instance | TextInstance {
@@ -9705,7 +9899,7 @@ export function getFirstHydratableChild(
 }
 ```
 
-```
+```js
 function updateHostComponent(current, workInProgress, renderExpirationTime) {
     ...省略
     if (current === null) {
@@ -9715,7 +9909,7 @@ function updateHostComponent(current, workInProgress, renderExpirationTime) {
 }
 ```
 
-```
+```js
 function tryToClaimNextHydratableInstance(fiber: Fiber): void {
   if (!isHydrating) {
     return;
@@ -9755,13 +9949,13 @@ function tryToClaimNextHydratableInstance(fiber: Fiber): void {
 }
 ```
 
-```
+```js
 function insertNonHydratedInstance(returnFiber: Fiber, fiber: Fiber) {
   fiber.effectTag |= Placement;
 }
 ```
 
-```
+```js
 function tryHydrate(fiber, nextInstance) {
   switch (fiber.tag) {
     case HostComponent: {
@@ -9789,7 +9983,7 @@ function tryHydrate(fiber, nextInstance) {
 }
 ```
 
-```
+```js
 export function canHydrateInstance(
   instance: Instance | TextInstance,
   type: string,
@@ -9806,7 +10000,7 @@ export function canHydrateInstance(
 }
 ```
 
-```
+```js
 export function canHydrateTextInstance(
   instance: Instance | TextInstance,
   text: string,
@@ -9822,7 +10016,7 @@ export function canHydrateTextInstance(
 
 #### 在completeWork的流程中
 
-```
+```js
 function completeWork(
   current: Fiber | null,
   workInProgress: Fiber,
@@ -9870,7 +10064,7 @@ function completeWork(
 }
 ```
 
-```
+```js
 function popHydrationState(fiber: Fiber): boolean {
   if (!supportsHydration) {
     return false;
@@ -9917,7 +10111,7 @@ function popHydrationState(fiber: Fiber): boolean {
 }
 ```
 
-```
+```js
 export function shouldSetTextContent(type: string, props: Props): boolean {
   return (
     type === 'textarea' ||
@@ -9932,7 +10126,7 @@ export function shouldSetTextContent(type: string, props: Props): boolean {
 }
 ```
 
-```
+```js
 function deleteHydratableInstance(
     returnFiber: Fiber,
     instance: HydratableInstance,
@@ -9957,7 +10151,7 @@ function deleteHydratableInstance(
 }
 ```
 
-```
+```js
 export function createFiberFromHostInstanceForDeletion(): Fiber {
   const fiber = createFiber(HostComponent, null, null, NoContext);
   // TODO: These should not need a type.
@@ -9967,7 +10161,7 @@ export function createFiberFromHostInstanceForDeletion(): Fiber {
 }
 ```
 
-```
+```js
 function prepareToHydrateHostInstance(
   fiber: Fiber,
   rootContainerInstance: Container,
@@ -10001,7 +10195,7 @@ function prepareToHydrateHostInstance(
 }
 ```
 
-```
+```js
 export function hydrateInstance(
   instance: Instance,
   type: string,
@@ -10034,21 +10228,25 @@ export function hydrateInstance(
 
 ### 平台插件注入
 
-确定插件注入顺序
-注入插件模块
+::: tip
+确定插件注入顺序<br/>
+注入插件模块<br/>
 计算registrationNameModules等属性
+::: 
 
 #### 源码摘要
 
-```
+```js
 // ReactDOM.js
 import './ReactDOMClientInjection';
 ```
 
-> 这个模块就是来执行事件模块的注入的
+::: tip
+这个模块就是来执行事件模块的注入的
+::: 
 
 
-```
+```js
 import * as EventPluginHub from 'events/EventPluginHub';
 import * as EventPluginUtils from 'events/EventPluginUtils';
 
@@ -10087,7 +10285,7 @@ EventPluginHub.injection.injectEventPluginsByName({
 });
 ```
 
-```
+```js
 const DOMEventPluginOrder = [
   'ResponderEventPlugin',
   'SimpleEventPlugin',
@@ -10100,7 +10298,7 @@ const DOMEventPluginOrder = [
 export default DOMEventPluginOrder;
 ```
 
-```
+```js
 export const injection = {
   /**
    * @param {array} InjectedEventPluginOrder
@@ -10117,7 +10315,7 @@ export const injection = {
 
 ##### injectEventPluginOrder
 
-```
+```js
 let eventPluginOrder: EventPluginOrder = null;
 
 export function injectEventPluginOrder(
@@ -10134,7 +10332,7 @@ export function injectEventPluginOrder(
 }
 ```
 
-```
+```js
 const namesToPlugins: NamesToPlugins = {};
 const plugins = [];
 
@@ -10181,7 +10379,7 @@ function recomputePluginOrdering(): void {
 
 ###### 插件示例
 
-```
+```js
 const eventTypes = {
   change: {
     phasedRegistrationNames: {
@@ -10217,7 +10415,7 @@ const ChangeEventPlugin = {
 export default ChangeEventPlugin;
 ```
 
-```
+```js
 export const eventNameDispatchConfigs = {};
 
 // dispatchConfig为ChangeEventPlugin.eventTypes.change
@@ -10264,7 +10462,7 @@ function publishEventForPlugin(
 }
 ```
 
-```
+```js
 export const registrationNameModules = {};
 export const registrationNameDependencies = {};
 
@@ -10292,7 +10490,7 @@ function publishRegistrationName(
 
 ##### injectEventPluginsByName
 
-```
+```js
 const namesToPlugins: NamesToPlugins = {};
 
 export function injectEventPluginsByName(
@@ -10328,7 +10526,7 @@ export function injectEventPluginsByName(
 
 #### 源码摘要
 
-```
+```js
 function completeWork(
   current: Fiber | null,
   workInProgress: Fiber,
@@ -10384,7 +10582,7 @@ function completeWork(
 }
 ```
 
-```
+```js
 export function finalizeInitialChildren(
   domElement: Instance,
   type: string,
@@ -10397,7 +10595,7 @@ export function finalizeInitialChildren(
 }
 ```
 
-```
+```js
 export function setInitialProperties(
     domElement: Element,
     tag: string,
@@ -10422,7 +10620,7 @@ export function setInitialProperties(
 }
 ```
 
-```
+```js
 function setInitialDOMProperties(
     tag: string,
     domElement: Element,
@@ -10450,7 +10648,7 @@ function setInitialDOMProperties(
 }
 ```
 
-```
+```js
 function ensureListeningTo(rootContainerElement, registrationName) {
   const isDocumentOrFragment =
     rootContainerElement.nodeType === DOCUMENT_NODE ||
@@ -10462,7 +10660,7 @@ function ensureListeningTo(rootContainerElement, registrationName) {
 }
 ```
 
-```
+```js
 export const mediaEventTypes = [
   TOP_ABORT,
   TOP_CAN_PLAY,
@@ -10539,7 +10737,7 @@ export function listenTo(
 }
 ```
 
-```
+```js
 const topListenersIDKey = '_reactListenersID' + ('' + Math.random()).slice(2);
 const alreadyListeningTo = {};
 let reactTopListenersCounter = 0;
@@ -10555,7 +10753,7 @@ function getListeningForDocument(mountAt: any) {
 }
 ```
 
-```
+```js
 export function trapBubbledEvent(
   topLevelType: DOMTopLevelEventType,
   element: Document | Element,
@@ -10576,7 +10774,7 @@ export function trapBubbledEvent(
 }
 ```
 
-```
+```js
 export function addEventBubbleListener(
   element: Document | Element,
   eventType: string,
@@ -10591,7 +10789,7 @@ export function addEventBubbleListener(
 #### 源码摘要
 
 
-```
+```js
 // nativeEvent就是我们事件触发的时候，我们的DOM的事件体系会给我们一个Event对象
 function dispatchInteractiveEvent(topLevelType, nativeEvent) {
   interactiveUpdates(dispatchEvent, topLevelType, nativeEvent);
@@ -10606,7 +10804,7 @@ let _interactiveUpdatesImpl = function(fn, a, b) {
 };
 ```
 
-```
+```js
 export function dispatchEvent(
   topLevelType: DOMTopLevelEventType,
   nativeEvent: AnyNativeEvent,
@@ -10647,7 +10845,7 @@ export function dispatchEvent(
 }
 ```
 
-```
+```js
 function getEventTarget(nativeEvent) {
   // Fallback to nativeEvent.srcElement for IE9
   // https://github.com/facebook/react/issues/12506
@@ -10665,7 +10863,7 @@ function getEventTarget(nativeEvent) {
 ```
 
 
-```
+```js
 export function getClosestInstanceFromNode(node) {
   if (node[internalInstanceKey]) {
     return node[internalInstanceKey];
@@ -10691,7 +10889,7 @@ export function getClosestInstanceFromNode(node) {
 }
 ```
 
-```
+```js
 export function isFiberMounted(fiber: Fiber): boolean {
   return isFiberMountedImpl(fiber) === MOUNTED;
 }
@@ -10726,7 +10924,7 @@ function isFiberMountedImpl(fiber: Fiber): number {
 }
 ```
 
-```
+```js
 const callbackBookkeepingPool = [];
 
 function getTopLevelCallbackBookKeeping(
@@ -10755,7 +10953,7 @@ function getTopLevelCallbackBookKeeping(
 }
 ```
 
-```
+```js
 let isBatching = false;
 let _batchedUpdatesImpl = function(fn, bookkeeping) {
   return fn(bookkeeping);
@@ -10789,7 +10987,7 @@ export function batchedUpdates(fn, bookkeeping) {
 }
 ```
 
-```
+```js
 function handleTopLevel(bookKeeping) {
   let targetInst = bookKeeping.targetInst;
 
@@ -10823,7 +11021,7 @@ function handleTopLevel(bookKeeping) {
 }
 ```
 
-```
+```js
 function findRootContainerNode(inst) {
   // TODO: It may be a good idea to cache this to prevent unnecessary DOM
   // traversal, but caching is difficult to do correctly without using a
@@ -10839,7 +11037,7 @@ function findRootContainerNode(inst) {
 }
 ```
 
-```
+```js
 export function runExtractedEventsInBatch(
   topLevelType: TopLevelType,
   targetInst: null | Fiber,
@@ -10857,7 +11055,7 @@ export function runExtractedEventsInBatch(
 }
 ```
 
-```
+```js
 let eventQueue: ?(Array<ReactSyntheticEvent> | ReactSyntheticEvent) = null;
 
 export function runEventsInBatch(
@@ -10898,7 +11096,7 @@ export function runEventsInBatch(
 }
 ```
 
-```
+```js
 function accumulateInto<T>(
   current: ?(Array<T> | T),
   next: T | Array<T>,
@@ -10932,7 +11130,7 @@ function accumulateInto<T>(
 }
 ```
 
-```
+```js
 function forEachAccumulated<T>(
   arr: ?(Array<T> | T),
   cb: (elem: T) => void,
@@ -10947,7 +11145,7 @@ function forEachAccumulated<T>(
 ```
 
 
-```
+```js
 const executeDispatchesAndReleaseTopLevel = function(e) {
   return executeDispatchesAndRelease(e, false);
 };
@@ -10967,7 +11165,7 @@ const executeDispatchesAndRelease = function(
 
 ```
 
-```
+```js
 export function executeDispatchesInOrder(event, simulated) {
   const dispatchListeners = event._dispatchListeners;
   const dispatchInstances = event._dispatchInstances;
@@ -10992,7 +11190,7 @@ export function executeDispatchesInOrder(event, simulated) {
 }
 ```
 
-```
+```js
 export let getNodeFromInstance = null;
 
 function executeDispatch(event, simulated, listener, inst) {
@@ -11007,7 +11205,7 @@ function executeDispatch(event, simulated, listener, inst) {
 
 #### 源码摘要
 
-```
+```js
 function extractEvents(
   topLevelType: TopLevelType,
   targetInst: null | Fiber,
@@ -11034,7 +11232,7 @@ function extractEvents(
 }
 ```
 
-```
+```js
 
 const ChangeEventPlugin = {
   eventTypes: eventTypes,
@@ -11091,7 +11289,7 @@ export default ChangeEventPlugin;
 ```
 
 
-```
+```js
 function shouldUseChangeEvent(elem) {
   const nodeName = elem.nodeName && elem.nodeName.toLowerCase();
   return (
@@ -11106,7 +11304,7 @@ function getTargetInstForChangeEvent(topLevelType, targetInst) {
 }
 ```
 
-```
+```js
 const supportedInputTypes: {[key: string]: true | void} = {
   color: true,
   date: true,
@@ -11141,7 +11339,7 @@ function isTextInputElement(elem: ?HTMLElement): boolean {
 }
 ```
 
-```
+```js
 function getTargetInstForInputOrChangeEvent(topLevelType, targetInst) {
   if (topLevelType === TOP_INPUT || topLevelType === TOP_CHANGE) {
     return getInstIfValueChanged(targetInst);
@@ -11149,7 +11347,7 @@ function getTargetInstForInputOrChangeEvent(topLevelType, targetInst) {
 }
 ```
 
-```
+```js
 function shouldUseClickEvent(elem) {
   // Use the `click` event to detect changes to checkbox and radio inputs.
   // This approach works across all browsers, whereas `change` does not fire
@@ -11169,7 +11367,7 @@ function getTargetInstForClickEvent(topLevelType, targetInst) {
 }
 ```
 
-```
+```js
 function getInstIfValueChanged(targetInst) {
   const targetNode = getNodeFromInstance(targetInst);
   if (inputValueTracking.updateValueIfChanged(targetNode)) {
@@ -11178,7 +11376,7 @@ function getInstIfValueChanged(targetInst) {
 }
 ```
 
-```
+```js
 function createAndAccumulateChangeEvent(inst, nativeEvent, target) {
   const event = SyntheticEvent.getPooled(
     eventTypes.change,
@@ -11195,7 +11393,7 @@ function createAndAccumulateChangeEvent(inst, nativeEvent, target) {
 ```
 
 
-```
+```js
 // SyntheticEvent.getPooled
 function getPooledEvent(dispatchConfig, targetInst, nativeEvent, nativeInst) {
   const EventConstructor = this;
@@ -11219,7 +11417,7 @@ function getPooledEvent(dispatchConfig, targetInst, nativeEvent, nativeInst) {
 }
 ```
 
-```
+```js
 export function enqueueStateRestore(target: EventTarget): void {
   if (restoreTarget) {
     if (restoreQueue) {
@@ -11233,10 +11431,12 @@ export function enqueueStateRestore(target: EventTarget): void {
 }
 ```
 
-> 此函数的意义是，如果我们setState之后，state对应的input的value是不一样的，我们要把值进行一个回滚
+::: tip
+此函数的意义是，如果我们setState之后，state对应的input的value是不一样的，我们要把值进行一个回滚
+::: 
 
 
-```
+```js
 export function accumulateTwoPhaseDispatches(events) {
   forEachAccumulated(events, accumulateTwoPhaseDispatchesSingle);
 }
@@ -11260,7 +11460,7 @@ function accumulateTwoPhaseDispatchesSingle(event) {
 }
 ```
 
-```
+```js
 export function traverseTwoPhase(inst, fn, arg) {
   const path = [];
   while (inst) {
@@ -11277,7 +11477,7 @@ export function traverseTwoPhase(inst, fn, arg) {
 }
 ```
 
-```
+```js
 function accumulateDirectionalDispatches(inst, phase, event) {
   const listener = listenerAtPhase(inst, event, phase);
   if (listener) {
@@ -11290,7 +11490,7 @@ function accumulateDirectionalDispatches(inst, phase, event) {
 }
 ```
 
-```
+```js
 function listenerAtPhase(inst, event, propagationPhase: PropagationPhases) {
   const registrationName =
     event.dispatchConfig.phasedRegistrationNames[propagationPhase];
@@ -11331,7 +11531,7 @@ export function getListener(inst: Fiber, registrationName: string) {
 #### 源码摘要
 
 
-```
+```js
 ReactGenericBatching.setBatchingImplementation(
   DOMRenderer.batchedUpdates,
   DOMRenderer.interactiveUpdates,
@@ -11354,7 +11554,7 @@ export function setBatchingImplementation(
 
 ### 源码摘要
 
-```
+```js
 export function useState<S>(
   initialState: (() => S) | S,
 ): [S, Dispatch<BasicStateAction<S>>] {
@@ -11381,7 +11581,7 @@ const ReactCurrentOwner = {
 };
 ```
 
-```
+```js
 function renderRoot(root: FiberRoot, isYieldy: boolean): void {
     invariant(
         !isWorking,
@@ -11402,7 +11602,7 @@ function renderRoot(root: FiberRoot, isYieldy: boolean): void {
 }
 ```
 
-```
+```js
 import {
   useCallback,
   useContext,
@@ -11429,7 +11629,7 @@ export const Dispatcher = {
 };
 ```
 
-```
+```js
 function updateFunctionComponent(
     current,
     workInProgress,
@@ -11462,7 +11662,7 @@ function updateFunctionComponent(
 }
 ```
 
-```
+```js
 export function prepareToUseHooks(
   current: Fiber | null,
   workInProgress: Fiber,
@@ -11489,7 +11689,7 @@ export function prepareToUseHooks(
 }
 ```
 
-```
+```js
 export function finishHooks(
   Component: any,
   props: any,
@@ -11565,7 +11765,7 @@ export function finishHooks(
 ##### 源码摘要
 
 
-```
+```js
 export function useState<S>(
   initialState: (() => S) | S,
 ): [S, Dispatch<BasicStateAction<S>>] {
@@ -11582,7 +11782,7 @@ function basicStateReducer<S>(state: S, action: BasicStateAction<S>): S {
 ```
 
 
-```
+```js
 let workInProgressHook: Hook | null = null;
 let currentlyRenderingFiber: Fiber | null = null;
 
@@ -11718,7 +11918,7 @@ export function useReducer<S, A>(
 }
 ```
 
-```
+```js
 let currentlyRenderingFiber: Fiber | null = null;
 
 function resolveCurrentlyRenderingFiber(): Fiber {
@@ -11730,7 +11930,7 @@ function resolveCurrentlyRenderingFiber(): Fiber {
 }
 ```
 
-```
+```js
 let firstWorkInProgressHook: Hook | null = null;
 let isReRender: boolean = false;
 let currentHook: Hook | null = null;
@@ -11786,7 +11986,7 @@ function createWorkInProgressHook(): Hook {
 }
 ```
 
-```
+```js
 function createHook(): Hook {
   return {
     memoizedState: null,
@@ -11800,7 +12000,7 @@ function createHook(): Hook {
 }
 ```
 
-```
+```js
 function dispatchAction<A>(fiber: Fiber, queue: UpdateQueue<A>, action: A) {
   invariant(
     numberOfReRenders < RE_RENDER_LIMIT,
@@ -11869,7 +12069,7 @@ function dispatchAction<A>(fiber: Fiber, queue: UpdateQueue<A>, action: A) {
 
 ##### 源码摘要
 
-```
+```js
 export function useEffect(
   create: () => mixed,
   inputs: Array<mixed> | void | null,
@@ -11883,7 +12083,7 @@ export function useEffect(
 }
 ```
 
-```
+```js
 export const UnmountMutation = /*      */ 0b00000100;
 export const MountLayout = /*          */ 0b00100000;
 
@@ -11896,7 +12096,7 @@ export function useLayoutEffect(
 }
 ```
 
-```
+```js
 let currentHook: Hook | null = null;
 
 function useEffectImpl(fiberEffectTag, hookEffectTag, create, inputs): void {
@@ -11925,7 +12125,7 @@ function useEffectImpl(fiberEffectTag, hookEffectTag, create, inputs): void {
 }
 ```
 
-```
+```js
 export default function areHookInputsEqual(arr1: any[], arr2: any[]) {
     // Don't bother comparing lengths in prod because these arrays should be
     // passed inline.
@@ -11946,7 +12146,7 @@ export default function areHookInputsEqual(arr1: any[], arr2: any[]) {
 }
 ```
 
-```
+```js
 let componentUpdateQueue: FunctionComponentUpdateQueue | null = null;
 
 function pushEffect(tag, create, destroy, inputs) {
@@ -11982,7 +12182,7 @@ function createFunctionComponentUpdateQueue(): FunctionComponentUpdateQueue {
 }
 ```
 
-```
+```js
 function commitRoot(root: FiberRoot, finishedWork: Fiber): void {
     ...省略
     while (nextEffect !== null) {
@@ -12089,7 +12289,7 @@ function commitRoot(root: FiberRoot, finishedWork: Fiber): void {
 ```
 
 
-```
+```js
 function commitHookEffectList(
   unmountTag: number,
   mountTag: number,
@@ -12129,7 +12329,7 @@ function commitHookEffectList(
 
 ##### commitBeforeMutationLifecycles
 
-```
+```js
 function commitBeforeMutationLifeCycles(
   current: Fiber | null,
   finishedWork: Fiber,
@@ -12146,12 +12346,14 @@ function commitBeforeMutationLifeCycles(
 }
 ```
 
-> 这个方法调用commitHookEffectList，不会执行它的destroy和create
+::: tip
+这个方法调用commitHookEffectList，不会执行它的destroy和create
+:::
 
 
 ##### commitAllHostEffects
 
-```
+```js
 function commitAllHostEffects() {
     while (nextEffect !== null) {
       
@@ -12213,7 +12415,7 @@ function commitAllHostEffects() {
 }
 ```
 
-```
+```js
 function commitWork(current: Fiber | null, finishedWork: Fiber): void {
     if (!supportsMutation) {
       switch (finishedWork.tag) {
@@ -12247,12 +12449,14 @@ function commitWork(current: Fiber | null, finishedWork: Fiber): void {
 }
 ```
 
-> 这个方法调用commitHookEffectList，会执行它的destroy，但是不会执行create
+::: tip
+这个方法调用commitHookEffectList，会执行它的destroy，但是不会执行create
+::: 
 
 
 ##### commitAllLifeCycles
 
-```
+```js
 function commitAllLifeCycles(
     finishedRoot: FiberRoot,
     committedExpirationTime: ExpirationTime,
@@ -12287,7 +12491,7 @@ function commitAllLifeCycles(
 }
 ```
 
-```
+```js
 function commitLifeCycles(
     finishedRoot: FiberRoot,
     current: Fiber | null,
@@ -12311,7 +12515,7 @@ function commitLifeCycles(
 
 ##### commitPassiveEffects
 
-```
+```js
 function commitPassiveEffects(root: FiberRoot, firstEffect: Fiber): void {
   rootWithPendingPassiveEffects = null;
   passiveEffectCallbackHandle = null;
@@ -12352,14 +12556,16 @@ function commitPassiveEffects(root: FiberRoot, firstEffect: Fiber): void {
 }
 ```
 
-```
+```js
 export function commitPassiveHookEffects(finishedWork: Fiber): void {
   commitHookEffectList(UnmountPassive, NoHookEffect, finishedWork);
   commitHookEffectList(NoHookEffect, MountPassive, finishedWork);
 }
 ```
 
-> 这个方法第一次调用commitHookEffectList，只会执行它的destroy，第二次调用，只会执行它的create
+::: tip
+这个方法第一次调用commitHookEffectList，只会执行它的destroy，第二次调用，只会执行它的create
+::: 
 
 
 
@@ -12367,7 +12573,7 @@ export function commitPassiveHookEffects(finishedWork: Fiber): void {
 
 ##### 源码摘要
 
-```
+```js
 export function useContext<T>(
   context: ReactContext<T>,
   observedBits: void | number | boolean,
@@ -12383,7 +12589,7 @@ export function useContext<T>(
 
 ##### 源码摘要
 
-```
+```js
 export function useRef<T>(initialValue: T): {current: T} {
   currentlyRenderingFiber = resolveCurrentlyRenderingFiber();
   workInProgressHook = createWorkInProgressHook();
@@ -12406,7 +12612,7 @@ export function useRef<T>(initialValue: T): {current: T} {
 
 ##### 源码摘要
 
-```
+```js
 export function useImperativeMethods<T>(
   ref: {current: T | null} | ((inst: T | null) => mixed) | null | void,
   create: () => T,
@@ -12443,7 +12649,7 @@ export function useImperativeMethods<T>(
 
 ##### 源码摘要
 
-```
+```js
 export function useCallback<T>(
   callback: T,
   inputs: Array<mixed> | void | null,
@@ -12470,7 +12676,7 @@ export function useCallback<T>(
 
 ##### 源码摘要
 
-```
+```js
 export function useMemo<T>(
   nextCreate: () => T,
   inputs: Array<mixed> | void | null,
@@ -12499,13 +12705,15 @@ export function useMemo<T>(
 
 ### 同步渲染
 
-先直接渲染子节点为null
-commit的时候设置state
+::: tip
+先直接渲染子节点为null<br/>
+commit的时候设置state<br/>
 再发起一次同步更新渲染fallback
+::: 
 
 #### 源码摘要
 
-```
+```js
 function updateSuspenseComponent(
     current,
     workInProgress,
@@ -12665,7 +12873,7 @@ function updateSuspenseComponent(
 }
 ```
 
-```
+```js
 function throwException(
     root: FiberRoot,
     returnFiber: Fiber,
@@ -12807,7 +13015,7 @@ function throwException(
 }
 ```
 
-```
+```js
 function commitLifeCycles(
     finishedRoot: FiberRoot,
     current: Fiber | null,
@@ -12864,7 +13072,7 @@ function commitLifeCycles(
 }
 ```
 
-```
+```js
 function hideOrUnhideAllChildren(finishedWork, isHidden) {
   if (supportsMutation) {
     // We only have the top Fiber that was inserted but we need recurse down its
@@ -12908,13 +13116,15 @@ function hideOrUnhideAllChildren(finishedWork, isHidden) {
 
 ### 异步渲染
 
-设置shouldCapture
-unwindWork设置state
+::: tip
+设置shouldCapture<br/>
+unwindWork设置state<br/>
 渲染fallback
+::: 
 
 #### 源码摘要
 
-```
+```js
 
 function updateSuspenseComponent(
   current,
@@ -13127,7 +13337,7 @@ function updateSuspenseComponent(
 }
 ```
 
-```
+```js
 function throwException(
   root: FiberRoot,
   returnFiber: Fiber,
@@ -13330,8 +13540,7 @@ function throwException(
 }
 ```
 
-```
-
+```js
 export function findEarliestOutstandingPriorityLevel(
   root: FiberRoot,
   renderExpirationTime: ExpirationTime,
@@ -13358,7 +13567,7 @@ export function findEarliestOutstandingPriorityLevel(
 }
 ```
 
-```
+```js
 function renderDidSuspend(
   root: FiberRoot,
   absoluteTimeoutMs: number,
@@ -13374,7 +13583,7 @@ function renderDidSuspend(
 }
 ```
 
-```
+```js
 function unwindWork(
   workInProgress: Fiber,
   renderExpirationTime: ExpirationTime,
@@ -13421,7 +13630,7 @@ function unwindWork(
 }
 ```
 
-```
+```js
 function renderRoot(
   root: FiberRoot,
   isYieldy: boolean,
@@ -13473,7 +13682,7 @@ function renderRoot(
 }
 ```
 
-```
+```js
 function onSuspend(
   root: FiberRoot,
   finishedWork: Fiber,
@@ -13496,7 +13705,7 @@ function onSuspend(
 }
 ```
 
-```
+```js
 function onTimeout(root, finishedWork, suspendedExpirationTime) {
   // The root timed out. Commit it.
   root.pendingCommitExpirationTime = suspendedExpirationTime;
@@ -13511,7 +13720,7 @@ function onTimeout(root, finishedWork, suspendedExpirationTime) {
 ```
 
 
-```
+```js
 function retrySuspendedRoot(
   root: FiberRoot,
   boundaryFiber: Fiber,
@@ -13572,24 +13781,33 @@ function retrySuspendedRoot(
 ```
 
 
+## 个人总结
+
+::: tip
+发起一个setState，首先找到他的FiberRoot，将FiberRoot加入到Root链表，判断是同步任务还是异步任务，如果是异步任务，创建一个newNode，加入到callbackNode链表中，并按照expirationTime进行排序，如果第一个callbackNode已经过期了，立马进行方法调用，否则，连续执行requestAnimationFrame（并发送postmessage，然后会进入浏览器的动画更新，等到浏览器动画更新回来后，执行idleTick，即调用flushWork。）如果任务已经过期，执行callbackNode链表，直到第一个不过期的任务为止。如果没有过期，在帧时间有空的情况下，执行callbackNode，（这时执行callbackNode也就是执行performAsyncWork）。然后找到Root链表中最高优先级的root，执行renderRoot。
+::: 
+
+::: tip
+执行renderRoot，首先执行workLoop循环，在没有捕获到错误的情况下，workLoop循环遍历整棵Fiber树，它先遍历到整棵树的最下面一个child节点，这次遍历就结束了，在这次遍历的过程中它执行的是beginWork,如果已经遍历到这棵树的最下面一个叶子节点了，将从这个叶子节点开始执行completeUnitOfWork，如果这个叶子节点有兄弟节点，它在走beginWork的流程，直到遍历到它最下面的叶子节点，在执行completeUnitOfWork。如果没有兄弟节点，对它的父级执行completeUnitOfWork。如果在workLoop循环中捕获到错误了，将调用completeUnitOfWork，执行unwindWork，在unwindWork过程中，它将判断这个组件是否有ShouldCapture，如果有,将设置DidCapture副作用，并重新走beginWork的流程，进行更新渲染。如果没有将看是否有兄弟节点，如果有兄弟节点，将从兄弟节点走beginWork的流程，如果没有兄弟节点，找它的父级走completeUnitOfWork的unwindWork流程，判断这个组件是否有ShouldCapture。
+::: 
+
+::: tip
+在beginWork中，如果不是第一次渲染并且前后两次的props是一样的并且当前这个节点没有更新或者有更新但是你的优先级不高，它去判断下子素上面是否有一个更新是要在这一次渲染里面去完成的，如果有，返回child，如果没有，返回null。否则按tag类型执行更新，在进行调和之后，返回当前节点的child。
+::: 
+
+::: tip
+在调和的过程中，子节点是单个元素的情况下，如果是第一次渲染，直接创建新的Fiber，如果不是第一次渲染，找有没有可以复用的Fiber，如果没有可以复用的，则创建新的Fiber。子节点是数组的情况下，如果是第一次渲染，创建数组里所有元素的Fiber，返回第一个元素的Fiber对象，如果不是第一次渲染，就会以相同的顺序去分别遍历新老的children它们对应的节点，判断他们的key是否相同，如果相同就会复用，如果不相同就会跳出循环，然后建立一个map对象，将老的children以key或index为key，Fiber为值放入map对象中，然后遍历新的children,看map中有没有对应的key或者index，如果有则复用，没有则新建，最后返回第一个元素的Fiber对象。
+::: 
+
+::: tip
+completeWork按当前节点的tag，判断是不是第一次渲染，如果是第一次渲染，创建对应的dom节点，注意，如果是HostComponent，它创建完对应的dom节点后，会将第一层子节点append进去，并设置相应的dom属性，如果不是第一次渲染,增加更新标记，修改updateQueue。
+::: 
+
+
 ## Question
 
 ### 如果定义的是一个function component,这个组件是没有实例的，因为它是一个PureComponent，但源码中，PureComponent实现是可以有实例的，也就是可以new
 
-## 个人总结
-
-发起一个setState，首先找到他的FiberRoot，将FiberRoot加入到Root链表，判断是同步任务还是异步任务，如果是异步任务，创建一个newNode，加入到callbackNode链表中，并按照expirationTime进行排序，如果第一个callbackNode已经过期了，立马进行方法调用，否则，连续执行requestAnimationFrame（并发送postmessage，然后会进入浏览器的动画更新，等到浏览器动画更新回来后，执行idleTick，即调用flushWork。）如果任务已经过期，执行callbackNode链表，直到第一个不过期的任务为止。如果没有过期，在帧时间有空的情况下，执行callbackNode，（这时执行callbackNode也就是执行performAsyncWork）。然后找到Root链表中最高优先级的root，执行renderRoot。
 
 
 
-执行renderRoot，首先执行workLoop循环，在没有捕获到错误的情况下，workLoop循环遍历整棵Fiber树，它先遍历到整棵树的最下面一个child节点，这次遍历就结束了，在这次遍历的过程中它执行的是beginWork,如果已经遍历到这棵树的最下面一个叶子节点了，将从这个叶子节点开始执行completeUnitOfWork，如果这个叶子节点有兄弟节点，它在走beginWork的流程，直到遍历到它最下面的叶子节点，在执行completeUnitOfWork。如果没有兄弟节点，对它的父级执行completeUnitOfWork。如果在workLoop循环中捕获到错误了，将调用completeUnitOfWork，执行unwindWork，在unwindWork过程中，它将判断这个组件是否有ShouldCapture，如果有,将设置DidCapture副作用，并重新走beginWork的流程，进行更新渲染。如果没有将看是否有兄弟节点，如果有兄弟节点，将从兄弟节点走beginWork的流程，如果没有兄弟节点，找它的父级走completeUnitOfWork的unwindWork流程，判断这个组件是否有ShouldCapture。
-
-
-
-在beginWork中，如果不是第一次渲染并且前后两次的props是一样的并且当前这个节点没有更新或者有更新但是你的优先级不高，它去判断下子素上面是否有一个更新是要在这一次渲染里面去完成的，如果有，返回child，如果没有，返回null。否则按tag类型执行更新，在进行调和之后，返回当前节点的child。
-
-在调和的过程中，子节点是单个元素的情况下，如果是第一次渲染，直接创建新的Fiber，如果不是第一次渲染，找有没有可以复用的Fiber，如果没有可以复用的，则创建新的Fiber。子节点是数组的情况下，如果是第一次渲染，创建数组里所有元素的Fiber，返回第一个元素的Fiber对象，如果不是第一次渲染，就会以相同的顺序去分别遍历新老的children它们对应的节点，判断他们的key是否相同，如果相同就会复用，如果不相同就会跳出循环，然后建立一个map对象，将老的children以key或index为key，Fiber为值放入map对象中，然后遍历新的children,看map中有没有对应的key或者index，如果有则复用，没有则新建，最后返回第一个元素的Fiber对象。
-
-
-
-completeWork按当前节点的tag，判断是不是第一次渲染，如果是第一次渲染，创建对应的dom节点，注意，如果是HostComponent，它创建完对应的dom节点后，会将第一层子节点append进去，并设置相应的dom属性，如果不是第一次渲染,增加更新标记，修改updateQueue。
