@@ -2106,7 +2106,6 @@ hell         地狱
 hero         英雄
 highway      公路
 holy         神圣
-honest       诚实
 honey        蜂蜜
 honor        荣誉
 hormone      激素
@@ -3135,3 +3134,4 @@ sparing      保守的
 brand        商标,牌子
 carbon       碳
 dark         黑暗
+honest       诚实

@@ -1,3 +1,5 @@
+[toc]
+
 # 数据结构与算法
 
 ## 数据结构
@@ -772,8 +774,6 @@ class Ugly {
 
 ## 排序
 
-时间复杂度算的是运行的次数
-空间复杂度算的是占用的内存
 
 ### 冒泡排序
 
@@ -789,25 +789,6 @@ const fn = (arr) => {
         }
     }
     return arr                
-}
-```
-
-### 选择排序
-
-```
-const fn = (arr) => {
-    for (let i = 0,len = arr.length, min; i < len; i++) {
-        min = arr[i]    
-        for (let j = i + 1; j<len; j++) {
-            if (arr[j] < min) {
-                let c = min;
-                min = arr[j]
-                arr[j] = c
-            }
-        }
-        arr[i] = min
-    }
-    return arr
 }
 ```
 

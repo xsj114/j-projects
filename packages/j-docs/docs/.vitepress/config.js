@@ -71,8 +71,8 @@ export default {
                             link: '/notes/design'
                         },
                         {
-                            text: '数据结构与算法',
-                            link: '/notes/data'
+                            text: '算法',
+                            link: '/notes/algorithm'
                         },
                         {
                             text: '计算机基础',
