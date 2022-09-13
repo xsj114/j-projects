@@ -168,5 +168,41 @@ class Insertion {
 :::
 
 ```js
+class InsertionX {
 
+    sort ( a ) {
+         
+        let exchanges = 0
+        let N = a.length;
+        for ( let i = N - 1; i > 0; i-- ) {
+            if ( this.less( a[i], a[i-1] ) ) {
+                this.exch( a, i, i-1 )
+                exchanges++
+            }
+        }
+
+        if (exchanges === 0) return
+
+        for (let i = 2; i < N; i++ ) {
+            let v = a[i]
+            let j = i
+            while ( this.less( v, a[j-1] ) ) {
+                a[j] = a[j-1]
+                j--
+            }
+            a[j] = v
+        }
+
+    }
+
+    less ( v, w ) {
+        return v < w
+    }
+
+    exch ( a, i, j ) {
+        let temp = a[i];
+        a[i] = a[j];
+        a[j] = temp;
+    }
+}
 ```

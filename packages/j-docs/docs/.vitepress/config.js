@@ -1,7 +1,9 @@
 export default {
     title: '许仕杰',
     markdown: {
-        toc: { 
+        lineNumbers: true,
+        config: (md) => {
+    
         }
     },
     themeConfig: {
