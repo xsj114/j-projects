@@ -3135,3 +3135,4 @@ brand        商标,牌子
 carbon       碳
 dark         黑暗
 honest       诚实
+ticket       票

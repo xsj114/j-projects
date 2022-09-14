@@ -73,6 +73,10 @@ export default {
                             link: '/notes/design'
                         },
                         {
+                            text: 'MYSQL',
+                            link: '/notes/mysql'
+                        },
+                        {
                             text: '算法',
                             link: '/notes/algorithm'
                         },
@@ -83,6 +87,29 @@ export default {
                         {
                             text: 'VIM',
                             link: '/notes/vim'
+                        }
+                    ]
+                },
+                {
+                    text: '面试总结',
+                    collapsible: true,
+                    collapsed: false,
+                    items: [
+                        {
+                            text: 'temp',
+                            link: '/notes/interview/index.md'
+                        },
+                        {
+                            text: 'css',
+                            link: '/notes/interview/css'
+                        },
+                        {
+                            text: 'javascript',
+                            link: '/notes/interview/javascript'
+                        },
+                        {
+                            text: 'webpack',
+                            link: '/notes/interview/webpack'
                         }
                     ]
                 },
