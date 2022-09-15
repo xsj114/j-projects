@@ -1,288 +1,8 @@
- [toc]
-
-# 面试总结
-
-
-
-
-
-### RESTful API
-
-| `RESTful API`包含 |
-| --- |
-| 基本的`URI`，如`https://api.github.com/users` |
-| 标准`HTTP`方法如`GET`，`POST`，`PUT`，`PATCH`，`DELETE` |
-| 传输的数据媒体类型如`JSON`，`XML` |
-
-
-#### REST
-
-`REST`（Representational State Transfer）是`万维网软件架构风格`用来创建网络服务
-
-`Representational`是数据的表现形式（`JSON`，`XML`....）
-`State`是当前状态或者数据
-`Transfer`是数据传输
-
-| REST的6个限制 | 描述 |
-| ------- | ------ |
-| 客户-服务器(Client-Server) | 关注点分离<br>服务端专注数据存储提升了简单性<br>前端专注用户界面提升了可移植性 |
-| 无状态 | 所有用户会话信息都保存在客户端<br>每次请求必须包括所有信息不能依赖上下文信息<br>服务端不用保存会话信息提升了简单性，可靠性，可见性|
-| 缓存 | 所有服务端响应都要被标为可缓存或不可缓存<br>减少前后端交互提升了性能|
-| 统一接口 | 接口设计尽可能统一通用，提升了简单性，可见性 <br> 接口与实现解耦，使前后端可以独立开发迭代|
-| 分层系统 | 软件架构是分层的，每层只知道相邻的一层，后面隐藏的就不知道了，比如客户端不知道是和代理还是真实服务器通信|
-| 按需代码| 客户端可以下载运行服务端传来的代码，比如JS<br>通过减少一些功能简化了客户端 |
-
-
-
-
-
-
-
-##### 统一接口的限制
-
-| 统一接口的限制 |  描述 |
-| ---------- | ----- |
-| 资源的标识 | 资源是任何可以命名的事物，比如用户，评论等<br>每个资源可以通过`URI`被唯一地标识 |
-| 通过表述来操作资源 |表述就是`Representation`<br>客户端不能直接操作服务端资源(比如`SQL`)<br>客户端应该通过表述来操作资源（比如`JSON`） |
-| 自描述消息 | 每个消息（请求或响应）必须提供足够的信息让接受者理解，例如媒体类型，`HTTP`方法，是否缓存 |
-|超媒体作为应用状态引擎 | 超媒体指带文字的链接<br>应用状态指一个网页<br>引擎指驱动，跳转<br>合起来就是点击链接跳转到另一个网页 |
-
-
-
-
-#### RESTful API设计最佳实践
-
-
-##### 请求设计规范
-
-
-| 请求设计规范 | 例子 |
-| ----- | ----- |
-| `URI`使用名词，尽量用复数 | `/users` |
-| `URI`使用嵌套表示关联关系 | `/users/12/repos/5` |
-| 使用正确的`HTTP`方法| `GET`，`POST`，`PUT`，`DELETE` |
-| 不符合`CRUD`（增删改查）的情况 | `POST`<br>`action`<br>`子资源` |
-
-##### 响应设计规范
-
-| 响应设计规范 | 解释 |
-|  ----- |  ----- |
-| 查询 |  每个响应都是可以被查询，可以被过滤的，我们加上一些限制条件就只能返回符合这些条件的一些返回值了 |
-| 分页 | 如果列表特别长的话，我们应该加上分页信息 |
-| 字段过滤 | 返回的结果只能返回你指定的那几个字段 |
-| 状态码 | 选择正确的状态码来作为它的响应  |
-| 错误处理 | 如果请求是错的，应该尽量把错误信息给返回并按照一个规范的格式 |
-
-
-##### 增删改查应该返回什么响应
-
-`增`返回当前增加或修改的数据 
-`删`返回`204`状态码
-`改`返回当前增加或修改的数据 
-`查`返回查询的数据
-
-
-
-
-
-
-
-
-### SESSION
-
-
-| 优势 |  
-| ----- |
-| 相比`JWT`最大的优势就在于可以主动清除`SESSION`（因为`SESSION`是保存在服务端的） |
-|`SESSION`保存在服务器端，相对较为安全 |
-| 结合`Cookie`使用，较为灵活，兼容性较好 |
-
-|  劣势 | 
-| ----- |
-| `Cookie+SESSION`在跨域场景表现并不好 |
-| 如果是分布式部署，需要做多机共享`SESSION`机制 |
-| 基于`Cookie`的机制很容易被`CSRF` |
-| 查询`SESSION`信息可能会有数据库查询操作 | 
-
-### JWT
-
-
-`JWT`(JSON WEB TOKEN)是一个开放标准
-`JWT`定义了一种紧凑且独立的方式，可以将各方之间的信息作为`JSON`对象进行安全传输
-`JWT`信息可以验证和信任，因为是经过数字签名的
-
-#### JWT的构成
-
-#####  头部（Header）
-
-`Header`本质是个`JSON`,这个`JSON`有两个字段
-第一个是`typ`，代表令牌的类型，这里固定为`JWT`
-第二个是`alg`,代表的是使用的哪种`hash`算法，比如`RSA`
-
-```
-// Header编码前后
-
-{"alg": "HS256", "typ": "JWT"}
-
-'eyjhbGciOiAiSFMyNTYiLCAidHlwIjogIkpXVCJ9'
-```
-
-##### 有效载荷(Payload)
-
-存储需要传递的信息，比如用户ID，用户名等
-还包含元数据，如过期时间，发布人等
-与`Header`不同，`Payload`可以加密
-
-#####  签名(Signature)
-
-对`Header`和`Payload`部分进行签名
-保证`Token`在传输的过程中没有被篡改或者损坏
-
-### `JWT` vs `SESSION`
-
-#### 可拓展性
-
-
-拓展程序有水平拓展，有垂直拓展
-水平拓展就是加服务器
-垂直拓展就是增强你服务器的硬件性能，比如说磁盘，内存，`CPU`等
-
-`SESSION`都是存在服务器中的，在水平拓展的方案中，你就必须要专门创建一个独立的中心式的`SESSION`存储系统才行，否则是没有办法共享的，所以在这种情况下，`JWT`是要比`SESSION`好的
-
-
-
-#### RESTFUL API
-
-`SESSION`是有状态的所以不能用做`RESTFUL API`
-
-#### 性能
-
-在客户端向服务端发送请求的时候，可能会有大量的用户信息在`JWT`中，那么每个`HTTP`请求都会产生大量的开销，如果用`SESSION`的话，只要少量的开销就可以了，因为`SESSION`非常的小
-
-但是`SESSION`也有缺点，因为对于`SESSION`来说，每一个请求都需要在服务器上查找一下`SESSION`，因为它拿到的是`SESSION ID`嘛，并没有完整的信息，你要用`SESSION ID`来查完整的信息，这也是需要消耗性能的，`JWT`它的数据都在`JWT`的字符串里，所以说不需要进行数据库查询
-
-
-#### 时效性
-
-`JWT`要比`SESSION`时效性差一点，因为`JWT`只有等到过期时间才可以销毁，`SESSION`可以在服务端手动的去销毁
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-### 页面加载过程
-
-| 加载资源的形式 |
-| ----------  |
-|     输入`URL`或跳转页面加载`HTML`      |
-|  加载`HTML`中的静态资源 |
-
-| 加载一个资源的过程 |
-| ------------- |
-| 浏览器根据`DNS`服务器得到域名的`IP`地址 |
-| 向这个`IP`的机器发送`HTTP`请求 |
-| 服务器收到，处理，并返回`HTTP`请求 |
-| 浏览器得到返回内容 |
-
-
-### 从输入URL到页面加载显示完成都发生了什么？
-
-
-浏览器有一个`UI thread`，它会做一个判断看输入的内容到底是`搜索`还是你真正要访问的一个站点，如果访问的是一个`URL`,它会对你输入的`URL`去进行一个相关的解析，接下来`UI thread`会通知`Network thread`
-
-
-`Network thread`首先会进行`DNS`查找，要去确认域名对应的那个`IP`，然后才能和服务器建立连接。在请求发起之前，需要设置`UA`等信息。服务器收到请求后，根据处理逻辑将数据组织成`Response`返回到前端，在返回到浏览器这边的时候，它在读取到`Response`前几个字节的时候会做一个分析，分析我们这个数据的类型，然后根据判断到的类型在去进行相关的解析。接下来还会做一个安全检查去判断一下，你访问的这个域名是不是安全的。然后会通知`UI thread`数据准备就绪。
-
-当数据准备好并且`Renderer Process`也准备好了之后，会有一个进程间的通信，并且会把数据传递给我们的`Renderer Process`。`Main thread`开始进行文本的解析，构建`DOM`，在构建`DOM`的过程中会遇到引用外部资源的情况，它会去进行加载。在遇到`JS`脚本的时候，会阻塞解析，可以使用`async`或者`defer`去进行一个异步的加载。`Main thread`还会去解析`CSS`，最终得到一个`computed styles`，它描述了我们每一个元素最终具体要画成什么样子。`Main thread`遍历我们的`DOM`和`computed styles`构造了我们的`RenderTree`。接下来进入到了`Layout`部分，`Layout`是指查找我们元素几何形状的一个过程，，并且会`创建绘制记录`。
-
-
-接下来，我们需要`Raster Thread`将页面拆分图层，构建`图层树`。然后`Compositor Thread`去把我们已经绘制出来的图层合成成一帧。
-
-
-> `UI thread`和`Network thread`都是`Browser Process`中的
-> `Main thread`，`Raster Thread`和`Compositor Thread`都是`Renderer Process`中的
-> 浏览器渲染的工作会交给`Renderer Process`
-
-
-### 什么是首屏加载？怎么优化？
-
-| 测量指标 | 含义 | 范围 |  备注 |
-|  ------ | ---- | ---- |  ---- |
-| `First Contentful Paint` | 有意义内容的绘制 | 控制在`2s`以内 | 当出现了第一个内容之后它就知道这个网站是可以访问的 |
-| `Largest Contentful Paint` | 最大内容的绘制 | 控制在`2.5s`以内 | 我们看到它绘制的第一个最大内容，无论是图片或者是很大一块文字内容之后，我们就知道这个网站到底是做什么的了 |
-| `Time to Interactive` | 用户可以开始进行交互了，你的页面全部加载完成了 | 控制在`3.8s`以内 | |
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-### Web服务器工作的过程
-
-
-```flow
-    st=>start: 接收客户端连接
-    op1=>operation: 接收请求报文
-    op2=>operation: 处理请求
-    op3=>operation: 访问Web资源
-    op4=>operation: 构造应答
-    op5=>operation: 发送应答
-    
-    st->op1->op2->op3->op4->op5
-```
-
-
-| 请求报文 |
-| ---- |
-| [请求方法][请求地址][HTTP版本] |
-| [请求头]|
-| [请求内容] |
-
-
-| 应答报文 |
-| ----- |
-| [HTTP版本][状态码][状态解释] |
-| [应答头] |
-| [应答内容] |
-
-
-
-
-
-
-
-
-
-
+# 性能优化
 
 
 ## 浏览器渲染
+
 
 | 浏览器渲染页面的过程 |
 | ---------------- |
@@ -296,7 +16,7 @@
 
 ### 浏览器渲染流程（关键渲染路径）
 
-```flow
+```
     st=>start: JavaScript（我们可以通过JavaScript去实现我们页面上的视觉的一些变化，主要意思是触发视觉变化）
     op1=>operation: Style（有了上一步的视觉变化，浏览器要重新对样式进行计算 ）
     op2=>operation: Layout（把元素按照计算后的样式，绘制到页面上，它要知道元素的大小和元素的位置）
@@ -306,30 +26,30 @@
     st->op1->op2->op3->op4
 ```
 
-#### 不触发`Layout`
 
+::: details 不触发Layout
 `Layout`关心的是位置和大小，所以样式修改如果不是`宽度`，`高度`这样的位置信息的话，它就不会触发我们的`Layout`，比如修改背景颜色，阴影大小等就不会触发`Layout`
+:::
 
-
-#### 不触发`Layout`也不触发`Repaint`
-
-
+::: details 不触发Layout也不触发Repaint
 | 不触发`Layout`和`Repaint`的属性 |
 | ---- |
 | `transform` |
 | `opacity`   |
 
 
-上述两个属性虽然可以只影响我们`Composite`的过程，但是要把属性所影响到的元素提取到一个单独的`图层`里
-
+上述两个属性虽然可以只影响我们`Composite`的过程，但是要把属性所影响到的元素提取到一个单独的`图层`里<br/>
 设置元素CSS属性`will-change:transform`，浏览器就会将这个元素提取到一个单独的`图层`里
+:::
 
 
 
 ### Reflow
 
-首次页面加载完之后，把元素绘制到页面上的过程，我们叫`Layout`
+
+首次页面加载完之后，把元素绘制到页面上的过程，我们叫`Layout`<br/>
 之后页面上发生了一些视觉上的变化导致再次`Layout`，这个过程称之为回流，也就是`Reflow`
+
 
 |  触发Reflow |
 | ------- |
@@ -339,10 +59,9 @@
 | 当你`Resize`窗口的时候，或是滚动的时候 |
 | 当你修改网页的默认字体时 |
 
-#### layout thrashing（布局抖动）
 
-当你出现`Reflow`的时候，还有可能导致`布局抖动`
-
+::: details layout thrashing（布局抖动）
+当你出现`Reflow`的时候，还有可能导致`布局抖动`<br/>
 `布局抖动`产生的原因是因为有连续的读写，而且每一次我们的读操作，都会强制我们的`布局`立即进行一个重新的计算，这样就会导致有连续不断的`强制回流`发生，连续不断的`强制回流`就会导致我们页面的一个`布局抖动`，结果就是我们的页面变的非常的卡顿
 
 | 避免`layout thrashing` |
@@ -350,9 +69,8 @@
 | 避免回流 | 
 | 读写分离 |
 
-##### 例子
 
-```
+```js
 let cards = document.getElementsByClassName( 'cards' )
 
 const update = ( timestamp ) => {
@@ -363,14 +81,15 @@ const update = ( timestamp ) => {
 }
 window.addEventListener( 'load', update )
 ```
-
-
+:::
 
 
 
 ### Repaint
 
+
 页面要呈现的内容统统画在屏幕上,就是`Repaint`（重绘）
+
 
 | 触发Repaint |
 | ---- |
@@ -380,13 +99,7 @@ window.addEventListener( 'load', update )
 
 
 
-
-
-
-
-## 性能优化
-
-### 性能优化工具
+## 性能优化工具
 
 | 工具 |
 | ---- |
@@ -394,7 +107,10 @@ window.addEventListener( 'load', update )
 | `LightHouse` |
 | `devTools` |
 
-### 性能指标
+
+
+
+## 性能指标
 
 | 指标 | 描述 | 影响因素 |
 | ---- | ---- | ----- |
@@ -407,42 +123,44 @@ window.addEventListener( 'load', update )
 | 异步请求足够快 | 所有的异步请求能在`1s`內把数据返回回来 | |
 
 
-### RAIL测量模型
 
-#### Response
+## RAIL测量模型
 
-`R`代表`Response`响应
+### Response
+
+`R`代表`Response`响应<br/>
 处理事件应在`50ms`以內完成
 
-#### Animation
+### Animation
 
-`A`代表`Animation`动画
+`A`代表`Animation`动画<br/>
 每`10ms`产生一帧
 
-#### Idle
+### Idle
 
-`I`代表`Idle`空闲
+`I`代表`Idle`空闲<br/>
 尽可能增加空闲时间
 
 
-#### Load
+### Load
 
 
-`L`代表`Load`加载
+`L`代表`Load`加载<br/>
 在`5s`內完成内容加载并可以交互
 
 
-### 优化
 
-#### 代码优化
+## 优化
 
-##### JAVASCRIPT开销
 
-`JAVASCRIPT`的开销在于`加载`，`执行`，`解析&编译`
+### 代码优化
 
-###### 解决方案
 
-`Code splitting`代码拆分，按需加载
+::: details JAVASCRIPT开销
+分析：<br/>
+`JAVASCRIPT`的开销在于`加载`，`执行`，`解析&编译`<br/>
+解决方案：<br/>
+`Code splitting`代码拆分，按需加载<br/>
 `Tree shaking`代码减重
 
 | 从`解析`和`执行`来看 |
@@ -450,13 +168,12 @@ window.addEventListener( 'load', update )
 | 避免长任务 |
 | 避免超过`1KB`的行间脚本 |
 | 使用`requestAnimationFrame`和`requestIdleCallback`进行时间调度 |
+:::
 
 
-##### V8编译原理
-
+::: details V8编译原理
 `V8`拿到`JS脚本`之后首先会进行`解析`的工作，把它翻译成`抽象语法树`。它先把文本识别成字符，然后在把里面重要的信息提取出来变成一些`节点`，然后存储在一定的数据结构里。接下来利用这个数据结构在去理解写的东西是什么含义，理解这个是什么含义就是`解释器（Interpreter）`做的事情。然后在把代码变成机器码运行之前，编译器会进行一些优化工作，所以`V8`的编译器有优化功能。
-
-```flow
+```
 start=>start: JS
 op1=>operation: Parse it
 op2=>operation: Abstract Syntax Tree
@@ -468,12 +185,9 @@ op6=>operation: Bytecode
 
 start->op1->op2->op3->op4->op5->op6
 ```
-
-###### 逆优化
-
+逆优化<br/>
 有时编译器的优化工作做的不一定合适，所以在运行时的时候当它发现它所做的优化不合适的时候，它会发生一个`逆优化`的过程，如果发生`逆优化`的情况，反而会降低我们运行的效率。
-
-```
+```js
 const { performance, PerformanceObserver } = require('perf_hooks');
 
 const add = ( a, b ) => a + b;
@@ -504,17 +218,14 @@ observer.observe( { entryTypes: [ 'measure' ] } );
 performance.measure( '测量1', 'start', 'end' );
 
 ```
-
-##### 函数优化
-
-像`V8`这样的`JS引擎`它会对函数默认进行一个`懒解析`，也就是说当我们这个函数真正被调用的时候，它才会去解析我们这个函数的声明的一个函数体。
-
-`懒解析`的好处在于如果它不需要被解析的话，我们也不需要为它去创建一个语法树。在堆的内存空间上也不用为这个函数去进行一个内存分配。
+::: 
 
 
+::: details 函数优化
+像`V8`这样的`JS引擎`它会对函数默认进行一个`懒解析`，也就是说当我们这个函数真正被调用的时候，它才会去解析我们这个函数的声明的一个函数体。<br/>
+`懒解析`的好处在于如果它不需要被解析的话，我们也不需要为它去创建一个语法树。在堆的内存空间上也不用为这个函数去进行一个内存分配。<br/>
 如果函数是`立即执行`的，在刚开始声明的时候我们对它是默认进行了一个`懒解析`，但是我们又发现它要`立即执行`，于是又进行了一个快速的`eager parsing（饥饿解析）`，这样导致的结果就是对同一个函数先进行`懒解析`在进行`饥饿解析`，导致效率反而降低了。
-
-```
+```js
 export default () => {
     // 通过一对括号,就可以进行eager parsing（饥饿解析）
     const add = ( ( a, b ) => a + b );
@@ -523,12 +234,12 @@ export default () => {
     add( num1, num2 )
 }
 ```
+:::
 
-##### 对象优化
 
-###### 以相同顺序初始化对象成员，避免隐藏类的调整
-
-```
+::: details 对象优化 
+`以相同顺序初始化对象成员，避免隐藏类的调整`<br/>
+```js
 class RectArea {      // HC0
     constructor (l,w) {
         this.l = l    // HC1
@@ -540,7 +251,9 @@ const rectOne = new RectArea(3, 4)
 const rectTwo = new RectArea(5, 6)
 ```
 
-```
+<br/>
+
+```js
 // 反例
 
 const car1 = { color: 'red' }   // HC0
@@ -549,33 +262,28 @@ car1.seats = 4                  // HC1（不是只包含了seats属性，它其�
 const car2 = { seats: 2 }       // HC2
 car2.color = 'blue'             // HC3
 ```
-
-`JS`是弱类型语言，我们在写的时候不会去强调或者声明它的类型，但对于`编译器`而言最终还是要明确一个类型。它就会在解析的时候根据自己的推断会给赋一个具体的类型。我们管这些类型叫做`隐藏类型`。在之后它所做的一些优化都是基于`隐藏类型`去做的。
-
-
-
-###### 实例化后避免添加新属性
-
-```
+`JS`是弱类型语言，我们在写的时候不会去强调或者声明它的类型，但对于`编译器`而言最终还是要明确一个类型。它就会在解析的时候根据自己的推断会给赋一个具体的类型。我们管这些类型叫做`隐藏类型`。在之后它所做的一些优化都是基于`隐藏类型`去做的。<br/>
+<br/>
+`实例化后避免添加新属性`
+```js
 const car1 = { color: 'red' };    // In-object属性
 car1.seats = 4;                   // Normal/Fast属性
 ```
-
-`In-object`属性是这个对象从开始创建就带有的属性
-`Normal/Fast`属性是存储在`property store`里，需要通过`描述数组`间接查找
-
-###### 尽量使用`Array`代替`array-like`对象
-
-
-```
+`In-object`属性是这个对象从开始创建就带有的属性<br/>
+`Normal/Fast`属性是存储在`property store`里，需要通过`描述数组`间接查找<br/>
+<br/>
+`尽量使用Array代替array-like对象`
+```js
+// 不如在真实数组上效率高
 Array.prototype.forEach.call( arrayLike, ( value, index ) => {
     console.log( `${index}:${value}` )
 })
 ```
 
-> 不如在真实数组上效率高
+<br/>
 
-```
+```js
+// 最好还是先把这种`类数组`转成`数组`然后在去进行遍历
 const arr = Array.prototype.slice.call( arrayLike, 0 );
 
 arr.forEach( ( value, index ) => {
@@ -583,13 +291,9 @@ arr.forEach( ( value, index ) => {
 } )
 ```
 
-> 最好还是先把这种`类数组`转成`数组`然后在去进行遍历
-
-
-
-###### 避免读取超过数组的长度
-
-```
+`避免读取超过数组的长度`
+```js
+// 首先会造成undefined和数字进行比较，并且还会让array[3]沿原型链进行查找
 function foo ( array ) {
     for ( let i = 0; i <= array.length; i++ ) { // 越界比较
         if ( array[i] > 1000 ) {
@@ -603,22 +307,15 @@ const arr = [ 10, 100, 1000 ];
 foo( arr );
 ```
 
-> 首先会造成`undefined`和数字进行比较，并且还会让`array[3]`沿`原型链`进行查找
-
-###### 避免元素类型转换
-
-
-```
+`避免元素类型转换`
+```js
+// 原先类型是PACKED_SMI_ELEMENTS，加入4.4之后类型变成了PACKED_DOUBLE_ELEMENTS
 const array = [ 3, 2, 1 ];    // PACKED_SMI_ELEMENTS
 array.push(4.4)               // PACKED_DOUBLE_ELEMENTS
 ```
+:::
 
-> 原先类型是`PACKED_SMI_ELEMENTS`，加入`4.4`之后类型变成了`PACKED_DOUBLE_ELEMENTS`
-
-
-
-##### HTML优化
-
+::: details HTML优化
 | HTML优化 |
 | ---- |
 | 减少`iframes`使用 |
@@ -628,82 +325,62 @@ array.push(4.4)               // PACKED_DOUBLE_ELEMENTS
 | 删除注释 |
 | `CSS`&`Javascript`尽量外链 |
 | 删除元素默认属性 |
+:::
 
-
-##### CSS优化
-
+:::details CSS优化
 | CSS优化 |
 | ----- |
 | 降低`CSS`对渲染的阻塞 |
 |  利用`GPU`进行完成动画 |
 | 使用`contain`属性  |
 | 使用`font-display`属性 |
+:::
 
 
-#### 资源优化
+### 资源优化
 
-##### 资源的加载顺序
-
-###### preload
-
-
-`preload`只管加载不管解析
-
-```
+::: details 资源的加载顺序
+`preload`<br/>
+preload只管加载不管解析
+```html
 <link rel="preload" href="img/product.svg" as="image"> // 优先加载图片
 
 // 当优先加载字体时必须要设置crossorigin属性
 <link rel="preload" href="https://fonts.gstatic.com/font.woff2" as="font" type="font/woff2" crossorigin="anonymous">   // 优先加载字体
 ```
-
-###### prefetch
-
-`prefetch`关注的是后续可能会用到的资源，在页面有空闲的时候，加载后面需要用到的资源
-
-```
+`prefetch`<br/>
+prefetch关注的是后续可能会用到的资源，在页面有空闲的时候加载后面需要用到的资源<br/>
+```html
 <link rel="prefetch" as="style" href="product-font.css">
 ```
+:::
 
 
+::: details 资源的压缩与合并
+减少`HTTP`请求数量<br/>
+减少请求资源的大小<br/>
+:::
 
-##### 资源的压缩与合并
-
-减少`HTTP`请求数量
-减少请求资源的大小
-
-
-##### 图片优化
-
-
-###### 图片格式比较
-
-
+::: details 图片优化
 | 格式 | 优点 | 缺点 |
 | ---- | ---- | ---- |
 | `JPEG/JPG` | 压缩比很高但是色彩保存的还很好 |  由于压缩比比较高，如果图片比较强调纹理或者边缘，它会显得非常有锯齿感或者模糊 |
 | `PNG` |  可以做透明背景的图片<br>如果我们想强调一些线条，纹理，边缘的细腻程度的时候，`PNG`做的比较好  |    体积会相对较大一些  |
 | `WebP` |  跟`PNG`有同样的质量，压缩比比`PNG`还高  |  浏览器兼容性不好  |
 
-
-###### 加载优化
-
-
+加载优化<br/>
 | 方案 | 说明 |
 | ---- | ---- |
 |  图片懒加载  | `<img src="" loading="lazy">` |
 | 渐进式图片 | 优点是始终可以让用户看到图片的全貌，只不过刚开始不太清晰逐渐给它加载清楚<br>等待时间是跟图片的大小和质量有关 |
 | 响应式图片 |  `<img src="lighthouse-200.jpg" sizes="50vw" srcset="lighthouse-100.jpg 100w,lighthouse-200.jpg 200w,lighthouse-1800.jpg 1800w">` |
+:::
 
-
-##### 字体优化
-
-
+::: details 字体优化
 | 字体的两个问题 |  描述 |
 | ------ | ----- |
 | `FOIT`(Flash Of Invisible Text)  | 文字从看不到到看到，这样一个闪烁变化的过程 |
 | `FOUT`(Flash Of Unstyled Text) | 文字开始看上去是一种样式，后来经过我们的样式渲染之后，又变成了另外一种字体，这个之间会有一个变化和闪动的过程 |
-
-###### font-display
 
 | `font-display`的值 | 描述 |
 | ------ | -------- |
@@ -712,9 +389,10 @@ array.push(4.4)               // PACKED_DOUBLE_ELEMENTS
 | swap | 开始先用一个默认的字体进行展示，直到需要的字体下载完成，在给替换成你的字体 |
 | fallback | `100ms`之前如果还没下载完则先不显示，`100ms`之后如果字体下载完了就可以去展示了，如果`100ms`之后还没下载完那就先用一个默认的字体临时去显示，直到下载完了在换成你的字体  |
 | optional | 浏览器可以判断用户的网络的一个速度情况，如果判断速度比较好，就用下载完的字体，如果判断网络情况不佳，预期短时间内很难把字体下载下来，那就用一个默认的字体，但是有一个问题是，一旦浏览器做出了选择，就不会在进行字体的替换了 |
+:::
 
 
-#### 传输加载优化
+### 传输加载优化
 
 
  | 方法 | 描述 |
@@ -725,9 +403,10 @@ array.push(4.4)               // PACKED_DOUBLE_ELEMENTS
  | `Service Workers` |    延长了首屏时间，但页面总加载时间减少<br>只能在`localhost`或`https`下使用 |
  | `HTTP2` | |
  | 服务端渲染`SSR` | 加速首屏加载<br/>更好的`SEO` |
- 
- 
-##### HTTP缓存
+
+
+
+#### HTTP缓存
 
 | 缓存的分类 |
 | ------ |
@@ -735,19 +414,17 @@ array.push(4.4)               // PACKED_DOUBLE_ELEMENTS
 | 协商缓存 |
 
 
-###### `Expires`
+##### `Expires`
 
-`Expires`的值表示的是绝对时间
-
+`Expires`的值表示的是绝对时间<br/>
 `Expires: Thu,21 Jan 2017 23:39:02 GMT`
 
+#####   `Cache-Control`
 
-######   `Cache-Control`
 
-
-`Cache-Control: max-age=3600`
-
+`Cache-Control: max-age=3600`<br/>
 `max-age`的值表示的是相对时间，也就是说我在拿到资源之后，在3600秒之内，不会再去请求服务器了
+
 
 
 | 可缓存性 | 含义 |
@@ -775,7 +452,7 @@ array.push(4.4)               // PACKED_DOUBLE_ELEMENTS
 | `no-transform` | 告诉代理服务器不要随便改动我返回的内容 |
 
 
-```
+```js
 const http = require('http')
     
 http.createServer(function (request, response) {
@@ -790,33 +467,32 @@ http.createServer(function (request, response) {
 ```
 
 
+##### `Last-Modified`和`If-Modified-Since`
 
-###### `Last-Modified`和`If-Modified-Since`
 
 它通过对比上次修改时间以验证资源是否需要更新，在拿到资源文件的时候服务器会通过`Last-Modified`下发一个时间，在下次请求时会在请求头中加`If-Modified-Since`
 
 
-###### `Etag`和`If-None-Match`
+
+##### `Etag`和`If-None-Match`
 
 
 它通过对比资源的签名判断是否使用缓存，服务器下发资源的时候，会给你`Etag`值（资源对内容会产生唯一的一个签名，我们叫它数据签名），在下次请求时会在请求头中加`If-None-Match`
 
 
- 
 
-### 提升页面性能的方法有哪些
+## 提升页面性能的方法有哪些
 
 
 | 方法 |
 | ----- |
-|    资源压缩合并，减少`HTTP`请求   | 
+| 资源压缩合并，减少`HTTP`请求   | 
 | 非核心代码异步加载 |
 | 使用`CDN` |
 | 预解析`DNS` |
 
 
-#### 非核心代码异步加载
-
+::: details 非核心代码异步加载
 | 异步加载的方式 | 描述 |
 | ------ | ----- |
 | 动态脚本加载 | 创建个`script`标签，把标签加到`body`上面去 |
@@ -824,35 +500,43 @@ http.createServer(function (request, response) {
 | `async` | 在加载完之后立即执行，如果是多个，执行顺序和加载顺序无关 |
 
 
-```
+```html
 <script src="" defer></script>
 <script src="" async></script>
 ```
+:::
 
 
-
-#### 预解析DNS
-
-
-```
+::: details 预解析DNS
+```html
 <link rel="dns-prefetch" href="www.baidu.com"/>
 ```
 
-```
+<br/>
+
+```html
 // 强制打开a标签的DNS预解析，默认a标签的DNS预解析开启，例如HTTP协议中
 // HTTPS中有些浏览器会关闭a标签的DNS预解析
-<meta http-equiv="x-dns-prefetch-control" content="on" >
+<meta http-equiv="x-dns-prefetch-control" content="on">
 ```
+:::
 
 
-### 渲染优化
+## 渲染优化
+
+| 方法 |
+| ---- |
+| `CSS`放前面，`JS`放后面 |
+| 懒加载(图片懒加载，下拉加载更多) | 
+| 减少DOM查询，对DOM查询做缓存 |
+| 减少DOM操作,多个操作尽量合并在一起执行 |
+| 事件节流 |
+| 尽早执行操作(如`DOMContentLoaded`) |
 
 
-#### `CSS`放前面，`JS`放后面
 
-####  懒加载(图片懒加载，下拉加载更多)
-
-```
+::: details 懒加载(图片懒加载，下拉加载更多)
+```js
 <script>
     var img = document.getElementById("img")
     img.src = img.getAttribute("data-realsrc")
@@ -861,10 +545,10 @@ http.createServer(function (request, response) {
     <img id="img" src="preview.png" data-realsrc="abc.png"/>
 </body>
 ```
+:::
 
-#### 减少DOM查询，对DOM查询做缓存
-
-```
+::: details 减少DOM查询，对DOM查询做缓存
+```js
 // 未缓存DOM查询
 var i
 for(i=0;i<document.getElementsByTagName('p').length;i++){}
@@ -874,10 +558,10 @@ var pList = document.getElementsByTagName('p')
 var i
 for(i=0;i<pList.length;i++){}
 ```
+:::
 
-#### 减少DOM操作,多个操作尽量合并在一起执行
-
-```
+::: details 减少DOM操作,多个操作尽量合并在一起执行
+```js
 <script>
     var listNode = document.getElementById('list')
     var frag = document.createDocumentFragment()
@@ -894,9 +578,54 @@ for(i=0;i<pList.length;i++){}
     <ul id="list"></ul>
 </body>
 ```
+::: 
 
-#### 事件节流
 
-#### 尽早执行操作(如`DOMContentLoaded`)
+
+## 什么是首屏加载？怎么优化？
+
+| 测量指标 | 含义 | 范围 |  备注 |
+|  ------ | ---- | ---- |  ---- |
+| `First Contentful Paint` | 有意义内容的绘制 | 控制在`2s`以内 | 当出现了第一个内容之后它就知道这个网站是可以访问的 |
+| `Largest Contentful Paint` | 最大内容的绘制 | 控制在`2.5s`以内 | 我们看到它绘制的第一个最大内容，无论是图片或者是很大一块文字内容之后，我们就知道这个网站到底是做什么的了 |
+| `Time to Interactive` | 用户可以开始进行交互了，你的页面全部加载完成了 | 控制在`3.8s`以内 | |
+
+
+
+## 从输入URL到页面加载显示完成都发生了什么？
+
+
+浏览器有一个`UI thread`，它会做一个判断看输入的内容到底是`搜索`还是你真正要访问的一个站点，如果访问的是一个`URL`,它会对你输入的`URL`去进行一个相关的解析，接下来`UI thread`会通知`Network thread`
+
+
+`Network thread`首先会进行`DNS`查找，要去确认域名对应的那个`IP`，然后才能和服务器建立连接。在请求发起之前，需要设置`UA`等信息。服务器收到请求后，根据处理逻辑将数据组织成`Response`返回到前端，在返回到浏览器这边的时候，它在读取到`Response`前几个字节的时候会做一个分析，分析我们这个数据的类型，然后根据判断到的类型在去进行相关的解析。接下来还会做一个安全检查去判断一下，你访问的这个域名是不是安全的。然后会通知`UI thread`数据准备就绪。
+
+当数据准备好并且`Renderer Process`也准备好了之后，会有一个进程间的通信，并且会把数据传递给我们的`Renderer Process`。`Main thread`开始进行文本的解析，构建`DOM`，在构建`DOM`的过程中会遇到引用外部资源的情况，它会去进行加载。在遇到`JS`脚本的时候，会阻塞解析，可以使用`async`或者`defer`去进行一个异步的加载。`Main thread`还会去解析`CSS`，最终得到一个`computed styles`，它描述了我们每一个元素最终具体要画成什么样子。`Main thread`遍历我们的`DOM`和`computed styles`构造了我们的`RenderTree`。接下来进入到了`Layout`部分，`Layout`是指查找我们元素几何形状的一个过程，，并且会`创建绘制记录`。
+
+
+接下来，我们需要`Raster Thread`将页面拆分图层，构建`图层树`。然后`Compositor Thread`去把我们已经绘制出来的图层合成成一帧。
+
+::: tip
+`UI thread`和`Network thread`都是`Browser Process`中的<br/>
+`Main thread`，`Raster Thread`和`Compositor Thread`都是`Renderer Process`中的<br/>
+浏览器渲染的工作会交给`Renderer Process`
+:::
+
+
+::: details 页面加载过程 
+| 加载资源的形式 |
+| ----------  |
+|     输入`URL`或跳转页面加载`HTML`      |
+|  加载`HTML`中的静态资源 |
+
+| 加载一个资源的过程 |
+| ------------- |
+| 浏览器根据`DNS`服务器得到域名的`IP`地址 |
+| 向这个`IP`的机器发送`HTTP`请求 |
+| 服务器收到，处理，并返回`HTTP`请求 |
+| 浏览器得到返回内容 |
+:::
+
+
 
 

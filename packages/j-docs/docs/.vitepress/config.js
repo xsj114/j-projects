@@ -69,6 +69,10 @@ export default {
                             link: '/notes/typescript'
                         },
                         {
+                            text: 'RESTFUL',
+                            link: '/notes/resetful'
+                        },
+                        {
                             text: '设计模式',
                             link: '/notes/design'
                         },
@@ -96,16 +100,16 @@ export default {
                     collapsed: false,
                     items: [
                         {
-                            text: 'temp',
-                            link: '/notes/interview/index.md'
-                        },
-                        {
                             text: 'css',
                             link: '/notes/interview/css'
                         },
                         {
                             text: 'javascript',
                             link: '/notes/interview/javascript'
+                        },
+                        {
+                            text: '性能优化',
+                            link: '/notes/interview/performance'
                         },
                         {
                             text: 'webpack',

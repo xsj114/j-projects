@@ -613,6 +613,35 @@ console.log(navigator.userAgent)
 `data`到`view`是正向，通过`Object.defineProperty`实现<br/>
 `view`到`data`是反向，通过`input`事件实现
 
+## web服务器工作的过程
+
+
+```
+    st=>start: 接收客户端连接
+    op1=>operation: 接收请求报文
+    op2=>operation: 处理请求
+    op3=>operation: 访问Web资源
+    op4=>operation: 构造应答
+    op5=>operation: 发送应答
+    
+    st->op1->op2->op3->op4->op5
+```
+
+
+| 请求报文 |
+| ---- |
+| 请求方法 请求地址 HTTP版本 |
+| 请求头|
+| 请求内容 |
+
+
+| 应答报文 |
+| ----- |
+| HTTP版本 状态码 状态解释 |
+| 应答头 |
+| 应答内容 |
+
+
 
 ## CommonJS模块的加载原理
 
@@ -632,6 +661,79 @@ console.log(navigator.userAgent)
 `CommonJS`模块的`require()`是同步加载模块,`ES6`模块的`import`命令是异步加载,有一个独立的模块依赖的解析阶段
 
 
+## SESSION
+
+
+| 优势 |  
+| ----- |
+| 相比`JWT`最大的优势就在于可以主动清除`SESSION`（因为`SESSION`是保存在服务端的） |
+|`SESSION`保存在服务器端，相对较为安全 |
+| 结合`Cookie`使用，较为灵活，兼容性较好 |
+
+|  劣势 | 
+| ----- |
+| `Cookie+SESSION`在跨域场景表现并不好 |
+| 如果是分布式部署，需要做多机共享`SESSION`机制 |
+| 基于`Cookie`的机制很容易被`CSRF` |
+| 查询`SESSION`信息可能会有数据库查询操作 | 
+
+
+## JWT
+
+
+`JWT`(JSON WEB TOKEN)是一个开放标准<br/>
+`JWT`定义了一种紧凑且独立的方式，可以将各方之间的信息作为`JSON`对象进行安全传输<br/>
+`JWT`信息可以验证和信任，因为是经过数字签名的
+
+
+::: details JWT的构成
+头部（Header）<br/>
+`Header`本质是个`JSON`,这个`JSON`有两个字段<br/>
+第一个是`typ`，代表令牌的类型，这里固定为`JWT`<br/>
+第二个是`alg`,代表的是使用的哪种`hash`算法，比如`RSA`
+```js
+// Header编码前后
+{"alg": "HS256", "typ": "JWT"}
+'eyjhbGciOiAiSFMyNTYiLCAidHlwIjogIkpXVCJ9'
+```
+有效载荷(Payload)<br/>
+存储需要传递的信息，比如用户ID，用户名等<br/>
+还包含元数据，如过期时间，发布人等<br/>
+与`Header`不同，`Payload`可以加密<br/>
+签名(Signature)<br/>
+对`Header`和`Payload`部分进行签名<br/>
+保证`Token`在传输的过程中没有被篡改或者损坏
+:::
+
+
+## `JWT`与`SESSION`
+
+::: tip
+可拓展性<br/>
+拓展程序有水平拓展，有垂直拓展<br/>
+水平拓展就是加服务器<br/>
+垂直拓展就是增强你服务器的硬件性能，比如说磁盘，内存，`CPU`等<br/>
+`SESSION`都是存在服务器中的，在水平拓展的方案中，你就必须要专门创建一个独立的中心式的`SESSION`存储系统才行，否则是没有办法共享的，所以在这种情况下，`JWT`是要比`SESSION`好的
+:::
+
+
+
+::: tip
+RESTFUL API<br/>
+`SESSION`是有状态的所以不能用做`RESTFUL API`
+:::
+
+::: tip
+性能<br/>
+在客户端向服务端发送请求的时候，可能会有大量的用户信息在`JWT`中，那么每个`HTTP`请求都会产生大量的开销，如果用`SESSION`的话，只要少量的开销就可以了，因为`SESSION`非常的小<br/>
+
+但是`SESSION`也有缺点，因为对于`SESSION`来说，每一个请求都需要在服务器上查找一下`SESSION`，因为它拿到的是`SESSION ID`嘛，并没有完整的信息，你要用`SESSION ID`来查完整的信息，这也是需要消耗性能的，`JWT`它的数据都在`JWT`的字符串里，所以说不需要进行数据库查询
+:::
+
+::: tip
+时效性<br/>
+`JWT`要比`SESSION`时效性差一点，因为`JWT`只有等到过期时间才可以销毁，`SESSION`可以在服务端手动的去销毁
+:::
 
 ## 手写代码
 
