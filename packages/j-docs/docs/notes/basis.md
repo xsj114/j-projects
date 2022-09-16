@@ -224,7 +224,7 @@ IP地址常使用`点分十进制`来表示（0-255.0-255.0-255.0-255）
 IP数据报每一跳的IP地址始终不变
 
 
-```mermaid
+```
 graph TD
     A计算机-->E路由器
     E路由器-->D计算机
@@ -340,7 +340,7 @@ CIDR将网络前缀相同的IP地址称为一个`CIDR地址块`
 
 作用
 
-```mermaid
+```
 graph TB
 网络层IP32位地址--> |ARP协议| 数据链路层MAC48位地址
 ```
@@ -393,7 +393,7 @@ ARP协议是直接封装到数据链路层`帧数据`里面的
 #### RARP协议（Reverse Address Resolution Protocol）
 
 作用
-```mermaid
+```
 graph TB
 数据链路层MAC48位地址--> |RARP协议| 网络层IP32位地址
 ```
@@ -601,7 +601,7 @@ S<sub>i</sub>描述的是当前节点到别的节点的下一节点
 > OSPF（Open Shortest Path First）协议的过程
 
 
-```mermaid
+```
 flowchart TD
 id1[路由器接入网络] 
 id2[随后向相邻路由器发出问候信息] 
@@ -877,7 +877,7 @@ TCP的`滑动窗口`以字节为单位
 `DNS`（Domain Name System：域名系统）
 
 
-```mermaid
+```
 graph TB
 域名--> |DNS服务| IP
 ```
@@ -909,7 +909,7 @@ graph TB
 
 ##### 浏览器输入URL后HTTP请求返回的完整过程
 
-```flow
+```
 start=>start: Redirect（跳转）
 operation=>operation: App cache（应用缓存）
 operation1=>operation: DNS（DNS查找）
@@ -1170,7 +1170,7 @@ http.createServer(function (request, response) {
 
 ##### HTTPS工作过程
 
-```flow
+```
 start=>start: 443端口的TCP连接
 operation=>operation: SSL安全参数握手
 operation1=>operation: 客户端发送数据

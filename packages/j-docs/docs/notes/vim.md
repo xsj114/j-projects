@@ -1,3 +1,8 @@
+---
+title: VIM
+titleTemplate: 学习笔记
+---
+
 [toc]
 
 # VIM

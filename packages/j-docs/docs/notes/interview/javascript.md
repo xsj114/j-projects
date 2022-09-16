@@ -1,3 +1,10 @@
+---
+title: JAVASCRIPT
+titleTemplate: 面试总结
+---
+
+[toc]
+
 # JAVASCRIPT
 
 ## 说一下对变量提升的理解
@@ -883,7 +890,7 @@ console.log(5)
 // 1 3 5 2 4
 ```
 
-## 创建10个\<a\>标签,点击的时候弹出来对应的序号
+## 创建10个a标签,点击的时候弹出来对应的序号
 
 ```js
 for(var i = 0; i < 10; i++) {

@@ -1,5 +1,6 @@
 export default {
     title: '许仕杰',
+    lastUpdated: true,
     markdown: {
         lineNumbers: true,
         config: (md) => {
@@ -8,6 +9,8 @@ export default {
     },
     themeConfig: {
         logo: '/assets/logo.png',
+        outline: 6,
+        outlineTitle: '1231313',
         socialLinks: [
             {
                 icon: 'github',
@@ -97,7 +100,7 @@ export default {
                 {
                     text: '面试总结',
                     collapsible: true,
-                    collapsed: false,
+                    collapsed: true,
                     items: [
                         {
                             text: 'css',
@@ -120,7 +123,7 @@ export default {
                 {
                     text: '备忘录',
                     collapsible: true,
-                    collapsed: false,
+                    collapsed: true,
                     items: [
                         {
                             text: '账号与信息',

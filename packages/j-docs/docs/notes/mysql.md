@@ -1,3 +1,8 @@
+---
+title: MYSQL
+titleTemplate: 学习笔记
+---
+
 [toc]
  
 # Mysql
