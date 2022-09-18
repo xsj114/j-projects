@@ -263,5 +263,239 @@ class Shell {
 
 ### 归并排序
 
+::: tip
+能够保证将任意长度为N的数组排序所需时间和NlogN成正比<br/>
+缺点是所需的额外空间和N成正比
+:::
+
+
+::: details 归并
+将两个有序的数组归并成一个更大的有序数组
+```js
+// 原地归并
+const merge = (a, lo, mid, hi) => {
+    let aux = []
+    let i = lo;
+    let j = mid + 1;
+    for (let k = lo; k <= hi; k++ ) {
+        aux[k] = a[k]
+    }
+
+    for (let k = lo; k <= hi; k++) {
+        if ( i > mid ) { a[k] = aux[j++] } // 左半边用尽取右半边的元素
+        else if ( j > hi) { a[k] = aux[i++] }   // 右半边用尽取左半边的元素
+        else if ( less( aux[j], aux[i] ) ) { a[k] = aux[j++] } // 右半边的当前元素小于左半边的当前元素
+        else { a[k] = aux[i++] } // 右半边的当前元素大于等于左半边的当前元素
+    }
+}
+
+const less = ( v, w ) => {
+    return v < w
+}
+```
+:::
+
+
+#### 自顶向下的归并排序
+
+```js
+class Merge {
+
+    constructor () {
+        this.aux = []
+    }
+
+    sort (a) {
+        this._sort(a, 0, a.length - 1)    
+    }
+
+    _sort (a, lo, hi) {
+        if ( hi <= lo ) return
+        let mid = lo + parseInt( ( hi - lo ) / 2 ) 
+        this._sort( a, lo, mid )
+        this._sort( a, mid + 1,  hi )
+        this.merge( a, lo, mid, hi )
+    }
+
+    merge ( a, lo, mid, hi ) {
+        let i = lo;
+        let j = mid + 1;
+        for (let k = lo; k <= hi; k++ ) {
+            this.aux[k] = a[k]
+        }
+
+        for (let k = lo; k <= hi; k++) {
+            if ( i > mid ) { a[k] = this.aux[j++] } // 左半边用尽取右半边的元素
+            else if ( j > hi) { a[k] = this.aux[i++] }   // 右半边用尽取左半边的元素
+            else if ( this.less( this.aux[j], this.aux[i] ) ) { a[k] = this.aux[j++] } // 右半边的当前元素小于左半边的当前元素
+            else { a[k] = this.aux[i++] } // 右半边的当前元素大于等于左半边的当前元素
+        }
+    }
+
+    less ( v, w ) {
+        return v < w
+    }
+}
+```
+
+::: details  自顶向下的归并排序优化
+使用插入排序处理小规模的子数组（因为插入排序非常简单，因此很可能在小数组上比归并排序更快）<br/>
+测试数组是否已经有序
+:::
+
+```js
+class MergeX {
+
+    constructor () {
+        this.aux = []
+        this.cutoff = 15
+    }
+
+    sort (a) {
+        this._sort(a, 0, a.length - 1)    
+    }
+
+    _sort (a, lo, hi) {
+        if ( hi <= lo + this.cutoff ) {
+            this.insertSort(a, lo, hi)
+            return
+        }
+        let mid = lo + parseInt( ( hi - lo ) / 2 ) 
+        this._sort( a, lo, mid )
+        this._sort( a, mid + 1,  hi )
+        if ( !( this.less( a[mid + 1], a[mid] ) ) ) { return }
+        this.merge( a, lo, mid, hi )
+    }
+
+    merge ( a, lo, mid, hi ) {
+        let i = lo;
+        let j = mid + 1;
+        for (let k = lo; k <= hi; k++ ) {
+            this.aux[k] = a[k]
+        }
+
+        for (let k = lo; k <= hi; k++) {
+            if ( i > mid ) { a[k] = this.aux[j++] } // 左半边用尽取右半边的元素
+            else if ( j > hi) { a[k] = this.aux[i++] }   // 右半边用尽取左半边的元素
+            else if ( this.less( this.aux[j], this.aux[i] ) ) { a[k] = this.aux[j++] } // 右半边的当前元素小于左半边的当前元素
+            else { a[k] = this.aux[i++] } // 右半边的当前元素大于等于左半边的当前元素
+        }
+    }
+
+    insertSort ( a, lo, hi ) {
+        for ( let i = lo; i <= hi; i++ ) {
+            for ( let j = i; j > lo && this.less( a[j], a[j-1] ); j-- ) {
+                this.exch( a, j, j - 1 )
+            }
+        }
+    }
+
+    less ( v, w ) {
+        return v < w
+    }
+
+    exch ( a, i, j ) {
+        let temp = a[i];
+        a[i] = a[j];
+        a[j] = temp;
+    }
+}
+```
+
+#### 自底向上的归并排序
+
+```js
+class MergeBU {
+
+    constructor () {
+        this.aux = []
+    }
+
+    sort (a) {
+        let N = a.length
+        for ( let sz = 1; sz < N; sz = sz + sz ) {
+            for ( let lo = 0; lo < N - sz; lo += sz + sz) {
+                this.merge( a, lo, lo + sz - 1, Math.min( lo + sz + sz - 1, N - 1) )
+            }
+        }
+    }
+
+
+    merge ( a, lo, mid, hi ) {
+        let i = lo;
+        let j = mid + 1;
+        for (let k = lo; k <= hi; k++ ) {
+            this.aux[k] = a[k]
+        }
+
+        for (let k = lo; k <= hi; k++) {
+            if ( i > mid ) { a[k] = this.aux[j++] } // 左半边用尽取右半边的元素
+            else if ( j > hi) { a[k] = this.aux[i++] }   // 右半边用尽取左半边的元素
+            else if ( this.less( this.aux[j], this.aux[i] ) ) { a[k] = this.aux[j++] } // 右半边的当前元素小于左半边的当前元素
+            else { a[k] = this.aux[i++] } // 右半边的当前元素大于等于左半边的当前元素
+        }
+    }
+
+    less ( v, w ) {
+        return v < w
+    }
+}
+```
+
+
+### 快速排序
+
+
+```js
+class Quick {
+
+
+    sort (a) {
+        this._sort(a, 0, a.length - 1)
+    }
+
+    _sort (a, lo, hi) {
+        if ( hi <= lo ) { return }
+        let j = this.partition(a, lo, hi)             
+        this._sort(a, lo, j - 1 )
+        this._sort(a, j + 1, hi)
+           
+    }
+
+    partition (a, lo, hi) {
+        let i = lo
+        let j = hi + 1
+        let v = a[lo]
+        while (true) {
+            // 为了找到一个大于v的元素
+            while ( this.less( a[++i], v ) ) {
+                if ( i === hi ) break
+            } 
+            // 为了找到一个不大于v的元素
+            while ( this.less( v, a[--j] ) ) {
+                if ( j === lo ) break
+            } 
+            if ( i >= j ) { break }
+            this.exch( a, i, j )
+        }
+        this.exch( a, lo, j )
+        return j
+    }
+
+    less ( v, w ) {
+        return v < w
+    }
+
+    exch ( a, i, j ) {
+        let temp = a[i];
+        a[i] = a[j];
+        a[j] = temp;
+    }
+
+}
+
+```
+
+
 
 
