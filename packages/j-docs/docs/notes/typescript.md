@@ -1655,8 +1655,7 @@ type T2 = Foo<{ a: string; b: number }>;
 
 ## utility types
 
-### Partial\<Type\>
-
+::: details Partial&lt;Type&gt;
 ```
 interface Person {
     name: string
@@ -1673,18 +1672,17 @@ let user: Partial<Person> = {
 }
 
 ```
-
-#### Implementation
-
+实现
 ```
 type Partial<T> = {
     [ P in keyof T ]?: T[ P ];
 }
 ```
+:::
 
 
-### Required\<Type\>
 
+::: details Required&lt;Type&gt;
 ```
 interface Props {
   a?: number;
@@ -1695,17 +1693,16 @@ const obj: Props = { a: 5 };
 
 const obj2: Required<Props> = { a: 5, b: 'string' };
 ```
-
-#### Implementation
-
+实现
 ```
 type Required<T> = {
     [ P in keyof T ]-?: T[ P ];
 }
 ```
+:::
 
-### Readonly\<Type\>
 
+::: details Readonly&lt;Type&gt;
 ```
 interface Todo {
   title: string;
@@ -1717,34 +1714,31 @@ const todo: Readonly<Todo> = {
 
 todo.title = "Hello";  // error
 ```
-
-#### Implementation
-
+实现
 ```
 type Readonly<T> = {
     readonly [ P in keyof T ]: T[ P ];
 }
 ```
+:::
 
-### Record\<Keys,Type\>
 
+::: details Record&lt;Keys,Type&gt;
 ```
 let obj: Record<'a'|'b', boolean> = {
     a: true,
     b: false
 }
 ```
-
-#### Implementation
-
+实现
 ```
 type Record<K, T> = {
     [ P in K ]: T;
 }
 ```
+:::
 
-### Pick\<Type, Keys\>
-
+::: details Pick&lt;Type,Keys&gt;
 ```
 interface Todo {
   title: string;
@@ -1759,17 +1753,15 @@ const todo: TodoPreview = {
   completed: false
 };
 ```
-
-#### Implementation
-
+实现
 ```
 type Pick<T,K extends keyof T> = {
     [P in K]: T[P]
 }
 ```
+:::
 
-### Omit\<Type, Keys\>
-
+::: details Omit&lt;Type,Keys&gt;
 ```
 interface Todo {
     title: string;
@@ -1783,17 +1775,15 @@ const todo: TodoPreview = {
     title: "Clean room"
 };
 ```
-
-#### Implementation
-
+实现
 ```
 type Omit <T, K extends keyof T> = {
     [ P in Exclude<keyof T, K> ]: T[P]
 }
 ```
+:::
 
-### Exclude\<Type, ExcludedUnion\>
-
+::: details Exclude&lt;Type,ExcludedUnion&gt;
 ```
 // T0 = "b" | "c"
 type T0 = Exclude<"a" | "b" | "c", "a">;
@@ -1801,42 +1791,35 @@ type T0 = Exclude<"a" | "b" | "c", "a">;
 let b: T0 = 'b'
 let c: T0 = 'c'
 ```
-
-#### Implementation
-
+实现
 ```
 type Exclude<T, U> = T extends U ? never : T;
 ```
+:::
 
-### Extract\<Type, Union\>
-
+::: details Extract&lt;Type,Union&gt;
 ```
 type T0 = Extract<"a" | "b" | "c", "a">
 let a: T0 = 'a'
 ```
-
-#### Implementation
-
+实现
 ```
 type Extract<T, U> = T extends U ? T : never;
 ```
+:::
 
-### NonNullable\<Type\>
-
-
+::: details NonNullable&lt;Type&gt;
 ```
 type T0 = NonNullable<string | number | undefined | null>;
 ```
-
-#### Implementation
-
+实现
 ```
 type NonNullable<T> = T extends undefined | null ? never : T;
 ```
+:::
 
 
-### Parameters\<Type\>
-
+::: details Parameters&lt;Type&gt;
 构造的是元组类型
 ```
 type T1 = Parameters<(s: string) => void>;
@@ -1852,15 +1835,13 @@ let arr: T3 = [{
     b: 'b'
 }]
 ```
-
-#### Implementation
-
+实现
 ```
 type Parameters<T extends ( ...args: any[] ) => any> = T extends ( ...args: infer P ) => any ? P : never;
 ```
+:::
 
-### ConstructorParameters\<Type\>
-
+::: details ConstructorParameters&lt;Type&gt;
 ```
 class Person {
     constructor( public name: string, age: number ) {}
@@ -1871,28 +1852,24 @@ type X = ConstructorParameters<typeof Person>
 
 let arr: X = ['', 32]
 ```
-
-#### Implementation
-
+实现
 ```
 type ConstructorParameters<T extends new ( ...args: any[] ) => any> = T extends new ( ...args: infer U ) => any ? U : never;
 ```
+:::
 
-### ReturnType\<Type\>
-
+::: details ReturnType&lt;Type&gt;
 ```
 // type T0 = string
 type T0 = ReturnType<() => string>;
 ```
-
-#### Implementation
-
+实现
 ```
 type ReturnType<T extends ( ...args: any[] ) => any> = T extends ( ...args: any[] ) => infer U ? U : never;
 ```
+:::
 
-### InstanceType\<Type\>
-
+::: details InstanceType&lt;Type&gt;
 ```
 class C {
   x = 0;
@@ -1920,15 +1897,13 @@ let t: T0 = {
     y: 1
 }
 ```
-
-#### Implementation
-
+实现
 ```
 type InstanceType<T extends new ( ...args: any ) => any> = T extends new ( ...args: any ) => infer U ? U : any;
 ```
+:::
 
-### ThisParameterType\<Type\>
-
+::: details ThisParameterType&lt;Type&gt;
 提取函数this参数的类型，如果没有this参数是unknown类型
 ```
 function toHex(this: Number) {
@@ -1937,18 +1912,15 @@ function toHex(this: Number) {
 
 let a: ThisParameterType<typeof toHex> = 1
 ```
-
-#### Implementation
-
+实现
 ```
 type ThisParameterType<T> = T extends ( this: infer U, ...args: any[] ) => any ? U : unknown;
 ```
+:::
 
 
-### OmitThisParameter\<Type\>
-
+::: details OmitThisParameter&lt;Type&gt;
 删除Type中的this，创建新的函数类型，如果没有this，则就是Type类型
-
 ```
 function toHex (this: Number) {
   return this.toString(16);
@@ -1956,9 +1928,7 @@ function toHex (this: Number) {
 
 const fn: OmitThisParameter<typeof toHex> = toHex.bind({a: 1});
 ```
-
-#### Implementation
-
+实现
 ```
 type OmitThisParameter<T> = T extends ( this: infer U, ...args: infer A ) => infer R ? ( ...args: A ) => R : T;
 ```
@@ -1966,6 +1936,7 @@ type OmitThisParameter<T> = T extends ( this: infer U, ...args: infer A ) => inf
 ```
 type OmitThisParameter<T> = unknown extends ThisParameterType<T> ? T : T extends ( ...args: infer A ) => infer R ? ( ...args: A ) => R : T;
 ```
+:::
 
 ## 声明合并
 

@@ -1,3 +1,7 @@
+---
+title: 计算机基础
+titleTemplate: 学习笔记
+---
 
 [toc]
 
