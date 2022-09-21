@@ -501,5 +501,80 @@ class Quick {
 ```
 
 
+::: details 快速排序优化
+切换到插入排序（对于小数组，快速排序比插入排序慢）<br/>
+三取样切分
+```
+class QuickX {
 
+    constructor () {
+        this.cutoff = 15
+    }
+
+
+    sort (a) {
+        this._sort(a, 0, a.length - 1)
+    }
+
+    _sort (a, lo, hi) {
+        let n = hi - lo + 1
+        if ( n <= this.cutoff ) { 
+            this.insertSort(a, lo, hi)
+            return
+        }
+        let m = this.medianThree(a, lo, lo + n / 2, hi)
+        this.exch(a, m, lo)
+        let j = this.partition(a, lo, hi)             
+        this._sort(a, lo, j - 1 )
+        this._sort(a, j + 1, hi)
+           
+    }
+
+    medianThree ( a, i, j, k ) {
+        return ( this.less( a[i], a[j] ) ) ?
+               ( this.less( a[j], a[k] ) ? j : this.less( a[i], a[k] ) ? k : i ) :
+               ( this.less( a[k], a[j] ) ? j : this.less( a[k], a[i] ) ? k : i ) );
+    }
+
+    insertSort ( a, lo, hi ) {
+        for ( let i = lo; i <= hi; i++ ) {
+            for ( let j = i; j > lo && this.less( a[j], a[j-1] ); j-- ) {
+                this.exch( a, j, j - 1 )
+            }
+        }
+    }
+
+    partition (a, lo, hi) {
+        let i = lo
+        let j = hi + 1
+        let v = a[lo]
+        while (true) {
+            // 为了找到一个大于v的元素
+            while ( this.less( a[++i], v ) ) {
+                if ( i === hi ) break
+            } 
+            // 为了找到一个不大于v的元素
+            while ( this.less( v, a[--j] ) ) {
+                if ( j === lo ) break
+            } 
+            if ( i >= j ) { break }
+            this.exch( a, i, j )
+        }
+        this.exch( a, lo, j )
+        return j
+    }
+
+    less ( v, w ) {
+        return v < w
+    }
+
+    exch ( a, i, j ) {
+        let temp = a[i];
+        a[i] = a[j];
+        a[j] = temp;
+    }
+
+}
+```
+:::
 
