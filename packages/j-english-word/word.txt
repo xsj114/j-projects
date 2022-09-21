@@ -2320,7 +2320,6 @@ protein      蛋白
 protest      抗议,断言
 proud        骄傲,得意
 province     省
-provision    规定,条款
 provoke      惹,挑衅
 pulse        脉息
 punch        殴打
@@ -3136,3 +3135,10 @@ carbon       碳
 dark         黑暗
 honest       诚实
 ticket       票
+marketplace  市井
+universe     宇宙
+provision    规定,条款
+hardware     硬件
+bats         怪异,疯的
+diagram      图表
+contradict   顶撞,抵触
