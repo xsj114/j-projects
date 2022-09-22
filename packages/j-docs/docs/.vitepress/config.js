@@ -72,6 +72,10 @@ export default {
                             link: '/notes/typescript'
                         },
                         {
+                            text: 'YARN',
+                            link: '/notes/yarn'
+                        },
+                        {
                             text: 'RESTFUL',
                             link: '/notes/resetful'
                         },

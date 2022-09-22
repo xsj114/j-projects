@@ -504,7 +504,7 @@ class Quick {
 ::: details 快速排序优化
 切换到插入排序（对于小数组，快速排序比插入排序慢）<br/>
 三取样切分
-```
+```js
 class QuickX {
 
     constructor () {
@@ -522,7 +522,7 @@ class QuickX {
             this.insertSort(a, lo, hi)
             return
         }
-        let m = this.medianThree(a, lo, lo + n / 2, hi)
+        let m = this.medianThree(a, lo, lo + parseInt( n / 2 ), hi)
         this.exch(a, m, lo)
         let j = this.partition(a, lo, hi)             
         this._sort(a, lo, j - 1 )
@@ -533,7 +533,7 @@ class QuickX {
     medianThree ( a, i, j, k ) {
         return ( this.less( a[i], a[j] ) ) ?
                ( this.less( a[j], a[k] ) ? j : this.less( a[i], a[k] ) ? k : i ) :
-               ( this.less( a[k], a[j] ) ? j : this.less( a[k], a[i] ) ? k : i ) );
+               ( this.less( a[k], a[j] ) ? j : this.less( a[k], a[i] ) ? k : i ) ;
     }
 
     insertSort ( a, lo, hi ) {
