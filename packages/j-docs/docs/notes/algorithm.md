@@ -25,6 +25,120 @@ titleTemplate: 学习笔记
 | 立方级别 | N³ |
 | 指数级别 | 2^N |
 
+
+## 数据结构
+
+### 优先队列
+
+
+::: details 无序数组实现优先队列
+```js
+class MaxPQ {
+
+    constructor () {
+        this.n = 0
+        this.pq = []
+    }
+
+    // 向优先队列中插入一个元素
+    insert (v) {
+        this.pq[this.n++] = v
+    }
+    
+    // 返回最大元素
+    max () {
+        let max = 0
+        for (let i = 1; i < this.n; i++) {
+            if ( this.less(max, i) ) { max = i }
+        }
+        return this.pq[max]
+    }
+
+    // 删除并返回最大元素
+    delMax () {
+        let max = 0
+        for (let i = 1; i < this.n; i++) {
+            if ( this.less(max, i) ) { max = i }
+        }
+        this.exch(max, this.n - 1)
+        return this.pq[--this.n]
+    }
+
+    // 返回队列是否为空
+    isEmpty () {
+        return this.n === 0
+    }
+
+    // 返回优先队列中的元素个数
+    size () {
+        return this.n
+    }
+
+    less (i, j) {
+        return this.pq[i] < this.pq[j]
+    }
+
+    exch ( i, j ) {
+        let temp = this.pq[i];
+        this.pq[i] = this.pq[j];
+        this.pq[j] = temp;
+    }
+
+}
+```
+:::
+
+
+::: details 有序数组实现优先队列
+```js
+class MaxPQ {
+
+    constructor () {
+        this.n = 0
+        this.pq = []
+    }
+
+    // 向优先队列中插入一个元素
+    insert (v) {
+        let i = this.n - 1
+        while ( i >= 0 && this.less( v, this.pq[i] ) ) {
+            this.pq[i+1] = this.pq[i]
+            i--
+        }
+        this.pq[i+1] = v
+        this.n++
+    }
+    
+    // 返回最大元素
+    max () {
+        return this.pq[this.n - 1]
+    }
+
+    // 删除并返回最大元素
+    delMax () {
+        return this.pq[--this.n]
+    }
+
+    // 返回队列是否为空
+    isEmpty () {
+        return this.n === 0
+    }
+
+    // 返回优先队列中的元素个数
+    size () {
+        return this.n
+    }
+
+    less (v, w) {
+        return v < w
+    }
+
+}
+```
+:::
+
+
+
 ## 排序
 
 
@@ -450,6 +564,16 @@ class MergeBU {
 避免这种情况的方法是在快速排序前将数组随机排序
 :::
 
+
+::: details 思路
+关键在于切分<br/>
+对于某个切分元素`a[j]`已经排定<br/>
+`a[lo]`到`a[j-1]`中的所有元素都不大于`a[j]`<br/>
+`a[j+1]`到`a[hi]`中的所有元素都不小于`a[j]`<br/>
+通过递归的调用切分来排序
+:::
+
+
 ```js
 class Quick {
 
@@ -577,4 +701,59 @@ class QuickX {
 }
 ```
 :::
+
+
+#### 三向切分的快速排序
+
+::: tip
+对于存在大量重复元素的数组<br/>
+三向切分的快速排序比标准的快速排序的效率高得多
+:::
+
+::: details 思路
+从左到右遍历数组一次<br/>
+维护一个指针`lt`使得`a[lo..lt-1]`中的元素都小于`v`<br/>
+维护一个指针`gt`使得`a[gt+1..hi]`中的元素都大于`v`<br/>
+维护一个指针`i`使得`a[lt..i-1]`中的元素都等于`v`
+:::
+
+```js
+class Quick3way {
+
+    sort (a) {
+        this._sort(a, 0, a.length - 1)
+    }
+
+    _sort (a, lo, hi) {
+        if (hi <= lo) return
+        let lt = lo;
+        let gt = hi;
+        let i = lo + 1;
+        let v = a[lo];
+        while (i <= gt) {
+            if (a[i] < v) {
+                this.exch(a, lt++, i++)    
+            } else if (a[i] > v) {
+                this.exch(a, i, gt--)    
+            } else {
+                i++
+            }
+        }
+        this._sort(a, lo, lt - 1)
+        this._sort(a, gt + 1, hi)
+    }
+
+    exch ( a, i, j ) {
+        let temp = a[i];
+        a[i] = a[j];
+        a[j] = temp;
+    }
+
+}
+```
+
+
+### 堆排序
+
+
 

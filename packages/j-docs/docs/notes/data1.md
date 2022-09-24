@@ -775,66 +775,6 @@ class Ugly {
 ## 排序
 
 
-### 快速排序
-
-`本质：在遍历的时候，先选一个基准元素，选中这个基准元素的目的是，把所有小于基准元素的放在左边，大于基准元素的放在右边，在对基本元素左边的第一个元素做为左边的基准元素，重复上述过程，以此类推`
-
-```
-const fn = (arr) => {
-    let quickSort = (arr) => {
-        let len = arr.length
-        if (len < 2) {
-            return arr
-        } else {
-            let flag = arr[0]
-            let left = []
-            let right = []
-            for (let i=1, tmp; i < len; i++) {
-                tmp = arr[i]
-                if (tmp<flag) {
-                    left.push(tmp)
-                } else {
-                    right.push(tmp)
-                }
-            }
-            return quickSort(left).concat(flag, quickSort(right))
-        }
-    }
-    return quickSort(arr)
-}
-```
-
-```
-const fn = (arr) => {
-    let swap = (arr, i, j) => {
-        let tmp = arr[i]
-        arr[i] = arr[j]
-        arr[j] = tmp
-    }
-    let findCenter = (arr, left, right) => {
-        let flag = arr[left]
-        let idx = left + 1
-        for (let i = idx; i <= right; i++) {
-            if (arr[i] < flag) {
-                swap(arr, idx, i)
-                idx++
-            }
-        }
-        swap(arr, left, idx - 1)
-        return idx
-    }
-    let sort = (arr, left, right) => {
-        if (left < right) {
-            let center = findCenter(arr, left, right)
-            sort(arr, left, center - 1)
-            sort(arr, center, right)
-        }  
-    }
-    sort(arr, 0, arr.length - 1)
-    return arr
-}
-```
-
 ### 堆排序
 
 ```
