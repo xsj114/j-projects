@@ -859,17 +859,44 @@ class Quick3way {
 ```js
 class Heap {
 
+    constructor () {
+        this.n = 0
+        this.heap = null
+    }
+
     sort (a) {
-        let N = a.length
-        for (let k = parseInt( N / 2 ); K >= 1; k--) {
-            this.sink()
+        this.heap = a
+        this.n = a.length
+        for (let k = parseInt( this.n / 2 ); k >= 1; k--) {
+            this.sink(k)
         }
-        while (N>1) {
-            this.exch()
-            this.sink()
+        while (this.n > 1) {
+            this.exch( 1, this.n-- )
+            this.sink( 1 )
         }
     }
 
+    exch ( i, j ) {
+        let temp = this.heap[i];
+        this.heap[i] = this.heap[j];
+        this.heap[j] = temp;
+    }
+
+     sink (k) {
+        while (2 * k <= this.n) {
+            let c = 2 * k
+            if ( c < this.n && this.less( c, c + 1 ) ) {
+                c++
+            }
+            if ( !this.less( k, c ) ) break
+            this.exch( k, c )
+            k = c
+        }
+    }
+
+    less (v, w) {
+        return this.heap[v] < this.heap[w]
+    }
 }
 ```
 
