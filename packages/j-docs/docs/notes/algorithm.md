@@ -30,6 +30,15 @@ titleTemplate: 学习笔记
 
 ### 优先队列
 
+::: tip
+优先队列的各种实现在最坏情况下运行时间的增长数量级
+
+| 数据结构  |  插入元素 |  删除最大元素 |
+| --- | ---- | ----- |
+| 有序数组  |  N |  1 |
+| 无序数组 | 1 | N |
+| 堆 | logN | logN |
+:::
 
 ::: details 无序数组实现优先队列
 ```js
@@ -135,6 +144,87 @@ class MaxPQ {
 
 }
 ```
+:::
+
+
+::: details 堆实现优先队列
+在一个堆中，位置k的结点的父结点的位置为`k/2`,而它两个子节点的位置则分别为`2k`和`2k+1`<br/>
+```js
+class MaxPQ {
+
+    constructor () {
+        this.n = 0
+        this.pq = []
+    }
+
+    // 向优先队列中插入一个元素
+    insert (v) {
+        this.pq[++this.n] = v
+        this.swim(this.n)
+    }
+
+    // 上浮
+    swim (k) {
+        while ( k > 1 && this.less( parseInt( k / 2 ), k ) ) {
+            this.exch( parseInt( k / 2 ), k )
+            k = parseInt( k / 2 )
+        }
+    }
+
+    // 下沉
+    sink (k) {
+        while (2 * k <= this.n) {
+            let c = 2 * k
+            if ( c < this.n && this.less( c, c + 1 ) ) {
+                c++
+            }
+            if ( !this.less( k, c ) ) break
+            this.exch( k, c )
+            k = c
+        }
+    }
+    
+    // 返回最大元素
+    max () {
+        return this.pq[1]
+    }
+
+    // 删除并返回最大元素
+    delMax () {
+        let max = this.pq[1]
+        this.exch(1, this.n--)
+        this.pq[this.n + 1] = null
+        this.sink(1)
+        return max
+    }
+
+    // 返回队列是否为空
+    isEmpty () {
+        return this.n === 0
+    }
+
+    // 返回优先队列中的元素个数
+    size () {
+        return this.n
+    }
+
+    less (v, w) {
+        return this.pq[v] < this.pq[w]
+    }
+
+
+    exch ( i, j ) {
+        let temp = this.pq[i];
+        this.pq[i] = this.pq[j];
+        this.pq[j] = temp;
+    }
+
+}
+```
+插入元素原理<br/>
+将新元素加到数组末尾，增加堆的大小并让这个新元素上浮到合适的位置<br/>
+删除最大元素原理<br/>
+从数组顶端删去最大的元素并将数组的最后一个元素放到顶端，减小堆的大小并让这个元素下沉到合适的位置
 :::
 
 
@@ -755,5 +845,91 @@ class Quick3way {
 
 ### 堆排序
 
+::: tip
+:::
+
+
+::: details 思路
+堆排序分为两个阶段,一个是堆的构造阶段,一个是下沉排序阶段<br/>
+堆的构造阶段中，将原始数组重新组织安排进一个堆中<br/>
+下沉排序阶段中，从堆中按顺序取出所有元素并得到排序结果
+:::
+
+
+```js
+class Heap {
+
+    sort (a) {
+        let N = a.length
+        for (let k = parseInt( N / 2 ); K >= 1; k--) {
+            this.sink()
+        }
+        while (N>1) {
+            this.exch()
+            this.sink()
+        }
+    }
+
+}
+```
+
+#### 堆的构造
+
+```js
+// 使用下沉构造堆
+const arr = [ , 'S', 'O', 'R', 'T', 'E', 'X', 'A', 'M', 'P', 'L', 'E']
+const createHeap = (a) => {
+    let N = a.length
+    const sink = (k) => {
+        while (2 * k <= N) {
+            let c = 2 * k
+            if ( c < N && less( c, c + 1 ) ) {
+                c++
+            }
+            if ( !less( k, c ) ) break
+            exch( k, c )
+            k = c
+        }
+    }
+    const less = (i, j ) => {
+        return a[i] < a[j]
+    }
+    const exch = (i, j ) => {
+        let temp = a[i];
+        a[i] = a[j];
+        a[j] = temp;
+    }
+    for (let k = parseInt( N / 2 ); k >= 1; k-- ) {
+        sink(k)
+    }
+}
+createHeap(arr)
+```
+
+```js
+// 使用上浮构造堆
+const arr = [ , 'S', 'O', 'R', 'T', 'E', 'X', 'A', 'M', 'P', 'L', 'E']
+const createHeap = (a) => {
+    let N = a.length
+    const swim = (k) => {
+        while ( k > 1 && less( parseInt( k / 2 ), k ) ) {
+            exch( parseInt( k / 2 ), k )
+            k = parseInt( k / 2 )
+        }
+    }
+    const less = (i, j ) => {
+        return a[i] < a[j]
+    }
+    const exch = (i, j ) => {
+        let temp = a[i];
+        a[i] = a[j];
+        a[j] = temp;
+    }
+    for (let i = 2; i < N; i++) {
+        swim(i)
+    }
+}
+createHeap(arr)
+```
 
 
