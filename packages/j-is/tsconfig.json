@@ -5,7 +5,8 @@
         "noImplicitAny": true,
         "strict": true,
         "moduleResolution": "node",
-        "module": "commonjs"
+        "module": "commonjs",
+        "types": ["node", "jest"]
     },
     "include": ["src/**/*"],
     "exclude": ["test", "dist", "node_modules", "coverage"]

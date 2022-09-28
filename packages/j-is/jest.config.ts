@@ -1,6 +1,6 @@
-import type { Config } from '@jest/types';
+import type { Config } from 'jest';
 
-const config: Config.InitialOptions = {
+const config: Config = {
     ...require( '../../jest.base.config.js' ),
     ...require( '../../jest.base.config.ts' ),
     'verbose': true,
