@@ -175,9 +175,41 @@ yarn cache clean --mirror
     "devDependencies": {},
     // 列出的依赖项将由使用者提供
     "peerDependencies": {},
-    // 
-    "optionalDependencies": {}
+    // 列出的依赖项即便安装失败，也不影响整体项目运行
+    "optionalDependencies": {},
+    // 只能设置在项目的根目录下，在任何其他workspace中使用会产生警告
+    // 定义使用特定的包版本,下面列出了acorn包使用6.4.2版本，如果你的项目里引入了webpack，acorn是webpack的依赖，它的版本可能是8.8.0,设置此字段后，将只会下载6.4.2版本
+    "resolutions": {
+        "acorn": "6.4.2"
+    }
 }
+```
+
+
+## .yarnrc.yml
+
+```
+// 下载的软件包在系统上的存储路径
+cacheFolder: "./.yarn/cache"
+
+// 忽略cacheFolder设置，并将缓存文件存储到共享的文件夹中
+enableGlobalCache: false
+
+// 存储所有系统全局文件的路径
+globalFolder: "./.yarn/global"
+
+// 定义发出http请求时要使用的代理
+httpProxy: "http://127.0.0.1:1087"
+
+// 定义发出https请求时要使用的代理
+httpsProxy: "http://127.0.0.1:1087"
+
+// 定义使用什么方式去安装node包
+nodeLinker: "pnp"
+
+pnpFallbackMode: ""
+
+packageExtensions: ""
 ```
 
 

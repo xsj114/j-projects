@@ -1994,7 +1994,6 @@ fatal        致命
 discipline   纪律,训练
 disclose     透露
 fate         命运
-discourage   阻碍
 discourse    论述,演讲
 disease      疾病
 dismiss      解雇
@@ -3142,3 +3141,5 @@ hardware     硬件
 bats         怪异,疯的
 diagram      图表
 contradict   顶撞,抵触
+discourage   阻碍
+capacity     容量
