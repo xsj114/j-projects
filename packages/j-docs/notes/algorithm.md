@@ -871,24 +871,25 @@ class Heap {
         this.heap = a
         this.n = a.length
         for (let k = parseInt( this.n / 2 ); k >= 1; k--) {
-            this.sink(k)
+            this.sink(k, this.n)
         }
-        while (this.n > 1) {
-            this.exch( 1, this.n-- )
-            this.sink( 1 )
+        let k = this.n
+        while (k > 1) {
+            this.exch( 1, k-- )
+            this.sink( 1, k )
         }
     }
 
     exch ( i, j ) {
-        let temp = this.heap[i];
-        this.heap[i] = this.heap[j];
-        this.heap[j] = temp;
+        let temp = this.heap[i-1];
+        this.heap[i-1] = this.heap[j-1];
+        this.heap[j-1] = temp;
     }
 
-     sink (k) {
-        while (2 * k <= this.n) {
+     sink (k, n) {
+        while (2 * k <= n) {
             let c = 2 * k
-            if ( c < this.n && this.less( c, c + 1 ) ) {
+            if ( c < n && this.less( c, c + 1 ) ) {
                 c++
             }
             if ( !this.less( k, c ) ) break
@@ -897,8 +898,8 @@ class Heap {
         }
     }
 
-    less (v, w) {
-        return this.heap[v] < this.heap[w]
+    less (i, j) {
+        return this.heap[i-1] < this.heap[j-1]
     }
 }
 ```
