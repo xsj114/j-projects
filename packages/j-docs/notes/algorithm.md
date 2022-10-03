@@ -848,8 +848,6 @@ class Quick3way {
 
 ### 堆排序
 
-::: tip
-:::
 
 
 ::: details 思路
@@ -962,5 +960,515 @@ const createHeap = (a) => {
 }
 createHeap(arr)
 ```
+
+
+
+## 查找
+
+
+### 符号表
+
+::: tip
+符号表是一种存储键值对的数据结构，支持插入和查找两种操作
+:::
+
+
+| 使用的数据结构 | 实现 | 优点 |  缺点 |
+| ----- | ---- | ---- | ----- |
+| 链表（顺序查找）| SequentialSearchST |  适用于小型问题 | 对于大型符号表很慢 |
+| 有序数组（二分查找）| BinarySearchST | 最优的查找效率和空间需求，能够进行有序性相关的操作 | 插入操作很慢|
+| 二叉查找树 | BST | 实现简单，能够进行有序性相关的操作 | 没有性能上界的保证<br/><br/>链接需要额外的空间 |
+| 平衡二叉查找树 | RedBlackBST | 最优的查找和插入效率，能够进行有序性相关的操作| 链接需要额外的空间 |
+| 散列表 | SeparateChainHashST<br/>LinearProbingHashST  | 能够快速地查找和插入常见类型的数据 | 需要计算每种类型的数据的散列<br/><br/>无法进行有序性相关的操作<br/><br/>链接和空节点需要额外的空间 |
+
+
+#### 基于链表的符号表
+
+```js
+class Node {
+    
+    constructor (key, val, next) {
+        this.key = key
+        this.val = val
+        this.next = next
+    }
+
+}
+```
+
+
+```js
+class SequentialSearchST {
+
+    constructor () {
+        this.first = null
+        this.n = 0
+    }
+
+    put (key, val) {
+
+        if ( key === null ) throw "key cannot be null" 
+
+        if (val === null) {
+            this.delete(key)
+            return
+        }
+
+
+        for ( let x = this.first; x !== null; x = x.next ) {
+            if ( key === x.key ) {
+                x.val = val
+                return
+            }
+        }
+
+        this.first = new Node(key, val , this.first)
+        this.n++
+
+    }
+
+
+    get (key) {
+        if ( key === null ) throw "key cannot be null" 
+        for ( let x = this.first; x !== null; x = x.next ) {
+            if ( key === x.key ) return x.val
+        }
+        return null
+    }
+
+
+    delete (key) {
+        if ( key === null ) throw "key cannot be null" 
+        this.first = this._delete(this.first, key)
+    }
+
+    _delete (node, key) {
+        if ( node === null ) return null
+        if ( node.key === key ) {
+            this.n--
+            return node.next
+        }
+        node.next = this._delete(node.next, key)
+        return node
+    }
+
+    contains (key) {
+        if ( key === null ) throw "key cannot be null" 
+        return this.get(key) !== null
+    }
+
+    isEmpty () {
+        return this.size() === 0
+    }
+
+    size () {
+        return this.n
+    }
+
+    keys () {
+        const arr = []
+        for ( let x = this.first; x !== null; x = x.next ) {
+            arr.push(x.key)
+        }
+        return arr
+    }
+
+}
+```
+
+#### 基于有序数组的符号表
+
+
+::: details API
+| 方法  |  描述 |  运行所需时间的增长数量级 |
+| ---- | ---- | ----- |
+| put(key,val) | 将键值对存入表中（若值为空则将键key从表中删除） |  N |
+| get(key) | 获取键key对应的值（若键key不存在则返回空） | logN |
+| delete(key) | 从表中删去键key（及其对应的值） | N |
+| contains(key) | 键key是否存在于表中 | logN |
+| isEmpty() | 表是否为空 | 1 |
+| size() | 表中的键值对数量 | 1 |
+| min() | 最小的键 | 1 |
+| max() | 最大的键 | 1 |
+| floor(key) | 小于等于key的最大键 | logN |
+| ceiling(key) | 大于等于key的最小键 | logN |
+| rank(key) | 小于key的键的数量 | logN |
+| select(k) | 排名为k的键 | 1 |
+| deleteMin() | 删除最小的键 | N |
+| deleteMax() | 删除最大的键 | 1 |
+| size(lo, hi) | [lo..hi]之间键的数量 | |
+| keys(lo, hi) | [lo..hi]之间的所有键,已排序 | |
+| keys() | 表中的所有键的集合,已排序 | |
+:::
+
+```js
+class BinarySearchST {
+
+    constructor () {
+        
+        this.keys = []
+        this.vals = []
+        this.n = 0
+    }
+
+    put (key, val) {
+
+        if ( key === null ) throw "key cannot be null" 
+
+        if (val === null) {
+            this.delete(key)
+            return
+        }
+
+        let i = this.rank( key )
+        if ( i < this.n && this.keys[i] === key ) {
+            this.vals[i] = val
+            return
+        }
+        for ( let j = this.n; j > i; j-- ) {
+            this.keys[j] = this.keys[j-1];       
+            this.vals[j] = this.vals[j-1];
+        }
+        this.keys[i] = key
+        this.vals[i] = val
+        this.n++
+    }
+
+
+    get (key) {
+
+        if ( key === null ) throw "key cannot be null" 
+
+        if ( this.isEmpty() ) return null
+        let i = this.rank( key )
+        if ( i < this.n && this.keys[i] === key ) {
+            return this.vals[i]
+        }
+        return null
+    }
+
+
+    delete (key) {
+
+        if ( key === null ) throw "key cannot be null" 
+
+        if ( this.isEmpty() ) return
+
+        let i = this.rank( key )             
+
+        // key not in table
+        if ( i === this.n || this.keys[i] !== key ) {
+            return
+        }
+
+        for ( let j = i; j < this.n-1; j++ ) {
+            this.keys[j] = this.keys[j+1];
+            this.vals[j] = this.vals[j+1];
+        }
+
+        this.n--
+
+        this.keys[n] = null
+        this.vals[n] = null
+
+    }
+
+    contains (key) {
+
+        if ( key === null ) throw "key cannot be null" 
+
+        return this.get(key) !== null
+    }
+
+    isEmpty () {
+        return this.size() === 0
+    }
+
+    size () {
+        return this.n
+    }
+
+    min () {
+        return this.keys[0]
+    }
+
+    max () {
+        return this.keys[this.n-1]
+    }
+
+
+    floor (key) {
+        if ( key === null ) throw "key cannot be null" 
+        let i = this.rank(key)
+        if ( i < this.n && key === this.keys[i] ) return this.keys[i] 
+        if ( i === 0 ) throw "no such element"
+        return this.keys[i-1]
+    }
+
+    ceiling (key) {
+        if ( key === null ) throw "key cannot be null" 
+        let i = this.rank(key)
+        if ( i === this.n ) throw "no such element"
+        return this.keys[i]
+    }
+
+    rank (key) {
+
+        if ( key === null ) throw "key cannot be null" 
+
+        let lo = 0
+        let hi = this.n - 1
+        while ( lo <= hi ) {
+            let mid = lo + ( hi - lo ) / 2
+            if ( key < this.keys[mid] ) {
+                hi = mid - 1
+            } else if ( key > this.keys[mid] ) {
+                lo = mid + 1
+            } else {
+                return mid
+            }
+        }
+        return lo
+    }
+
+    select (k) {
+        if ( k < 0 || k >= this.size() ) return
+        return this.keys[k]
+    }
+
+    deleteMin () {
+        this.delete( this.min() )
+    }
+
+
+    deleteMax () {
+        this.delete( this.max() )
+    }
+
+
+    sizeRange (lo, hi) {
+        
+        if ( lo > hi ) return 0
+        if ( this.contains(hi) ) return this.rank(hi) - this.rank(lo) + 1        
+        return this.rank(hi) - this.rank(lo)
+    }
+
+    keysRange (lo, hi) {
+        const arr = []
+        if ( lo > hi ) return arr
+        for ( let i = this.rank[lo]; i < this.rank(hi); i++) {
+            arr.push( this.keys[i] )
+        }
+        if ( this.contains( hi ) ) {
+            arr.push( this.keys[ this.rank( hi ) ] )
+        }
+        return arr
+    }
+
+
+    keys () {
+        return this.keysRange( this.min(), this.max() )
+    }
+
+}
+
+```
+
+
+#### 基于二叉查找树的符号表
+
+
+::: tip
+一棵二叉查找树是一棵二叉树，其中每个结点都含有一个键，且每个结点的键都大于其左子树中的任意结点的键而小于右子树的任意结点的键
+:::
+
+
+::: details API
+| 方法  |  描述 |  运行所需时间的增长数量级 |
+| ---- | ---- | ----- |
+| put(key,val) | 将键值对存入表中（若值为空则将键key从表中删除） |   |
+| get(key) | 获取键key对应的值（若键key不存在则返回空） |  |
+| delete(key) | 从表中删去键key（及其对应的值） |  |
+| contains(key) | 键key是否存在于表中 |  |
+| isEmpty() | 表是否为空 |  |
+| size() | 表中的键值对数量 |  |
+| min() | 最小的键 |  |
+| max() | 最大的键 |  |
+| floor(key) | 小于等于key的最大键 |  |
+| ceiling(key) | 大于等于key的最小键 |  |
+| rank(key) | 小于key的键的数量 |  |
+| select(k) | 排名为k的键 |  |
+| deleteMin() | 删除最小的键 |  |
+| deleteMax() | 删除最大的键 |  |
+| size(lo, hi) | [lo..hi]之间键的数量 | |
+| keys(lo, hi) | [lo..hi]之间的所有键,已排序 | |
+| keys() | 表中的所有键的集合,已排序 | |
+:::
+
+```js
+class Node {
+
+    constructor (key, val, n) {
+        this.n = n
+        this.key = key
+        this.val = val
+        this.left = null
+        this.right = null
+    }
+
+}
+```
+
+```js
+class BST {
+
+    constructor () {
+        this.root = null
+    }
+
+
+    put (key, val) {
+        this.root = this._put(this.root, key, val)
+    }
+
+    _put (node, key, val) {
+        if ( node === null ) return new Node( key, val, 1 )
+        if ( key < node.key ) {
+            node.left = this._put( node.left, key, val )
+        } else if ( key > node.key ) {
+            node.right = this._put( node.right, key, val )
+        } else {
+            node.val = val
+        }
+        node.n = this.size( node.left ) + this.size( node.right ) + 1
+        return node
+    }
+
+
+    get (key) {
+        return this._get(this.root, key)
+    }
+
+    _get (node, key) {
+        if ( node === null ) return null
+        if ( key < node.key ) {
+            return this.get(node.left, key)
+        } else if ( key > node.key ) {
+            return this.get(node.right, key)
+        } else {
+            return node.val    
+        }
+    }
+
+
+    delete (key) {
+
+    }
+
+    contains (key) {
+    }
+
+    isEmpty () {
+    }
+
+    size ( node = this.root ) {
+        if ( node === null ) return 0
+        return node.n
+    }
+
+    min () {
+        return this._min( this.root ).key
+    }
+
+    _min (node) {
+        if ( node.left === null ) return node
+        return this._min( node.left )
+    }
+
+    max () {
+        return this._max( this.root ).key
+    }
+
+    _max () {
+        if ( node.right === null ) return node
+        return this._max( node.right )
+    }
+
+
+    floor (key) {
+        let node = this._floor( this.root, key )
+        if ( node === null ) return null
+        return node.key
+    }
+
+    _floor (node, key) {
+        if ( node === null ) return null
+        if ( key === node.key ) { return node }
+        // 给定的key小于二叉查找树的根节点，那么小于等于key的最大键一定在根节点的左子树中
+        if ( key < node.key ) { return this._floor( node.left, key ) }
+        // 给定的key大于二叉查找树的根节点，那么只有当根节点右子树中存在小于等于key的节点时，小于等于key的最大键才会出现在右子树中，否则根节点就是小于等于key的最大键
+        let t = this._floor( node.right, key ) 
+        if ( t !== null ) return t
+        return node
+    }
+
+    ceiling (key) {
+        let node = this._ceiling( this.root, key )
+        if ( node === null ) { return null }
+        return node.key
+    }
+
+    _ceiling ( node, key ) {
+        if ( node === null ) { return null }
+        if ( key === node.key ) return node
+        // 给定的key小于二叉查找树的根节点，那么只有当根节点左子树中存在大于等于key的节点时，大于等于key的最小键才会出现在左子树中，否则根节点就是大于等于key的最小键
+        if ( key < node.key ) { 
+            let t = this._ceiling( node.left, key )
+            if ( t !== null ) return t
+            return node
+        }
+        // 给定的key大于二叉查找树的根节点，那么大于等于key的最小键一定在根节点的右子树中
+        return this._ceiling( node.right, key )
+    }
+
+    rank ( key ) {
+    }
+
+    select ( key ) {
+        return this._select( this.root, key ).key
+    }
+
+    _select ( node, key ) {
+        if ( node === null ) return null
+        let t = this.size(x.left)
+        
+    }
+
+    deleteMin () {
+
+    }
+
+
+    deleteMax () {
+
+    }
+
+
+    sizeRange (lo, hi) {
+
+    }
+
+    keysRange (lo, hi) {
+    }
+
+
+    keys () {
+
+    }
+
+}
+```
+
+
 
 
