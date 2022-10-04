@@ -1098,7 +1098,7 @@ class SequentialSearchST {
 | deleteMax() | 删除最大的键 | 1 |
 | size(lo, hi) | [lo..hi]之间键的数量 | |
 | keys(lo, hi) | [lo..hi]之间的所有键,已排序 | |
-| keys() | 表中的所有键的集合,已排序 | |
+| keysAll() | 表中的所有键的集合,已排序 | |
 :::
 
 ```js
@@ -1161,15 +1161,15 @@ class BinarySearchST {
             return
         }
 
-        for ( let j = i; j < this.n-1; j++ ) {
+        for ( let j = i; j < this.n - 1; j++ ) {
             this.keys[j] = this.keys[j+1];
             this.vals[j] = this.vals[j+1];
         }
 
         this.n--
 
-        this.keys[n] = null
-        this.vals[n] = null
+        this.keys[this.n] = null
+        this.vals[this.n] = null
 
     }
 
@@ -1219,7 +1219,7 @@ class BinarySearchST {
         let lo = 0
         let hi = this.n - 1
         while ( lo <= hi ) {
-            let mid = lo + ( hi - lo ) / 2
+            let mid = lo + parseInt( ( hi - lo ) / 2 )
             if ( key < this.keys[mid] ) {
                 hi = mid - 1
             } else if ( key > this.keys[mid] ) {
@@ -1256,7 +1256,7 @@ class BinarySearchST {
     keysRange (lo, hi) {
         const arr = []
         if ( lo > hi ) return arr
-        for ( let i = this.rank[lo]; i < this.rank(hi); i++) {
+        for ( let i = this.rank( [lo] ); i < this.rank( hi ); i++) {
             arr.push( this.keys[i] )
         }
         if ( this.contains( hi ) ) {
@@ -1266,7 +1266,7 @@ class BinarySearchST {
     }
 
 
-    keys () {
+    keysAll () {
         return this.keysRange( this.min(), this.max() )
     }
 
