@@ -1352,23 +1352,22 @@ class BST {
     _get (node, key) {
         if ( node === null ) return null
         if ( key < node.key ) {
-            return this.get(node.left, key)
+            return this._get(node.left, key)
         } else if ( key > node.key ) {
-            return this.get(node.right, key)
+            return this._get(node.right, key)
         } else {
             return node.val    
         }
     }
 
 
-    delete (key) {
-
-    }
 
     contains (key) {
+        return this.get( key ) !== null
     }
 
     isEmpty () {
+        return this.size() === 0
     }
 
     size ( node = this.root ) {
@@ -1389,7 +1388,7 @@ class BST {
         return this._max( this.root ).key
     }
 
-    _max () {
+    _max (node) {
         if ( node.right === null ) return node
         return this._max( node.right )
     }
@@ -1432,43 +1431,98 @@ class BST {
     }
 
     rank ( key ) {
+        return this._rank( this.root, key )
     }
 
-    select ( key ) {
-        return this._select( this.root, key ).key
+    _rank ( node, key ) {
+        if ( node === null ) return 0
+        if ( key < node.key ) { return this._rank( node.left, key ) }
+        else if ( key > node.key ) { return 1 + this.size( node.left ) + this.rank( node.right, key ) }
+        else return this.size( node.left )
     }
 
-    _select ( node, key ) {
+    select ( k ) {
+        return this._select( this.root, k ).key
+    }
+
+    _select ( node, k ) {
         if ( node === null ) return null
-        let t = this.size(x.left)
-        
+        let t = this.size(node.left)
+        if ( t > k ) return this._select( node.left, k )
+        else if ( t < k ) return this._select( node.right, k - t- 1 )
+        else return node
     }
+
+
+    delete (key) {
+        this.root = this._delete( this.root, key )
+    }
+
+    _delete ( node, key ) {
+        
+        if ( node === null ) return null
+        if ( key < node.key ) { node.left = this._delete( node.left, key ) }
+        else if ( key > node.key ) { node.right = this._delete( node.right, key ) }
+        else {
+            if ( node.right === null ) { return node.left }
+            if ( node.left === null ) { return node.right }
+            let t = node
+            node = this._min( t.right )
+            node.right = this._deleteMin( t.right )
+            node.left = t.left
+        }
+        node.n = this.size( node.left ) + this.size( node.right ) + 1
+        return node
+    }
+
 
     deleteMin () {
+        this.root = this._deleteMin( this.root )
+    }
 
+    _deleteMin ( node ) {
+        if ( node.left === null ) return node.right
+        node.left = this._deleteMin( node.left ) 
+        node.n = this.size( node.left ) + this.size( node.right ) + 1
+        return node
     }
 
 
     deleteMax () {
+        this.root = this._deleteMax( this.root )
+    }
 
+    _deleteMax ( node ) {
+        if ( node.right === null ) return node.left
+        node.right = this._deleteMax( node.right ) 
+        node.n = this.size( node.left ) + this.size( node.right ) + 1
+        return node
     }
 
 
     sizeRange (lo, hi) {
-
+        if ( this.contains( hi ) ) return this.rank( hi ) - this.rank( lo ) + 1
+        else { return this.rank( hi ) - this.rank( lo ) }
     }
 
     keysRange (lo, hi) {
+        const arr = []
+        this._keysRange( this.root, arr, lo, hi )
+        return arr
+    }
+
+    _keysRange ( node, arr, lo, hi ) {
+        if ( node === null ) return
+        if ( lo < node.key ) { this._keysRange( node.left, arr, lo, hi ) }
+        if ( lo <= node.key && hi >= node.key ) { arr.push( node.key ) }
+        if ( hi > node.key ) { this._keysRange( node.right, arr, lo, hi ) }
     }
 
 
     keys () {
-
+        this.keysRange( this.min(), this.max() )
     }
 
 }
 ```
-
-
-
 
