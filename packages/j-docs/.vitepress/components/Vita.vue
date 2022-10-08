@@ -2,7 +2,7 @@
     <div class="vita">
         <div class="vita-header"></div>
         <div class="vita-avatar">
-            <img src="../../assets/logo.png" />
+            <img src="../../public/logo.png" />
         </div>
         <p class="vita-name">许仕杰</p>
         <div class="vita-info">

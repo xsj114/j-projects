@@ -1,6 +1,7 @@
 ---
 title: JAVASCRIPT
 titleTemplate: 学习笔记
+outline: 'deep'
 ---
 
 

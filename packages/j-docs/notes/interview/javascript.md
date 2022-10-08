@@ -1,6 +1,7 @@
 ---
 title: JAVASCRIPT
 titleTemplate: 面试总结
+outline: 'deep'
 ---
 
 [toc]

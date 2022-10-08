@@ -1,6 +1,7 @@
 ---
 title: 设计模式
 titleTemplate: 学习笔记
+outline: 'deep'
 ---
 
 [toc]

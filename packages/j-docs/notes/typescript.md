@@ -1,3 +1,10 @@
+---
+title: Typescript
+titleTemplate: 学习笔记
+outline: 'deep'
+---
+
+
 [toc]
 
 # Typescript学习笔记

@@ -1,6 +1,7 @@
 ---
 title: CSS
 titleTemplate: 学习笔记
+outline: 'deep'
 ---
 
 [toc]

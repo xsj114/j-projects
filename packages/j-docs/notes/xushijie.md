@@ -1,6 +1,7 @@
 ---
 title: 个人信息及配置 
 titleTemplate: 备忘录
+outline: 'deep'
 ---
 [toc]
    

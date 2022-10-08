@@ -1,6 +1,7 @@
 ---
 title: 性能优化
 titleTemplate: 面试总结
+outline: 'deep'
 ---
 
 [toc]

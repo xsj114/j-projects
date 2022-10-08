@@ -1,6 +1,7 @@
 ---
 title: 算法
 titleTemplate: 学习笔记
+outline: 'deep'
 ---
 
 [toc]
@@ -1525,4 +1526,10 @@ class BST {
 
 }
 ```
+
+#### 基于平衡查找树的符号表
+
+
+
+
 

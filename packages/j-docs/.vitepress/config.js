@@ -1,5 +1,6 @@
 export default {
     title: '许仕杰',
+    titleTemplate: false,
     lastUpdated: true,
     markdown: {
         lineNumbers: true,
@@ -7,10 +8,9 @@ export default {
     
         }
     },
+    outDir: './dist',
     themeConfig: {
-        logo: '/assets/logo.png',
-        outline: 6,
-        outlineTitle: '1231313',
+        logo: '/logo.png',
         socialLinks: [
             {
                 icon: 'github',

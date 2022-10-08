@@ -1,6 +1,7 @@
 ---
 title: yarn
 titleTemplate: 学习笔记
+outline: 'deep'
 ---
 
 [toc]
@@ -207,9 +208,17 @@ httpsProxy: "http://127.0.0.1:1087"
 // 定义使用什么方式去安装node包
 nodeLinker: "pnp"
 
+// 某些引入的依赖包在依赖项方面被错误的指定,从而导致yarn拒绝访问，利用packageExtensions字段提供了一种扩展现有包定义的方法
+packageExtensions: ""
+
+// 定义pnp模式下允许包使用内置回退机制的范围
 pnpFallbackMode: ""
 
-packageExtensions: ""
+// 定义pnp的模式,有loose和strict两种模式
+pnpMode: ""
+
+// 定义目前在项目中安装yarn的首选方式
+yarnPath: ""
 ```
 
 
