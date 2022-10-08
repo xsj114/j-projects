@@ -3143,3 +3143,4 @@ diagram      图表
 contradict   顶撞,抵触
 discourage   阻碍
 capacity     容量
+snoop        窥探,话多的人
