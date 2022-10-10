@@ -1,0 +1,41 @@
+@import "../common/variable.styl"
+
+.j_tag
+    line-height 28px
+    padding $--tag-padding
+    display inline-block
+    box-sizing border-box
+    font-size $--tag-font-size
+    color $--tag-color
+    border-radius $--tag-border-radius
+    background-color $--tag-background-color
+    position relative
+    word-break break-all
+    .j_tag_close
+        position absolute
+        top 0
+        right 0 
+        cursor pointer
+        line-height 12px
+        margin 0
+        padding 0
+        .j_tag_close_fix
+            color #9d9998
+            background-color #fff
+            font-size 12px
+
+.j_tag_large
+    line-height 34px
+    padding 0 20px
+
+.j_tag_small
+    line-height 20px
+    padding 0 14px
+
+.j_tag_active
+    background #4865ff
+    color #fff
+
+.j_tag_disable
+    background #ccc
+    color #fff

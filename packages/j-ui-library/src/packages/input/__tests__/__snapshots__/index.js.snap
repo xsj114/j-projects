@@ -1,0 +1,647 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[` 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JInput JInput method blur 1`] = `
+VueWrapper {
+  "_emitted": undefined,
+  "_emittedByOrder": undefined,
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JInput JInput method focus 1`] = `
+VueWrapper {
+  "_emitted": undefined,
+  "_emittedByOrder": undefined,
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JInput clearable click event click 1`] = `
+VueWrapper {
+  "_emitted": Object {
+    "change": Array [
+      Array [
+        "",
+      ],
+    ],
+    "clear": Array [
+      Array [],
+    ],
+    "focus": Array [
+      Array [
+        FocusEvent {
+          "isTrusted": true,
+        },
+      ],
+    ],
+    "input": Array [
+      Array [
+        "",
+      ],
+    ],
+  },
+  "_emittedByOrder": Array [
+    Object {
+      "args": Array [
+        "",
+      ],
+      "name": "input",
+    },
+    Object {
+      "args": Array [
+        "",
+      ],
+      "name": "change",
+    },
+    Object {
+      "args": Array [],
+      "name": "clear",
+    },
+    Object {
+      "args": Array [
+        FocusEvent {
+          "isTrusted": true,
+        },
+      ],
+      "name": "focus",
+    },
+  ],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JInput clearable pass clearable and mock focused disabled and readonly is false and value is empty 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JInput clearable pass clearable and mock focused disabled and readonly is false and value not empty 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JInput clearable pass clearable and mock focused disabled is false an readonly is true and value not empty 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JInput clearable pass clearable and mock focused disabled is true and readonly is false and value not empty 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JInput clearable pass clearable and mock hovering disabled and readonly is false and value is empty 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JInput clearable pass clearable and mock hovering disabled and readonly is false and value not empty 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JInput clearable pass clearable and mock hovering disabled is false an readonly is true and value not empty 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JInput clearable pass clearable and mock hovering disabled is true and readonly is false and value not empty 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JInput create blur event 1`] = `
+VueWrapper {
+  "_emitted": Object {
+    "blur": Array [
+      Array [
+        FocusEvent {
+          "isTrusted": false,
+        },
+      ],
+    ],
+  },
+  "_emittedByOrder": Array [
+    Object {
+      "args": Array [
+        FocusEvent {
+          "isTrusted": false,
+        },
+      ],
+      "name": "blur",
+    },
+  ],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JInput create change event 1`] = `
+VueWrapper {
+  "_emitted": Object {
+    "change": Array [
+      Array [
+        "test",
+      ],
+    ],
+  },
+  "_emittedByOrder": Array [
+    Object {
+      "args": Array [
+        "test",
+      ],
+      "name": "change",
+    },
+  ],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JInput create compositionend isComposing is false 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JInput create compositionend isComposing is true 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JInput create compositionstart 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JInput create create 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JInput create focus event 1`] = `
+VueWrapper {
+  "_emitted": Object {
+    "focus": Array [
+      Array [
+        FocusEvent {
+          "isTrusted": true,
+        },
+      ],
+    ],
+  },
+  "_emittedByOrder": Array [
+    Object {
+      "args": Array [
+        FocusEvent {
+          "isTrusted": true,
+        },
+      ],
+      "name": "focus",
+    },
+  ],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JInput create input event event value equal nativeInputValue 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JInput create input event input 1`] = `
+VueWrapper {
+  "_emitted": Object {
+    "input": Array [
+      Array [
+        "test two",
+      ],
+    ],
+  },
+  "_emittedByOrder": Array [
+    Object {
+      "args": Array [
+        "test two",
+      ],
+      "name": "input",
+    },
+  ],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JInput create input event isComposing is ture 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JInput create mouseenter event 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JInput create mouseleave event 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JInput disabled pass disabled 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JInput readonly pass readonly 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JInput round is round 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JInput round is round and pass append slots 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JInput round is round and pass prepend slots 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JInput showPassword click event click 1`] = `
+VueWrapper {
+  "_emitted": Object {
+    "blur": Array [
+      Array [
+        FocusEvent {
+          "isTrusted": true,
+        },
+      ],
+    ],
+    "focus": Array [
+      Array [
+        FocusEvent {
+          "isTrusted": true,
+        },
+      ],
+      Array [
+        FocusEvent {
+          "isTrusted": true,
+        },
+      ],
+    ],
+  },
+  "_emittedByOrder": Array [
+    Object {
+      "args": Array [
+        FocusEvent {
+          "isTrusted": true,
+        },
+      ],
+      "name": "focus",
+    },
+    Object {
+      "args": Array [
+        FocusEvent {
+          "isTrusted": true,
+        },
+      ],
+      "name": "blur",
+    },
+    Object {
+      "args": Array [
+        FocusEvent {
+          "isTrusted": true,
+        },
+      ],
+      "name": "focus",
+    },
+  ],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JInput showPassword click event click and pass type  1`] = `
+VueWrapper {
+  "_emitted": Object {
+    "blur": Array [
+      Array [
+        FocusEvent {
+          "isTrusted": true,
+        },
+      ],
+    ],
+    "focus": Array [
+      Array [
+        FocusEvent {
+          "isTrusted": true,
+        },
+      ],
+      Array [
+        FocusEvent {
+          "isTrusted": true,
+        },
+      ],
+    ],
+  },
+  "_emittedByOrder": Array [
+    Object {
+      "args": Array [
+        FocusEvent {
+          "isTrusted": true,
+        },
+      ],
+      "name": "focus",
+    },
+    Object {
+      "args": Array [
+        FocusEvent {
+          "isTrusted": true,
+        },
+      ],
+      "name": "blur",
+    },
+    Object {
+      "args": Array [
+        FocusEvent {
+          "isTrusted": true,
+        },
+      ],
+      "name": "focus",
+    },
+  ],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JInput showPassword pass showPassword and mock focused disabled and readonly is false and value is empty 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JInput showPassword pass showPassword and mock focused disabled is false and readonly is true and value is empty 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JInput showPassword pass showPassword and mock focused disabled is true and readonly is false and value is empty 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JInput showPassword pass showPassword and mock value disabled is false and readonly is false and value is empty 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JInput showPassword pass showPassword and mock value disabled is false and readonly is false and value not empty 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JInput showPassword pass showPassword and mock value disabled is false and readonly is true and value not empty 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JInput showPassword pass showPassword and mock value disabled is true and readonly is false and value not empty 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JInput showPassword pass showPassword test input type mock passwordVisible is false 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JInput showPassword pass showPassword test input type mock passwordVisible is true 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JInput showPassword pass showPassword test input type mock passwordVisible is true and pass type 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JInput size large size 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JInput size small size 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JInput slot append is round 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JInput slot append not is round 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JInput slot prefix prefix 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JInput slot prefix prefix calcIconOffset 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JInput slot prepend is round 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JInput slot prepend not is round 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JInput slot suffix suffix 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JInput slot suffix suffix calcIconOffset 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JInput tabindex pass tabindex 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JInput type default 1`] = `
+Wrapper {
+  "selector": "input",
+}
+`;
+
+exports[`JInput type pass type is number 1`] = `
+Wrapper {
+  "selector": "input",
+}
+`;
+
+exports[`JInput type pass type is passworad 1`] = `
+Wrapper {
+  "selector": "input",
+}
+`;
+
+exports[`JInput type pass type is textarea 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JInput watch nativeInputValue 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;

@@ -1,0 +1,26 @@
+@import "../common/variable.styl"
+.j_option_menu_list_item
+    position relative
+    padding 0 20px
+    cursor pointer
+    box-sizing border-box
+    font-size $--option-menu-list-item-font-size
+    line-height $--option-menu-list-item-line-height
+    color $--option-menu-list-item-color
+    white-space nowrap
+    overflow hidden
+    text-overflow ellipsis
+    &:hover
+        background-color #f5f7fa
+.j_option_menu_list_item_small    
+    font-size $--option-menu-list-item-small-font-size
+    line-height $--option-menu-list-item-small-line-height
+    
+.j_option_menu_list_item_large
+    font-size $--option-menu-list-item-large-font-size
+    line-height $--option-menu-list-item-large-line-height
+.j_option_menu_list_item_selected
+    color $--option-menu-list-item-selected-color
+    font-weight bold
+.j_option_menu_list_item_hover
+    background-color $--option-menu-list-item-selected-background-color

@@ -1,0 +1,1731 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`JSelect JOption destroy destroy 1`] = `
+Object {
+  "components": Object {
+    "JOption": Object {
+      "_Ctor": Object {
+        "0": [Function],
+        "1": [Function],
+        "105": [Function],
+        "187": [Function],
+        "239": [Function],
+        "320": [Function],
+        "332": [Function],
+        "344": [Function],
+        "356": [Function],
+        "368": [Function],
+        "380": [Function],
+        "393": [Function],
+        "405": [Function],
+        "53": [Function],
+      },
+      "beforeDestroy": [Function],
+      "computed": Object {
+        "currentLabel": [Function],
+        "itemSelected": [Function],
+        "optionSize": [Function],
+      },
+      "created": [Function],
+      "data": [Function],
+      "inject": Object {
+        "select": Object {
+          "from": "select",
+        },
+      },
+      "methods": Object {
+        "handleOptionClick": [Function],
+        "hoverItem": [Function],
+        "queryChange": [Function],
+      },
+      "mixins": Array [
+        Object {
+          "methods": Object {
+            "broadcast": [Function],
+            "dispatch": [Function],
+          },
+        },
+      ],
+      "name": "JOption",
+      "props": Object {
+        "created": Object {
+          "type": [Function],
+        },
+        "label": Object {
+          "type": Array [
+            [Function],
+            [Function],
+          ],
+        },
+        "size": Object {
+          "type": [Function],
+        },
+        "value": Object {
+          "required": true,
+        },
+      },
+      "render": [Function],
+    },
+    "JSelect": Object {
+      "$_vueTestUtils_original": [Circular],
+      "_Ctor": Object {
+        "0": [Function],
+        "320": [Function],
+        "332": [Function],
+        "344": [Function],
+        "356": [Function],
+        "368": [Function],
+        "380": [Function],
+        "393": [Function],
+        "405": [Function],
+      },
+      "components": Object {
+        "JInput": Object {
+          "_Ctor": Object {
+            "0": [Function],
+            "1": [Function],
+            "105": [Function],
+            "117": [Function],
+            "127": [Function],
+            "13": [Function],
+            "137": [Function],
+            "147": [Function],
+            "157": [Function],
+            "167": [Function],
+            "177": [Function],
+            "187": [Function],
+            "199": [Function],
+            "209": [Function],
+            "219": [Function],
+            "229": [Function],
+            "23": [Function],
+            "239": [Function],
+            "250": [Function],
+            "260": [Function],
+            "270": [Function],
+            "280": [Function],
+            "290": [Function],
+            "300": [Function],
+            "310": [Function],
+            "320": [Function],
+            "33": [Function],
+            "332": [Function],
+            "344": [Function],
+            "356": [Function],
+            "368": [Function],
+            "380": [Function],
+            "393": [Function],
+            "405": [Function],
+            "43": [Function],
+            "53": [Function],
+            "65": [Function],
+            "75": [Function],
+            "85": [Function],
+            "95": [Function],
+          },
+          "computed": Object {
+            "inputDisabled": [Function],
+            "inputReadonly": [Function],
+            "inputSize": [Function],
+            "nativeInputValue": [Function],
+            "showClear": [Function],
+            "showPasswordVisible": [Function],
+          },
+          "data": [Function],
+          "inheritAttrs": false,
+          "install": [Function],
+          "methods": Object {
+            "blur": [Function],
+            "calcIconOffset": [Function],
+            "focus": [Function],
+            "getInput": [Function],
+            "handleBlur": [Function],
+            "handleChange": [Function],
+            "handleClear": [Function],
+            "handleCompositionEnd": [Function],
+            "handleCompositionStart": [Function],
+            "handleFocus": [Function],
+            "handleInput": [Function],
+            "handlePasswordVisible": [Function],
+            "setNativeInputValue": [Function],
+            "updateIconOffset": [Function],
+          },
+          "mounted": [Function],
+          "name": "JInput",
+          "props": Object {
+            "clearable": Object {
+              "default": false,
+              "type": [Function],
+            },
+            "disabled": Object {
+              "default": false,
+              "type": [Function],
+            },
+            "readonly": Object {
+              "default": false,
+              "type": [Function],
+            },
+            "round": Object {
+              "default": false,
+              "type": [Function],
+            },
+            "showPassword": Object {
+              "default": false,
+              "type": [Function],
+            },
+            "size": Object {
+              "type": [Function],
+            },
+            "tabindex": Object {
+              "type": [Function],
+            },
+            "type": Object {
+              "default": "text",
+              "type": [Function],
+            },
+            "value": Object {
+              "type": Array [
+                [Function],
+                [Function],
+              ],
+            },
+          },
+          "render": [Function],
+          "updated": [Function],
+          "watch": Object {
+            "nativeInputValue": [Function],
+          },
+        },
+        "JOption": Object {
+          "_Ctor": Object {
+            "0": [Function],
+            "1": [Function],
+            "105": [Function],
+            "187": [Function],
+            "239": [Function],
+            "320": [Function],
+            "332": [Function],
+            "344": [Function],
+            "356": [Function],
+            "368": [Function],
+            "380": [Function],
+            "393": [Function],
+            "405": [Function],
+            "53": [Function],
+          },
+          "beforeDestroy": [Function],
+          "computed": Object {
+            "currentLabel": [Function],
+            "itemSelected": [Function],
+            "optionSize": [Function],
+          },
+          "created": [Function],
+          "data": [Function],
+          "inject": Object {
+            "select": Object {
+              "from": "select",
+            },
+          },
+          "methods": Object {
+            "handleOptionClick": [Function],
+            "hoverItem": [Function],
+            "queryChange": [Function],
+          },
+          "mixins": Array [
+            Object {
+              "methods": Object {
+                "broadcast": [Function],
+                "dispatch": [Function],
+              },
+            },
+          ],
+          "name": "JOption",
+          "props": Object {
+            "created": Object {
+              "type": [Function],
+            },
+            "label": Object {
+              "type": Array [
+                [Function],
+                [Function],
+              ],
+            },
+            "size": Object {
+              "type": [Function],
+            },
+            "value": Object {
+              "required": true,
+            },
+          },
+          "render": [Function],
+        },
+        "JOptionMenu": Object {
+          "_Ctor": Object {
+            "0": [Function],
+            "1": [Function],
+            "105": [Function],
+            "117": [Function],
+            "127": [Function],
+            "13": [Function],
+            "137": [Function],
+            "147": [Function],
+            "157": [Function],
+            "167": [Function],
+            "177": [Function],
+            "187": [Function],
+            "199": [Function],
+            "209": [Function],
+            "219": [Function],
+            "229": [Function],
+            "23": [Function],
+            "239": [Function],
+            "250": [Function],
+            "260": [Function],
+            "270": [Function],
+            "280": [Function],
+            "290": [Function],
+            "300": [Function],
+            "310": [Function],
+            "320": [Function],
+            "33": [Function],
+            "332": [Function],
+            "344": [Function],
+            "356": [Function],
+            "368": [Function],
+            "380": [Function],
+            "393": [Function],
+            "405": [Function],
+            "43": [Function],
+            "53": [Function],
+            "65": [Function],
+            "75": [Function],
+            "85": [Function],
+            "95": [Function],
+          },
+          "components": Object {
+            "JScrollbar": Object {
+              "_Ctor": Object {
+                "0": [Function],
+                "1": [Function],
+                "105": [Function],
+                "117": [Function],
+                "127": [Function],
+                "13": [Function],
+                "137": [Function],
+                "147": [Function],
+                "157": [Function],
+                "167": [Function],
+                "177": [Function],
+                "187": [Function],
+                "199": [Function],
+                "209": [Function],
+                "219": [Function],
+                "229": [Function],
+                "23": [Function],
+                "239": [Function],
+                "250": [Function],
+                "260": [Function],
+                "270": [Function],
+                "280": [Function],
+                "290": [Function],
+                "300": [Function],
+                "310": [Function],
+                "320": [Function],
+                "33": [Function],
+                "332": [Function],
+                "344": [Function],
+                "356": [Function],
+                "368": [Function],
+                "380": [Function],
+                "393": [Function],
+                "405": [Function],
+                "43": [Function],
+                "53": [Function],
+                "65": [Function],
+                "75": [Function],
+                "85": [Function],
+                "95": [Function],
+              },
+              "components": Object {
+                "Bar": Object {
+                  "_Ctor": Object {
+                    "0": [Function],
+                    "1": [Function],
+                    "105": [Function],
+                    "117": [Function],
+                    "127": [Function],
+                    "13": [Function],
+                    "137": [Function],
+                    "147": [Function],
+                    "157": [Function],
+                    "167": [Function],
+                    "177": [Function],
+                    "187": [Function],
+                    "199": [Function],
+                    "209": [Function],
+                    "219": [Function],
+                    "229": [Function],
+                    "23": [Function],
+                    "239": [Function],
+                    "250": [Function],
+                    "260": [Function],
+                    "270": [Function],
+                    "280": [Function],
+                    "290": [Function],
+                    "300": [Function],
+                    "310": [Function],
+                    "320": [Function],
+                    "33": [Function],
+                    "332": [Function],
+                    "344": [Function],
+                    "356": [Function],
+                    "368": [Function],
+                    "380": [Function],
+                    "393": [Function],
+                    "405": [Function],
+                    "43": [Function],
+                    "53": [Function],
+                    "65": [Function],
+                    "75": [Function],
+                    "85": [Function],
+                    "95": [Function],
+                  },
+                  "computed": Object {
+                    "bar": [Function],
+                  },
+                  "props": Object {
+                    "vertical": Object {
+                      "type": [Function],
+                    },
+                  },
+                  "render": [Function],
+                },
+              },
+              "computed": Object {
+                "wrap": [Function],
+              },
+              "data": [Function],
+              "methods": Object {
+                "handleScroll": [Function],
+              },
+              "name": "JScrollbar",
+              "props": Object {
+                "tag": Object {
+                  "default": "div",
+                  "type": [Function],
+                },
+                "viewClass": Object {},
+                "wrapClass": Object {},
+              },
+              "render": [Function],
+            },
+          },
+          "computed": Object {
+            "popperClass": [Function],
+          },
+          "data": [Function],
+          "mixins": Array [
+            Object {
+              "beforeDestroy": [Function],
+              "data": [Function],
+              "methods": Object {
+                "appendArrow": [Function],
+                "createPopper": [Function],
+                "destroyPopper": [Function],
+                "updatePopper": [Function],
+              },
+              "props": Object {
+                "appendToBody": Object {
+                  "default": true,
+                  "type": [Function],
+                },
+                "offset": Object {
+                  "default": [Function],
+                  "type": [Function],
+                },
+                "placement": Object {
+                  "default": "bottom",
+                  "type": [Function],
+                },
+                "visibleArrow": Object {
+                  "default": true,
+                  "type": [Function],
+                },
+              },
+              "watch": Object {
+                "showPopper": Object {
+                  "handler": [Function],
+                  "user": true,
+                },
+              },
+            },
+          ],
+          "mounted": [Function],
+          "name": "JOptionMenu",
+          "render": [Function],
+          "watch": Object {
+            "$parent.inputWidth": [Function],
+          },
+        },
+        "JTag": Object {
+          "_Ctor": Object {
+            "380": [Function],
+          },
+          "computed": Object {
+            "tagSize": [Function],
+          },
+          "install": [Function],
+          "methods": Object {
+            "handleClick": [Function],
+            "handleClose": [Function],
+            "handleMouseOut": [Function],
+            "handleMouseOver": [Function],
+          },
+          "name": "JTag",
+          "props": Object {
+            "active": Object {
+              "type": [Function],
+            },
+            "closable": Object {
+              "type": [Function],
+            },
+            "disable": Object {
+              "type": [Function],
+            },
+            "size": Object {
+              "type": [Function],
+            },
+          },
+          "render": [Function],
+        },
+      },
+      "computed": Object {
+        "debounce": [Function],
+        "emptyText": [Function],
+        "readonly": [Function],
+        "selectDisabled": [Function],
+        "selectSize": [Function],
+        "showClose": [Function],
+        "showNewOption": [Function],
+      },
+      "created": [Function],
+      "data": [Function],
+      "directives": Object {
+        "clickoutside": Object {
+          "bind": [Function],
+          "unbind": [Function],
+        },
+      },
+      "install": [Function],
+      "methods": Object {
+        "clearSelected": [Function],
+        "deleteTag": [Function],
+        "emitChange": [Function],
+        "getOption": [Function],
+        "getSlots": [Function],
+        "handleBlur": [Function],
+        "handleClose": [Function],
+        "handleFocus": [Function],
+        "handleInput": [Function],
+        "handleOptionHover": [Function],
+        "handleOptionSelect": [Function],
+        "handleQueryChange": [Function],
+        "managePlaceholder": [Function],
+        "onInputChange": [Function],
+        "onOptionDestroy": [Function],
+        "resetHoverIndex": [Function],
+        "resetInputHeight": [Function],
+        "setSelected": [Function],
+        "setSoftFocus": [Function],
+        "toggleMenu": [Function],
+      },
+      "mixins": Array [
+        Object {
+          "methods": Object {
+            "broadcast": [Function],
+            "dispatch": [Function],
+          },
+        },
+      ],
+      "mounted": [Function],
+      "name": "JSelect",
+      "props": Object {
+        "allowCreate": Object {
+          "default": false,
+          "type": [Function],
+        },
+        "clearable": Object {
+          "default": false,
+          "type": [Function],
+        },
+        "disabled": Object {
+          "type": [Function],
+        },
+        "filterable": Object {
+          "default": false,
+          "type": [Function],
+        },
+        "multiple": Object {
+          "default": false,
+          "type": [Function],
+        },
+        "placeholder": Object {
+          "default": "请选择",
+          "type": [Function],
+        },
+        "popperClass": Object {
+          "type": [Function],
+        },
+        "remote": Object {
+          "default": false,
+          "type": [Function],
+        },
+        "remoteMethod": Object {
+          "type": [Function],
+        },
+        "size": Object {
+          "type": [Function],
+        },
+        "value": Object {
+          "required": true,
+          "type": Array [
+            [Function],
+            [Function],
+          ],
+        },
+      },
+      "provide": [Function],
+      "render": [Function],
+      "watch": Object {
+        "hoverIndex": [Function],
+        "placeholder": [Function],
+        "value": [Function],
+        "visible": [Function],
+      },
+    },
+  },
+  "data": [Function],
+  "methods": Object {
+    "setOption": [Function],
+  },
+  "render": [Function],
+}
+`;
+
+exports[`JSelect JOption itemSelected multiple choice 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JSelect JOption itemSelected single choice 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JSelect JOption label no pass label 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JSelect JOption label pass label 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JSelect JOption mouseenter event mouseenter event 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JSelect JOption queryChange queryChange 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JSelect JOption size large size 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+  "selector": Object {
+    "_Ctor": Object {
+      "1": [Function],
+      "105": [Function],
+      "187": [Function],
+      "239": [Function],
+      "320": [Function],
+      "332": [Function],
+      "344": [Function],
+      "356": [Function],
+      "53": [Function],
+    },
+    "beforeDestroy": [Function],
+    "computed": Object {
+      "currentLabel": [Function],
+      "itemSelected": [Function],
+      "optionSize": [Function],
+    },
+    "created": [Function],
+    "data": [Function],
+    "inject": Object {
+      "select": Object {
+        "from": "select",
+      },
+    },
+    "methods": Object {
+      "handleOptionClick": [Function],
+      "hoverItem": [Function],
+      "queryChange": [Function],
+    },
+    "mixins": Array [
+      Object {
+        "methods": Object {
+          "broadcast": [Function],
+          "dispatch": [Function],
+        },
+      },
+    ],
+    "name": "JOption",
+    "props": Object {
+      "created": Object {
+        "type": [Function],
+      },
+      "label": Object {
+        "type": Array [
+          [Function],
+          [Function],
+        ],
+      },
+      "size": Object {
+        "type": [Function],
+      },
+      "value": Object {
+        "required": true,
+      },
+    },
+    "render": [Function],
+  },
+}
+`;
+
+exports[`JSelect JOption size small size 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+  "selector": Object {
+    "_Ctor": Object {
+      "1": [Function],
+      "105": [Function],
+      "187": [Function],
+      "239": [Function],
+      "320": [Function],
+      "332": [Function],
+      "344": [Function],
+      "53": [Function],
+    },
+    "beforeDestroy": [Function],
+    "computed": Object {
+      "currentLabel": [Function],
+      "itemSelected": [Function],
+      "optionSize": [Function],
+    },
+    "created": [Function],
+    "data": [Function],
+    "inject": Object {
+      "select": Object {
+        "from": "select",
+      },
+    },
+    "methods": Object {
+      "handleOptionClick": [Function],
+      "hoverItem": [Function],
+      "queryChange": [Function],
+    },
+    "mixins": Array [
+      Object {
+        "methods": Object {
+          "broadcast": [Function],
+          "dispatch": [Function],
+        },
+      },
+    ],
+    "name": "JOption",
+    "props": Object {
+      "created": Object {
+        "type": [Function],
+      },
+      "label": Object {
+        "type": Array [
+          [Function],
+          [Function],
+        ],
+      },
+      "size": Object {
+        "type": [Function],
+      },
+      "value": Object {
+        "required": true,
+      },
+    },
+    "render": [Function],
+  },
+}
+`;
+
+exports[`JSelect allowCreate no pass allowCreate 1`] = `
+VueWrapper {
+  "_emitted": Object {
+    "focus": Array [
+      Array [
+        FocusEvent {
+          "isTrusted": true,
+        },
+      ],
+    ],
+    "visible-change": Array [
+      Array [
+        true,
+      ],
+    ],
+  },
+  "_emittedByOrder": Array [
+    Object {
+      "args": Array [
+        FocusEvent {
+          "isTrusted": true,
+        },
+      ],
+      "name": "focus",
+    },
+    Object {
+      "args": Array [
+        true,
+      ],
+      "name": "visible-change",
+    },
+  ],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JSelect allowCreate pass allowCreate 1`] = `
+VueWrapper {
+  "_emitted": Object {
+    "focus": Array [
+      Array [
+        FocusEvent {
+          "isTrusted": true,
+        },
+      ],
+    ],
+    "visible-change": Array [
+      Array [
+        true,
+      ],
+    ],
+  },
+  "_emittedByOrder": Array [
+    Object {
+      "args": Array [
+        FocusEvent {
+          "isTrusted": true,
+        },
+      ],
+      "name": "focus",
+    },
+    Object {
+      "args": Array [
+        true,
+      ],
+      "name": "visible-change",
+    },
+  ],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JSelect emptyText empty text element not show 1`] = `
+VueWrapper {
+  "_emitted": Object {
+    "visible-change": Array [
+      Array [
+        true,
+      ],
+    ],
+  },
+  "_emittedByOrder": Array [
+    Object {
+      "args": Array [
+        true,
+      ],
+      "name": "visible-change",
+    },
+  ],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JSelect emptyText no match data 1`] = `
+VueWrapper {
+  "_emitted": Object {
+    "focus": Array [
+      Array [
+        FocusEvent {
+          "isTrusted": true,
+        },
+      ],
+    ],
+    "visible-change": Array [
+      Array [
+        true,
+      ],
+    ],
+  },
+  "_emittedByOrder": Array [
+    Object {
+      "args": Array [
+        FocusEvent {
+          "isTrusted": true,
+        },
+      ],
+      "name": "focus",
+    },
+    Object {
+      "args": Array [
+        true,
+      ],
+      "name": "visible-change",
+    },
+  ],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JSelect emptyText no option 1`] = `
+VueWrapper {
+  "_emitted": Object {
+    "visible-change": Array [
+      Array [
+        true,
+      ],
+    ],
+  },
+  "_emittedByOrder": Array [
+    Object {
+      "args": Array [
+        true,
+      ],
+      "name": "visible-change",
+    },
+  ],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JSelect emptyText options length no equal 1 1`] = `
+VueWrapper {
+  "_emitted": Object {
+    "focus": Array [
+      Array [
+        FocusEvent {
+          "isTrusted": true,
+        },
+      ],
+    ],
+    "visible-change": Array [
+      Array [
+        true,
+      ],
+    ],
+  },
+  "_emittedByOrder": Array [
+    Object {
+      "args": Array [
+        FocusEvent {
+          "isTrusted": true,
+        },
+      ],
+      "name": "focus",
+    },
+    Object {
+      "args": Array [
+        true,
+      ],
+      "name": "visible-change",
+    },
+  ],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JSelect extra test hoverIndex 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JSelect extra test optionMenu width 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JSelect extra test select JInput vModel 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JSelect extra test select handleClose 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JSelect multiple choice clearable no pass clearabel 1`] = `
+VueWrapper {
+  "_emitted": Object {
+    "visible-change": Array [
+      Array [
+        true,
+      ],
+      Array [
+        false,
+      ],
+    ],
+  },
+  "_emittedByOrder": Array [
+    Object {
+      "args": Array [
+        true,
+      ],
+      "name": "visible-change",
+    },
+    Object {
+      "args": Array [
+        false,
+      ],
+      "name": "visible-change",
+    },
+  ],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JSelect multiple choice clearable pass clearable 1`] = `
+VueWrapper {
+  "_emitted": Object {
+    "change": Array [
+      Array [
+        Array [],
+      ],
+    ],
+    "clear": Array [
+      Array [],
+    ],
+    "input": Array [
+      Array [
+        Array [],
+      ],
+    ],
+  },
+  "_emittedByOrder": Array [
+    Object {
+      "args": Array [
+        Array [],
+      ],
+      "name": "input",
+    },
+    Object {
+      "args": Array [
+        Array [],
+      ],
+      "name": "change",
+    },
+    Object {
+      "args": Array [],
+      "name": "clear",
+    },
+  ],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JSelect multiple choice clearable pass clearable and showClose is false 1`] = `
+VueWrapper {
+  "_emitted": Object {
+    "visible-change": Array [
+      Array [
+        true,
+      ],
+    ],
+  },
+  "_emittedByOrder": Array [
+    Object {
+      "args": Array [
+        true,
+      ],
+      "name": "visible-change",
+    },
+  ],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JSelect multiple choice create create and have default value 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JSelect multiple choice create create and no have default value 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JSelect multiple choice create create and value is string 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JSelect multiple choice delete tag event delete tag event 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JSelect multiple choice filterable pass filterable 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JSelect multiple choice filterable queryElement blur event 1`] = `
+VueWrapper {
+  "_emitted": Object {
+    "blur": Array [
+      Array [
+        FocusEvent {
+          "isTrusted": false,
+        },
+      ],
+    ],
+  },
+  "_emittedByOrder": Array [
+    Object {
+      "args": Array [
+        FocusEvent {
+          "isTrusted": false,
+        },
+      ],
+      "name": "blur",
+    },
+  ],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JSelect multiple choice filterable queryElement focus event 1`] = `
+VueWrapper {
+  "_emitted": Object {
+    "focus": Array [
+      Array [
+        FocusEvent {
+          "isTrusted": true,
+        },
+      ],
+    ],
+  },
+  "_emittedByOrder": Array [
+    Object {
+      "args": Array [
+        FocusEvent {
+          "isTrusted": true,
+        },
+      ],
+      "name": "focus",
+    },
+  ],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JSelect multiple choice filterable queryElement input event 1`] = `
+VueWrapper {
+  "_emitted": Object {
+    "focus": Array [
+      Array [
+        FocusEvent {
+          "isTrusted": true,
+        },
+      ],
+    ],
+    "visible-change": Array [
+      Array [
+        true,
+      ],
+    ],
+  },
+  "_emittedByOrder": Array [
+    Object {
+      "args": Array [
+        FocusEvent {
+          "isTrusted": true,
+        },
+      ],
+      "name": "focus",
+    },
+    Object {
+      "args": Array [
+        true,
+      ],
+      "name": "visible-change",
+    },
+  ],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JSelect multiple choice filterable queryElement keyup event 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JSelect multiple choice option select event option select event 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JSelect multiple choice placeholder no pass placeholder 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JSelect multiple choice placeholder pass placeholder 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JSelect multiple choice placeholder placeholder change 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JSelect multiple choice size large size 1`] = `
+Wrapper {
+  "selector": ".j_select_tags_input",
+}
+`;
+
+exports[`JSelect multiple choice size small size 1`] = `
+Wrapper {
+  "selector": ".j_select_tags_input",
+}
+`;
+
+exports[`JSelect multiple choice value pass  value 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JSelect remote and remoteMethod no pass remote and remoteMethod 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JSelect remote and remoteMethod pass remote and remoteMethod 1`] = `
+VueWrapper {
+  "_emitted": Object {
+    "focus": Array [
+      Array [
+        FocusEvent {
+          "isTrusted": true,
+        },
+      ],
+      Array [
+        FocusEvent {
+          "isTrusted": true,
+        },
+      ],
+    ],
+    "visible-change": Array [
+      Array [
+        true,
+      ],
+      Array [
+        false,
+      ],
+      Array [
+        true,
+      ],
+    ],
+  },
+  "_emittedByOrder": Array [
+    Object {
+      "args": Array [
+        FocusEvent {
+          "isTrusted": true,
+        },
+      ],
+      "name": "focus",
+    },
+    Object {
+      "args": Array [
+        true,
+      ],
+      "name": "visible-change",
+    },
+    Object {
+      "args": Array [
+        false,
+      ],
+      "name": "visible-change",
+    },
+    Object {
+      "args": Array [
+        FocusEvent {
+          "isTrusted": true,
+        },
+      ],
+      "name": "focus",
+    },
+    Object {
+      "args": Array [
+        true,
+      ],
+      "name": "visible-change",
+    },
+  ],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JSelect single choice clearable click close element 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JSelect single choice clearable no pass clearabel 1`] = `
+VueWrapper {
+  "_emitted": Object {
+    "visible-change": Array [
+      Array [
+        true,
+      ],
+      Array [
+        false,
+      ],
+    ],
+  },
+  "_emittedByOrder": Array [
+    Object {
+      "args": Array [
+        true,
+      ],
+      "name": "visible-change",
+    },
+    Object {
+      "args": Array [
+        false,
+      ],
+      "name": "visible-change",
+    },
+  ],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JSelect single choice clearable pass clearable 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JSelect single choice clearable pass clearable and showClose is false 1`] = `
+VueWrapper {
+  "_emitted": Object {
+    "visible-change": Array [
+      Array [
+        true,
+      ],
+    ],
+  },
+  "_emittedByOrder": Array [
+    Object {
+      "args": Array [
+        true,
+      ],
+      "name": "visible-change",
+    },
+  ],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JSelect single choice create blur event 1`] = `
+VueWrapper {
+  "_emitted": Object {
+    "blur": Array [
+      Array [
+        FocusEvent {
+          "isTrusted": false,
+        },
+      ],
+    ],
+  },
+  "_emittedByOrder": Array [
+    Object {
+      "args": Array [
+        FocusEvent {
+          "isTrusted": false,
+        },
+      ],
+      "name": "blur",
+    },
+  ],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JSelect single choice create create 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JSelect single choice create focus event 1`] = `
+VueWrapper {
+  "_emitted": Object {
+    "focus": Array [
+      Array [
+        FocusEvent {
+          "isTrusted": true,
+        },
+      ],
+    ],
+  },
+  "_emittedByOrder": Array [
+    Object {
+      "args": Array [
+        FocusEvent {
+          "isTrusted": true,
+        },
+      ],
+      "name": "focus",
+    },
+  ],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JSelect single choice create option select event option select event 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JSelect single choice create scopedSlots prefix 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JSelect single choice create scopedSlots suffix 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JSelect single choice disabled no pass disabled 1`] = `
+VueWrapper {
+  "_emitted": Object {
+    "focus": Array [
+      Array [
+        FocusEvent {
+          "isTrusted": true,
+        },
+      ],
+    ],
+  },
+  "_emittedByOrder": Array [
+    Object {
+      "args": Array [
+        FocusEvent {
+          "isTrusted": true,
+        },
+      ],
+      "name": "focus",
+    },
+  ],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JSelect single choice disabled pass disabled 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JSelect single choice filterable keyup event 1`] = `
+VueWrapper {
+  "_emitted": Object {
+    "focus": Array [
+      Array [
+        FocusEvent {
+          "isTrusted": true,
+        },
+      ],
+    ],
+    "visible-change": Array [
+      Array [
+        true,
+      ],
+      Array [
+        false,
+      ],
+    ],
+  },
+  "_emittedByOrder": Array [
+    Object {
+      "args": Array [
+        FocusEvent {
+          "isTrusted": true,
+        },
+      ],
+      "name": "focus",
+    },
+    Object {
+      "args": Array [
+        true,
+      ],
+      "name": "visible-change",
+    },
+    Object {
+      "args": Array [
+        false,
+      ],
+      "name": "visible-change",
+    },
+  ],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JSelect single choice filterable keyup event query equal selectedLabel 1`] = `
+VueWrapper {
+  "_emitted": Object {
+    "focus": Array [
+      Array [
+        FocusEvent {
+          "isTrusted": true,
+        },
+      ],
+    ],
+    "visible-change": Array [
+      Array [
+        true,
+      ],
+      Array [
+        false,
+      ],
+    ],
+  },
+  "_emittedByOrder": Array [
+    Object {
+      "args": Array [
+        FocusEvent {
+          "isTrusted": true,
+        },
+      ],
+      "name": "focus",
+    },
+    Object {
+      "args": Array [
+        true,
+      ],
+      "name": "visible-change",
+    },
+    Object {
+      "args": Array [
+        false,
+      ],
+      "name": "visible-change",
+    },
+  ],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JSelect single choice filterable no pass filterable 1`] = `
+VueWrapper {
+  "_emitted": Object {
+    "visible-change": Array [
+      Array [
+        true,
+      ],
+    ],
+  },
+  "_emittedByOrder": Array [
+    Object {
+      "args": Array [
+        true,
+      ],
+      "name": "visible-change",
+    },
+  ],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JSelect single choice filterable pass filterable 1`] = `
+VueWrapper {
+  "_emitted": Object {
+    "visible-change": Array [
+      Array [
+        true,
+      ],
+    ],
+  },
+  "_emittedByOrder": Array [
+    Object {
+      "args": Array [
+        true,
+      ],
+      "name": "visible-change",
+    },
+  ],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JSelect single choice placeholder no pass placeholder 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JSelect single choice placeholder pass placeholder 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JSelect single choice popperClass no pass popperClass 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JSelect single choice popperClass pass popperClass 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JSelect single choice size large size 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JSelect single choice size small size 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JSelect single choice value pass  value 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;

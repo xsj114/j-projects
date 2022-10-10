@@ -1,0 +1,72 @@
+@import "../common/variable.styl"
+
+.j_card
+    display inline-block
+
+    .j_card_identity
+        margin 0
+        padding 0
+        display flex
+        align-items center
+
+        .j_card_identity_icon
+            width $--card-icon-size
+            height $--card-icon-size
+            line-height $--card-icon-size
+            overflow hidden
+
+    .j_card_identity_doctor
+        justify-content flex-end
+
+    .j_card_identity_horizontal
+        display inline-flex
+
+    .j_card_content
+        padding $--card-content-padding
+        margin-top $--card-content-margin-top
+        border  $--card-border
+        display inline-flex
+        align-items center
+        font-size $--card-content-font-size
+        color $--card-content-color
+        .j_card_content_icon
+            width $--card-icon-size
+            height $--card-icon-size
+            line-height $--card-icon-size
+            margin-right 6px
+            overflow hidden
+        .j_card_content_text
+            flex 1
+
+    .j_card_content_doctor
+        border-radius $--card-doctor-border-radius
+        border-color $--card-doctor-border-color
+        background-color $--card-doctor-background-color
+
+    .j_card_content_patient
+        border-radius $--card-patient-border-radius
+        border-color $--card-patient-border-color
+        background-color $--card-patient-background-color
+
+    .j_card_content_horizontal
+        margin 0
+
+    .j_card_content_large
+        padding $--card-content-large-padding
+
+    .j_card_content_small
+        padding $--card-content-small-padding
+
+    .j_card_role
+        font-size $--card-role-font-size
+        color $--card-role-color
+        font-weight 400
+
+    .j_card_role_patient
+        margin-left $--card-role-margin
+
+    .j_card_role_doctor
+        margin-right $--card-role-margin
+
+    .j_card_role_horizontal
+        margin 0 $--card-role-margin

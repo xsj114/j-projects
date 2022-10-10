@@ -1,0 +1,49 @@
+@import "../common/variable.styl"
+
+.j_button
+    margin 0
+    outline none
+    cursor pointer
+    box-sizing border-box
+    display inline-block
+    background-color $--button-background-color 
+    text-align center
+    white-space nowrap
+    color $--button-color
+    line-height 1.9
+    font-weight $--button-font-weight
+    border $--button-border
+    border-color $--button-border-color
+    padding $--button-padding
+    font-size $--button-font-size
+    border-radius $--button-border-radius
+
+    &:disabled
+        background-color #a0cfff
+        border-color #a0cfff
+        color #fff
+        cursor $--button-disabled-cursor
+
+
+.j_button_border
+    background-color #ffffff
+    color $--button-border-color
+
+    &:disabled
+        background-color #ffffff
+        border-color #ebeef5
+        color #c0c4cc
+        cursor $--button-disabled-cursor
+
+
+.j_button_round
+    border-radius 18px
+
+.j_button_large
+    padding $--button-large-padding
+    font-size $--button-large-font-size
+
+.j_button_small
+    padding $--button-small-padding
+    font-size $--button-small-font-size
+

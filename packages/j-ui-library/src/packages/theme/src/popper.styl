@@ -1,0 +1,27 @@
+.j_popper
+    &[data-popper-placement^='top'] > .j_popper_arrow
+        bottom -($--popper-width / 2)
+    &[data-popper-placement^='bottom'] > .j_popper_arrow
+        top -($--popper-width / 2)
+    &[data-popper-placement^='left'] > .j_popper_arrow
+        right -($--popper-width / 2)
+    &[data-popper-placement^='right'] > .j_popper_arrow
+        left -($--popper-width / 2)
+
+    .j_popper_arrow,
+    .j_popper_arrow::before
+        position absolute
+        width $--popper-width
+        height $--popper-height
+        z-index -1 
+    .j_popper_arrow::before
+        content ''
+        transform rotate(45deg)
+
+.j_popper_light
+    .j_popper_arrow::before
+        background $--popper-light-background-color
+
+.j_popper_dark
+    .j_popper_arrow::before
+        background $--popper-dark-background-color

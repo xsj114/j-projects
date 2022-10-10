@@ -1,0 +1,165 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`JTag active is active 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JTag closable is closable 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JTag closable is closable click 1`] = `
+VueWrapper {
+  "_emitted": Object {
+    "close": Array [
+      Array [
+        MouseEvent {
+          "isTrusted": false,
+        },
+      ],
+    ],
+  },
+  "_emittedByOrder": Array [
+    Object {
+      "args": Array [
+        MouseEvent {
+          "isTrusted": false,
+        },
+      ],
+      "name": "close",
+    },
+  ],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JTag closable slot icon 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JTag create click 1`] = `
+VueWrapper {
+  "_emitted": Object {
+    "click": Array [
+      Array [
+        MouseEvent {
+          "isTrusted": false,
+        },
+      ],
+    ],
+  },
+  "_emittedByOrder": Array [
+    Object {
+      "args": Array [
+        MouseEvent {
+          "isTrusted": false,
+        },
+      ],
+      "name": "click",
+    },
+  ],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JTag create create 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JTag create create text 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JTag create mouseout 1`] = `
+VueWrapper {
+  "_emitted": Object {
+    "mouseout": Array [
+      Array [
+        MouseEvent {
+          "isTrusted": false,
+        },
+      ],
+    ],
+  },
+  "_emittedByOrder": Array [
+    Object {
+      "args": Array [
+        MouseEvent {
+          "isTrusted": false,
+        },
+      ],
+      "name": "mouseout",
+    },
+  ],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JTag create mouseover 1`] = `
+VueWrapper {
+  "_emitted": Object {
+    "mouseover": Array [
+      Array [
+        MouseEvent {
+          "isTrusted": false,
+        },
+      ],
+    ],
+  },
+  "_emittedByOrder": Array [
+    Object {
+      "args": Array [
+        MouseEvent {
+          "isTrusted": false,
+        },
+      ],
+      "name": "mouseover",
+    },
+  ],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JTag disable is disable 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JTag size large size 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JTag size small size 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;

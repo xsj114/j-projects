@@ -1,0 +1,245 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`JBubble JBubble method close 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JBubble JBubble method open 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JBubble create create 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JBubble create create and no root element 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JBubble create create and no tag element 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+  "selector": Object {
+    "$_vueTestUtils_original": [Circular],
+    "_Ctor": Object {
+      "13": [Function],
+    },
+    "computed": Object {
+      "bubbleSize": [Function],
+    },
+    "data": [Function],
+    "destroyed": [Function],
+    "install": [Function],
+    "methods": Object {
+      "close": [Function],
+      "getFirstElement": [Function],
+      "handleClosePopper": [Function],
+      "hide": [Function],
+      "open": [Function],
+      "setExpectedState": [Function],
+      "show": [Function],
+    },
+    "mixins": Array [
+      Object {
+        "beforeDestroy": [Function],
+        "data": [Function],
+        "methods": Object {
+          "appendArrow": [Function],
+          "createPopper": [Function],
+          "destroyPopper": [Function],
+          "updatePopper": [Function],
+        },
+        "props": Object {
+          "appendToBody": Object {
+            "default": true,
+            "type": [Function],
+          },
+          "offset": Object {
+            "default": [Function],
+            "type": [Function],
+          },
+          "placement": Object {
+            "default": "bottom",
+            "type": [Function],
+          },
+          "visibleArrow": Object {
+            "default": true,
+            "type": [Function],
+          },
+        },
+        "watch": Object {
+          "showPopper": Object {
+            "handler": [Function],
+            "user": true,
+          },
+        },
+      },
+    ],
+    "mounted": [Function],
+    "name": "JBubble",
+    "props": Object {
+      "size": Object {
+        "type": [Function],
+      },
+    },
+    "render": [Function],
+    "updated": [Function],
+  },
+}
+`;
+
+exports[`JBubble create destroyed 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JBubble create popper element mouseout 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JBubble create popper element mouseover 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JBubble create reference element mouseout 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JBubble create reference element mouseover 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JBubble size large size 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JBubble size small size 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;
+
+exports[`JBubble slot content content 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+  "selector": Object {
+    "$_vueTestUtils_original": [Circular],
+    "_Ctor": Object {
+      "62": [Function],
+    },
+    "computed": Object {
+      "bubbleSize": [Function],
+    },
+    "data": [Function],
+    "destroyed": [Function],
+    "install": [Function],
+    "methods": Object {
+      "close": [Function],
+      "getFirstElement": [Function],
+      "handleClosePopper": [Function],
+      "hide": [Function],
+      "open": [Function],
+      "setExpectedState": [Function],
+      "show": [Function],
+    },
+    "mixins": Array [
+      Object {
+        "beforeDestroy": [Function],
+        "data": [Function],
+        "methods": Object {
+          "appendArrow": [Function],
+          "createPopper": [Function],
+          "destroyPopper": [Function],
+          "updatePopper": [Function],
+        },
+        "props": Object {
+          "appendToBody": Object {
+            "default": true,
+            "type": [Function],
+          },
+          "offset": Object {
+            "default": [Function],
+            "type": [Function],
+          },
+          "placement": Object {
+            "default": "bottom",
+            "type": [Function],
+          },
+          "visibleArrow": Object {
+            "default": true,
+            "type": [Function],
+          },
+        },
+        "watch": Object {
+          "showPopper": Object {
+            "handler": [Function],
+            "user": true,
+          },
+        },
+      },
+    ],
+    "mounted": [Function],
+    "name": "JBubble",
+    "props": Object {
+      "size": Object {
+        "type": [Function],
+      },
+    },
+    "render": [Function],
+    "updated": [Function],
+  },
+}
+`;
+
+exports[`JBubble user operation move the reference element into the popper element at the moment 1`] = `
+VueWrapper {
+  "_emitted": Object {},
+  "_emittedByOrder": Array [],
+  "isFunctionalComponent": undefined,
+}
+`;

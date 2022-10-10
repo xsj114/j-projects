@@ -1,0 +1,43 @@
+@import "../common/variable.styl"
+
+
+.j_autocomplete
+    display inline-block
+
+.j_autocomplete_suggest
+    border $--autocomplete-suggest-border
+    border-radius $--autocomplete-suggest-border-radius
+    background-color $--autocomplete-suggest-background-color
+    box-shadow $--autocomplete-suggest-box-shadow
+    box-sizing border-box
+
+
+    &_list_wrap
+        max-height 260px
+
+    &_list
+        margin 0
+        padding 10px 0
+        list-style none
+
+        &_item 
+            margin 0
+            padding 0 20px
+            cursor pointer
+            font-size $--autocomplete-suggest-item-font-size
+            line-height $--autocomplete-suggest-item-line-height
+            color $--autocomplete-suggest-item-color
+            white-space nowrap
+            overflow hidden
+            text-overflow ellipsis
+
+            &:hover
+                background-color #f5f7fa
+
+       .j_autocomplete_suggest_list_item_small
+            font-size $--autocomplete-suggest-item-small-font-size
+            line-height $--autocomplete-suggest-item-small-line-height
+
+       .j_autocomplete_suggest_list_item_large
+            font-size $--autocomplete-suggest-item-large-font-size
+            line-height $--autocomplete-suggest-item-large-line-height

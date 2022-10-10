@@ -1,0 +1,36 @@
+@import "../common/variable.styl"
+
+.j_bubble
+    display inline-block
+    &_popper
+        border-radius 10px
+        color $--bubble-color
+        font-size $--bubble-font-size
+        line-height $--bubble-line-height
+        background-color $--bubble-background-color
+        ul
+            margin 0
+            padding 0
+            border-radius 10px 10px 10px 10px
+            overflow hidden
+            li
+                list-style none
+                cursor pointer
+                padding $--bubble-padding
+                &:hover
+                    background-color  $--bubble-hover-background-color           
+                
+.j_bubble_popper_small
+    font-size $--bubble-small-font-size
+    line-height $--bubble-small-line-height
+    ul
+        li
+            padding $--bubble-small-padding
+        
+
+.j_bubble_popper_large
+    font-size $--bubble-large-font-size
+    line-height $--bubble-large-line-height
+    ul
+        li
+            padding $--bubble-large-padding

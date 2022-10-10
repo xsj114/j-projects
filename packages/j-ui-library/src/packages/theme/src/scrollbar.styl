@@ -1,0 +1,31 @@
+.j_scrollbar
+    position relative
+
+    &_wrap
+        height 100%
+        overflow scroll
+
+    &_bar
+        position absolute
+        right 2px 
+        bottom 2px
+        border-radius 4px
+
+        div
+            width 100%
+
+    &_bar_vertical
+        width 6px
+        top 2px
+
+    &_bar_horizontal
+        height 6px
+        left 2px
+    
+    &_bar_thumb
+        cursor pointer
+        border-radius inherit
+        background $--scrollbar-background-color
+
+    &_hidden_default
+        scrollbar-width none        

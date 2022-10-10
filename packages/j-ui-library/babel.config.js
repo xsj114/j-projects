@@ -1,0 +1,10 @@
+module.exports = {
+    presets: [ '@vue/babel-preset-jsx' ],
+    env: {
+        test: {
+            presets: [
+                [ '@babel/preset-env', { 'targets': { 'node': 'current' } } ],
+            ],
+        },
+    },
+};

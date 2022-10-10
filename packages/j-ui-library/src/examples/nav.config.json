@@ -1,0 +1,44 @@
+{
+    "components": [
+        {
+           "name": "tag",
+           "ct_name": "标签",
+           "path": "/tag"
+        },
+        {
+           "name": "button",
+           "ct_name": "按钮",
+           "path": "/button"
+        },
+        {
+           "name": "input",
+           "ct_name": "输入框",
+           "path": "/input"
+        },
+        {
+           "name": "autocomplete",
+           "ct_name": "输入建议",
+           "path": "/autocomplete"
+        },
+        {
+           "name": "select",
+           "ct_name": "选择框",
+           "path": "/select"
+        },
+        {
+           "name": "card",
+           "ct_name": "对话框",
+           "path": "/card"
+        },
+        {
+           "name": "bubble",
+           "ct_name": "气泡", 
+           "path": "/bubble"
+        },
+        {
+            "name": "scrollbar",
+            "ct_name": "滚动条",
+            "path": "/scrollbar"
+        }
+    ]    
+}
