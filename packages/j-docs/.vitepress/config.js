@@ -2,6 +2,7 @@ export default {
     title: '许仕杰',
     titleTemplate: false,
     lastUpdated: true,
+    base: '/j-projects/',
     markdown: {
         lineNumbers: true,
         config: (md) => {
