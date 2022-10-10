@@ -11,7 +11,7 @@ export default {
     },
     outDir: '../../docs',
     themeConfig: {
-        logo: '/logo.png',
+        logo: '/j-projects/logo.png',
         socialLinks: [
             {
                 icon: 'github',

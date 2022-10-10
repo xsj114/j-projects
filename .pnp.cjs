@@ -52,14 +52,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
     "enableTopLevelFallback": true,\
     "ignorePatternData": "(^(?:\\\\.yarn\\\\/sdks(?:\\\\/(?!\\\\.{1,2}(?:\\\\/|$))(?:(?:(?!(?:^|\\\\/)\\\\.{1,2}(?:\\\\/|$)).)*?)|$))$)",\
     "fallbackExclusionList": [\
-      ["j-check-word", ["workspace:packages/j-check-word"]],\
-      ["j-check-word-server", ["workspace:packages/j-check-word-server"]],\
-      ["j-docs", ["workspace:packages/j-docs"]],\
-      ["j-http-code", ["workspace:packages/j-http-code"]],\
-      ["j-is", ["workspace:packages/j-is"]],\
-      ["j-projects", ["workspace:."]],\
-      ["j-stack-9a24e6", ["workspace:packages/j-stack"]],\
-      ["j-ui-library", ["workspace:packages/j-ui-library"]]\
     ],\
     "fallbackPool": [\
       [\

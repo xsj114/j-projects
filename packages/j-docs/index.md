@@ -17,8 +17,11 @@ hero:
 
 <script setup>
 import ListProjects from './.vitepress/components/ListProjects.vue'
+
 </script>
 
 <ListProjects/>
+
+
 
 

@@ -8133,7 +8133,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "j-docs@workspace:packages/j-docs"
   dependencies:
-    vitepress: ^1.0.0-alpha.8
+    vitepress: ^1.0.0-alpha.19
     vue: ^3.2.37
   languageName: unknown
   linkType: soft
@@ -12476,7 +12476,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vitepress@npm:^1.0.0-alpha.8":
+"vitepress@npm:^1.0.0-alpha.19":
   version: 1.0.0-draft.8
   resolution: "vitepress@npm:1.0.0-draft.8"
   dependencies:
