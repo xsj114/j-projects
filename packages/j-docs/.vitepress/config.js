@@ -8,7 +8,7 @@ export default {
     
         }
     },
-    outDir: './dist',
+    outDir: '../../docs',
     themeConfig: {
         logo: '/logo.png',
         socialLinks: [
