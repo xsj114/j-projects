@@ -7,7 +7,7 @@ export default {
         lineNumbers: true,
         config: (md) => {}
     },
-    outDir: '../../docs',
+    outDir: './dist',
     themeConfig: {
         logo: '/j-projects/logo.png',
         socialLinks: [
