@@ -5,9 +5,7 @@ export default {
     base: '/j-projects/',
     markdown: {
         lineNumbers: true,
-        config: (md) => {
-    
-        }
+        config: (md) => {}
     },
     outDir: '../../docs',
     themeConfig: {
