@@ -27,5 +27,6 @@ module.exports = {
         'vue/html-indent': [ 'error', 4, {
             'attribute': 1,
         } ],
+        'max-len': [ 'off' ],
     },
 };

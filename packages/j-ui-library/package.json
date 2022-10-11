@@ -7,7 +7,8 @@
         "build": "webpack --env prod",
         "build:lib": "webpack --config ./webpack.lib.config.js",
         "webpack:analyse": "webpack --profile --json > stats.json",
-        "lint": "eslint --cache --fix ./",
+        "lint": "eslint ./",
+        "lint:fix": "eslint ./ --fix",
         "test": "jest"
     },
     "sideEffects": [
@@ -22,31 +23,29 @@
         "not dead",
         "> 0.2%"
     ],
-    "dependencies": {
-    
-    },
     "devDependencies": {
-        "@babel/core": "^7.17.8",
+        "@babel/core": "^7.19.3",
         "@babel/eslint-parser": "^7.17.0",
         "@babel/plugin-transform-runtime": "^7.17.0",
         "@babel/preset-env": "^7.16.11",
-        "@babel/runtime": "^7.17.8",
         "@popperjs/core": "^2.4.4",
         "@testing-library/jest-dom": "^5.16.4",
+        "@typescript-eslint/eslint-plugin": "^5.31.0",
+        "@typescript-eslint/parser": "^5.31.0",
         "@vue/babel-helper-vue-jsx-merge-props": "^1.2.1",
         "@vue/babel-preset-jsx": "^1.2.4",
         "@vue/test-utils": "^1.0.3",
         "autoprefixer": "^10.4.4",
         "axios": "^0.26.1",
-        "babel-core": "^7.0.0-bridge.0",
         "babel-jest": "^24.9.0",
         "babel-loader": "^8.2.4",
         "css-loader": "^6.7.1",
         "eslint": "^8.13.0",
         "eslint-config-google": "^0.14.0",
-        "eslint-plugin-vue": "^8.6.0",
+        "eslint-plugin-vue": "^9.3.0",
         "html-webpack-plugin": "^5.3.2",
-        "jest": "^24.9.0",
+        "jest": "24.9.0",
+        "jest-environment-jsdom": "24.9.0",
         "mini-css-extract-plugin": "^2.6.0",
         "postcss": "^8.4.12",
         "postcss-loader": "^6.2.1",
@@ -54,12 +53,13 @@
         "stylus": "^0.57.0",
         "stylus-loader": "^6.2.0",
         "vue": "^2.6.14",
+        "vue-eslint-parser": "^9.0.3",
         "vue-jest": "^3.0.7",
         "vue-loader": "^15.9.8",
         "vue-router": "^3.3.4",
         "vue-template-compiler": "^2.6.14",
         "webpack": "^5.70.0",
         "webpack-cli": "^4.9.2",
-        "webpack-dev-server": "^4.3.1" 
+        "webpack-dev-server": "^4.3.1"
     }
 }
