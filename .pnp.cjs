@@ -41,7 +41,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "reference": "workspace:packages/j-is"\
       },\
       {\
-        "name": "j-stack-9a24e6",\
+        "name": "j-stack",\
         "reference": "workspace:packages/j-stack"\
       },\
       {\
@@ -1457,6 +1457,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       [\
         "babel-code-frame",\
         "npm:6.26.0"\
+      ],\
+      [\
+        "babel-core",\
+        "virtual:90d0a53b5df4e046cd16c7b163e13a55f7661f0c33b64755f7522b59540cd161978e84581e75416b9b8494db696369cc8262173aa1c2d6a687d6db4c26582295#npm:7.0.0-bridge.0"\
       ],\
       [\
         "babel-helper-vue-jsx-merge-props",\
@@ -3229,6 +3233,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       [\
         "j-is",\
         "workspace:packages/j-is"\
+      ],\
+      [\
+        "j-stack",\
+        "workspace:packages/j-stack"\
       ],\
       [\
         "j-ui-library",\
@@ -13492,6 +13500,28 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["babel-core", [\
+        ["npm:7.0.0-bridge.0", {\
+          "packageLocation": "./.yarn/cache/babel-core-npm-7.0.0-bridge.0-7fe146b78f-2a1cb87901.zip/node_modules/babel-core/",\
+          "packageDependencies": [\
+            ["babel-core", "npm:7.0.0-bridge.0"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:90d0a53b5df4e046cd16c7b163e13a55f7661f0c33b64755f7522b59540cd161978e84581e75416b9b8494db696369cc8262173aa1c2d6a687d6db4c26582295#npm:7.0.0-bridge.0", {\
+          "packageLocation": "./.yarn/__virtual__/babel-core-virtual-f2b59f5546/0/cache/babel-core-npm-7.0.0-bridge.0-7fe146b78f-2a1cb87901.zip/node_modules/babel-core/",\
+          "packageDependencies": [\
+            ["babel-core", "virtual:90d0a53b5df4e046cd16c7b163e13a55f7661f0c33b64755f7522b59540cd161978e84581e75416b9b8494db696369cc8262173aa1c2d6a687d6db4c26582295#npm:7.0.0-bridge.0"],\
+            ["@babel/core", "npm:7.19.3"],\
+            ["@types/babel__core", null]\
+          ],\
+          "packagePeers": [\
+            "@babel/core",\
+            "@types/babel__core"\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["babel-helper-vue-jsx-merge-props", [\
         ["npm:2.0.3", {\
           "packageLocation": "./.yarn/cache/babel-helper-vue-jsx-merge-props-npm-2.0.3-2e0549e295-94d354b401.zip/node_modules/babel-helper-vue-jsx-merge-props/",\
@@ -20170,11 +20200,11 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "SOFT"\
         }]\
       ]],\
-      ["j-stack-9a24e6", [\
+      ["j-stack", [\
         ["workspace:packages/j-stack", {\
           "packageLocation": "./packages/j-stack/",\
           "packageDependencies": [\
-            ["j-stack-9a24e6", "workspace:packages/j-stack"],\
+            ["j-stack", "workspace:packages/j-stack"],\
             ["@typescript-eslint/eslint-plugin", "virtual:592d31ba185e036e611283c6e831c364c94683d79ea5072f84f3dac3647aff28bcf35d919d8a0fbd45c0a80ad218a07ea889ca8f49ab948be1f201bdf1642a77#npm:5.38.0"],\
             ["@typescript-eslint/parser", "virtual:592d31ba185e036e611283c6e831c364c94683d79ea5072f84f3dac3647aff28bcf35d919d8a0fbd45c0a80ad218a07ea889ca8f49ab948be1f201bdf1642a77#npm:5.38.0"],\
             ["eslint", "npm:8.24.0"],\
@@ -20202,6 +20232,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@vue/test-utils", "virtual:90d0a53b5df4e046cd16c7b163e13a55f7661f0c33b64755f7522b59540cd161978e84581e75416b9b8494db696369cc8262173aa1c2d6a687d6db4c26582295#npm:1.3.0"],\
             ["autoprefixer", "virtual:a994b79b70d8a6634ceed19357705fc8b22774bba5f27fddd446bb37710bdec52f482a32c063e974f1d9bf5fe8bacbbf98e228294edc78a25372e99ac4f810ca#npm:10.4.12"],\
             ["axios", "npm:0.26.1"],\
+            ["babel-core", "virtual:90d0a53b5df4e046cd16c7b163e13a55f7661f0c33b64755f7522b59540cd161978e84581e75416b9b8494db696369cc8262173aa1c2d6a687d6db4c26582295#npm:7.0.0-bridge.0"],\
             ["babel-jest", "virtual:90d0a53b5df4e046cd16c7b163e13a55f7661f0c33b64755f7522b59540cd161978e84581e75416b9b8494db696369cc8262173aa1c2d6a687d6db4c26582295#npm:24.9.0"],\
             ["babel-loader", "virtual:90d0a53b5df4e046cd16c7b163e13a55f7661f0c33b64755f7522b59540cd161978e84581e75416b9b8494db696369cc8262173aa1c2d6a687d6db4c26582295#npm:8.2.5"],\
             ["css-loader", "virtual:90d0a53b5df4e046cd16c7b163e13a55f7661f0c33b64755f7522b59540cd161978e84581e75416b9b8494db696369cc8262173aa1c2d6a687d6db4c26582295#npm:6.7.1"],\
@@ -27545,7 +27576,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/babel-core", null],\
             ["@types/vue", null],\
             ["@types/vue-template-compiler", null],\
-            ["babel-core", null],\
+            ["babel-core", "virtual:90d0a53b5df4e046cd16c7b163e13a55f7661f0c33b64755f7522b59540cd161978e84581e75416b9b8494db696369cc8262173aa1c2d6a687d6db4c26582295#npm:7.0.0-bridge.0"],\
             ["babel-plugin-transform-es2015-modules-commonjs", "npm:6.26.2"],\
             ["chalk", "npm:2.4.2"],\
             ["deasync", "npm:0.1.28"],\

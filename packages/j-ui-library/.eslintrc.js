@@ -16,6 +16,7 @@ module.exports = {
         'ecmaFeatures': {
             'jsx': true,
         },
+        'requireConfigFile': false,
         // You can use parserOptions.parser property to specify a custom parser to parse <script> tags.
         'parser': '@babel/eslint-parser',
     },
