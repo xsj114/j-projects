@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-# yarn lint:all && yarn jest:all
+yarn lint:all && yarn jest:all
 
 # Commit will be aborted
 # exit 1  

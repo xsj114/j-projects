@@ -6,7 +6,7 @@
     ],
     "scripts": {
         "lint:all": "eslint ./ --fix && eslint ./",
-        "test:all": "jest",
+        "test:all": "jest && yarn workspace j-ui-library test",
         "docs:deploy": "yarn workspace j-docs docs:build",
         "postinstall": "husky install",
         "prepack": "pinst --disable",
