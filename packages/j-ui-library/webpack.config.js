@@ -27,7 +27,7 @@ module.exports = ( env ) => {
     let plugins = [
         new HtmlWebpackPlugin( {
             title: 'Vue',
-            template: path.resolve( __dirname, './public/index.html' ),
+            template: path.resolve( __dirname, './index.html' ),
         } ),
         new VueLoaderPlugin(),
     ];
@@ -63,7 +63,7 @@ module.exports = ( env ) => {
             rules: [
                 {
                     test: /\.js$/,
-                    exclude: path.resolve( __dirname, './node_modules' ),
+                    include: path.resolve( __dirname, './src' ),
                     use: {
                         loader: 'babel-loader',
                         options: {
