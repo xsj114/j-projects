@@ -5,7 +5,7 @@
         "packages/*"
     ],
     "scripts": {
-        "lint:all": "yarn node bin/lint.cjs",
+        "lint:all": "./bin/lint.sh",
         "test:all": "jest",
         "docs:deploy": "yarn workspace j-docs docs:build",
         "postinstall": "husky install",

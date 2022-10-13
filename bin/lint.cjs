@@ -10,7 +10,7 @@ const lint = async () => {
         } )
         for (let val of result) {
             exec( `yarn workspace ${val.name} lint`, ( error, stdout, stderr ) => {
-                console.log(stderr)
+                console.log(stdout)
             } )
         }
     })
