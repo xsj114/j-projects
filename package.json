@@ -5,7 +5,7 @@
         "packages/*"
     ],
     "scripts": {
-        "lint:all": "./bin/lint.sh",
+        "lint:all": "eslint ./ --fix && eslint ./",
         "test:all": "jest",
         "docs:deploy": "yarn workspace j-docs docs:build",
         "postinstall": "husky install",
