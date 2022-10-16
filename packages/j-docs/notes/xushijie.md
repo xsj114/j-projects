@@ -54,6 +54,8 @@ service shadowsocks-libev restart -c /etc/shadowsocks-libev/config.json
 
 账号：xu-shijie
 
+账号：j-xushijie
+
 
 ### 谷歌上网助手
 

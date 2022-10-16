@@ -12,6 +12,7 @@
 .DS_Store
 **/views/*
 **/dist/*
+**/lib/*
 **/coverage/*
 **/*.swp
 **/*.env

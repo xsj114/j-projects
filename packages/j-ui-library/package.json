@@ -1,7 +1,8 @@
 {
     "name": "j-ui-library",
     "packageManager": "yarn@3.2.1",
-    "main": "index.js",
+    "main": "lib/main.js",
+    "version": "0.0.11",
     "scripts": {
         "serve": "webpack serve",
         "build": "webpack --env prod",

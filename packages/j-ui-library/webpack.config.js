@@ -12,7 +12,7 @@ module.exports = ( env ) => {
         devServer: {
             static: './dist',
             open: true,
-            port: 3000,
+            port: 4000,
             hot: 'only',
             historyApiFallback: true,
             client: {

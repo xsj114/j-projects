@@ -17,14 +17,12 @@ module.exports = () => {
         entry: {
             main: path.resolve( __dirname, './src/index.js' ),
         },
-        target: 'web',
         output: {
             path: path.resolve( __dirname, './lib' ),
             clean: true,
             publicPath: '/',
             library: {
-                name: 'j-ui-library',
-                type: 'umd',
+                type: 'commonjs2',
             },
         },
         plugins,
@@ -151,9 +149,9 @@ module.exports = () => {
                 },
             },
         },
-        experiments: {
-            outputModule: true,
-        },
+        // experiments: {
+            // outputModule: true,
+        // },
     };
 
     return webpackLibConfig;

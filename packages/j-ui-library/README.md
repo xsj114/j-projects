@@ -1,6 +1,6 @@
 [toc]
 
-# @j-xushijie/j-ui-library
+# j-ui-library
 
 ## Introduction
 
@@ -9,7 +9,7 @@ A vue ui component library
 ## Install
 
 ```
-npm i @j-xushijie/j-ui-library
+npm i j-ui-library
 ```
 
 ## Import
