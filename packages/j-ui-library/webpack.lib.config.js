@@ -150,7 +150,7 @@ module.exports = () => {
             },
         },
         // experiments: {
-            // outputModule: true,
+        // outputModule: true,
         // },
     };
 
