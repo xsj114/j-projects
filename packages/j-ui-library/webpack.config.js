@@ -7,7 +7,6 @@ const { merge } = require( 'webpack-merge' );
 module.exports = ( env ) => {
     const __DEV__ = env.prod ? false : true;
 
-
     const devServerConfig = {
         devServer: {
             static: './dist',

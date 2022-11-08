@@ -10,19 +10,18 @@ module.exports = () => {
         } ),
     ];
 
-
     const webpackLibConfig = {
         mode: 'production',
         devtool: 'cheap-module-source-map',
         entry: {
-            main: path.resolve( __dirname, './src/index.js' ),
+            main: path.resolve( __dirname, './src/index.js' )
         },
         output: {
             path: path.resolve( __dirname, './lib' ),
             clean: true,
-            publicPath: '/',
             library: {
-                type: 'commonjs2',
+                name: 'j-ui-library',
+                type: 'umd',
             },
         },
         plugins,
@@ -30,7 +29,7 @@ module.exports = () => {
             rules: [
                 {
                     test: /\.js$/,
-                    exclude: path.resolve( __dirname, './node_modules' ),
+                    include: path.resolve( __dirname, './src' ),
                     use: {
                         loader: 'babel-loader',
                         options: {
@@ -123,6 +122,7 @@ module.exports = () => {
             mainFiles: [ 'index' ],
             modules: [ 'node_modules' ],
         },
+        /*
         optimization: {
             usedExports: true,
             moduleIds: 'deterministic',
@@ -149,6 +149,7 @@ module.exports = () => {
                 },
             },
         },
+        */
         // experiments: {
         // outputModule: true,
         // },

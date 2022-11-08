@@ -9,6 +9,8 @@ import JSelect from './packages/select/index.js';
 import JOption from './packages/option/index.js';
 
 
+
+
 const components = [
     JAutocomplete,
     JBubble,
@@ -41,6 +43,7 @@ export default {
     JSelect,
     JOption,
 };
+
 
 
 /*

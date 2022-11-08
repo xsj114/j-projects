@@ -1578,4 +1578,87 @@ class BST {
 :::
 
 
+```js
+class Node {
 
+    constructor ( key, val, n, color ) {
+        this.key = key
+        this.val = val
+        this.left = null
+        this.right = null
+        this.n = n
+        this.color = color
+    }
+
+}
+```
+
+```js
+class RedBlackBST {
+
+    constructor () {
+        this.root = null
+    }
+
+    isRed ( node ) {
+        if ( node === null ) return false
+        return x.color === 'RED'        
+    }
+
+    rotateLeft ( node ) {
+        let x = node.right
+        node.right = x.left
+        x.left = node
+        x.color = node.color
+        node.color = 'RED'
+        x.n = node.n
+        node.n = 1 + this.size( node.left ) + this.size( node.right )
+        return x
+    }
+
+    rotateRight ( node ) {
+        let x = node.left
+        node.left = x.right
+        x.right = node
+        x.color = node.color
+        node.color = 'RED'
+        x.n = node.n
+        node.n = 1 + this.size( node.left ) + this.size( node.right )
+        return x
+    }
+
+    flipColors ( node ) {
+        node.color = 'RED'
+        node.left.color = 'BLACK'
+        node.right.color = 'BLACK'
+    }
+
+    size ( node = this.root ) {
+        if ( node === null ) return 0
+        return node.n
+    }
+
+    put ( key, val ) {
+        this.root = this._put( this.root, key, val )
+        this.root.color = 'BLACK'
+    }
+
+    _put ( node, key, val ) {
+        if ( node === null ) return new Node( key, val, 1, 'RED' )
+        if ( key < node.key ) {
+            node.left = this._put( node.left, key, val )
+        } else if ( key > node.key ) {
+            node.right = this._put( node.right, key, val )
+        } else {
+            node.val = val
+        }
+
+        if ( this.isRed( node.right ) && !this.isRed( node.left ) ) node = this.rotateLeft( node )
+        if ( this.isRed( node.left ) && this.isRed( node.left.left ) ) node = this.rotateRight( node )
+        if ( this.isRed( node.left ) && this.isRed( node.right ) ) this.flipColors( node )
+        node.n = this.size( node.left ) + this.size( node.right ) + 1
+        return node
+    }
+
+}
+```

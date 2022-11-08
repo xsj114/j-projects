@@ -1106,4 +1106,122 @@ box["style"]["width"]
 ```
 
 
+## Proxy
+
+### Proxy支持的拦截操作
+
+```js
+const target = {
+    name: 'target object'
+}
+var handler = {
+    get: function (target, propKey, receiver) {
+        console.log(target) // { name: 'target object' }
+        console.log(propKey) // name
+        return 'proxy object'
+    },
+}
+
+let proxy = new Proxy( target, handler )
+console.log(proxy.name) // proxy object
+```
+
+
+```js
+const target = {
+    name: 'target object'
+}
+var handler = {
+    set: function (target, propKey, value, receiver) {
+        console.log(target) // { name: 'target object' }
+        console.log(propKey) // 'name'
+        console.log(value) // 'proxy name'
+        target[propKey] = 'set name'
+    },
+}
+
+let proxy = new Proxy( target, handler )
+proxy.name = 'proxy name'
+console.log( proxy.name ) // 'set name'
+```
+
+
+```js
+const target = {
+    name: 'target object'
+}
+var handler = {
+    has: function (target, propKey) {
+        console.log(target) // { name: 'target object' }
+        console.log(propKey) // 'name'
+        return false
+    },
+}
+
+let proxy = new Proxy( target, handler )
+console.log('name' in target) // true
+console.log('name' in proxy) // false
+```
+
+```js
+const target = {
+    name: 'target object'
+}
+var handler = {
+    deleteProperty: function (target, propKey) {
+        console.log(target) // { name: 'target object' }
+        console.log(propKey) // 'name' or 'age'
+        return propKey === 'name' ? true : false
+    },
+}
+
+let proxy = new Proxy( target, handler )
+console.log(delete proxy['name']) // true
+console.log(delete proxy['age']) // false
+```
+
+
+```js
+const target = {
+    name: 'target object',
+    age: 32
+}
+var handler = {
+    ownKeys: function (target) {
+        console.log(target) // {name: 'target object', age: 32}
+        return ['age']
+    },
+}
+
+let proxy = new Proxy( target, handler )
+for (let key in proxy) {
+    console.log( key ) // 'age'
+}
+
+console.log( Object.keys(proxy) ) // ['age']
+
+console.log( Object.getOwnPropertyNames(proxy) ) // ['age']
+
+console.log( Object.getOwnPropertySymbols(proxy) ) // []
+```
+
+
+### Proxy.revocable() 
+
+::: tip
+一个使用场景是，目标对象不允许直接访问，必须通过代理访问，一旦访问结束，就收回代理权，不允许再次访问
+:::
+
+```js
+let target = {}
+let handler = {}
+// Proxy.revocable()方法返回一个对象，该对象的proxy属性是Proxy实例，revoke属性是一个函数，可以取消Proxy实例
+let { proxy, revoke } = Proxy.revocable( target, handler )
+proxy.foo = 123
+console.log( proxy.foo )
+revoke()
+console.log( proxy.foo ) // 当执行revoke函数之后，再访问Proxy实例，就会抛出一个错误
+```
+
+
 

@@ -668,6 +668,37 @@ console.log(navigator.userAgent)
 `CommonJS`模块是运行时加载,`ES6`模块是编译时输出接口<br/>
 `CommonJS`模块的`require()`是同步加载模块,`ES6`模块的`import`命令是异步加载,有一个独立的模块依赖的解析阶段
 
+## node中module.exports和exports的区别
+
+`exports`是`module.exports`的引用
+
+```js
+console.log( module.exports === exports ) // true
+```
+
+如果给`exports`设置了一个新的对象，`exports`和`module.exports`将不再是同一个对象
+
+```js
+exports = {}
+console.log( exports === module.exports ) // false
+```
+
+## UMD
+
+```js
+(function (root, factory) {
+    if ( typeof define === 'function' && define.amd ) {
+        define( [], factory )
+    } else if ( typeof exports === 'objects' && typeof exports.nodeName !== 'string' ) {
+        factory( exports, require( 'b' ) )
+    } else {
+        factory( ( root.commonJsStrict = {} ), root.b )
+    }
+}( typeof self !== 'undefined' ? self : this, function ( exports, b ) {
+    // self在浏览器中是window，在node中是undefined
+}))
+```
+
 
 ## SESSION
 
@@ -1119,3 +1150,4 @@ class List{
 	</ul>
 </body>
 ```
+
