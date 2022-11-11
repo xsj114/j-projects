@@ -1,7 +1,7 @@
 const { series } = require( 'gulp' );
 
 function defaultTask() {
-    series()
+    series();
 }
 
 exports.default = defaultTask;
