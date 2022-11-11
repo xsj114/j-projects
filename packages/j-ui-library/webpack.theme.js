@@ -1,22 +1,21 @@
-const path = require( 'path' )
-const fs = require('fs')
+const path = require( 'path' );
+const fs = require( 'fs' );
 const MiniCssExtractPlugin = require( 'mini-css-extract-plugin' );
 
 
-let files = fs.readdirSync( path.resolve( __dirname, './src/packages/theme/src' ) ) 
-const componentsStyle = {}
-for (let file of files) {
-    let fileName = file.replace( /\.styl$/, '' )
-    componentsStyle[fileName] = path.resolve( __dirname, `./src/packages/theme/src/${file}`)
+const files = fs.readdirSync( path.resolve( __dirname, './src/packages/theme/src' ) );
+const componentsStyle = {};
+for ( const file of files ) {
+    const fileName = file.replace( /\.styl$/, '' );
+    componentsStyle[ fileName ] = path.resolve( __dirname, `./src/packages/theme/src/${file}` );
 }
 
-const entry = Object.assign( {}, { 
-    index: path.resolve( __dirname, './src/packages/theme/index.styl' ) 
-}, componentsStyle )
-    
+const entry = Object.assign( {}, {
+    index: path.resolve( __dirname, './src/packages/theme/index.styl' ),
+}, componentsStyle );
+
 
 module.exports = () => {
-
     const webpackConfig = {
         mode: 'production',
         entry,
@@ -106,9 +105,8 @@ module.exports = () => {
                 },
             ],
         },
-    }
+    };
 
 
-    return webpackConfig
-
-}
+    return webpackConfig;
+};

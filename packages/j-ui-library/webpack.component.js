@@ -1,9 +1,8 @@
-const path = require( 'path' )
+const path = require( 'path' );
 const { VueLoaderPlugin } = require( 'vue-loader' );
-const components = require( './components.json' )
+const components = require( './components.json' );
 
 module.exports = () => {
-
     const webpackConfig = {
         mode: 'production',
         entry: components,
@@ -11,8 +10,8 @@ module.exports = () => {
             path: path.resolve( __dirname, './lib' ),
             filename: '[name].js',
             library: {
-                type: 'commonjs2'
-            }
+                type: 'commonjs2',
+            },
         },
         resolve: {
             alias: {
@@ -73,9 +72,8 @@ module.exports = () => {
                 },
             ],
         },
-    }
+    };
 
 
-    return webpackConfig
-
-}
+    return webpackConfig;
+};
