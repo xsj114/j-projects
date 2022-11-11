@@ -18,7 +18,6 @@ module.exports = () => {
         },
         output: {
             path: path.resolve( __dirname, './lib' ),
-            clean: true,
             library: {
                 name: 'j-ui-library',
                 type: 'umd',

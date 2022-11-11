@@ -1,4 +1,3 @@
-import '@packages/theme/index.styl';
 import JAutocomplete from './packages/autocomplete/index.js';
 import JBubble from './packages/bubble/index.js';
 import JButton from './packages/button/index.js';

@@ -1,0 +1,10 @@
+{
+    "j-autocomplete": "./src/packages/autocomplete/index.js",
+    "j-bubble": "./src/packages/bubble/index.js",
+    "j-button": "./src/packages/button/index.js",
+    "j-card": "./src/packages/card/index.js",
+    "j-input": "./src/packages/input/index.js",
+    "j-tag": "./src/packages/tag/index.js",
+    "j-select": "./src/packages/select/index.js",
+    "j-option": "./src/packages/option/index.js"
+}
