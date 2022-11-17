@@ -17,7 +17,7 @@ npm i j-ui-library
 ```
 import Vue from 'vue';
 import JUI from 'j-ui-library'
-import 'j-ui-library/lib/j-ui-library.css'
+import 'j-ui-library/lib/theme/index.css'
 
 Vue.use(JUI)
 
@@ -26,6 +26,34 @@ new Vue({
   render: h => h(App)
 });
 ```
+
+## load on demand
+
+```
+import Vue from 'vue';
+import { JButton } from 'j-ui-library'
+
+Vue.use(JButton)
+```
+### .babelrc
+
+```
+{
+    "plugins": [
+        [
+            "component",
+            {
+                "libraryName": "j-ui-library",
+                "styleLibrary": {
+                    name: "theme",
+                    base: true
+                }
+            }
+        ]
+    ]
+}
+```
+
 
 ## Components
 
