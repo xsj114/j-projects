@@ -8,10 +8,79 @@ outline: 'deep'
 
 # CSS
 
+
+## doctype的意义是什么
+
+让浏览器以标准模式渲染（比如IE，有自己的盒模型，如果带上doctype，会以标准模式渲染）<br/>
+让浏览器知道元素的合法性
+
+
+## em和i有什么区别
+
+`em`是语义化的标签，表强调<br/>
+`i`是纯样式的标签，表斜体<br/>
+`HTML5`中`i`不推荐使用，一般用作图标
+
+
+## HTML语义化的意义是什么
+
+开发者容易理解<br/>
+机器容易理解结构<br/>
+有助于`SEO`
+
+## 哪些元素可以自闭合
+
+| 哪些元素可以自闭合 |
+| ---- |
+| 表单元素input |
+| 图片img |
+| br<br/>hr|
+| meta<br/>link |
+
+## HTML和DOM的关系
+
+HTML是死的<br/>
+DOM由HTML解析而来，是活的<br/>
+JS可以维护DOM
+
+
+## form的作用有哪些
+
+直接提交表单<br/>
+使用`submit`或`reset`按钮,可直接提交表单或清空表单内容<br/>
+便于浏览器保存表单<br/>
+第三方库可以整体提取值
+
+
+## 如果图片下面有空隙，它的原理是什么，怎么样去除？
+
+
+因为`img`元素是内联元素，要遵守行高的构成，默认会按照`baseline`对齐,`baseline`和底线之间是有偏差的，这个偏差的大小视字体而定
+
+它会遵守垂直对齐这个方式，所以调整下`vertical-align`设置为`bottom`,按底线对齐,即可去除空隙
+
+
+## css实现三角形
+
+```css
+<style>
+div{
+    width: 0;
+    height: 30px;
+    border-bottom: 30px solid red;
+    border-left: 30px solid transparent;
+    border-right: 30px solid transparent;
+}
+</style>
+
+<div></div>
+```
+
 ## 块元素的特性
 
 默认块元素独占一行<br/>
 支持所有`css`命令
+
 
 
 ## 内联元素的特性
@@ -20,7 +89,7 @@ outline: 'deep'
 不支持宽高<br/>
 一行上可以显示继续跟同类的标签<br/>
 不支持上下的`margin`<br/>
-代码换行被解析
+代码换行被解析<br/>
 
 ## `inline-block`的特性
 
@@ -29,37 +98,6 @@ outline: 'deep'
 默认内容撑开宽度<br/>
 标签之间的换行间隙被解析
 
-
-## float的特性
-
-::: tip
-定义：
-使元素脱离文档流,按照指定方向发生移动,遇到父级边界或者相邻的浮动元素停了下来
-:::
-
-块在一排显示<br/>
-内联支持宽高<br/> 
-默认内容撑开宽度<br/> 
-脱离文档流<br/> 
-提升层级半层 
-
-
-## `position-relative`的特性
-
-
-不影响元素本身的特性<br/>
-不使元素脱离文档流,元素移动之后原始位置会被保留<br/>
-如果没有定位偏移量,对元素本身没有任何影响<br/>
-提升层级
-
-## `position-absolute`的特性
-
-使元素完全脱离文档流<br/> 
-使内联支持宽高<br/>
-块属性标签内容撑开宽度<br/>
-如果有定位父级相对于定位父级发生偏移,没有定位父级相对于`document`发生偏移<br/>
-相对定位一般都是配合绝对定位元素使用<br/>
-提升层级
 
 
 
@@ -178,17 +216,6 @@ div{
 | 网格布局 |  新的技术 |
 
 
-
-## 谈谈你对CSS盒模型的认识
-
-`CSS`盒模型包含`margin`,`border`,`padding`,`content`<br/>
-盒模型大小 = `border` + `padding` + `width/height`<br/>
-标准盒模型与`IE`盒模型的区别是计算的宽度和高度不同
-
-| 盒模型分类 |  描述  | 设置 |
-| ------ | ---- | ----- |
-| 标准盒模型 |  宽度和高度指的是`content` |  `box-sizing: content-box;`  |
-| `IE`盒模型 | 宽度和高度指的是`content+padding+border` | 	`box-sizing: border-box;` |
 
 
 

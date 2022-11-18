@@ -8,6 +8,68 @@ outline: 'deep'
 
 # HTML
 
+
+## 常见元素
+
+| Head区元素 |
+| ----- |
+| meta |
+| title |
+| style |
+| link |
+| script |
+| base |
+
+| body区元素|
+| ----- |
+| div<br/>section<br/>article<br/>aside<br/>header<br/>footer |
+| p |
+| span<br/>em<br/>strong |
+| table<br/>thead<br/>tbody<br/>tr<br/>td |
+| ul<br/>ol<br/>li<br/>dl<br/>dt<br/>dd |
+| a |
+| form<br/>input<br/>select<br/>textarea<br/>button |
+
+
+## HTML版本
+
+
+| HTML版本 | 描述 |
+| ----- | ---- |
+| HTML4/4.0.1 | 写法比较灵活，标签和标签属性，大小写比较随意，导致浏览器做了很多兼容 |
+| XHTML | 要求非常严格，比如所有标签必须是小写的，所有属性必须是小写的,所有属性必须要有值 |
+| HTML5 | 写法没有那么严格了 |
+
+## HTML元素嵌套关系
+
+
+块级元素可以包含行内元素<br/>
+块级元素不一定能包含块级元素（比如p元素不能包含div元素）<br/>
+行内元素一般不能包含块级元素
+
+:::tip
+a元素在嵌套关系的计算中，是要被拿掉的，不参与计算
+
+```html
+<!--合法的,因为拿掉a元素之后，是body元素包裹div元素，肯定是合法的-->
+<a>
+    <div></div>
+</a>
+```
+
+<br/>
+
+```html
+<!--不合法的,因为拿掉a元素后，是p元素包裹div元素，但是p元素不能包裹div元素，所以不合法-->
+
+<p>
+    <a>
+        <div></div>
+    </a>
+</p>
+```
+:::
+
 ## HTML5
 
 ### 新增标签
@@ -21,6 +83,8 @@ outline: 'deep'
 <article></article>
 
 <aside></aside>
+
+<nav></nav>
 
 <section></section>
 

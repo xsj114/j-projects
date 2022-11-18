@@ -9,7 +9,42 @@ outline: 'deep'
 # CSS
 
 
-## 属性选择器
+## 选择器
+
+选择器的作用是用于匹配HTML元素
+
+
+### 分类和权重
+
+
+| 分类 | 示例 |
+| ---- | ----- |
+| 元素选择器 | `a{}` |
+| 伪元素选择器 | `::before{}` |
+| 类选择器 | `.test{}` |
+| 属性选择器 | `[type=radio]{}` |
+| 伪类选择器 | `:hover{}` |
+| ID选择器 | `#id{}` |
+| 组合选择器 | `[type=checkbox]+label{}` |
+| 否定选择器 | `:not(.test){}` |
+| 通用选择器 | `*{}` |
+
+:::tip
+伪元素是双冒号，伪类是单冒号<br/>
+伪元素是一种真实存在的元素，在页面中可以有内容，可以有样式的。<br/>
+伪类是一种状态下的样式，比如hover伪类，它的意思是鼠标指向一个元素的时候，这样一种状态下的样式。
+:::
+
+| 权重 | 权重值 |
+| ---- |  ----- |
+| ID选择器 |  100 |
+| 类选择器，属性选择器，伪类选择器 | 10 |
+| 元素选择器，伪元素选择器| 1 |
+| 其它选择器 | 0 |
+
+
+
+### 属性选择器
 
 ```html
 // p标签的attr属性等于test
@@ -90,7 +125,7 @@ outline: 'deep'
 </body> 
 ```
 
-## 伪类选择器
+### 伪类选择器
 
 | 伪类选择器 |
 | ------ |
@@ -232,6 +267,208 @@ outline: 'deep'
 </body> 
 ```
 
+
+### 解析方式和性能
+
+浏览器解析CSS选择器的方式是从右往左解析的
+
+```css
+/*浏览器会先去找.test,找到后再去看有没有一个祖先是div，再去看有没有一个祖先是body*/
+body div .test{
+    color: red;
+}
+```
+
+## 盒模型
+
+`CSS`盒模型包含`margin`,`border`,`padding`,`content`<br/>
+盒模型大小 = `border` + `padding` + `width/height`<br/>
+标准盒模型与`IE`盒模型的区别是计算的宽度和高度不同
+
+| 盒模型分类 |  描述  | 设置 |
+| ------ | ---- | ----- |
+| 标准盒模型 |  宽度和高度指的是`content` |  `box-sizing: content-box;`  |
+| `IE`盒模型 | 宽度和高度指的是`content+padding+border` | 	`box-sizing: border-box;` |
+
+
+## float
+
+::: tip
+定义：
+使元素脱离文档流,按照指定方向发生移动,遇到父级边界或者相邻的浮动元素停了下来
+:::
+
+块在一排显示<br/>
+内联支持宽高<br/> 
+默认内容撑开宽度<br/> 
+脱离文档流<br/> 
+提升层级半层 
+
+
+
+## position
+
+### `position-relative`的特性
+
+不影响元素本身的特性<br/>
+不使元素脱离文档流,元素移动之后原始位置会被保留（不会因为偏移而改变布局的计算）<br/>
+如果没有定位偏移量,对元素本身没有任何影响<br/>
+提升层级
+
+
+### `position-absolute`的特性
+
+使元素完全脱离文档流<br/> 
+使内联支持宽高<br/>
+块属性标签内容撑开宽度<br/>
+如果有定位父级相对于定位父级发生偏移,没有定位父级相对于`document`发生偏移<br/>
+相对定位一般都是配合绝对定位元素使用<br/>
+提升层级
+
+## 布局
+
+### table表格布局
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .left{
+            background: red;
+            width: 200px;
+        }
+        .right{
+            background: blue;
+        }
+        table{
+            width: 800px;
+            height: 200px;
+            border-collapse: collapse;
+        }
+    </style>
+    <script type="text/javascript"></script>
+</head>
+<body>
+    <table>
+        <tr>
+            <td class="left">左</td>
+            <td class="right">右</td>
+        </tr>
+    </table>
+</body>
+</html>
+```
+
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .left{
+            background: red;
+            width: 200px;
+        }
+        .right{
+            background: blue;
+        }
+        .table{
+            display: table;
+            width: 800px;
+            height: 200px;
+        }
+        .table-row{
+            display: table-row;
+        }
+        .table-cell{
+            display: table-cell;
+            vertical-align: middle;
+        }
+    </style>
+    <script type="text/javascript"></script>
+</head>
+<body>
+    <div class="table">
+        <div class="table-row">
+            <div class="left table-cell">
+                左
+            </div>
+            <div class="right table-cell">
+                右
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+```
+
+### float浮动 + margin
+
+### inline-block布局
+
+### flexbox布局
+
+
+#### 旧版弹性盒模型
+
+
+`display: box`<br/>
+`display: inline-box`
+
+| 主轴设置 | 描述 | 值 | 备注|
+| ------ | ----- | ----- | --- |
+| box-orient | 主轴方向 | horizontal(横向)<br/>vertical(垂直) |
+| box-direction | 主轴排列顺序 | reverse(反序)<br/>normal(正序) | reverse会顶着左侧,新版会顶着右侧|
+| box-pack | 主轴方向富裕空间 | start <br/> end <br/> center <br/> justify |
+| box-align | 侧轴方向富裕空间 | start <br/> end <br/> center  |
+
+
+| 子级样式 | 描述| 备注|
+| --- | --- | ---- |
+| box-flex |盒子的弹性空间 | 子元素的尺寸=盒子的尺寸*子元素的box-flex属性值/所有子元素的box-flex属性值的和 |
+| box-ordinal-group | 元素的具体位置设置 | 数值越小越靠前,最小值默认处理为1|
+
+
+
+## 自定义字体
+
+
+```html
+<head>
+<style type="text/css">
+.custom-font{
+    font-family: IF;
+}
+@font-face{
+    font-family: "IF";
+    src: url("./IndieFlower.ttf");
+}
+</style>
+</head>
+
+<body>
+    <p class="custom-font">自定义字体</p>
+</body>
+```
+
+
 ## 响应式
 
 ### 媒体类型
@@ -281,27 +518,6 @@ outline: 'deep'
 | orientation:portrait | 屏幕垂直 |
 | orientation:landscape | 屏幕水平 |
 
-
-## 弹性盒模型
-
-### 旧版弹性盒模型
-
-
-`display: box`<br/>
-`display: inline-box`
-
-| 主轴设置 | 描述 | 值 | 备注|
-| ------ | ----- | ----- | --- |
-| box-orient | 主轴方向 | horizontal(横向)<br/>vertical(垂直) |
-| box-direction | 主轴排列顺序 | reverse(反序)<br/>normal(正序) | reverse会顶着左侧,新版会顶着右侧|
-| box-pack | 主轴方向富裕空间 | start <br/> end <br/> center <br/> justify |
-| box-align | 侧轴方向富裕空间 | start <br/> end <br/> center  |
-
-
-| 子级样式 | 描述| 备注|
-| --- | --- | ---- |
-| box-flex |盒子的弹性空间 | 子元素的尺寸=盒子的尺寸*子元素的box-flex属性值/所有子元素的box-flex属性值的和 |
-| box-ordinal-group | 元素的具体位置设置 | 数值越小越靠前,最小值默认处理为1|
 
 
 
