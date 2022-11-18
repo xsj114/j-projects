@@ -254,4 +254,207 @@ dom.getBoundingClientRect().width/height
 | `display:inline-block` |
 
 
+## 九宫格布局
 
+> 利用float布局
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        ul{
+            width: 360px;
+        }
+        li{
+            float: left;
+            width: 100px;
+            height: 100px;
+            margin: 10px;
+            background: yellow;
+            list-style: none;
+            text-align: center;
+            line-height: 100px;
+        }
+    </style>
+    <script type="text/javascript"></script>
+</head>
+
+<body>
+    <ul>
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+        <li>6</li>
+        <li>7</li>
+        <li>8</li>
+        <li>9</li>
+    </ul>
+</body>
+</html>
+```
+
+> 利用flex布局
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        ul{
+            width: 360px;
+            display: flex;
+            flex-wrap: wrap;
+        }
+        li{
+            width: 100px;
+            height: 100px;
+            margin: 10px;
+            background: yellow;
+            list-style: none;
+            text-align: center;
+            line-height: 100px;
+        }
+    </style>
+    <script type="text/javascript"></script>
+</head>
+
+<body>
+    <ul>
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+        <li>6</li>
+        <li>7</li>
+        <li>8</li>
+        <li>9</li>
+    </ul>
+</body>
+</html>
+```
+
+> 利用inline-block布局
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        ul{
+            width: 360px;
+            font-size: 0;
+        }
+        li{
+            width: 100px;
+            height: 100px;
+            margin: 10px;
+            background: yellow;
+            list-style: none;
+            text-align: center;
+            line-height: 100px;
+            font-size: 16px;
+            display: inline-block;
+        }
+    </style>
+    <script type="text/javascript"></script>
+</head>
+
+<body>
+    <ul>
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+        <li>6</li>
+        <li>7</li>
+        <li>8</li>
+        <li>9</li>
+    </ul>
+</body>
+</html>
+```
+
+> 利用表格布局
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .container{
+            display: table;
+        }
+        .table-row{
+            display: table-row;
+        }
+        .block{
+            width: 100px;
+            height: 100px;
+            background: yellow;
+            list-style: none;
+            text-align: center;
+            line-height: 100px;
+            display: table-cell;
+        }
+    </style>
+    <script type="text/javascript"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="table-row">
+            <div class="block">1</div>
+            <div class="block">2</div>
+            <div class="block">3</div>
+        </div>
+        <div class="table-row">
+            <div class="block">4</div>
+            <div class="block">5</div>
+            <div class="block">6</div>
+        </div>
+        <div class="table-row">
+            <div class="block">7</div>
+            <div class="block">8</div>
+            <div class="block">9</div>
+        </div>
+    </div>
+</body>
+</html>
+```

@@ -421,7 +421,144 @@ body div .test{
 
 ### float浮动 + margin
 
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .container{
+            height: 100px;
+        }
+        .left{
+            width: 200px;
+            background: red;
+            float: left;
+            height: 100%;
+        }
+        .right{
+            margin-left: 200px;
+            background: yellow;
+            height: 100%;
+        }
+    </style>
+    <script type="text/javascript"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="left">左</div>
+        <div class="right">右</div>
+    </div>
+</body>
+</html>
+```
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .container{
+            height: 100px;
+        }
+        .left{
+            width: 200px;
+            background: red;
+            float: left;
+            height: 100%;
+        }
+        .center{
+            margin-left: 200px;
+            margin-right: 200px;
+            background: blue;
+            height: 100%;
+        }
+        .right{
+            width: 200px;
+            background: yellow;
+            height: 100%;
+            float: right;
+        }
+    </style>
+    <script type="text/javascript"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="left">左</div>
+        <div class="right">右</div>
+        <div class="center">中</div>
+    </div>
+</body>
+</html>
+```
+
 ### inline-block布局
+
+没有清楚浮动等问题<br/>
+需要处理间隙
+
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .container{
+            height: 200px;
+            width: 800px;
+            font-size: 0;
+        }
+        .left{
+            width: 200px;
+            height: 200px;
+            background: red;
+            display: inline-block;
+            font-size: 14px;
+        }
+        .right{
+            width: 600px;
+            height: 200px;
+            background: yellow;
+            display: inline-block;
+            font-size: 14px;
+        }
+    </style>
+    <script type="text/javascript"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="left">左</div>
+        <div class="right">右</div>
+    </div>
+</body>
+</html>
+```
 
 ### flexbox布局
 
