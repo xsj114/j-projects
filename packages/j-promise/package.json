@@ -1,0 +1,33 @@
+{
+    "name": "j-promise",
+    "packageManager": "yarn@3.2.3",
+    "type": "module",
+    "scripts": {
+        "build": "vite build",
+        "test": "jest",
+        "lint": "eslint ./",
+        "lint:fix": "eslint ./ --fix"
+    },
+    "exports": {
+        ".": {
+            "import": "./dist/j-promise.js",
+            "require": "./dist/j-promise.cjs",
+            "default": "./dist/j-promise.umd.cjs"
+        }
+    },
+    "files": [
+        "dist"
+    ],
+    "devDependencies": {
+        "@babel/core": "^7.20.2",
+        "@babel/preset-env": "^7.20.2",
+        "@rollup/plugin-commonjs": "^23.0.2",
+        "@typescript-eslint/eslint-plugin": "^5.31.0",
+        "@typescript-eslint/parser": "^5.31.0",
+        "eslint": "^8.20.0",
+        "eslint-config-google": "^0.14.0",
+        "j-is": "workspace:*",
+        "jest": "^28.1.3",
+        "vite": "^3.2.4"
+    }
+}

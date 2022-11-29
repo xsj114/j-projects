@@ -353,6 +353,60 @@ dom.getBoundingClientRect().width/height
 </html>
 ```
 
+
+```html
+<style type="text/css">
+    li{
+        list-style: none;
+    }
+    .grid{
+        display: flex;
+        flex-wrap: wrap;
+        width: 300px;
+    }
+    .grid li{
+        width: 100px;
+        height: 100px;
+        line-height: 100px;
+        text-align: center;
+        border: 4px solid #ccc;
+        box-sizing: border-box;
+        margin-left: -4px;
+        margin-top: -4px;
+    }
+    .grid li:nth-child(3n+1){
+        margin-left: 0;
+    }
+    .grid li:nth-child(1){
+        margin-top: 0;
+    }
+    .grid li:nth-child(2){
+        margin-top: 0;
+    }
+    .grid li:nth-child(3){
+        margin-top: 0;
+    }
+    .grid li:hover{
+        border-color: red;
+        z-index: 2;
+    }
+</style>
+<body>
+    <ul class="grid">
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+        <li>6</li>
+        <li>7</li>
+        <li>8</li>
+        <li>9</li>
+    </ul>
+</body>
+```
+
+
 > 利用inline-block布局
 
 ```html

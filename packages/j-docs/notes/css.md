@@ -605,6 +605,93 @@ body div .test{
 </body>
 ```
 
+## 动画
+
+
+### transition补间动画 
+
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .container{
+            width: 100px;
+            height: 100px;
+            background: red;
+            transition: width 1s, background 3s;
+            transition-timing-function: ease-in-out; /*用来指定你的动画,时间和进度是什么关系的*/
+        }
+        .container:hover{
+            width: 800px;
+            background: green;
+        }
+    </style>
+    <script type="text/javascript"></script>
+</head>
+
+<body>
+    <div class="container"></div>
+</body>
+
+</html>
+```
+
+
+### keyframe关键帧动画
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .container{
+            width: 100px;
+            height: 100px;
+            background: red;
+            animation: run 1s;
+            animation-fill-mode: forwards;
+        }
+        @keyframes run{
+            0%{
+                width: 100px;
+            }
+            50%{
+                width: 200px;
+            }
+            100%{
+                width: 800px;
+            }
+        }
+    </style>
+    <script type="text/javascript"></script>
+</head>
+
+<body>
+    <div class="container"></div>
+</body>
+
+</html>
+```
+
+
 
 ## 响应式
 

@@ -2159,7 +2159,6 @@ lawsuit      诉讼
 lawyer       律师
 leaf         叶子
 league       联盟
-lean         倾斜
 lecture      演讲
 legend       传说
 legislative  立法
@@ -3145,3 +3144,8 @@ discourage   阻碍
 capacity     容量
 snoop        窥探,话多的人
 impersonate  模仿
+pronounce    发音
+lean         倾斜
+sloppy       稀松
+procedure    程序
+assimilate   吸收

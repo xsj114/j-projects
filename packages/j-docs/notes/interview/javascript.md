@@ -651,22 +651,6 @@ console.log(navigator.userAgent)
 
 
 
-## CommonJS模块的加载原理
-
-`CommonJS`主要是通过`require`和`module.exports`两个方法做模块化加载，`CommonJS`模块是运行时执行，并且是同步加载模块，加载完的模块是一个对象，并将它放到缓存中，再次加载的时候，也会从缓存中读取，不会在重复加载了，也就是说`CommonJS`模块无论加载多少次，都只会在第一次加载时运行一次。在`CommonJS`中，一旦出现某个模块被循环加载，就只输出已经执行的部分，还未执行的部分不会输出
-
-
-## ES6模块的加载原理
-
-浏览器加载`ES6`模块，也使用`<script>`标签，但是要加入`type="module"`属性,浏览器对于带有`type="module"`的`<script>`，都是异步加载,等同于打开了`<script>`标签的`defer`属性
-
-`JS`引擎对脚本静态分析的时候,遇到模块加载命令`import`,就会生成一个只读引用。等到脚本真正执行时,再根据这个只读引用,到被加载的那个模块里面去取值。因此，ES6 模块是动态引用，并且不会缓存值，模块里面的变量绑定其所在的模块。
-
-## ES6模块与CommonJS模块的差异
-
-`CommonJS`模块输出的是一个值的拷贝,`ES6`模块输出的是值的引用<br/>
-`CommonJS`模块是运行时加载,`ES6`模块是编译时输出接口<br/>
-`CommonJS`模块的`require()`是同步加载模块,`ES6`模块的`import`命令是异步加载,有一个独立的模块依赖的解析阶段
 
 ## node中module.exports和exports的区别
 
@@ -681,22 +665,6 @@ console.log( module.exports === exports ) // true
 ```js
 exports = {}
 console.log( exports === module.exports ) // false
-```
-
-## UMD
-
-```js
-(function (root, factory) {
-    if ( typeof define === 'function' && define.amd ) {
-        define( [], factory )
-    } else if ( typeof exports === 'objects' && typeof exports.nodeName !== 'string' ) {
-        factory( exports, require( 'b' ) )
-    } else {
-        factory( ( root.commonJsStrict = {} ), root.b )
-    }
-}( typeof self !== 'undefined' ? self : this, function ( exports, b ) {
-    // self在浏览器中是window，在node中是undefined
-}))
 ```
 
 
@@ -990,60 +958,6 @@ function forEach (obj, fn) {
 }
 ```
 
-
-## 九宫格
-
-```html
-<style type="text/css">
-    li{
-        list-style: none;
-    }
-    .grid{
-        display: flex;
-        flex-wrap: wrap;
-        width: 300px;
-    }
-    .grid li{
-        width: 100px;
-        height: 100px;
-        line-height: 100px;
-        text-align: center;
-        border: 4px solid #ccc;
-        box-sizing: border-box;
-        margin-left: -4px;
-        margin-top: -4px;
-    }
-    .grid li:nth-child(3n+1){
-        margin-left: 0;
-    }
-    .grid li:nth-child(1){
-        margin-top: 0;
-    }
-    .grid li:nth-child(2){
-        margin-top: 0;
-    }
-    .grid li:nth-child(3){
-        margin-top: 0;
-    }
-    .grid li:hover{
-        border-color: red;
-        z-index: 2;
-    }
-</style>
-<body>
-    <ul class="grid">
-        <li>1</li>
-        <li>2</li>
-        <li>3</li>
-        <li>4</li>
-        <li>5</li>
-        <li>6</li>
-        <li>7</li>
-        <li>8</li>
-        <li>9</li>
-    </ul>
-</body>
-```
 
 
 ## JS案例
