@@ -163,7 +163,7 @@ describe( 'JPromise.race', ()=> {
         } );
         const p2 = JPromise.reject( 'error' );
 
-        const promise = JPromise.race( [ p1, p2 ] ).then( fn1 ).catch( fn2 );
+        JPromise.race( [ p1, p2 ] ).then( fn1 ).catch( fn2 );
         jest.runAllTimers();
         expect( fn1 ).toHaveBeenCalledTimes( 0 );
         expect( fn2 ).toHaveBeenCalledTimes( 1 );
@@ -197,7 +197,7 @@ describe( 'JPromise.race', ()=> {
             }, 1000 );
         } );
 
-        const promise = JPromise.race( [ p1, p2 ] ).then( fn1 ).catch( fn2 );
+        JPromise.race( [ p1, p2 ] ).then( fn1 ).catch( fn2 );
         jest.runAllTimers();
         expect( fn1 ).toHaveBeenCalledTimes( 1 );
         expect( fn2 ).toHaveBeenCalledTimes( 0 );
@@ -227,6 +227,7 @@ describe( 'JPromise.any', ()=> {
         jest.runAllTimers();
         expect( promise[ '[[PromiseState]]' ] ).toEqual( 'fulfilled' );
         expect( promise[ '[[PromiseResult]]' ] ).toEqual( 42 );
+        expect( result ).toEqual( 42 );
     } );
 
 
@@ -294,6 +295,7 @@ describe( 'Promise.try', () => {
     it( 'catch sync error', () => {
         let errMsg = '';
         const fn = () => {
+            // eslint-disable-next-line no-throw-literal
             throw '同步错误';
         };
         JPromise.try( fn ).catch( ( err )=> {

@@ -9,9 +9,9 @@ class JPromise {
         this[ '[[PromiseThenable]]' ] = [];
 
         try {
-            executor( PromiseResolve.bind( null, this ), PromiseReject.bind( null, this ) );
+            executor( promiseResolve.bind( null, this ), promiseReject.bind( null, this ) );
         } catch ( e ) {
-            PromiseReject.bind( null, this )( e );
+            promiseReject.bind( null, this )( e );
         }
     }
 
@@ -152,9 +152,9 @@ class JPromise {
     }
 
     finally( callback ) {
-        return this.then( 
+        return this.then(
             () => JPromise.resolve( callback() ),
-            () => JPromise.reject( callback() ) 
+            () => JPromise.reject( callback() ),
         );
     }
 
@@ -175,13 +175,13 @@ class JPromise {
             promise,
         } );
 
-        if ( this[ '[[PromiseState]]' ] !== 'pending' ) PromiseExecute( this );
+        if ( this[ '[[PromiseState]]' ] !== 'pending' ) promiseExecute( this );
 
         return promise;
     }
 }
 
-function PromiseExecute( promise ) {
+function promiseExecute( promise ) {
     let result; let thenable;
 
     if ( !promise[ '[[PromiseThenable]]' ].length ) return;
@@ -195,7 +195,7 @@ function PromiseExecute( promise ) {
         if ( promise[ '[[PromiseState]]' ] === 'fulfilled' ) {
             // If onFulfilled is not a function and promise1 is fulfilled, promise2 must be fulfilled with the same value as promise1.
             if ( is.null( thenable.onFulfilled ) ) {
-                PromiseResolve( thenable.promise, promise[ '[[PromiseResult]]' ] );
+                promiseResolve( thenable.promise, promise[ '[[PromiseResult]]' ] );
                 continue;
             }
 
@@ -206,15 +206,15 @@ function PromiseExecute( promise ) {
                     result = thenable.onFulfilled.call( null, promise[ '[[PromiseResult]]' ] );
                     if ( result instanceof JPromise ) {
                         result.then(
-                            ( value ) => PromiseResolve( thenable.promise, value ),
-                            ( value ) => PromiseReject( thenable.promise, value ),
+                            ( value ) => promiseResolve( thenable.promise, value ),
+                            ( value ) => promiseReject( thenable.promise, value ),
                         );
                     } else {
-                        PromiseResolve( thenable.promise, result );
+                        promiseResolve( thenable.promise, result );
                     }
                 } catch ( e ) {
                     // If either onFulfilled or onRejected throws an exception e, promise2 must be rejected with e as the reason.
-                    PromiseReject( thenable.promise, e );
+                    promiseReject( thenable.promise, e );
                 }
             }, 0, thenable );
         }
@@ -222,7 +222,7 @@ function PromiseExecute( promise ) {
         if ( promise[ '[[PromiseState]]' ] === 'rejected' ) {
             // If onRejected is not a function and promise1 is rejected, promise2 must be rejected with the same reason as promise1.
             if ( is.null( thenable.onRejected ) ) {
-                PromiseReject( thenable.promise, promise[ '[[PromiseResult]]' ] );
+                promiseReject( thenable.promise, promise[ '[[PromiseResult]]' ] );
                 continue;
             }
 
@@ -233,29 +233,29 @@ function PromiseExecute( promise ) {
                     result = thenable.onRejected.call( null, promise[ '[[PromiseResult]]' ] );
                     if ( result instanceof JPromise ) {
                         result.then(
-                            ( value ) => PromiseResolve( thenable.promise, value ),
-                            ( value ) => PromiseReject( thenable.promise, value ),
+                            ( value ) => promiseResolve( thenable.promise, value ),
+                            ( value ) => promiseReject( thenable.promise, value ),
                         );
                     } else {
-                        PromiseResolve( thenable.promise, result );
+                        promiseResolve( thenable.promise, result );
                     }
                 } catch ( e ) {
                     // If either onFulfilled or onRejected throws an exception e, promise2 must be rejected with e as the reason.
-                    PromiseReject( thenable.promise, e );
+                    promiseReject( thenable.promise, e );
                 }
             }, 0, thenable );
         }
     }
 }
 
-function PromiseReject( promise, reason ) {
+function promiseReject( promise, reason ) {
     if ( promise[ '[[PromiseState]]' ] !== 'pending' ) return;
     promise[ '[[PromiseState]]' ] = 'rejected';
     promise[ '[[PromiseResult]]' ] = reason;
-    PromiseExecute( promise );
+    promiseExecute( promise );
 }
 
-function PromiseResolve( promise, value ) {
+function promiseResolve( promise, value ) {
     if ( promise === value ) {
         throw new TypeError( 'Chaining cycle detected for promise' );
     }
@@ -265,15 +265,19 @@ function PromiseResolve( promise, value ) {
         try {
             then = value.then;
         } catch ( e ) {
-            PromiseReject( promise, e );
+            promiseReject( promise, e );
             return;
         }
         if ( is.function( then ) ) {
             try {
-                then.call( value, PromiseResolve.bind( null, promise ), PromiseReject.bind( null, promise ) );
+                then.call(
+                    value,
+                    promiseResolve.bind( null, promise ),
+                    promiseReject.bind( null, promise ),
+                );
             } catch ( e ) {
                 if ( promise[ '[[PromiseState]]' ] === 'pending' ) {
-                    PromiseReject( promise, e );
+                    promiseReject( promise, e );
                 }
             }
             return;
@@ -283,7 +287,7 @@ function PromiseResolve( promise, value ) {
     if ( promise[ '[[PromiseState]]' ] !== 'pending' ) return;
     promise[ '[[PromiseState]]' ] = 'fulfilled';
     promise[ '[[PromiseResult]]' ] = value;
-    PromiseExecute( promise );
+    promiseExecute( promise );
 }
 
 

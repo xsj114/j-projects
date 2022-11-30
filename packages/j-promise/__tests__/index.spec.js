@@ -5,8 +5,7 @@ jest.useFakeTimers();
 describe( 'JPromise', ()=> {
     describe( 'JPromise.prototype.then', () => {
         it( 'basie use and sync resolve', () => {
-            let p;
-            p = new JPromise( ( resolve, reject )=>{
+            const p = new JPromise( ( resolve, reject )=>{
                 resolve( 'success' );
             } );
             expect( p[ '[[PromiseState]]' ] ).toBe( 'fulfilled' );
@@ -14,8 +13,7 @@ describe( 'JPromise', ()=> {
         } );
 
         it( 'basie use and async resolve', () => {
-            let p;
-            p = new JPromise( ( resolve, reject )=>{
+            const p = new JPromise( ( resolve, reject )=>{
                 setTimeout( ()=>{
                     resolve( 'success' );
                 }, 1000 );
@@ -26,8 +24,8 @@ describe( 'JPromise', ()=> {
         } );
 
         it( 'basie use and throw error', () => {
-            let p;
-            p = new JPromise( ( resolve, reject )=>{
+            const p = new JPromise( ( resolve, reject )=>{
+                // eslint-disable-next-line no-throw-literal
                 throw 'error';
             } );
             jest.runAllTimers();
@@ -38,9 +36,7 @@ describe( 'JPromise', ()=> {
 
         it( 'basie use and sync resolve', () => {
             let result;
-            let p;
-
-            p = new JPromise( ( resolve, reject )=> {
+            const p = new JPromise( ( resolve, reject )=> {
                 resolve( 'hello' );
             } ).then( ( res )=> {
                 result = res;
@@ -54,9 +50,8 @@ describe( 'JPromise', ()=> {
 
         it( 'basie use and sync resolve and return value', () => {
             let result;
-            let p;
 
-            p = new JPromise( ( resolve, reject )=> {
+            const p = new JPromise( ( resolve, reject )=> {
                 resolve( 'hello' );
             } ).then( ( res )=> {
                 result = res;
@@ -73,7 +68,7 @@ describe( 'JPromise', ()=> {
         it( 'basie use and sync resolve and mock fn', () => {
             const fn1 = jest.fn();
             const fn2 = jest.fn();
-            const p = new JPromise( ( resolve, reject )=> {
+            new JPromise( ( resolve, reject )=> {
                 resolve( 'hello' );
             } ).then( fn1, fn2 );
             jest.runAllTimers();
@@ -83,9 +78,8 @@ describe( 'JPromise', ()=> {
 
         it( 'basie use and async resolve', () => {
             let result;
-            let p;
 
-            p = new JPromise( ( resolve, reject )=> {
+            const p = new JPromise( ( resolve, reject )=> {
                 setTimeout( ()=>{
                     resolve( 'hello' );
                 }, 1000 );
@@ -101,9 +95,8 @@ describe( 'JPromise', ()=> {
 
         it( 'basie use and async resolve and return value', () => {
             let result;
-            let p;
 
-            p = new JPromise( ( resolve, reject )=> {
+            const p = new JPromise( ( resolve, reject )=> {
                 setTimeout( ()=>{
                     resolve( 'hello' );
                 }, 1000 );
@@ -121,10 +114,9 @@ describe( 'JPromise', ()=> {
 
         it( 'basie use and sync reject', () => {
             let result;
-            let p;
             const fn = jest.fn();
 
-            p = new JPromise( ( resolve, reject )=> {
+            const p = new JPromise( ( resolve, reject )=> {
                 reject( 'error' );
             } ).then( fn, ( err ) => {
                 result = err;
@@ -140,11 +132,9 @@ describe( 'JPromise', ()=> {
 
 
         it( 'basie use and sync reject and return value', () => {
-            let p;
-
             const fn = jest.fn();
 
-            p = new JPromise( ( resolve, reject )=> {
+            const p = new JPromise( ( resolve, reject )=> {
                 reject( 'error' );
             } ).then( fn, ( err )=>err );
 
@@ -157,7 +147,7 @@ describe( 'JPromise', ()=> {
         it( 'basie use and sync reject and mock fn', () => {
             const fn1 = jest.fn();
             const fn2 = jest.fn();
-            const p = new JPromise( ( resolve, reject )=> {
+            new JPromise( ( resolve, reject )=> {
                 reject( 'error' );
             } ).then( fn1, fn2 );
             jest.runAllTimers();
@@ -167,9 +157,8 @@ describe( 'JPromise', ()=> {
 
         it( 'basie use and async reject', () => {
             let result;
-            let p;
 
-            p = new JPromise( ( resolve, reject )=> {
+            const p = new JPromise( ( resolve, reject )=> {
                 setTimeout( ()=>{
                     reject( 'error' );
                 }, 1000 );
@@ -184,10 +173,7 @@ describe( 'JPromise', ()=> {
         } );
 
         it( 'basie use and async reject and return value', () => {
-            let p;
-
-
-            p = new JPromise( ( resolve, reject )=> {
+            const p = new JPromise( ( resolve, reject )=> {
                 setTimeout( ()=>{
                     reject( 'error' );
                 }, 1000 );
@@ -246,6 +232,7 @@ describe( 'JPromise', ()=> {
             const p = new JPromise( ( resolve, reject )=> {
                 resolve( 'success' );
             } ).then( ()=>{
+                // eslint-disable-next-line no-throw-literal
                 throw 'error';
             } );
 
@@ -260,6 +247,7 @@ describe( 'JPromise', ()=> {
                     resolve( 'success' );
                 }, 1000 );
             } ).then( ()=>{
+                // eslint-disable-next-line no-throw-literal
                 throw 'error';
             } );
 
@@ -274,6 +262,7 @@ describe( 'JPromise', ()=> {
                 reject( 'promise error' );
             } ).then( ()=>{
             }, () => {
+                // eslint-disable-next-line no-throw-literal
                 throw 'error';
             } );
 
@@ -288,6 +277,7 @@ describe( 'JPromise', ()=> {
                     reject( 'promise error' );
                 }, 1000 );
             } ).then( ()=>{}, ()=>{
+                // eslint-disable-next-line no-throw-literal
                 throw 'error';
             } );
 
@@ -586,6 +576,7 @@ describe( 'JPromise', ()=> {
             it( 'object.then is throw', () => {
                 const object = {
                     then: ()=>{
+                        // eslint-disable-next-line no-throw-literal
                         throw 'error';
                     },
                 };
@@ -609,6 +600,7 @@ describe( 'JPromise', ()=> {
                 const object = {
                     then: ( resolve, reject )=>{
                         resolve( 'success' );
+                        // eslint-disable-next-line no-throw-literal
                         throw 'error';
                     },
                 };
@@ -633,6 +625,7 @@ describe( 'JPromise', ()=> {
                 const object = {
                     then: ( resolve, reject )=>{
                         reject( 'is error' );
+                        // eslint-disable-next-line no-throw-literal
                         throw 'error';
                     },
                 };
