@@ -120,6 +120,10 @@ export default {
                         {
                             text: 'webpack',
                             link: '/notes/interview/webpack'
+                        },
+                        {
+                            text: 'code',
+                            link: '/notes/interview/code'
                         }
                     ]
                 },

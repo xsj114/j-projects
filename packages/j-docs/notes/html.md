@@ -190,29 +190,29 @@ a元素在嵌套关系的计算中，是要被拿掉的，不参与计算
 
 ```html
 <script>
-    oDiv=document.getElementById('div');
-    oUl=document.getElementById('ul');
-    oDiv.ondragenter=function(){
-        oDiv.innerHTML='可以释放啦';
+    oDiv = document.getElementById('div');
+    oUl = document.getElementById('ul');
+    oDiv.ondragenter = function(){
+        oDiv.innerHTML = '可以释放啦';
     }
-    oDiv.ondragleave=function(){
-        oDiv.innerHTML='将文件拖拽到此区域';
+    oDiv.ondragleave = function(){
+        oDiv.innerHTML = '将文件拖拽到此区域';
     }
-    oDiv.ondragover=function(ev){
+    oDiv.ondragover = function(ev){
         ev.preventDefault();
     }
-    oDiv.ondrop=function(ev){
+    oDiv.ondrop = function(ev){
 		ev.preventDefault();
-		var fs=ev.dataTransfer.files;
-		for(var i=0;i<fs.length;i++){
-			if(fs[i].type.indexOf('image')!=-1){
-				var fd=new FileReader();
+		var fs = ev.dataTransfer.files;
+		for(var i = 0; i < fs.length; i++) {
+			if(fs[i].type.indexOf('image') != -1){
+				var fd = new FileReader();
 				fd.readAsDataURL(fs[i]);
 				fd.onload=function(){
 					// console.log(this.result)
-					var oLi=document.createElement('li');
-					var oImg=document.createElement('img');
-					oImg.src=this.result;
+					var oLi = document.createElement('li');
+					var oImg = document.createElement('img');
+					oImg.src = this.result;
 					oLi.appendChild(oImg);
 					oUl.appendChild(oLi);
 				}
@@ -373,7 +373,7 @@ w.onmessage = function(ev){
 ```js
 // worker.js
 // self 代表子线程自身
-self.onmessage=function(ev){
+self.onmessage = function(ev){
 	console.log(ev.data)  // hi
 	self.postMessage('worker send:'+ ev.data);
 }

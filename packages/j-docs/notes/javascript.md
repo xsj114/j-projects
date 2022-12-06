@@ -158,35 +158,6 @@ Drag.prototype.fnUp = function(){
 }
 ```
 
-## 数据劫持
-
-```js
-var data = {
-	title : '新闻',
-	num : 1
-}
-
-observer(data);
-
-console.log(data)
-
-function observer(obj){
-	Object.keys(obj).forEach((item) => {
-		defineReactive(obj,item,obj[item]);
-	});
-}
-
-function defineReactive(obj,key,value){
-	Object.defineProperty(obj,key,{
-		get () {
-			return value;
-		},
-		set (newValue) {
-			value = newValue;
-		}
-	})
-}
-```
 
 ## 面向对象
 
@@ -1058,6 +1029,20 @@ document.body.offsetHeight
 | `ontouchmove` | 手指移动 |
 | `ontouchend` | 手指离开 |
 
+
+### 事件对象
+
+```js
+// 当前位于屏幕上的所有手指的一个列表
+event.touches
+
+// 位于当前DOM元素上的手指的一个列表
+event.targetTouches
+
+// 涉及当前事件的手指的一个列表
+event.changedTouches
+```
+
 ### 移动端的点透
 
 当上层元素发生点击的时候,下层元素也有点击（焦点）
@@ -1075,18 +1060,6 @@ document.addEventListener('touchstart',function(ev){
 })
 ```
 
-### 事件对象
-
-```js
-// 当前位于屏幕上的所有手指的一个列表
-event.touches
-
-// 位于当前DOM元素上的手指的一个列表
-event.targetTouches
-
-// 涉及当前事件的手指的一个列表
-event.changedTouches
-```
 
 ### 多指操作
 
@@ -1150,20 +1123,124 @@ window.onload = function(){
 | 当前被点击的元素 |  `event.target` |
  
   
-## `[]`的使用
 
-如果是系统定义的东西，使用`[]`要加引号<br/>
-使用`[]`是因为有可能内容会发生改变
+## async函数
 
 
 ```js
-box["style"]["width"]
+async function getData() {
+     let data = await fetch()
+     return data
+}
+
+getData().then( res => console.log(res) )
 ```
 
+```js
+async function f() {
+  throw new Error('出错了');
+}
+
+f().then(
+  v => console.log('resolve', v),
+  e => console.log('reject', e)
+)
+// reject Error: 出错了
+```
+
+```js
+async function f() {
+  await Promise.reject('出错了');
+  await Promise.resolve('hello world'); // 不会执行
+}
+```
+
+```js
+async function logInOrder(urls) {
+  // 并发读取远程URL
+  // 虽然map方法的参数是async函数，但它是并发执行的，因为只有async函数内部是继发执行，外部不受影响
+  const textPromises = urls.map(async url => {
+    const response = await fetch(url);
+    return response.text();
+  });
+
+  // 按次序输出
+  for (const textPromise of textPromises) {
+    console.log(await textPromise);
+  }
+}
+```
+
+:::tip
+`async`函数返回一个`Promise`对象<br/>
+
+`async`函数内部`return`语句返回的值,会成为`then`方法回调函数的参数<br/>
+
+`async`函数内部抛出错误，会导致返回的`Promise`对象变为`reject`状态。抛出的错误对象会被`catch`方法回调函数接收到<br/>
+
+`await`命令后面是一个`Promise`对象，返回该对象的结果。如果不是`Promise`对象，就直接返回对应的值。任何一个`await`语句后面的`Promise`对象变为`reject`状态，那么整个`async`函数都会中断执行
+:::
+
+### 顶层await
+
+顶层`await`主要目的是解决模块异步加载的问题,注意,顶层`await`只能用在`ES6`模块，不能用在`CommonJS`模块
+
+```js
+// awaiting.js
+const dynamic = import(someMission);
+const data = fetch(url);
+export const output = someProcess( ( await dynamic ).default, await data );
+```
+::: tip
+上面代码中，两个异步操作在输出的时候，都加上了await命令。只有等到异步操作完成，这个模块才会输出值。
+:::
+
+```js
+// usage.js
+import { output } from "./awaiting.js";
+function outputPlusValue( value ) { return output + value }
+
+console.log( outputPlusValue( 100 ) );
+setTimeout( () => console.log( outputPlusValue( 100 ) ), 1000 );
+```
+
+## Object.defineProperty
+
+
+```js
+var data = {
+	title : '新闻',
+	num : 1
+}
+
+observer(data);
+
+console.log(data)
+
+function observer(obj){
+	Object.keys(obj).forEach((item) => {
+		defineReactive( obj, item, obj[item] );
+	});
+}
+
+function defineReactive( obj, key, value ) {
+	Object.defineProperty( obj, key, {
+		get () {
+			return value;
+		},
+		set (newValue) {
+			value = newValue;
+		}
+	} )
+}
+```
 
 ## Proxy
 
+
 ### Proxy支持的拦截操作
+
+#### get
 
 ```js
 const target = {
@@ -1181,6 +1258,46 @@ let proxy = new Proxy( target, handler )
 console.log(proxy.name) // proxy object
 ```
 
+```js
+const target = {}
+const handler = {
+    get ( target, propKey ) {
+        return function () {
+            return target[propKey] ? true : false
+        }
+    }
+};
+
+const proxy = new Proxy(target, handler);
+
+console.log(proxy.foo()) // false
+```
+
+
+```js
+const target = Object.defineProperties({}, {
+  foo: {
+    value: 123,
+    writable: false,
+    configurable: false
+  },
+});
+
+const handler = {
+  get(target, propKey) {
+    return 'abc';
+  }
+};
+
+const proxy = new Proxy(target, handler);
+console.log(proxy.foo) // Uncaught TypeError
+```
+
+:::tip
+如果一个属性不可配置（configurable）且不可写（writable），则`Proxy`不能修改该属性，否则通过`Proxy`对象访问该属性会报错
+:::
+
+#### set
 
 ```js
 const target = {
@@ -1202,6 +1319,46 @@ console.log( proxy.name ) // 'set name'
 
 
 ```js
+const obj = {};
+Object.defineProperty(obj, 'foo', {
+  value: 'bar',
+  writable: false
+});
+
+const handler = {
+  set: function(obj, prop, value, receiver) {
+    obj[prop] = 'baz';
+    return true;
+  }
+};
+
+const proxy = new Proxy(obj, handler);
+proxy.foo = 'baz';
+console.log(proxy.foo) // "bar"
+```
+
+:::tip
+如果目标对象自身的某个属性不可写，那么`set`方法将不起作用
+:::
+
+#### apply
+
+
+```js
+var target = function () { return 'I am the target'; };
+var handler = {
+  apply: function () {
+    return 'I am the proxy';
+  }
+};
+
+var p = new Proxy(target, handler);
+console.log( p() ) // "I am the proxy"
+```
+
+#### has
+
+```js
 const target = {
     name: 'target object'
 }
@@ -1217,6 +1374,56 @@ let proxy = new Proxy( target, handler )
 console.log('name' in target) // true
 console.log('name' in proxy) // false
 ```
+
+```js
+var obj = { a: 10 };
+Object.preventExtensions(obj);
+
+var p = new Proxy(obj, {
+  has: function(target, prop) {
+    return false;
+  }
+});
+
+console.log( 'a' in p )     // Uncaught TypeError
+```
+
+::: tip
+如果原对象不可配置或者禁止扩展，这时has()拦截会报错
+:::
+
+
+#### construct
+
+`construct()`方法返回的必须是一个对象，否则会报错
+
+```js
+class Person {
+    
+    constructor (name, age) {
+        this.name = name
+        this.age = age
+        this.sex = 'man'
+    }
+
+}
+
+
+const ProxyPerson = new Proxy( Person, {
+    construct: function ( target, args ) {
+        args[1] = args[1] - 10
+        return new target(...args)
+    }
+})
+
+const p = new ProxyPerson('Lee', 30)
+console.log(p.age) // 20
+```
+
+#### deleteProperty
+
+`deleteProperty`方法用于拦截`delete`操作，如果这个方法抛出错误或者返回`false`，当前属性就无法被`delete`命令删除
+
 
 ```js
 const target = {
@@ -1235,6 +1442,136 @@ console.log(delete proxy['name']) // true
 console.log(delete proxy['age']) // false
 ```
 
+```js
+const target = {
+    name: 'Lee',
+    age: 30,
+    sex: 'man'
+}
+Object.defineProperty( target, 'sex', {
+      configurable: false
+} )
+var handler = {
+    deleteProperty: function ( target ) {
+        return true    
+    },
+}
+
+const proxy = new Proxy(target, handler)
+delete proxy['name']
+delete proxy['age']
+delete proxy['sex'] // Uncaught TypeError
+```
+
+:::tip
+目标对象自身的不可配置（configurable）的属性，不能被deleteProperty方法删除，否则报错
+:::
+
+
+#### defineProperty
+
+`defineProperty()`方法拦截了`Object.defineProperty()`操作
+
+```js
+var handler = {
+  defineProperty (target, key, descriptor) {
+    return false;
+  }
+};
+var target = {};
+var proxy = new Proxy(target, handler);
+proxy.foo = 'bar' // 不会生效
+```
+
+:::tip
+如果目标对象不可扩展（non-extensible），则defineProperty()不能增加目标对象上不存在的属性，否则会报错。另外，如果目标对象的某个属性不可写（writable）或不可配置（configurable），则defineProperty()方法不得改变这两个设置
+:::
+
+#### getOwnPropertyDescriptor
+
+
+`getOwnPropertyDescriptor()`方法拦截`Object.getOwnPropertyDescriptor()`，返回一个属性描述对象或者`undefined`
+
+```js
+var handler = {
+  getOwnPropertyDescriptor (target, key) {
+    if (key[0] === '_') {
+      return;
+    }
+    return Object.getOwnPropertyDescriptor(target, key);
+  }
+};
+var target = { _foo: 'bar', baz: 'tar' };
+var proxy = new Proxy(target, handler);
+Object.getOwnPropertyDescriptor(proxy, 'wat')  // undefined
+
+Object.getOwnPropertyDescriptor(proxy, '_foo') // undefined
+
+Object.getOwnPropertyDescriptor(proxy, 'baz') 
+// { value: 'tar', writable: true, enumerable: true, configurable: true }
+```
+
+#### getPrototypeOf
+
+`getPrototypeOf()`方法主要用来拦截获取对象原型
+
+```js
+var proto = {};
+console.log( Object.getPrototypeOf( proto ) === Object.prototype ) // true
+var p = new Proxy( proto, {
+    getPrototypeOf ( target ) {
+        return null
+    }
+} );
+
+console.log( Object.getPrototypeOf( p ) === null ) // true
+```
+
+:::tip
+`getPrototypeOf()`方法的返回值必须是对象或者null，否则报错。另外，如果目标对象不可扩展（non-extensible），`getPrototypeOf()`方法必须返回目标对象的原型对象
+:::
+
+#### isExtensible
+
+`isExtensible()`方法拦截`Object.isExtensible()`操作,该方法只能返回布尔值，否则返回值会被自动转为布尔值
+
+```js
+var p = new Proxy( {}, {
+    isExtensible: function( target ) {
+        return true;
+    }
+} );
+
+console.log( Object.isExtensible( p ) ) // true
+```
+
+```js
+var p = new Proxy({}, {
+    isExtensible: function(target) {
+        return false;
+    }
+});
+
+Object.isExtensible(p)    // Uncaught TypeError
+```
+
+:::tip
+这个方法有一个强限制，它的返回值必须与目标对象的isExtensible属性保持一致，否则就会抛出错误
+```js
+Object.isExtensible(proxy) === Object.isExtensible(target)
+```
+:::
+
+#### ownKeys
+
+`ownKeys()`方法用来拦截对象自身属性的读取操作。具体来说，拦截以下操作
+
+`Object.getOwnPropertyNames()`<br/>
+`Object.getOwnPropertySymbols()`<br/>
+`Object.keys()`<br/>
+`for...in`循环<br/>
+
+`ownKeys()`方法返回的数组成员，只能是字符串或`Symbol`值。如果有其他类型的值，或者返回的根本不是数组，就会报错
 
 ```js
 const target = {
@@ -1259,6 +1596,118 @@ console.log( Object.getOwnPropertyNames(proxy) ) // ['age']
 
 console.log( Object.getOwnPropertySymbols(proxy) ) // []
 ```
+
+```js
+let target = {
+  a: 1,
+  b: 2,
+  c: 3,
+  [Symbol.for('secret')]: '4',
+};
+
+Object.defineProperty(target, 'key', {
+  enumerable: false,
+  configurable: true,
+  writable: true,
+  value: 'static'
+});
+
+let handler = {
+  ownKeys(target) {
+    return ['a', 'd', Symbol.for('secret'), 'key'];
+  }
+};
+
+let proxy = new Proxy(target, handler);
+
+Object.keys(proxy)   // ['a']
+```
+:::tip
+使用`Object.keys()`方法时<br/>
+有三类属性会被`ownKeys()`方法自动过滤，不会返回<br/>
+目标对象上不存在的属性<br/>
+属性名为Symbol值<br/>
+不可遍历（enumerable）的属性
+:::
+
+```js
+var obj = {};
+Object.defineProperty(obj, 'a', {
+  configurable: false,
+  enumerable: true,
+  value: 10 
+});
+
+var p = new Proxy(obj, {
+  ownKeys: function(target) {
+    return ['b'];
+  }
+});
+Object.getOwnPropertyNames(p)  // Uncaught TypeError
+```
+
+:::tip
+如果目标对象自身包含不可配置的属性，则该属性必须被ownKeys()方法返回，否则报错
+:::
+
+```js
+var obj = {
+  a: 1
+};
+
+Object.preventExtensions(obj);
+
+var p = new Proxy(obj, {
+  ownKeys: function(target) {
+    return ['a', 'b'];
+  }
+});
+
+Object.getOwnPropertyNames(p) // Uncaught TypeError
+```
+
+:::tip
+如果目标对象是不可扩展的（non-extensible），这时ownKeys()方法返回的数组之中，必须包含原对象的所有属性，且不能包含多余的属性，否则报错
+:::
+
+#### preventExtensions
+
+`preventExtensions()`方法拦截`Object.preventExtensions()`。该方法必须返回一个布尔值，否则会被自动转为布尔值
+
+
+```js
+var proxy = new Proxy({}, {
+  preventExtensions: function(target) {
+    Object.preventExtensions(target);
+    return true;
+  }
+});
+
+Object.preventExtensions(proxy)
+```
+
+:::tip
+这个方法有一个限制，只有目标对象不可扩展时（即Object.isExtensible(proxy)为false），proxy.preventExtensions才能返回true，否则会报错
+:::
+
+
+#### setPrototypeOf
+
+`setPrototypeOf()`方法主要用来拦截`Object.setPrototypeOf()`方法。该方法只能返回布尔值，否则会被自动转为布尔值。另外，如果目标对象不可扩展（non-extensible），`setPrototypeOf()`方法不得改变目标对象的原型
+
+```js
+var handler = {
+  setPrototypeOf (target, proto) {
+    throw new Error('Changing the prototype is forbidden');
+  }
+};
+var proto = {};
+var target = function () {};
+var proxy = new Proxy(target, handler);
+Object.setPrototypeOf(proxy, proto);
+// Error: Changing the prototype is forbidden
+```
+
 
 
 ### Proxy.revocable() 
