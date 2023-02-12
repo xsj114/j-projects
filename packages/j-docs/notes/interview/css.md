@@ -11,8 +11,18 @@ outline: 'deep'
 
 ## doctype的意义是什么
 
+
+`DTD`是一系列的语法规则，用来定义`XML`或`(X)HTML`的文件类型。浏览器会使用它来判断文档类型，决定使用何种协议来解析，以及切换浏览器模式
+
+`DOCTYPE`是用来声明文档类型和`DTD`规范的，一个主要的用途便是文件的合法性验证。如果文件代码不合法，那么浏览器解析时便会出一些差错
+
 让浏览器以标准模式渲染（比如IE，有自己的盒模型，如果带上doctype，会以标准模式渲染）<br/>
 让浏览器知道元素的合法性
+
+
+| html5 | html4.0.1|
+| ---- | ------ |
+|    `<!DOCTYPE html>`  |  严格模式和宽松模式(严格模式不包括展示性的和弃用的元素,宽松模式包括)|
 
 
 ## em和i有什么区别
@@ -66,7 +76,7 @@ JS可以维护DOM
 <style>
 div{
     width: 0;
-    height: 30px;
+    height: 0;
     border-bottom: 30px solid red;
     border-left: 30px solid transparent;
     border-right: 30px solid transparent;
@@ -99,6 +109,9 @@ div{
 标签之间的换行间隙被解析
 
 
+## 如果flex容器宽度是1000px,它有10个子项,每个子项宽度是200px，会怎么渲染
+
+会在一排显示，每个子项实际宽度只有100px
 
 
 ## 说出10个块级元素与10个行内元素，并说出行级元素与块级元素的区别
@@ -134,22 +147,6 @@ div{
 
 
 
-## 用纯css画一个下箭头
-
-```html
-<style type="text/css">
-div{
-    width:0;
-    height:0;
-    border-top:10px solid #000;
-    border-left:10px solid transparent;
-    border-right:10px solid transparent;
-}
-</style>
-<body>
-    <div></div>	
-</body>
-```
 
 
 ## margin的问题
@@ -202,7 +199,85 @@ div{
 
 ## 什么是`css hack`
 
+
 针对不同的浏览器写不同的`css code`的过程就是`css hack`也是浏览器兼容
+
+## 说说z-index有什么需要注意的地方
+
+使用`z-index`的时候，要配合定位来使用<br/>
+使用`z-index`的时候，会创建一个新的层叠上下文<br/>
+`z-index`值大层级未必高
+
+```html
+<style>
+div {
+    width: 200px;
+    height: 200px;
+    padding: 20px;
+}
+.one, .two, .three, .four {
+    position: absolute;
+}
+.one {
+    background: #f00;
+    outline: 5px solid #000;
+    top: 100px;
+    left: 200px;
+    z-index: 10;
+}
+.two {
+    background: #0f0;
+    outline: 5px solid #000;
+    top: 50px;
+    left: 75px;
+    z-index: 100;
+}
+.three {
+    background: #0ff;
+    outline: 5px solid #000;
+    top: 125px;
+    left: 25px;
+    z-index: 150;
+}
+.four {
+    background: #00f;
+    outline: 5px solid #ff0;
+    top: 200px;
+    left: 350px;
+    z-index: 50;
+}
+</style>
+
+
+
+
+<div class="one">
+    one-10
+    <div class="two">two-100</div>
+    <div class="three">three-150</div>
+</div>
+<div class="four">four-50</div>
+```
+
+
+## BFC
+
+| `BFC`的原理 |
+| ------ | 
+| `BFC`的区域不会与浮动元素重叠 |
+| 计算`BFC`高度的时候，浮动元素也会参与计算 |
+| `BFC`在页面中是一个独立的容器<br/>外面的元素不会影响里面的元素<br/>里面的元素也不会影响外面的元素 |
+
+
+
+|创建`BFC` |
+| ----- |
+|  `overflow`不为`visible` |
+| `float`值不为`none` |
+| `position`不为`static`或`relative`|
+| `display:inline-block` |
+
+
 
 
 ## 假设高度已知，请写出三栏布局，其中左栏，右栏，宽度各为300px，中间自适应
@@ -216,42 +291,6 @@ div{
 | 网格布局 |  新的技术 |
 
 
-
-
-
-## JS怎么获取盒模型对应的宽和高
-
-```js
-// 取到内联样式的宽和高
-dom.style.width/height
-
-// 计算后的样式(只有IE支持)
-dom.currentStyle.width/height 
-
-// 计算后的样式
-window.getComputedStyle(dom).style.width/height  
-
-dom.getBoundingClientRect().width/height
-```
-
-
-## BFC
-
-| `BFC`的原理 |
-| ------ | 
-|  在`BFC`这个元素内的垂直方向的边距会发生重叠  |
-| `BFC`的区域不会与浮动元素重叠 |
-| 计算`BFC`高度的时候，浮动元素也会参与计算 |
-| `BFC`在页面中是一个独立的容器<br/>外面的元素不会影响里面的元素<br/>里面的元素也不会影响外面的元素 |
-
-
-
-|创建`BFC` |
-| ----- |
-|  `overflow`不为`visible` |
-| `float`值不为`none` |
-| `position`不为`static`或`relative`|
-| `display:inline-block` |
 
 
 ## 九宫格布局
@@ -512,3 +551,5 @@ dom.getBoundingClientRect().width/height
 </body>
 </html>
 ```
+
+

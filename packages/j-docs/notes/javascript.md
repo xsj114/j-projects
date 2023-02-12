@@ -9,6 +9,24 @@ outline: 'deep'
 
 # JAVASCRIPT
 
+## JS怎么获取盒模型对应的宽和高
+
+```js
+// 取到内联样式的宽和高
+dom.style.width/height
+
+// 计算后的样式(只有IE支持)
+dom.currentStyle.width/height 
+
+// 计算后的样式
+window.getComputedStyle(dom).style.width/height  
+
+dom.getBoundingClientRect().width/height
+```
+
+
+
+
 ## JS模块
 
 
@@ -173,57 +191,6 @@ Drag.prototype.fnUp = function(){
 对象下面的变量，叫做对象的属性<br/>
 对象下面的函数，叫做对象的方法
 
-### 面向对象程序
-
-```js
-var obj = new Object();
-obj.name = '小明';
-obj.showName = function(){
-	console.log(this.name);
-}
-obj.showName();
-```
-
-### 面向对象中的工厂方式
-
-```js
-function CreatePerson (name) {
-	//原料
-	var obj = new Object();
-	//加工
-	obj.name = name;
-	obj.showName = function(){
-		console.log(this.name);
-	}
-	//出厂
-	return obj;
-}
-
-var p1 = CreatePerson('小明');
-p1.showName();
-```
-
-### 面向对象的构造函数
-
-```js
-function CreatePerson(name){
-	this.name = name;
-	this.showName = function(){
-		console.log(this.name);
-	}		    	
-}
-
-//当new去调用一个函数，这个时候，函数中的this就是创建出来的对象，而且函数的返回值直接就是this了(隐式返回)
-
-// new后面调用的函数叫做构造函数
-var p1 = new CreatePerson('小明');
-var p2 = new CreatePerson('小强');
-
-p1.showName();
-p2.showName();
-
-console.log(p1.showName==p2.showName); // false
-```
 
 ### 原型
 
@@ -253,6 +220,16 @@ p1.showName();
 
 所有函数的默认原型都是`Object`的实例
 
+
+### 原型规则
+
+![An image](../assets/prototype.jpg)
+
+所有的引用类型(数组，对象，函数)都具有对象特性，即可自由扩展属性（除了`null`以外）
+
+所有的引用类型(数组，对象，函数)，都有一个`__proto__`属性，`__proto__`属性值指向它的构造函数的`prototype`属性值，当试图得到一个对象的某个属性时，如果这个对象本身没有这个属性，那么会去它的`__proto__`(即它的构造函数的`prototype`)中寻找
+
+所有的函数，都有一个`prototype`属性，属性值也是一个普通的对象，这个对象就是原型对象，默认情况下，所有原型对象都会自动获得一个`constructor`属性，这个属性是一个指向`propotype`属性所在函数的指针
 
 
 ### 继承
@@ -1205,6 +1182,27 @@ setTimeout( () => console.log( outputPlusValue( 100 ) ), 1000 );
 ```
 
 ## Object.defineProperty
+
+
+::: tip
+对象里目前存在的属性描述符有两种主要形式,数据描述符和存取描述符,一个描述符只能是这两者其中之一,不能同时是两者
+:::
+
+| 数据描述符 | 
+| ------ | 
+| `Configurable` | 
+| `Enumerable` | 
+| `Writable` | 
+| `Value`  |
+
+
+| 存取描述符 | 
+| ---- | 
+| `Configurable` | 
+| `Enumerable` | 
+| `Get` | 
+| `Set` | 
+
 
 
 ```js

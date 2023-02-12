@@ -8,6 +8,9 @@ outline: 'deep'
 
 # JAVASCRIPT
 
+
+
+
 ## 说一下对变量提升的理解
 
 ```js
@@ -28,9 +31,10 @@ function fn ( name ) {
 
 ## 如何理解作用域
 
+作用域有两种工作模型，词法作用域和动态作用域，JS中的作用域属于词法作用域，即作用域是由代码写在哪里决定的<br/>
 自由变量（当前作用域没有定义的变量，即自由变量）<br/>
 作用域链即自由变量的查找<br/>
-没有块级作用域只有函数和全局作用域
+有块级作用域,函数作用域和全局作用域
 
 ## JS数据类型
 
@@ -90,12 +94,41 @@ console.log(obj2.x)   // 200
 
 
 
-## 何时使用`===`和`==`
+## 何时使用`===`和`==`,`===`和`Object.is`的不同之处
 
 ```js
 obj.a == null
 // 相当于
 obj.a === null || obj.a === undefined
+```
+
+`==`只会对比两个值是否相等<br/>
+`===`会对比值和引用是否都相等<br/>
+`Object.is`和`===`的不同之处只有两个,一是`+0`不等于`-0`，二是`NaN`等于自身
+
+```js
+console.log(+0 === -0)    // true
+console.log(NaN === NaN)  // false
+
+Object.is(+0, -0)   // false
+Object.is(NaN, NaN) // true
+```
+
+```js
+// Object.is的原理
+Object.defineProperty( Object, 'is', {
+    value: function (x, y) {
+        if ( x === y ) {
+            // 针对+0不等于-0的情况
+            return x !== 0 || 1 / x === 1 / y
+        }
+        // 针对NaN的情况
+        return x !== x && y !== y
+    },
+    configurable: true,
+    enumerable: false,
+    writable: true
+})
 ```
 
 ## 创建对象的几种方法
@@ -115,31 +148,6 @@ var P = {name: 'zh'}
 var obj = Object.create(P)
 
 ```
-
-## 对象属性的特征
-
-::: tip
-要修改对象属性的默认特性，必须使用`Object.defineProperty()`
-:::
-
-| 数据属性 | 描述 |
-| ------ | ---- |
-| `Configurable` | 能否重新定义属性或用`delete`删除属性 |
-| `Enumerable` | 能否通过`for-in`循环返回属性 |
-| `Writable` | 能否修改属性的值 |
-| `Value`  |这个属性的数据值，默认值为`undefined` |
-
-::: tip
-访问器属性不能直接定义，必须使用`Object.defineProperty()`来定义
-:::
-
-| 访问器属性 | 描述 |
-| ---- | ----- |
-| `Configurable` | 能否重新定义属性或用`delete`删除属性 |
-| `Enumerable` | 能否通过`for-in`循环返回属性 |
-| `Get` | 读取属性时调用的函数，默认值为`undefined` |
-| `Set` | 写入属性时调用的函数，默认值为`undefined` |
-
 
 
 ## 如何准确判断一个变量是数组类型
@@ -180,44 +188,6 @@ person2.constructor = Person  //true
 ```
 
 
-## 原型规则
-
-所有的引用类型(数组，对象，函数)都具有对象特性，即可自由扩展属性（除了`null`以外）
-
-所有的引用类型(数组，对象，函数)，都有一个`__proto__`属性，`__proto__`属性值指向它的构造函数的`prototype`属性值，当试图得到一个对象的某个属性时，如果这个对象本身没有这个属性，那么会去它的`__proto__`(即它的构造函数的`prototype`)中寻找
-
-所有的函数，都有一个`prototype`属性，属性值也是一个普通的对象，这个对象就是原型对象，默认情况下，所有原型对象都会自动获得一个`constructor`属性，这个属性是一个指向`propotype`属性所在函数的指针
-
-## 写一个原型链继承的例子
-
-```js
-function A(){}
-function B(){}
-B.prototype = new A()
-```
-
-## zepto或其他框架源码中如何使用原型链
-
-```js
-var div = new Elem( 'div' )
-function Elem( id ){
-    this.elem = document.getElementById( id )
-}
-Elem.prototype.html = function( val ) {
-    var elem = this.elem
-    if( val ) {
-        elem.innerHTML = val
-        return this     //链式操作
-    } else {
-        return elem.innerHTML
-    }
-}
-Elem.prototype.on = function( type, fn ) {
-    var elem = this.elem
-    elem.addEventListenet( type, fn )
-}
-```
-
 
 ## 说明`this`几种不同的使用场景
 
@@ -249,6 +219,48 @@ var fn1 = a.fn
 fn1()  // this === window
 ```
 
+
+## 箭头函数的`this`问题
+
+箭头函数没有自己的`this`对象，内部的`this`就是定义时上层作用域中的`this`。也就是说，箭头函数内部的`this`指向是固定的，相比之下，普通函数的`this`指向是可变的<br/>
+由于箭头函数没有自己的`this`，所以也就不能用`call()`,`apply()`,`bind()`这些方法去改变`this`的指向<br/>
+
+```js
+var A = 2;
+
+const B = {
+  f1: function() {
+    return this.A
+  },
+  f2: () => {
+    return this.A
+  },
+  A: 10
+}
+
+console.log(B.f1(), B.f2()); // 10 2
+const f1 = B.f1, f2 = B.f2;
+console.log(f1(), f2()); // 2 2
+```
+
+```js
+class A {
+    method1 () { 
+        console.log(this) 
+    }
+    method2 = () => { console.log(this) }
+}
+
+const a = new A();
+a.method1();  // a
+a.method2();  // a
+a.method1.bind({name:'test'})(); // {name:'test'}
+a.method2.bind({name:'test'})();  // a
+a.method1.bind({name:'test'}).call(window) // {name:'test'}
+a.method2.bind({name:'test'}).call(window) // a
+```
+
+
 ## JS中的内置函数
 
 | 内置函数 |
@@ -276,6 +288,36 @@ var functionName = function (arg1, arg2) {}
 ::: tip
 在匿名函数中定义的任何变量，都会在执行结束时被销毁
 :::
+
+## 什么是函数柯里化
+
+柯里化，就是把一个多参数的函数，转化为单参数函数
+
+`f(x, y, z) -> f(x)(y)(z)`
+
+```js
+const squares = function (x, y) {
+  return x * x + y * y;
+};
+// 柯里化版本
+const currySquares = function (x) {
+  return function (y) {
+    return x * x + y * y;
+  };
+};
+```
+
+## 什么是函数组合
+
+函数组合就是将两个或多个函数组合起来生成一个新的函数,每个函数的结果作为下一个函数的参数传递，而最后一个函数的结果是整个函数的结果
+
+```js
+const compose = (f, g) => (x) => f(g(x))
+const f = (x) => x * x
+const g = (x) => x + 2
+const composefg = compose(f, g)
+composefg(1)
+```
 
 
 ## 有一个函数执行对象查找时,永远不会去查找原型,这个函数是?
@@ -313,10 +355,10 @@ console.log(createComparisonFunction('age')(obj1,obj2))
 
 ```js
 // 闭包只能取得包含函数中任何变量的最后一个值
-function createFunctions(){
+function createFunctions () {
 	var result = new Array();
-	for(var i=0;i<10;i++){
-		result[i]=function(){
+	for (var i = 0; i < 10; i++ ) {
+		result[i] = function () {
 			return i;
 		}
 	}
@@ -386,6 +428,37 @@ console.log(createFunctions()[9]())  // 10
 
 可以跨域的三个标签`<script>,<img>,<link>`
 
+## CORS和普通的AJAX请求有哪些不同
+
+
+`CORS`和`Ajax`在发送请求时没有任何区别，都是`HTTP`请求。<br/>
+浏览器发现`Ajax`跨域时，会自动在`HTTP`请求头`Header`中添加几个关键词,转为`CORS`<br/>
+
+
+## 什么是简单请求，什么是非简单请求
+
+
+简单请求不会触发`CORS`预检请求<br/>
+非简单请求要求必须首先使用`OPTIONS`方法发起一个预检请求
+
+
+| 简单请求(必须满足下述所有条件) |
+| ----- |
+| `GET`，`HEAD`，`POST`方法之一 |
+| 只能设置下面这些字段<br/>`Accept`<br/>`Accept-Language`<br/>`Content-Language`<br/>`Content-Type`<br/>`Range`|
+| `Content-Type`的值为下面三个之一<br/>`text/plain`<br/>`multipart/form-data`<br/>`application/x-www-form-urlencoded`|
+| 请求中没有使用`ReadableStream`对象|
+| 如果请求是使用`XMLHttpRequest`对象发出的，在返回的`XMLHttpRequest.upload`对象属性上没有注册任何事件监听器|
+
+
+
+
+
+
+
+## 直接使用表单提交请求，会有跨域问题吗
+
+不会
 
 ## 同步和异步的区别是什么？分别举一个同步和异步的例子
 
@@ -449,34 +522,20 @@ window.addEventListener('error',function(e){},true)
 | 在输入内容时，可以输入脚本(`<script>`),脚本中有攻击代码，获取基本信息，发送到自己的服务器上 |  替换关键字，例如替换`<`为`&lt;` `>`为`&gt;` |
 
 
+
+
 | `CSRF`跨站请求伪造预防 |
 | ------- |
 | `Token`验证 |
-| `Referer`验证 |
+| `Referer`验证(`Referer`指的是页面来源,比如判断是不是站点下的页面) |
 | 隐藏令牌 |
 
+:::tip
+`CSRF`攻击原理<br/>
+一个用户是网站A的注册用户，它通过用户名密码登陆了网站A,如果登陆成功，网站A下发一个`cookie`,这时用户又访问了一个网站B，这个网站B的页面上有一个引诱点击，点击之后是会请求网站A的一个接口,cookie是在每次请求时都携带的,网站A拿到cookie进行了身份验证，验证成功后就执行了网站A的这个接口<br/>
+有两个重点，一是用户一定在网站A登录过,二是网站A中某一个接口存在这种漏洞
+:::
 
-## 请描述一下`Cookie`，`sessionStorage`，`localStorage`的区别
-
-
-| `Cookie`用于存储的缺点 |
-| ------------ |
-| 存储量太小，只有4kb |
-| 所有`HTTP`请求都带着,会影响获取资源的效率 |
-| API简单，需要封装才能用 |
-
-| `sessionStorage，localStorage` |
-| ----------- |
-| `H5`中专门为存储而设计的 |
-| 最大容量5M |
-| API简单易用 |
-
-
-## window.onload和DOMContentLoaded的区别
-
-|window.onload |DOMContentLoaded|
-| ----- | --- |
-|  页面的全部资源加载完才会执行，包括图片，视频等 |  `DOM`渲染完即可执行，此时图片，视频还可能没有加载完 |
 
 
 ## JS是怎样管理内存的？
@@ -492,31 +551,19 @@ window.addEventListener('error',function(e){},true)
 `引用计数`是当创建变量之后，去看下有哪些对它进行了引用，当`引用计数`归0之后就可以对它进行相关的回收了。不过`引用计数`无法解决循环引用的问题。
 
 
+
 `标记清除`是两个过程，一个是`标记`的过程，一个是`清除`的过程。
 
 标记的过程会从一个根节点去进行扫描，通过一个遍历去看一下所有的节点是不是都可以被访问的到，如果某些节点不能被访问到了，就会把他们标记出来。清除的过程就是把标记出来的节点给回收掉。
 
-
-## 哪些操作会造成内存泄漏？
-
-
-意外的全局变量<br/>
-被遗忘的定时器和回调函数<br/>
-闭包<br/>
-`DOM`引用
-
 ```js
-var elements = {
-  image: document.getElementById('image')
-};
-function doStuff() {
-  elements.image.src = 'http://example.com/image_name.png';
-}
-function removeImage() {
-  document.body.removeChild(document.getElementById('image'));
-  // 这个时候我们对于image仍然有一个引用,Image元素仍然无法被内存回收
-}
+const object = { a: new Array(1000), b: new Array(2000) }
+setInterval( () => console.log( object.a ), 1000 )
 ```
+
+:::tip
+可以看到上面的b元素始终没有被访问到，它所创建的这个数组实际上是可以被回收掉的，但是object始终可以访问到b元素，所以b元素所创建的数组就不能被标记清除掉
+:::
 
 
 ## 如何避免内存泄漏？
@@ -579,6 +626,45 @@ function deleteElement () {
 deleteElement();
 ```
 
+
+```js
+var elements = {
+  image: document.getElementById('image')
+};
+function doStuff() {
+  elements.image.src = 'http://example.com/image_name.png';
+}
+function removeImage() {
+  document.body.removeChild(document.getElementById('image'));
+  // 这个时候我们对于image仍然有一个引用,Image元素仍然无法被内存回收
+}
+```
+
+
+## 请描述一下`Cookie`，`sessionStorage`，`localStorage`的区别
+
+
+| `Cookie`用于存储的缺点 |
+| ------------ |
+| 存储量太小，只有4kb |
+| 所有`HTTP`请求都带着,会影响获取资源的效率 |
+| API简单，需要封装才能用 |
+
+| `sessionStorage，localStorage` |
+| ----------- |
+| `H5`中专门为存储而设计的 |
+| 最大容量5M |
+| API简单易用 |
+
+
+## window.onload和DOMContentLoaded的区别
+
+|window.onload |DOMContentLoaded|
+| ----- | --- |
+|  页面的全部资源加载完才会执行，包括图片，视频等 |  `DOM`渲染完即可执行，此时图片，视频还可能没有加载完 |
+
+
+
 ## 如何理解JSON
 
 `JSON`只不过是一个`JS对象`而已,不过它也是一种数据格式
@@ -603,23 +689,6 @@ JSON.parse('{"a":10,"b":20}')
 console.log(navigator.userAgent)
 ```
 
-
-## 什么是DOCTYPE及作用，有哪几种
-
-`DTD`是一系列的语法规则，用来定义`XML`或`(X)HTML`的文件类型。浏览器会使用它来判断文档类型，决定使用何种协议来解析，以及切换浏览器模式
-
-`DOCTYPE`是用来声明文档类型和`DTD`规范的，一个主要的用途便是文件的合法性验证。如果文件代码不合法，那么浏览器解析时便会出一些差错
-
-| html5 | html4.0.1|
-| ---- | ------ |
-|    `<!DOCTYPE html>`  |  严格模式和宽松模式(严格模式不包括展示性的和弃用的元素,宽松模式包括)|
-
-
-## 双向绑定的原理是?
-
-
-`data`到`view`是正向，通过`Object.defineProperty`实现<br/>
-`view`到`data`是反向，通过`input`事件实现
 
 ## web服务器工作的过程
 
@@ -650,22 +719,6 @@ console.log(navigator.userAgent)
 | 应答内容 |
 
 
-
-
-## node中module.exports和exports的区别
-
-`exports`是`module.exports`的引用
-
-```js
-console.log( module.exports === exports ) // true
-```
-
-如果给`exports`设置了一个新的对象，`exports`和`module.exports`将不再是同一个对象
-
-```js
-exports = {}
-console.log( exports === module.exports ) // false
-```
 
 
 ## SESSION
@@ -742,196 +795,186 @@ RESTFUL API<br/>
 `JWT`要比`SESSION`时效性差一点，因为`JWT`只有等到过期时间才可以销毁，`SESSION`可以在服务端手动的去销毁
 :::
 
+## 聊一下MVC,MVP和MVVM
 
 
-## 一个关于setTimeout的笔试题
+`MVC`分别是`Model`,`View`,`Controller`<br/>
+使用`MVC`的目的就是将`M`和`V`的代码分离<br/>
+![An image](../../assets/mvc.jpg)
+
+`MVP`是从经典的模式`MVC`演变而来<br/>
+在`MVP`中`View`并不直接使用`Model`，它们之间的通信是通过`Presenter`(`MVC`中的`Controller`)来进行的<br/>
+在`MVC`中`View`会直接从`Model`中读取数据而不是通过`Controller`
+![An image](../../assets/mvp.jpg)
+
+
+`MVVM`是在`MVC`和`MVP`的基础上延伸而来的<br/>
+`MVVM`分别是`View`,`ViewModel`,`Model`<br/>
+`MVC`中`Controller`演变成`MVVM`中的`ViewModel`<br/>
+`ViewModel`和`View`还有`Model`都是双向的一个过程<br/>
+`Model`可以理解为服务器上的某一块业务逻辑的操作<br/>
+`ViewModel`就是我们的`Vue`框架,它是`View`和`Model`之间的一个核心枢纽<br/>
+`View`就是我们的页面<br/>
+
+![An image](../../assets/mvvm.jpg)
+
+
+## 双向绑定的原理是?
+
+
+`data`到`view`是正向，通过`Object.defineProperty`实现<br/>
+`view`到`data`是反向，通过`input`事件实现
+
+
+## 观察者模式和发布订阅模式的区别
+
+
+观察者模式里只有两个角色,观察者和被观察者,并且两者是松耦合的关系<br/>
+发布订阅模式里不仅仅只有发布者和订阅者还有一个中间人,所以发布者和订阅者完全不存在耦合
+
+
+## 静态页面缓存有哪些方式
+
+`Service Worker`<br/>
+`HTTP缓存`<br/>
+`H5的manifest`
+
+## requestAnimationFrame属于宏任务还是微任务
+
+是宏任务，但是和那些平行级别的宏任务相比，它的执行顺序是不确定的
+
 
 ```js
-console.log(1)
-setTimeout(function(){
-	console.log(2)
-},0)
-console.log(3)
-setTimeout(function(){
-	console.log(4)
-},1000)
-console.log(5)
-
-// 1 3 5 2 4
-```
-
-## 创建10个a标签,点击的时候弹出来对应的序号
-
-```js
-for(var i = 0; i < 10; i++) {
-    (function (i) {
-        var a = document.createElement('a')
-        a.addEventListener('click',function(e){
-            e.preventDefault()
-            var num = i
-            console.log(num)
-        })
-        document.body.appendChild(a)
-	})(i)
-}
-```
-
-
-## 获取2017-06-10格式的日期
-
-```js
-var dt = new Date()
-var formatDate = formatDate(dt)
-console.log(formatDate)
-function formatDate (dt) {
-    if(!dt){
-        dt=new Date()   
-    }
-    var year = dt.getFullYear()
-    var month = dt.getMonth() + 1 
-    var date = dt.getDate()
-    if (month < 10) {
-        month = '0' + month
-    }
-    if (date < 10){
-        date = '0' + date
-	}
-	return year + '-' + month + '-' + date
-}
-```
-
-
-## 获取随机数，要求是长度一致的字符串格式
-
-```js
-var random = Math.random()
-random = random + '0000000000'
-random = random.slice(0,10)
-console.log(random)
-```
-
-
-## 写一个能遍历对象和数组的通用forEach函数
-
-```js
-function forEach (obj, fn) {
-    var key
-    if (obj instanceof Array){
-        obj.forEach(function(item, index){
-            fn(index, item)
-        })
-    } else {
-        for (key in obj) {
-            fn(key, obj[key])
-        }
-    }
-}
-```
-
-
-
-## JS案例
-
-```js
-function Foo(){
-    getName = function(){
-        console.log(1)
-    }
-    return this
-}
-Foo.getName = function(){
+setTimeout(() => {
+    console.log(1)
+})
+requestAnimationFrame(() => {
     console.log(2)
-}
-Foo.prototype.getName = function(){
-    console.log(3)
-}
-var getName = function(){
+})
+setTimeout(() => {
     console.log(4)
-}
-function getName (){
-    console.log(5)
-}
-Foo.getName() 
-getName()
-Foo().getName()
-getName()
-new Foo.getName()
-new Foo().getName()
-new new Foo().getName()
+})
+Promise.resolve(3).then(res => {
+    console.log(res)
+})
 
-// 2 4 1 1 2 3 3
+// 打印顺序有时是3->2->1->4,有时是3->1->4->2
 ```
 
-## 编写一个通用的事件监听函数
+## 如何clone一个函数
+
+使用`bind`方法
+
+
+## es next了解过嘛，通过什么途径
+
+
+`ESNext`是一个动态名称，指的是撰写本文时的下一个版本。`ESNext`中的特性更准确地称为提案，因为根据定义，规范尚未最终确定<br/>
+可通过`https://tc39.es/ecma262/`进行查看学习
+
+
+## GET可以上传文件吗
+
+可以转为`base64`，然后上传
+
+
+
+
+## 如果在进入页面的时候需要一次渲染10万条数据，有什么首屏优化的方案？
+
+
+使用`requestAnimationFrame`和`DocumentFragment`,做时间分片渲染数据<br/>
+使用虚拟列表技术，只展示可视区域中的内容，当页面滚动时，动态替换可视区域中的数据
+
+## 前端监控怎么实现
+
+数据采集（目的就是记录用户在使用产品过程中的真实操作,主要记录异常数据和行为数据）<br/>
+搭建API<br/>
+对接数据库<br/>
+对数据进行统计，分析<br/>
+可视化展示<br/>
+API对接报警通知服务（如钉钉）
+
+## 异步代码错误该如何进行捕获
+
+
+`try{}catch(){}`只能捕获同步代码错误
 
 ```js
-function bindEvent (elem, type, selector, fn){
-    if (fn == null ) {
-        fn = selector
-        selector = null
-    }
-    elem.addEventListener(type, function(e) {
-        var target
-        if (selector) {
-            target = e.target;
-            if (target.matches(selector)) {
-                fn.call(target, e)
-            }
-        } else {
-            fn(e)
-        }
+const fn = () => {
+    throw "error"
+}
+
+const fn1 = () => {
+    setTimeout(()=>{
+        throw "error"
+    }, 1000)
+}
+
+try{
+    fn()
+}catch(e){
+    console.log(e) // error
+}
+
+try{
+    fn1()
+}catch(e){
+    console.log(e) // 未执行
+}
+// Uncaught error
+```
+
+`Promise.try`即可以捕获同步错误，又可以捕获异步错误
+
+
+
+```js
+const fn = () => {
+    throw 'error'
+}
+
+const fn1 = () => {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            reject("error");
+        }, 3000);
+    });
+}
+
+Promise.try = function (callback) {
+    return new Promise((resolve, reject)=> {
+        return Promise.resolve(callback()).then(resolve, reject)
     })
 }
-```
 
-## 使用面向对象方式维护一个列表，每个列表有一个删除按钮，点击删除按钮移除当前行
-
-```html
-<script>
-window.addEventListener('DOMContentLoaded',function(){
-    new List('.list');
+Promise.try(fn).catch(err=>{
+    console.log(err)
 })
-class List{
-    constructor(sel){
-			this.el=Array.from(document.querySelectorAll(sel));
-			let self=this;
-			this.el.forEach(item=>{
-				item.addEventListener('click',function(e){
-					if(e.target.className.indexOf('del')>-1){
-						self.removeItem.call(self,e.target)
-					}
-				},false)
-			})
-    }
-		
-    removeItem(target){
-        let self = this
-        let findParent = function(node) {
-            let parent = node.parentNode;
-            let root = self.el.find(item => {
-                return item == parent
-            })
-            if(root){
-                root.removeChild(node);
-            }else{
-    	       findParent(parent)
-            }
-    	}
-        findParent(target)
-    }
-}
-</script>
-<body>
-	<ul class="list">
-		<li><span class="del">1</span></li>
-		<li><span class="del">2</span></li>
-		<li><span class="del">3</span></li>
-		<li><span class="del">4</span></li>
-		<li><span class="del">5</span></li>
-		<li><span class="del">6</span></li>
-		<li><span class="del">7</span></li>
-		<li><span class="del">8</span></li>
-	</ul>
-</body>
+Promise.try(fn1).catch(err=>{
+    console.log(err)
+})
 ```
+
+`unhandledrejection`可以捕获`Promise`未捕获的错误
+
+```js
+window.addEventListener("unhandledrejection", event => {
+    console.log(event.reason)
+});
+
+new Promise((resolve,reject)=>{
+    reject('error')
+})
+```
+
+
+## Vue的价值
+
+不需要知道修改哪块的`DOM`<br/>
+不需要对数据每一次的修改都去操作DOM<br/>
+不需要去写修改DOM的逻辑<br/>
+
+
+
 

@@ -1,15 +1,17 @@
+---
+title: Vue
+titleTemplate: 学习笔记
+outline: 'deep'
+---
+
 [toc]
 
-# Vue源码笔记
+# Vue源码
+
+## new Vue
 
 
-## 数据驱动
-
-
-### 源码摘要
-
-
-```
+```js
 ...省略
 function Vue (options) {
   if (process.env.NODE_ENV !== 'production' &&
@@ -26,7 +28,9 @@ initMixin(Vue)
 export default Vue
 ```
 
-```
+> 执行了一个`_init`方法，这个方法在`initMixin()`中
+
+```js
 export function initMixin (Vue: Class<Component>) {
     Vue.prototype._init = function (options?: Object) {
       const vm: Component = this
@@ -44,9 +48,12 @@ export function initMixin (Vue: Class<Component>) {
           )
       }
       ...省略
+      initLifecycle(vm)
+      ...省略
       initState(vm)
       ...省略
   
+      // 如果是组件,是走不到这个逻辑的，它没有el
       if (vm.$options.el) {
         vm.$mount(vm.$options.el)
       }
@@ -54,8 +61,8 @@ export function initMixin (Vue: Class<Component>) {
 }
 ```
 
-```
 
+```js
 export function initState (vm: Component) {
   vm._watchers = []
   const opts = vm.$options
@@ -70,7 +77,9 @@ export function initState (vm: Component) {
 }
 ```
 
-```
+> 执行`initData`
+
+```js
 function initData (vm: Component) {
   let data = vm.$options.data
   data = vm._data = typeof data === 'function'
@@ -114,23 +123,8 @@ function initData (vm: Component) {
 }
 ```
 
-```
-export function getData (data: Function, vm: Component): any {
-  // #7573 disable dep collection when invoking data getters
-  pushTarget()
-  try {
-    return data.call(vm, vm)
-  } catch (e) {
-    handleError(e, vm, `data()`)
-    return {}
-  } finally {
-    popTarget()
-  }
-}
-```
 
-
-```
+```js
 const sharedPropertyDefinition = {
   enumerable: true,
   configurable: true,
@@ -149,9 +143,58 @@ export function proxy (target: Object, sourceKey: string, key: string) {
 }
 ```
 
-#### Vue.$mount
+> 我们在声明式选项`data`中声明的数据，其实访问的是`vm`的`_data`
 
+
+```js
+export function initLifecycle (vm: Component) {
+    const options = vm.$options
+  
+    // locate first non-abstract parent
+    let parent = options.parent
+    if (parent && !options.abstract) {
+      while (parent.$options.abstract && parent.$parent) {
+        parent = parent.$parent
+      }
+      parent.$children.push(vm)
+    }
+  
+    vm.$parent = parent
+    vm.$root = parent ? parent.$root : vm
+  
+    vm.$children = []
+    vm.$refs = {}
+  
+    vm._watcher = null
+    vm._inactive = null
+    vm._directInactive = false
+    vm._isMounted = false
+    vm._isDestroyed = false
+    vm._isBeingDestroyed = false
+}
 ```
+
+## Vue.$mount
+
+
+
+
+```js
+Vue.prototype.$mount = function (
+  el?: string | Element,
+  hydrating?: boolean
+): Component {
+  el = el && inBrowser ? query(el) : undefined
+  return mountComponent(this, el, hydrating)
+}
+```
+
+> 先定义了`$mount`方法
+
+```js
+// 先获取了$mount方法
+const mount = Vue.prototype.$mount
+// 又重新定义了,因为runtime-only版本其实没有这块逻辑
 Vue.prototype.$mount = function (
   el?: string | Element,
   hydrating?: boolean
@@ -168,8 +211,10 @@ Vue.prototype.$mount = function (
 
   const options = this.$options
   // resolve template/el and convert to render function
+  // 判断有没有定义render方法
   if (!options.render) {
     let template = options.template
+    // 判断有没有定义template方法
     if (template) {
       if (typeof template === 'string') {
         if (template.charAt(0) === '#') {
@@ -193,72 +238,31 @@ Vue.prototype.$mount = function (
     } else if (el) {
       template = getOuterHTML(el)
     }
+    // 跟编译相关
     if (template) {
-      /* istanbul ignore if */
-      if (process.env.NODE_ENV !== 'production' && config.performance && mark) {
-        mark('compile')
-      }
-
-      const { render, staticRenderFns } = compileToFunctions(template, {
-        shouldDecodeNewlines,
-        shouldDecodeNewlinesForHref,
-        delimiters: options.delimiters,
-        comments: options.comments
-      }, this)
-      options.render = render
-      options.staticRenderFns = staticRenderFns
-
-      /* istanbul ignore if */
-      if (process.env.NODE_ENV !== 'production' && config.performance && mark) {
-        mark('compile end')
-        measure(`vue ${this._name} compile`, 'compile', 'compile end')
-      }
+        ...省略
     }
   }
   return mount.call(this, el, hydrating)
 }
 ```
 
-```
-const mount = Vue.prototype.$mount
+> 首先对`el`进行了一个解析，然后判断了有没有`render`方法，没有的话，转化成了一个`template`,`template`最终会编译成`render`方法
 
-Vue.prototype.$mount = function (
-  el?: string | Element,
-  hydrating?: boolean
-): Component {
-  el = el && inBrowser ? query(el) : undefined
-  return mountComponent(this, el, hydrating)
-}
-```
 
-```
+
+```js
 export function mountComponent (
     vm: Component,
     el: ?Element,
     hydrating?: boolean
   ): Component {
     vm.$el = el
+    // 没有render方法并且template也不对，报警告
     if (!vm.$options.render) {
-      vm.$options.render = createEmptyVNode
-      if (process.env.NODE_ENV !== 'production') {
-        /* istanbul ignore if */
-        if ((vm.$options.template && vm.$options.template.charAt(0) !== '#') ||
-          vm.$options.el || el) {
-          warn(
-            'You are using the runtime-only build of Vue where the template ' +
-            'compiler is not available. Either pre-compile the templates into ' +
-            'render functions, or use the compiler-included build.',
-            vm
-          )
-        } else {
-          warn(
-            'Failed to mount component: template or render function not defined.',
-            vm
-          )
-        }
-      }
+        ...省略
     }
-    callHook(vm, 'beforeMount')
+    ...省略
   
     let updateComponent
     /* istanbul ignore if */
@@ -273,6 +277,7 @@ export function mountComponent (
     // we set this to vm._watcher inside the watcher's constructor
     // since the watcher's initial patch may call $forceUpdate (e.g. inside child
     // component's mounted hook), which relies on vm._watcher being already defined
+    //渲染Watcher
     new Watcher(vm, updateComponent, noop, {
       before () {
         if (vm._isMounted) {
@@ -292,101 +297,10 @@ export function mountComponent (
 }
 ```
 
-```
-export default class Watcher {
-    vm: Component;
-    expression: string;
-    cb: Function;
-    id: number;
-    deep: boolean;
-    user: boolean;
-    computed: boolean;
-    sync: boolean;
-    dirty: boolean;
-    active: boolean;
-    dep: Dep;
-    deps: Array<Dep>;
-    newDeps: Array<Dep>;
-    depIds: SimpleSet;
-    newDepIds: SimpleSet;
-    before: ?Function;
-    getter: Function;
-    value: any;
-  
-    constructor (
-      vm: Component,
-      expOrFn: string | Function,
-      cb: Function,
-      options?: ?Object,
-      isRenderWatcher?: boolean
-    ) {
-      this.vm = vm
-      if (isRenderWatcher) {
-        vm._watcher = this
-      }
-      vm._watchers.push(this)
-      // options
-      if (options) {
-        this.deep = !!options.deep
-        this.user = !!options.user
-        this.computed = !!options.computed
-        this.sync = !!options.sync
-        this.before = options.before
-      } else {
-        this.deep = this.user = this.computed = this.sync = false
-      }
-      ...省略
-      this.expression = process.env.NODE_ENV !== 'production'
-        ? expOrFn.toString()
-        : ''
-      // parse expression for getter
-      if (typeof expOrFn === 'function') {
-        this.getter = expOrFn
-      } else {
-        ...省略
-      }
-      if (this.computed) {
-        this.value = undefined
-        this.dep = new Dep()
-      } else {
-        this.value = this.get()
-      }
-    }
-  
-    /**
-     * Evaluate the getter, and re-collect dependencies.
-     */
-    get () {
-      pushTarget(this)
-      let value
-      const vm = this.vm
-      try {
-        value = this.getter.call(vm, vm)
-      } catch (e) {
-        if (this.user) {
-          handleError(e, vm, `getter for watcher "${this.expression}"`)
-        } else {
-          throw e
-        }
-      } finally {
-        // "touch" every property so they are all tracked as
-        // dependencies for deep watching
-        if (this.deep) {
-          traverse(value)
-        }
-        popTarget()
-        this.cleanupDeps()
-      }
-      return value
-    }
-  
-    ...省略
-}
-```
+> `updateComponent`这个方法，其实就执行了一次真实的渲染
 
-#### Vue._render
 
-```
+```js
 Vue.prototype._render = function (): VNode {
     const vm: Component = this
     const { render, _parentVnode } = vm.$options
@@ -397,24 +311,7 @@ Vue.prototype._render = function (): VNode {
     try {
       vnode = render.call(vm._renderProxy, vm.$createElement)
     } catch (e) {
-      handleError(e, vm, `render`)
-      // return error render result,
-      // or previous vnode to prevent render error causing blank component
-      /* istanbul ignore else */
-      if (process.env.NODE_ENV !== 'production') {
-        if (vm.$options.renderError) {
-          try {
-            vnode = vm.$options.renderError.call(vm._renderProxy, vm.$createElement, e)
-          } catch (e) {
-            handleError(e, vm, `renderError`)
-            vnode = vm._vnode
-          }
-        } else {
-          vnode = vm._vnode
-        }
-      } else {
-        vnode = vm._vnode
-      }
+        ...省略
     }
     // return empty vnode in case the render function errored out
     if (!(vnode instanceof VNode)) {
@@ -433,20 +330,41 @@ Vue.prototype._render = function (): VNode {
 }
 ```
 
+```js
+// 通过template编译出来的函数会执行下面的语句
+vm._c = (a, b, c, d) => createElement(vm, a, b, c, d, false)
+
+// 直接写render函数会执行下面的语句
+vm.$createElement = (a, b, c, d) => createElement(vm, a, b, c, d, true)
 ```
-export function initRender (vm: Component) {
-    ...省略
-    vm._c = (a, b, c, d) => createElement(vm, a, b, c, d, false)
-    // normalization is always applied for the public version, used in
-    // user-written render functions.
-    vm.$createElement = (a, b, c, d) => createElement(vm, a, b, c, d, true)
-    ...省略
+
+```js
+export function initMixin (Vue: Class<Component>) {
+    Vue.prototype._init = function (options?: Object) {
+        ...省略
+        if (process.env.NODE_ENV !== 'production') {
+          initProxy(vm)
+        } else {
+          vm._renderProxy = vm
+        }
+        ...省略
+    }
 }
 ```
 
-#### createElement
+> 可以看到`vm`的`_renderProxy`生产环境是`vm`
 
-```
+
+### createElement
+
+
+> `createElement`方法就是用来创建`vNode`的
+
+
+```js
+const SIMPLE_NORMALIZE = 1
+const ALWAYS_NORMALIZE = 2
+
 export function createElement (
   context: Component,
   tag: any,
@@ -467,7 +385,15 @@ export function createElement (
 }
 ```
 
-```
+
+
+
+```js
+export function isDef (v: any): boolean %checks {
+  return v !== undefined && v !== null
+}
+
+
 export function _createElement (
   context: Component,
   tag?: string | Class<Component> | Function | Object,
@@ -475,94 +401,51 @@ export function _createElement (
   children?: any,
   normalizationType?: number
 ): VNode | Array<VNode> {
-  if (isDef(data) && isDef((data: any).__ob__)) {
-    process.env.NODE_ENV !== 'production' && warn(
-      `Avoid using observed data object as vnode data: ${JSON.stringify(data)}\n` +
-      'Always create fresh vnode data objects in each render!',
-      context
-    )
-    return createEmptyVNode()
-  }
-  // object syntax in v-bind
-  if (isDef(data) && isDef(data.is)) {
-    tag = data.is
-  }
-  if (!tag) {
-    // in case of component :is set to falsy value
-    return createEmptyVNode()
-  }
-  // warn against non-primitive key
-  if (process.env.NODE_ENV !== 'production' &&
-    isDef(data) && isDef(data.key) && !isPrimitive(data.key)
-  ) {
-    if (!__WEEX__ || !('@binding' in data.key)) {
-      warn(
-        'Avoid using non-primitive value as key, ' +
-        'use string/number value instead.',
-        context
-      )
+    ...省略
+    if (normalizationType === ALWAYS_NORMALIZE) {
+        children = normalizeChildren(children)
+    } else if (normalizationType === SIMPLE_NORMALIZE) {
+        children = simpleNormalizeChildren(children)
     }
-  }
-  // support single function children as default scoped slot
-  if (Array.isArray(children) &&
-    typeof children[0] === 'function'
-  ) {
-    data = data || {}
-    data.scopedSlots = { default: children[0] }
-    children.length = 0
-  }
-  if (normalizationType === ALWAYS_NORMALIZE) {
-    children = normalizeChildren(children)
-  } else if (normalizationType === SIMPLE_NORMALIZE) {
-    children = simpleNormalizeChildren(children)
-  }
-  let vnode, ns
-  if (typeof tag === 'string') {
-    let Ctor
-    ns = (context.$vnode && context.$vnode.ns) || config.getTagNamespace(tag)
-    // config.isReservedTag是看这个标签是不是html原生的保留标签
-    if (config.isReservedTag(tag)) {
-      // platform built-in elements
-      vnode = new VNode(
-        config.parsePlatformTagName(tag), data, children,
-        undefined, undefined, context
-      )
-    } else if (isDef(Ctor = resolveAsset(context.$options, 'components', tag))) {
-      // component
-      vnode = createComponent(Ctor, data, context, children, tag)
+    let vnode, ns
+    if (typeof tag === 'string') {
+        let Ctor
+        ns = (context.$vnode && context.$vnode.ns) || config.getTagNamespace(tag)
+        // config.isReservedTag是看这个标签是不是html原生的保留标签
+        if (config.isReservedTag(tag)) {
+        // platform built-in elements
+            vnode = new VNode(
+            config.parsePlatformTagName(tag), data, children,undefined, undefined, context)
+        } else if (isDef(Ctor = resolveAsset(context.$options, 'components', tag))) {
+            // component
+            vnode = createComponent(Ctor, data, context, children, tag)
+        } else {
+            // unknown or unlisted namespaced elements
+            // check at runtime because it may get assigned a namespace when its
+            // parent normalizes children
+            vnode = new VNode(
+                tag, data, children,
+                undefined, undefined, context
+            )
+        }
     } else {
-      // unknown or unlisted namespaced elements
-      // check at runtime because it may get assigned a namespace when its
-      // parent normalizes children
-      vnode = new VNode(
-        tag, data, children,
-        undefined, undefined, context
-      )
+        // direct component options / constructor
+        vnode = createComponent(tag, data, context, children)
     }
-  } else {
-    // direct component options / constructor
-    vnode = createComponent(tag, data, context, children)
-  }
-  if (Array.isArray(vnode)) {
-    return vnode
-  } else if (isDef(vnode)) {
-    if (isDef(ns)) applyNS(vnode, ns)
-    if (isDef(data)) registerDeepBindings(data)
-    return vnode
-  } else {
-    return createEmptyVNode()
-  }
-}
-```
-
-```
-export function isDef (v: any): boolean %checks {
-  return v !== undefined && v !== null
+    if (Array.isArray(vnode)) {
+        return vnode
+    } else if (isDef(vnode)) {
+        if (isDef(ns)) applyNS(vnode, ns)
+        if (isDef(data)) registerDeepBindings(data)
+        return vnode
+    } else {
+        return createEmptyVNode()
+    }
 }
 ```
 
 
-```
+```js
 export function simpleNormalizeChildren (children: any) {
   for (let i = 0; i < children.length; i++) {
     if (Array.isArray(children[i])) {
@@ -573,7 +456,17 @@ export function simpleNormalizeChildren (children: any) {
 }
 ```
 
-```
+```js
+export function isPrimitive (value: any): boolean %checks {
+  return (
+    typeof value === 'string' ||
+    typeof value === 'number' ||
+    // $flow-disable-line
+    typeof value === 'symbol' ||
+    typeof value === 'boolean'
+  )
+}
+
 export function normalizeChildren (children: any): ?Array<VNode> {
   return isPrimitive(children)
     ? [createTextVNode(children)]
@@ -583,7 +476,8 @@ export function normalizeChildren (children: any): ?Array<VNode> {
 }
 ```
 
-```
+
+```js
 function normalizeArrayChildren (children: any, nestedIndex?: string): Array<VNode> {
   const res = []
   let i, c, lastIndex, last
@@ -604,6 +498,7 @@ function normalizeArrayChildren (children: any, nestedIndex?: string): Array<VNo
         res.push.apply(res, c)
       }
     } else if (isPrimitive(c)) {
+      // 是基础类型
       if (isTextNode(last)) {
         // merge adjacent text nodes
         // this is necessary for SSR hydration because text nodes are
@@ -633,235 +528,10 @@ function normalizeArrayChildren (children: any, nestedIndex?: string): Array<VNo
 }
 ```
 
-#### _update
-
-```
-Vue.prototype._update = function (vnode: VNode, hydrating?: boolean) {
-    const vm: Component = this
-    const prevEl = vm.$el
-    const prevVnode = vm._vnode
-    const prevActiveInstance = activeInstance
-    activeInstance = vm
-    vm._vnode = vnode
-    // Vue.prototype.__patch__ is injected in entry points
-    // based on the rendering backend used.
-    if (!prevVnode) {
-      // initial render
-      vm.$el = vm.__patch__(vm.$el, vnode, hydrating, false /* removeOnly */)
-    } else {
-      // updates
-      vm.$el = vm.__patch__(prevVnode, vnode)
-    }
-    activeInstance = prevActiveInstance
-    // update __vue__ reference
-    if (prevEl) {
-      prevEl.__vue__ = null
-    }
-    if (vm.$el) {
-      vm.$el.__vue__ = vm
-    }
-    // if parent is an HOC, update its $el as well
-    if (vm.$vnode && vm.$parent && vm.$vnode === vm.$parent._vnode) {
-      vm.$parent.$el = vm.$el
-    }
-    // updated hook is called by the scheduler to ensure that children are
-    // updated in a parent's updated hook.
-}
-```
-
-```
-const patch: Function = createPatchFunction({ nodeOps, modules })
-```
-
-```
-const hooks = ['create', 'activate', 'update', 'remove', 'destroy']
-
-export function createPatchFunction (backend) {
-    let i, j
-    const cbs = {}
-  
-    const { modules, nodeOps } = backend
-  
-    for (i = 0; i < hooks.length; ++i) {
-      cbs[hooks[i]] = []
-      for (j = 0; j < modules.length; ++j) {
-        if (isDef(modules[j][hooks[i]])) {
-          cbs[hooks[i]].push(modules[j][hooks[i]])
-        }
-      }
-    }
-    
-    function createElm (
-        vnode,
-        insertedVnodeQueue,
-        parentElm,
-        refElm,
-        nested,
-        ownerArray,
-        index
-      ) {
-        if (isDef(vnode.elm) && isDef(ownerArray)) {
-            ...省略
-        }
-    
-        vnode.isRootInsert = !nested // for transition enter check
-        if (createComponent(vnode, insertedVnodeQueue, parentElm, refElm)) {
-          return
-        }
-    
-        const data = vnode.data
-        const children = vnode.children
-        const tag = vnode.tag
-        if (isDef(tag)) {
-          if (process.env.NODE_ENV !== 'production') {
-            if (data && data.pre) {
-              creatingElmInVPre++
-            }
-            if (isUnknownElement(vnode, creatingElmInVPre)) {
-              warn(
-                'Unknown custom element: <' + tag + '> - did you ' +
-                'register the component correctly? For recursive components, ' +
-                'make sure to provide the "name" option.',
-                vnode.context
-              )
-            }
-          }
-    
-          vnode.elm = vnode.ns
-            ? nodeOps.createElementNS(vnode.ns, tag)
-            : nodeOps.createElement(tag, vnode)
-          setScope(vnode)
-    
-          /* istanbul ignore if */
-          if (__WEEX__) {
-            ...省略
-          } else {
-            createChildren(vnode, children, insertedVnodeQueue)
-            if (isDef(data)) {
-              invokeCreateHooks(vnode, insertedVnodeQueue)
-            }
-            insert(parentElm, vnode.elm, refElm)
-          }
-    
-          if (process.env.NODE_ENV !== 'production' && data && data.pre) {
-            creatingElmInVPre--
-          }
-        } else if (isTrue(vnode.isComment)) {
-          vnode.elm = nodeOps.createComment(vnode.text)
-          insert(parentElm, vnode.elm, refElm)
-        } else {
-          vnode.elm = nodeOps.createTextNode(vnode.text)
-          insert(parentElm, vnode.elm, refElm)
-        }
-    }
-    
-    function emptyNodeAt (elm) {
-        return new VNode(nodeOps.tagName(elm).toLowerCase(), {}, [], undefined, elm)
-    }
-    
-    function insert (parent, elm, ref) {
-        if (isDef(parent)) {
-          if (isDef(ref)) {
-            if (ref.parentNode === parent) {
-              nodeOps.insertBefore(parent, elm, ref)
-            }
-          } else {
-            nodeOps.appendChild(parent, elm)
-          }
-        }
-    }
-    
-    
-    function createChildren (vnode, children, insertedVnodeQueue) {
-        if (Array.isArray(children)) {
-          if (process.env.NODE_ENV !== 'production') {
-            checkDuplicateKeys(children)
-          }
-          for (let i = 0; i < children.length; ++i) {
-            createElm(children[i], insertedVnodeQueue, vnode.elm, null, true, children, i)
-          }
-        } else if (isPrimitive(vnode.text)) {
-          nodeOps.appendChild(vnode.elm, nodeOps.createTextNode(String(vnode.text)))
-        }
-    }
-  
-    ...省略
-  
-    return function patch (oldVnode, vnode, hydrating, removeOnly) {
-      // 删除时候的逻辑
-      if (isUndef(vnode)) {
-        if (isDef(oldVnode)) invokeDestroyHook(oldVnode)
-        return
-      }
-  
-      let isInitialPatch = false
-      const insertedVnodeQueue = []
-  
-      if (isUndef(oldVnode)) {
-        ...省略
-      } else {
-        const isRealElement = isDef(oldVnode.nodeType)
-        if (!isRealElement && sameVnode(oldVnode, vnode)) {
-            ...省略
-        } else {
-          if (isRealElement) {
-            // mounting to a real element
-            // check if this is server-rendered content and if we can perform
-            // a successful hydration.
-            if (oldVnode.nodeType === 1 && oldVnode.hasAttribute(SSR_ATTR)) {
-                ...省略
-            }
-            if (isTrue(hydrating)) {
-                ...省略
-            }
-            // either not server-rendered, or hydration failed.
-            // create an empty node and replace it
-            oldVnode = emptyNodeAt(oldVnode)
-          }
-  
-          // replacing existing element
-          const oldElm = oldVnode.elm
-          const parentElm = nodeOps.parentNode(oldElm)
-  
-          // create new node
-          createElm(
-            vnode,
-            insertedVnodeQueue,
-            // extremely rare edge case: do not insert if old element is in a
-            // leaving transition. Only happens when combining transition +
-            // keep-alive + HOCs. (#4590)
-            oldElm._leaveCb ? null : parentElm,
-            nodeOps.nextSibling(oldElm)
-          )
-  
-          // update parent placeholder node element, recursively
-          if (isDef(vnode.parent)) {
-            ...省略
-          }
-  
-          // destroy old node
-          if (isDef(parentElm)) {
-            removeVnodes(parentElm, [oldVnode], 0, 0)
-          } else if (isDef(oldVnode.tag)) {
-            invokeDestroyHook(oldVnode)
-          }
-        }
-      }
-  
-      invokeInsertHook(vnode, insertedVnodeQueue, isInitialPatch)
-      return vnode.elm
-    }
-}
-```
-
-> setScope暂时忽略
+### createComponent
 
 
-## 组件化
-
-### 源码摘要
-
-```
+```js
 export function createComponent (
     Ctor: Class<Component> | Function | Object | void,
     data: ?VNodeData,
@@ -873,10 +543,13 @@ export function createComponent (
       return
     }
   
+    // baseCtor其实是Vue
     const baseCtor = context.$options._base
   
     // plain options object: turn it into a constructor
+    // 传入的是普通对象，生成一个构造器
     if (isObject(Ctor)) {
+      // 其实执行的就是Vue.extend
       Ctor = baseCtor.extend(Ctor)
     }
   
@@ -903,46 +576,20 @@ export function createComponent (
       asyncFactory
     )
   
-    // Weex specific: invoke recycle-list optimized @render function for
-    // extracting cell-slot template.
-    // https://github.com/Hanks10100/weex-native-directive/tree/master/component
-    /* istanbul ignore if */
-    if (__WEEX__ && isRecyclableComponent(vnode)) {
-      return renderRecyclableComponentTemplate(vnode)
-    }
   
+    ...省略
+
+
     return vnode
 }
 ```
 
-
-
-```
-export function validateComponentName (name: string) {
-    if (!/^[a-zA-Z][\w-]*$/.test(name)) {
-      warn(
-        'Invalid component name: "' + name + '". Component names ' +
-        'can only contain alphanumeric characters and the hyphen, ' +
-        'and must start with a letter.'
-      )
-    }
-    if (isBuiltInTag(name) || config.isReservedTag(name)) {
-      warn(
-        'Do not use built-in or reserved HTML elements as component ' +
-        'id: ' + name
-      )
-    }
-}
-
-export const ASSET_TYPES = [
-    'component',
-    'directive',
-    'filter'
-]
+```js
+Vue.cid = 0
+let cid = 1
 
 Vue.extend = function (extendOptions: Object): Function {
     extendOptions = extendOptions || {}
-    // this是Vue
     const Super = this
     const SuperId = Super.cid
     const cachedCtors = extendOptions._Ctor || (extendOptions._Ctor = {})
@@ -1005,7 +652,7 @@ Vue.extend = function (extendOptions: Object): Function {
 }
 ```
 
-```
+```js
 function installComponentHooks (data: VNodeData) {
     const hooks = data.hook || (data.hook = {})
     for (let i = 0; i < hooksToMerge.length; i++) {
@@ -1019,160 +666,8 @@ function installComponentHooks (data: VNodeData) {
 }
 
 
-// inline hooks to be invoked on component VNodes during patch
 const componentVNodeHooks = {
-    init (vnode: VNodeWithData, hydrating: boolean): ?boolean {
-      ...省略
-    },
-  
-    prepatch (oldVnode: MountedComponentVNode, vnode: MountedComponentVNode) {
-      ...省略
-    },
-  
-    insert (vnode: MountedComponentVNode) {
-      ...省略
-    },
-  
-    destroy (vnode: MountedComponentVNode) {
-      ...省略
-    }
-}
-
-const hooksToMerge = Object.keys(componentVNodeHooks)
-
-function mergeHook (f1: any, f2: any): Function {
-    const merged = (a, b) => {
-      // flow complains about extra args which is why we use any
-      f1(a, b)
-      f2(a, b)
-    }
-    merged._merged = true
-    return merged
-}
-```
-
-#### patch
-
-
-```
-export function createPatchFunction (backend) {
-    let i, j
-    const cbs = {}
-  
-    const { modules, nodeOps } = backend
-  
-    for (i = 0; i < hooks.length; ++i) {
-      cbs[hooks[i]] = []
-      for (j = 0; j < modules.length; ++j) {
-        if (isDef(modules[j][hooks[i]])) {
-          cbs[hooks[i]].push(modules[j][hooks[i]])
-        }
-      }
-    }
-  
-    ...省略
-  
-    let creatingElmInVPre = 0
-  
-    function createElm (
-      vnode,
-      insertedVnodeQueue,
-      parentElm,
-      refElm,
-      nested,
-      ownerArray,
-      index
-    ) {
-      if (isDef(vnode.elm) && isDef(ownerArray)) {
-        // This vnode was used in a previous render!
-        // now it's used as a new node, overwriting its elm would cause
-        // potential patch errors down the road when it's used as an insertion
-        // reference node. Instead, we clone the node on-demand before creating
-        // associated DOM element for it.
-        vnode = ownerArray[index] = cloneVNode(vnode)
-      }
-  
-      vnode.isRootInsert = !nested // for transition enter check
-      if (createComponent(vnode, insertedVnodeQueue, parentElm, refElm)) {
-        return
-      }
-  
-      ...省略
-    }
-  
-    function createComponent (vnode, insertedVnodeQueue, parentElm, refElm) {
-      let i = vnode.data
-      if (isDef(i)) {
-        const isReactivated = isDef(vnode.componentInstance) && i.keepAlive
-        if (isDef(i = i.hook) && isDef(i = i.init)) {
-          i(vnode, false /* hydrating */)
-        }
-        // after calling the init hook, if the vnode is a child component
-        // it should've created a child instance and mounted it. the child
-        // component also has set the placeholder vnode's elm.
-        // in that case we can just return the element and be done.
-        if (isDef(vnode.componentInstance)) {
-          initComponent(vnode, insertedVnodeQueue)
-          insert(parentElm, vnode.elm, refElm)
-          ...省略
-          return true
-        }
-      }
-    }
-  
-    function initComponent (vnode, insertedVnodeQueue) {
-      if (isDef(vnode.data.pendingInsert)) {
-        insertedVnodeQueue.push.apply(insertedVnodeQueue, vnode.data.pendingInsert)
-        vnode.data.pendingInsert = null
-      }
-      vnode.elm = vnode.componentInstance.$el
-      ...省略
-    }
-  
-   
-  
-    function insert (parent, elm, ref) {
-      if (isDef(parent)) {
-        if (isDef(ref)) {
-          if (ref.parentNode === parent) {
-            nodeOps.insertBefore(parent, elm, ref)
-          }
-        } else {
-          nodeOps.appendChild(parent, elm)
-        }
-      }
-    }
-  
-  
-    ...省略
-  
-    return function patch (oldVnode, vnode, hydrating, removeOnly) {
-        if (isUndef(vnode)) {
-          if (isDef(oldVnode)) invokeDestroyHook(oldVnode)
-          return
-        }
-    
-        let isInitialPatch = false
-        const insertedVnodeQueue = []
-    
-        if (isUndef(oldVnode)) {
-          // empty mount (likely as component), create new root element
-          isInitialPatch = true
-          createElm(vnode, insertedVnodeQueue)
-        } else {
-          ...省略
-        }
-    
-        invokeInsertHook(vnode, insertedVnodeQueue, isInitialPatch)
-        return vnode.elm
-    }
-}
-```
-
-
-```
-// inline hooks to be invoked on component VNodes during patch
-const componentVNodeHooks = {
+    // 走了createElm之后，走到createComponent，执行这句i(vnode, false /* hydrating */)就走到了这个init方法
     init (vnode: VNodeWithData, hydrating: boolean): ?boolean {
       if (
         vnode.componentInstance &&
@@ -1187,14 +682,44 @@ const componentVNodeHooks = {
         )
         child.$mount(hydrating ? vnode.elm : undefined, hydrating)
       }
+    },
+  
+
+    prepatch (oldVnode: MountedComponentVNode, vnode: MountedComponentVNode) {
+        const options = vnode.componentOptions
+        const child = vnode.componentInstance = oldVnode.componentInstance
+        updateChildComponent(
+          child,
+          options.propsData, // updated props
+          options.listeners, // updated listeners
+          vnode, // new parent vnode
+          options.children // new children
+        )
+    },
+  
+    insert (vnode: MountedComponentVNode) {
+      ...省略
+    },
+  
+    destroy (vnode: MountedComponentVNode) {
+      ...省略
     }
-    ...省略
 }
-```
 
-> 走了createElm之后，走到createComponent，执行这句`i(vnode, false /* hydrating */)`就走到了componentVNodeHooks.init方法
+const hooksToMerge = Object.keys(componentVNodeHooks)
 
-```
+
+function mergeHook (f1: any, f2: any): Function {
+    const merged = (a, b) => {
+      // flow complains about extra args which is why we use any
+      f1(a, b)
+      f2(a, b)
+    }
+    merged._merged = true
+    return merged
+}
+
+
 export function createComponentInstanceForVnode (
   vnode: any, // we know it's MountedComponentVNode but flow doesn't
   parent: any, // activeInstance in lifecycle state
@@ -1205,42 +730,41 @@ export function createComponentInstanceForVnode (
     parent
   }
   ...省略
+  // 其实就是执行的Sub的构造函数
   return new vnode.componentOptions.Ctor(options)
 }
 ```
 
-```
-Vue.prototype._init = function (options?: Object) {
-    const vm: Component = this
-    // a uid
-    vm._uid = uid++
-
-    let startTag, endTag
-    /* istanbul ignore if */
-    if (process.env.NODE_ENV !== 'production' && config.performance && mark) {
-      startTag = `vue-perf-start:${vm._uid}`
-      endTag = `vue-perf-end:${vm._uid}`
-      mark(startTag)
+```js
+export function initMixin (Vue: Class<Component>) {
+    Vue.prototype._init = function (options?: Object) {
+      const vm: Component = this
+      ...省略
+      if (options && options._isComponent) {
+          // optimize internal component instantiation
+          // since dynamic options merging is pretty slow, and none of the
+          // internal component options needs special treatment.
+          initInternalComponent(vm, options)
+      } else {
+          ...省略
+      }
+      ...省略
+      initLifecycle(vm)
+      ...省略
+      initState(vm)
+      ...省略
+  
+      if (vm.$options.el) {
+        vm.$mount(vm.$options.el)
+      }
     }
-
-    // a flag to avoid this being observed
-    vm._isVue = true
-    // merge options
-    if (options && options._isComponent) {
-      // optimize internal component instantiation
-      // since dynamic options merging is pretty slow, and none of the
-      // internal component options needs special treatment.
-      initInternalComponent(vm, options)
-    } else {
-        ...省略
-    }
-    ...省略
-    initLifecycle(vm)
-    ...省略
 }
 ```
 
-```
+> 执行`Sub`的构造函数就执行`Vue`的`_init`方法
+
+
+```js
 export function initInternalComponent (vm: Component, options: InternalComponentOptions) {
     const opts = vm.$options = Object.create(vm.constructor.options)
     // doing this because it's faster than dynamic enumeration.
@@ -1261,39 +785,708 @@ export function initInternalComponent (vm: Component, options: InternalComponent
 }
 ```
 
-```
-export function initLifecycle (vm: Component) {
-    const options = vm.$options
-  
-    // locate first non-abstract parent
-    let parent = options.parent
-    if (parent && !options.abstract) {
-      while (parent.$options.abstract && parent.$parent) {
-        parent = parent.$parent
-      }
-      parent.$children.push(vm)
+
+
+### _update
+
+
+> `_update`方法其实就是把`vNode`渲染成真实的`DOM`
+
+
+```js
+Vue.prototype._update = function (vnode: VNode, hydrating?: boolean) {
+    const vm: Component = this
+    const prevEl = vm.$el
+    const prevVnode = vm._vnode
+    const prevActiveInstance = activeInstance
+    activeInstance = vm
+    vm._vnode = vnode
+    // Vue.prototype.__patch__ is injected in entry points
+    // based on the rendering backend used.
+    if (!prevVnode) {
+      // initial render
+      // 初次渲染
+      vm.$el = vm.__patch__(vm.$el, vnode, hydrating, false /* removeOnly */)
+    } else {
+      // updates
+      // 组件更新走这个分支
+      vm.$el = vm.__patch__(prevVnode, vnode)
     }
-  
-    vm.$parent = parent
-    vm.$root = parent ? parent.$root : vm
-  
-    vm.$children = []
-    vm.$refs = {}
-  
-    vm._watcher = null
-    vm._inactive = null
-    vm._directInactive = false
-    vm._isMounted = false
-    vm._isDestroyed = false
-    vm._isBeingDestroyed = false
+    activeInstance = prevActiveInstance
+    // update __vue__ reference
+    if (prevEl) {
+      prevEl.__vue__ = null
+    }
+    if (vm.$el) {
+      vm.$el.__vue__ = vm
+    }
+    // if parent is an HOC, update its $el as well
+    if (vm.$vnode && vm.$parent && vm.$vnode === vm.$parent._vnode) {
+      vm.$parent.$el = vm.$el
+    }
+    // updated hook is called by the scheduler to ensure that children are
+    // updated in a parent's updated hook.
 }
 ```
 
 
-#### 合并配置
 
+
+
+```js
+Vue.prototype.__patch__ = inBrowser ? patch : noop
+
+const patch: Function = createPatchFunction({ nodeOps, modules })
+```
+
+
+```js
+const hooks = ['create', 'activate', 'update', 'remove', 'destroy']
+
+
+export function createPatchFunction (backend) {
+    let i, j
+    const cbs = {}
+  
+    const { modules, nodeOps } = backend
+  
+    for (i = 0; i < hooks.length; ++i) {
+      cbs[hooks[i]] = []
+      for (j = 0; j < modules.length; ++j) {
+        if (isDef(modules[j][hooks[i]])) {
+          cbs[hooks[i]].push(modules[j][hooks[i]])
+        }
+      }
+    }
+
+    
+    
+    function createElm (
+        vnode,
+        insertedVnodeQueue,
+        parentElm,
+        refElm,
+        nested,
+        ownerArray,
+        index
+      ) {
+        if (isDef(vnode.elm) && isDef(ownerArray)) {
+            ...省略
+        }
+    
+        vnode.isRootInsert = !nested // for transition enter check
+        if (createComponent(vnode, insertedVnodeQueue, parentElm, refElm)) {
+          return
+        }
+    
+        const data = vnode.data
+        const children = vnode.children
+        const tag = vnode.tag
+        if (isDef(tag)) {
+          if (process.env.NODE_ENV !== 'production') {
+            if (data && data.pre) {
+              creatingElmInVPre++
+            }
+            if (isUnknownElement(vnode, creatingElmInVPre)) {
+              warn(
+                'Unknown custom element: <' + tag + '> - did you ' +
+                'register the component correctly? For recursive components, ' +
+                'make sure to provide the "name" option.',
+                vnode.context
+              )
+            }
+          }
+    
+          vnode.elm = vnode.ns
+            ? nodeOps.createElementNS(vnode.ns, tag)
+            : nodeOps.createElement(tag, vnode)
+          // setScope暂时忽略
+          setScope(vnode)
+    
+          /* istanbul ignore if */
+          if (__WEEX__) {
+            ...省略
+          } else {
+            createChildren(vnode, children, insertedVnodeQueue)
+            if (isDef(data)) {
+              invokeCreateHooks(vnode, insertedVnodeQueue)
+            }
+            insert(parentElm, vnode.elm, refElm)
+          }
+    
+          if (process.env.NODE_ENV !== 'production' && data && data.pre) {
+            creatingElmInVPre--
+          }
+        } else if (isTrue(vnode.isComment)) {
+          // 创建注释节点
+          vnode.elm = nodeOps.createComment(vnode.text)
+          insert(parentElm, vnode.elm, refElm)
+        } else {
+          // 创建文本节点
+          vnode.elm = nodeOps.createTextNode(vnode.text)
+          insert(parentElm, vnode.elm, refElm)
+        }
+    }
+
+
+    function createComponent (vnode, insertedVnodeQueue, parentElm, refElm) {
+      let i = vnode.data
+      if (isDef(i)) {
+        const isReactivated = isDef(vnode.componentInstance) && i.keepAlive
+        if (isDef(i = i.hook) && isDef(i = i.init)) {
+          i(vnode, false /* hydrating */)
+        }
+        // after calling the init hook, if the vnode is a child component
+        // it should've created a child instance and mounted it. the child
+        // component also has set the placeholder vnode's elm.
+        // in that case we can just return the element and be done.
+        if (isDef(vnode.componentInstance)) {
+          initComponent(vnode, insertedVnodeQueue)
+          insert(parentElm, vnode.elm, refElm)
+          ...省略
+          return true
+        }
+      }
+    }
+
+    function initComponent (vnode, insertedVnodeQueue) {
+      if (isDef(vnode.data.pendingInsert)) {
+        insertedVnodeQueue.push.apply(insertedVnodeQueue, vnode.data.pendingInsert)
+        vnode.data.pendingInsert = null
+      }
+      vnode.elm = vnode.componentInstance.$el
+      ...省略
+    }
+    
+    function emptyNodeAt (elm) {
+        return new VNode(nodeOps.tagName(elm).toLowerCase(), {}, [], undefined, elm)
+    }
+    
+    function insert (parent, elm, ref) {
+        if (isDef(parent)) {
+          if (isDef(ref)) {
+            if (ref.parentNode === parent) {
+              nodeOps.insertBefore(parent, elm, ref)
+            }
+          } else {
+            nodeOps.appendChild(parent, elm)
+          }
+        }
+    }
+    
+    
+    function createChildren (vnode, children, insertedVnodeQueue) {
+        if (Array.isArray(children)) {
+          if (process.env.NODE_ENV !== 'production') {
+            checkDuplicateKeys(children)
+          }
+          for (let i = 0; i < children.length; ++i) {
+            createElm(children[i], insertedVnodeQueue, vnode.elm, null, true, children, i)
+          }
+        } else if (isPrimitive(vnode.text)) {
+          nodeOps.appendChild(vnode.elm, nodeOps.createTextNode(String(vnode.text)))
+        }
+    }
+
+    function isPatchable (vnode) {
+        while (vnode.componentInstance) {
+            vnode = vnode.componentInstance._vnode
+        }
+        return isDef(vnode.tag)
+    }
+  
+    ...省略
+
+    function patchVnode (oldVnode, vnode, insertedVnodeQueue, removeOnly) {
+        if (oldVnode === vnode) {
+          return
+        }
+
+        const elm = vnode.elm = oldVnode.elm
+
+        ...省略
+
+        let i
+        const data = vnode.data
+        if (isDef(data) && isDef(i = data.hook) && isDef(i = i.prepatch)) {
+          i(oldVnode, vnode)
+        }
+
+        // 如果是组件的vNode，它的children是undefined，如果children存在说明它是普通的vNode
+        const oldCh = oldVnode.children
+        const ch = vnode.children
+
+        ...省略
+
+        // 新的vNode节点没有text
+        if (isUndef(vnode.text)) {
+          if (isDef(oldCh) && isDef(ch)) {
+            // 新旧vNode的children同时存在
+            if (oldCh !== ch) updateChildren(elm, oldCh, ch, insertedVnodeQueue, removeOnly)
+          } else if (isDef(ch)) {
+            // 新的有children老的没有
+            if (isDef(oldVnode.text)) nodeOps.setTextContent(elm, '')
+            addVnodes(elm, null, ch, 0, ch.length - 1, insertedVnodeQueue)
+          } else if (isDef(oldCh)) {
+            // 老的有children新的没有
+            removeVnodes(elm, oldCh, 0, oldCh.length - 1)
+          } else if (isDef(oldVnode.text)) {
+            // 新老都没有children，并且新的vNode没有text，但是老的vNode有text，把老的text设为空
+            nodeOps.setTextContent(elm, '')
+          }
+        } else if (oldVnode.text !== vnode.text) {
+          nodeOps.setTextContent(elm, vnode.text)
+        }
+        ...省略
+    }
+
+
+    ...省略
+  
+    return function patch (oldVnode, vnode, hydrating, removeOnly) {
+      // 删除时候的逻辑
+      if (isUndef(vnode)) {
+        if (isDef(oldVnode)) invokeDestroyHook(oldVnode)
+        return
+      }
+  
+      let isInitialPatch = false
+      const insertedVnodeQueue = []
+  
+      if (isUndef(oldVnode)) {
+          // 组件渲染的时候，会走到这里
+          // empty mount (likely as component), create new root element
+          isInitialPatch = true
+          createElm(vnode, insertedVnodeQueue)
+      } else {
+        // 判断是不是真实的DOM,首次渲染的时候，这个是true
+        const isRealElement = isDef(oldVnode.nodeType)
+        if (!isRealElement && sameVnode(oldVnode, vnode)) {
+            patchVnode(oldVnode, vnode, insertedVnodeQueue, removeOnly)
+        } else {
+          if (isRealElement) {
+            // mounting to a real element
+            // check if this is server-rendered content and if we can perform
+            // a successful hydration.
+            if (oldVnode.nodeType === 1 && oldVnode.hasAttribute(SSR_ATTR)) {
+                ...省略
+            }
+            if (isTrue(hydrating)) {
+                ...省略
+            }
+            // either not server-rendered, or hydration failed.
+            // create an empty node and replace it
+            // 把真实的DOM转化为vNode
+            oldVnode = emptyNodeAt(oldVnode)
+          }
+  
+          // replacing existing element
+          const oldElm = oldVnode.elm
+          const parentElm = nodeOps.parentNode(oldElm)
+  
+          // create new node
+          createElm(
+            vnode,
+            insertedVnodeQueue,
+            // extremely rare edge case: do not insert if old element is in a
+            // leaving transition. Only happens when combining transition +
+            // keep-alive + HOCs. (#4590)
+            oldElm._leaveCb ? null : parentElm,
+            nodeOps.nextSibling(oldElm)
+          )
+  
+          // update parent placeholder node element, recursively
+          if (isDef(vnode.parent)) {
+              let ancestor = vnode.parent
+              // isPatchable其实就是找到一个可挂载的节点
+              const patchable = isPatchable(vnode)
+              while (ancestor) {
+                for (let i = 0; i < cbs.destroy.length; ++i) {
+                  cbs.destroy[i](ancestor)
+                }
+                ancestor.elm = vnode.elm
+                if (patchable) {
+                    ...省略
+                } else {
+                  registerRef(ancestor)
+                }
+                ancestor = ancestor.parent
+              }
+          }
+  
+          // destroy old node
+          if (isDef(parentElm)) {
+            removeVnodes(parentElm, [oldVnode], 0, 0)
+          } else if (isDef(oldVnode.tag)) {
+            invokeDestroyHook(oldVnode)
+          }
+        }
+      }
+  
+      invokeInsertHook(vnode, insertedVnodeQueue, isInitialPatch)
+      return vnode.elm
+    }
+}
 
 ```
+
+
+```js
+function sameVnode (a, b) {
+  return (
+    a.key === b.key && (
+      (
+        a.tag === b.tag &&
+        a.isComment === b.isComment &&
+        isDef(a.data) === isDef(b.data) &&
+        sameInputType(a, b)
+      ) || (
+        isTrue(a.isAsyncPlaceholder) &&
+        a.asyncFactory === b.asyncFactory &&
+        isUndef(b.asyncFactory.error)
+      )
+    )
+  )
+}
+```
+
+## Watcher
+
+```js
+export default class Watcher {
+    vm: Component;
+    expression: string;
+    cb: Function;
+    id: number;
+    deep: boolean;
+    user: boolean;
+    computed: boolean;
+    sync: boolean;
+    dirty: boolean;
+    active: boolean;
+    dep: Dep;
+    deps: Array<Dep>;
+    newDeps: Array<Dep>;
+    depIds: SimpleSet;
+    newDepIds: SimpleSet;
+    before: ?Function;
+    getter: Function;
+    value: any;
+  
+    constructor (
+      vm: Component,
+      expOrFn: string | Function,
+      cb: Function,
+      options?: ?Object,
+      isRenderWatcher?: boolean
+    ) {
+      this.vm = vm
+      if (isRenderWatcher) {
+        vm._watcher = this
+      }
+      vm._watchers.push(this)
+      // options
+      if (options) {
+        this.deep = !!options.deep
+        this.user = !!options.user
+        this.computed = !!options.computed
+        this.sync = !!options.sync
+        this.before = options.before
+      } else {
+        this.deep = this.user = this.computed = this.sync = false
+      }
+      this.cb = cb
+      this.id = ++uid // uid for batching
+      this.active = true
+      this.dirty = this.computed // for computed watchers
+      this.deps = []
+      this.newDeps = []
+      this.depIds = new Set()
+      this.newDepIds = new Set()
+      this.expression = process.env.NODE_ENV !== 'production'
+        ? expOrFn.toString()
+        : ''
+      // parse expression for getter
+      if (typeof expOrFn === 'function') {
+        this.getter = expOrFn
+      } else {
+        this.getter = parsePath(expOrFn)
+        if (!this.getter) {
+          this.getter = function () {}
+          process.env.NODE_ENV !== 'production' && warn(
+            `Failed watching path: "${expOrFn}" ` +
+            'Watcher only accepts simple dot-delimited paths. ' +
+            'For full control, use a function instead.',
+            vm
+          )
+        }
+      }
+      if (this.computed) {
+        this.value = undefined
+        this.dep = new Dep()
+      } else {
+        this.value = this.get()
+      }
+    }
+  
+    /**
+     * Evaluate the getter, and re-collect dependencies.
+     */
+    get () {
+      pushTarget(this)
+      let value
+      const vm = this.vm
+      try {
+        // 这里进行了调用，就执行了前文的updateComponent方法
+        value = this.getter.call(vm, vm)
+      } catch (e) {
+        if (this.user) {
+          handleError(e, vm, `getter for watcher "${this.expression}"`)
+        } else {
+          throw e
+        }
+      } finally {
+        // "touch" every property so they are all tracked as
+        // dependencies for deep watching
+        if (this.deep) {
+          traverse(value)
+        }
+        popTarget()
+        this.cleanupDeps()
+      }
+      return value
+    }
+  
+    addDep (dep: Dep) {
+      const id = dep.id
+      if (!this.newDepIds.has(id)) {
+        this.newDepIds.add(id)
+        this.newDeps.push(dep)
+        if (!this.depIds.has(id)) {
+          dep.addSub(this)
+        }
+      }
+    }
+
+
+    cleanupDeps () {
+      let i = this.deps.length
+      while (i--) {
+        const dep = this.deps[i]
+        if (!this.newDepIds.has(dep.id)) {
+          dep.removeSub(this)
+        }
+      }
+      let tmp = this.depIds
+      this.depIds = this.newDepIds
+      this.newDepIds = tmp
+      this.newDepIds.clear()
+      tmp = this.deps
+      this.deps = this.newDeps
+      this.newDeps = tmp
+      this.newDeps.length = 0
+    }
+
+    update () {
+        /* istanbul ignore else */
+        if (this.computed) {
+          // A computed property watcher has two modes: lazy and activated.
+          // It initializes as lazy by default, and only becomes activated when
+          // it is depended on by at least one subscriber, which is typically
+          // another computed property or a component's render function.
+          if (this.dep.subs.length === 0) {
+            // In lazy mode, we don't want to perform computations until necessary,
+            // so we simply mark the watcher as dirty. The actual computation is
+            // performed just-in-time in this.evaluate() when the computed property
+            // is accessed.
+            this.dirty = true
+          } else {
+            // In activated mode, we want to proactively perform the computation
+            // but only notify our subscribers when the value has indeed changed.
+            this.getAndInvoke(() => {
+              this.dep.notify()
+            })
+          }
+        } else if (this.sync) {
+          this.run()
+        } else {
+          queueWatcher(this)
+        }
+    }
+
+
+    /**
+     * Scheduler job interface.
+     * Will be called by the scheduler.
+     */
+    run () {
+      if (this.active) {
+        this.getAndInvoke(this.cb)
+      }
+    }
+
+    getAndInvoke (cb: Function) {
+      const value = this.get()
+      if (
+        value !== this.value ||
+        // Deep watchers and watchers on Object/Arrays should fire even
+        // when the value is the same, because the value may
+        // have mutated.
+        isObject(value) ||
+        this.deep
+      ) {
+        // set new value
+        const oldValue = this.value
+        this.value = value
+        this.dirty = false
+        if (this.user) {
+          try {
+            cb.call(this.vm, value, oldValue)
+          } catch (e) {
+            handleError(e, this.vm, `callback for watcher "${this.expression}"`)
+          }
+        } else {
+          cb.call(this.vm, value, oldValue)
+        }
+      }
+    }
+
+    /**
+     * Evaluate and return the value of the watcher.
+     * This only gets called for computed property watchers.
+     */
+    evaluate () {
+      if (this.dirty) {
+        this.value = this.get()
+        this.dirty = false
+      }
+      return this.value
+    }
+
+
+    /**
+     * Depend on this watcher. Only for computed property watchers.
+     */
+    depend () {
+      if (this.dep && Dep.target) {
+        this.dep.depend()
+      }
+    }
+
+
+    teardown () {
+      if (this.active) {
+        // remove self from vm's watcher list
+        // this is a somewhat expensive operation so we skip it
+        // if the vm is being destroyed.
+        if (!this.vm._isBeingDestroyed) {
+          remove(this.vm._watchers, this)
+        }
+        let i = this.deps.length
+        while (i--) {
+          this.deps[i].removeSub(this)
+        }
+        this.active = false
+      }
+    }
+
+}
+```
+
+
+## Virtual DOM
+
+
+
+```js
+export default class VNode {
+  tag: string | void;
+  data: VNodeData | void;
+  children: ?Array<VNode>;
+  text: string | void;
+  elm: Node | void;
+  ns: string | void;
+  context: Component | void; // rendered in this component's scope
+  key: string | number | void;
+  componentOptions: VNodeComponentOptions | void;
+  componentInstance: Component | void; // component instance
+  parent: VNode | void; // component placeholder node
+
+  // strictly internal
+  raw: boolean; // contains raw HTML? (server only)
+  isStatic: boolean; // hoisted static node
+  isRootInsert: boolean; // necessary for enter transition check
+  isComment: boolean; // empty comment placeholder?
+  isCloned: boolean; // is a cloned node?
+  isOnce: boolean; // is a v-once node?
+  asyncFactory: Function | void; // async component factory function
+  asyncMeta: Object | void;
+  isAsyncPlaceholder: boolean;
+  ssrContext: Object | void;
+  fnContext: Component | void; // real context vm for functional nodes
+  fnOptions: ?ComponentOptions; // for SSR caching
+  fnScopeId: ?string; // functional scope id support
+
+  constructor (
+    tag?: string,
+    data?: VNodeData,
+    children?: ?Array<VNode>,
+    text?: string,
+    elm?: Node,
+    context?: Component,
+    componentOptions?: VNodeComponentOptions,
+    asyncFactory?: Function
+  ) {
+    this.tag = tag
+    this.data = data
+    this.children = children
+    this.text = text
+    this.elm = elm
+    this.ns = undefined
+    this.context = context
+    this.fnContext = undefined
+    this.fnOptions = undefined
+    this.fnScopeId = undefined
+    this.key = data && data.key
+    this.componentOptions = componentOptions
+    this.componentInstance = undefined
+    this.parent = undefined
+    this.raw = false
+    this.isStatic = false
+    this.isRootInsert = true
+    this.isComment = false
+    this.isCloned = false
+    this.isOnce = false
+    this.asyncFactory = asyncFactory
+    this.asyncMeta = undefined
+    this.isAsyncPlaceholder = false
+  }
+
+  // DEPRECATED: alias for componentInstance for backwards compat.
+  /* istanbul ignore next */
+  get child (): Component | void {
+    return this.componentInstance
+  }
+}
+```
+
+
+## 配置合并
+
+> 配置合并发生在两个时期，第一个是初始化的时候，第二个是子组件初始化的时候
+
+
+
+```js
+Vue.mixin = function (mixin: Object) {
+    // this是Vue
+    this.options = mergeOptions(this.options, mixin)
+    return this
+}
+```
+
+
+```js
 Vue.prototype._init = function (options?: Object) {
     const vm: Component = this
 
@@ -1311,13 +1504,13 @@ Vue.prototype._init = function (options?: Object) {
         vm
       )
     }
-
     ...省略
     
 }
 ```
 
-```
+
+```js
 export function resolveConstructorOptions (Ctor: Class<Component>) {
     let options = Ctor.options
     if (Ctor.super) {
@@ -1330,7 +1523,7 @@ export function resolveConstructorOptions (Ctor: Class<Component>) {
 > 这里的Ctor是Vue
 
 
-```
+```js
 export const ASSET_TYPES = [
     'component',
     'directive',
@@ -1346,26 +1539,11 @@ export function initGlobalAPI (Vue: GlobalAPI) {
       Vue.options[type + 's'] = Object.create(null)
     })
   
-    // this is used to identify the "base" constructor to extend all plain-object
-    // components with in Weex's multi-instance scenarios.
-    Vue.options._base = Vue
-  
-    extend(Vue.options.components, builtInComponents)
-  
     ...省略
 }
 ```
 
-
-```
-const defaultStrat = function (parentVal: any, childVal: any): any {
-    return childVal === undefined
-      ? parentVal
-      : childVal
-}
-
-const strats = config.optionMergeStrategies
-
+```js
 export function mergeOptions (
     parent: Object,
     child: Object,
@@ -1401,9 +1579,23 @@ export function mergeOptions (
 }
 ```
 
-####  生命周期
+> 对于不同的`key`有不同的合并策略，比如生命周期有生命周期的策略，`data`有`data`的策略,没有对应的策略就走`defaultStrat`的策略
 
+```js
+const defaultStrat = function (parentVal: any, childVal: any): any {
+    return childVal === undefined
+      ? parentVal
+      : childVal
+}
 ```
+
+
+
+## 生命周期
+
+
+
+```js
 export function callHook (vm: Component, hook: string) {
   // #7573 disable dep collection when invoking lifecycle hooks
   pushTarget()
@@ -1427,14 +1619,16 @@ export function callHook (vm: Component, hook: string) {
 > 执行生命周期的函数
 
 
-```
+
+
+```js
 Vue.prototype._init = function (options?: Object) {
     ...省略
 
     initLifecycle(vm)
     initEvents(vm)
     initRender(vm)
-    callHook(vm, 'beforeCreate')
+    callHook(vm, 'beforeCreate') 
     initInjections(vm) // resolve injections before data/props
     initState(vm)
     initProvide(vm) // resolve provide after data/props
@@ -1444,7 +1638,11 @@ Vue.prototype._init = function (options?: Object) {
 }
 ```
 
-```
+> 执行`beforeCreate`这个生命周期函数的时候是拿不到组件的数据的,因为像`data`,`props`那些数据的初始化是在`initState`中执行的,要想拿到这些数据，需要在`created`生命周期函数里获取
+
+
+
+```js
 export function mountComponent (
     vm: Component,
     el: ?Element,
@@ -1467,6 +1665,7 @@ export function mountComponent (
   
     ...省略
     
+    // 如果vm.$vnode是null，说明它是个根vNode
     if (vm.$vnode == null) {
         vm._isMounted = true
         callHook(vm, 'mounted')
@@ -1475,7 +1674,8 @@ export function mountComponent (
 }
 ```
 
-```
+
+```js
 export function createPatchFunction (backend) {
     
     ...省略
@@ -1498,6 +1698,7 @@ export function createPatchFunction (backend) {
 
         ...省略
   
+        // 这个insertedVnodeQueue是先插入子组件在插入父组件,所以导致了mounted的执行顺序是先子后父
         invokeInsertHook(vnode, insertedVnodeQueue, isInitialPatch)
         return vnode.elm
     }
@@ -1507,7 +1708,7 @@ export function createPatchFunction (backend) {
 const componentVNodeHooks = {
     
     ...省略
-  
+
     insert (vnode: MountedComponentVNode) {
       const { context, componentInstance } = vnode
       if (!componentInstance._isMounted) {
@@ -1523,7 +1724,13 @@ const componentVNodeHooks = {
 }
 ```
 
-```
+> 子组件的`mounted`会先执行,然后在执行父组件的`mounted`,`beforeMount`这个钩子是先父组件执行然后在子组件执行
+
+
+
+
+
+```js
 export function mountComponent (
     vm: Component,
     el: ?Element,
@@ -1573,6 +1780,7 @@ function callUpdatedHooks (queue) {
     while (i--) {
       const watcher = queue[i]
       const vm = watcher.vm
+      // vm._watcher === watcher说明它是一个渲染watcher
       if (vm._watcher === watcher && vm._isMounted) {
         callHook(vm, 'updated')
       }
@@ -1580,7 +1788,9 @@ function callUpdatedHooks (queue) {
 }
 ```
 
-```
+
+
+```js
 Vue.prototype.$destroy = function () {
     const vm: Component = this
     if (vm._isBeingDestroyed) {
@@ -1596,10 +1806,15 @@ Vue.prototype.$destroy = function () {
 }
 ```
 
-#### 组件注册
+> `beforeDestroy`的执行顺序是先父后子，`destroyed`的执行顺序是先子后父
 
 
-```
+
+## 组件注册
+
+
+
+```js
 export const ASSET_TYPES = [
   'component',
   'directive',
@@ -1621,15 +1836,14 @@ export function initAssetRegisters (Vue: GlobalAPI) {
       } else {
         /* istanbul ignore if */
         if (process.env.NODE_ENV !== 'production' && type === 'component') {
-          validateComponentName(id)
+            ...省略
         }
         if (type === 'component' && isPlainObject(definition)) {
           definition.name = definition.name || id
+          // 通过Vue.extend把定义的对象转为构造器
           definition = this.options._base.extend(definition)
         }
-        if (type === 'directive' && typeof definition === 'function') {
-          definition = { bind: definition, update: definition }
-        }
+        ...省略
         this.options[type + 's'][id] = definition
         return definition
       }
@@ -1638,7 +1852,8 @@ export function initAssetRegisters (Vue: GlobalAPI) {
 }
 ```
 
-```
+
+```js
 export function _createElement (
     context: Component,
     tag?: string | Class<Component> | Function | Object,
@@ -1672,7 +1887,7 @@ export function _createElement (
 }
 ```
 
-```
+```js
 export function resolveAsset (
     options: Object,
     type: string,
@@ -1702,10 +1917,10 @@ export function resolveAsset (
 }
 ```
 
-#### 异步组件
+## 异步组件
 
 
-```
+```js
 export function createComponent (
     Ctor: Class<Component> | Function | Object | void,
     data: ?VNodeData,
@@ -1743,24 +1958,14 @@ export function createComponent (
 }
 ```
 
-
-```
+```js
 export function resolveAsyncComponent (
     factory: Function,
     baseCtor: Class<Component>,
     context: Component
   ): Class<Component> | void {
-    if (isTrue(factory.error) && isDef(factory.errorComp)) {
-      return factory.errorComp
-    }
-  
-    if (isDef(factory.resolved)) {
-      return factory.resolved
-    }
-  
-    if (isTrue(factory.loading) && isDef(factory.loadingComp)) {
-      return factory.loadingComp
-    }
+
+    ...省略
   
     if (isDef(factory.contexts)) {
       // already pending
@@ -1848,7 +2053,8 @@ export function resolveAsyncComponent (
 }
 ```
 
-```
+
+```js
 export function createAsyncPlaceholder (
     factory: Function,
     data: ?VNodeData,
@@ -1863,7 +2069,8 @@ export function createAsyncPlaceholder (
 }
 ```
 
-```
+
+```js
 function ensureCtor (comp: any, base) {
     if (
       comp.__esModule ||
@@ -1875,8 +2082,9 @@ function ensureCtor (comp: any, base) {
       ? base.extend(comp)
       : comp
 }
+```
 
-
+```js
 Vue.prototype.$forceUpdate = function () {
     const vm: Component = this
     if (vm._watcher) {
@@ -1885,14 +2093,10 @@ Vue.prototype.$forceUpdate = function () {
 }
 ```
 
-## 响应式原理
-
-### 源码摘要
-
-#### 响应式对象
+## 响应式对象 
 
 
-```
+```js
 Vue.prototype._init = function (options?: Object) {
     const vm: Component = this
     ...省略
@@ -1930,7 +2134,8 @@ function initData (vm: Component) {
 }
 ```
 
-```
+
+```js
 export let shouldObserve: boolean = true
 
 export function observe (value: any, asRootData: ?boolean): Observer | void {
@@ -1960,8 +2165,7 @@ export function toggleObserving (value: boolean) {
 }
 ```
 
-
-```
+```js
 export class Observer {
   value: any;
   dep: Dep;
@@ -1974,8 +2178,8 @@ export class Observer {
     def(value, '__ob__', this)
     if (Array.isArray(value)) {
       const augment = hasProto
-        ? protoAugment
-        : copyAugment
+      ? protoAugment
+      : copyAugment
       augment(value, arrayMethods, arrayKeys)
       this.observeArray(value)
     } else {
@@ -2004,9 +2208,8 @@ export class Observer {
     }
   }
 }
-```
 
-```
+
 export function def (obj: Object, key: string, val: any, enumerable?: boolean) {
   Object.defineProperty(obj, key, {
     value: val,
@@ -2017,7 +2220,8 @@ export function def (obj: Object, key: string, val: any, enumerable?: boolean) {
 }
 ```
 
-```
+
+```js
 export function defineReactive (
     obj: Object,
     key: string,
@@ -2043,6 +2247,7 @@ export function defineReactive (
     Object.defineProperty(obj, key, {
       enumerable: true,
       configurable: true,
+      // getter主要做依赖收集的工作
       get: function reactiveGetter () {
         const value = getter ? getter.call(obj) : val
         if (Dep.target) {
@@ -2056,6 +2261,7 @@ export function defineReactive (
         }
         return value
       },
+      // setter主要做派发更新的工作
       set: function reactiveSetter (newVal) {
         const value = getter ? getter.call(obj) : val
         /* eslint-disable no-self-compare */
@@ -2078,243 +2284,12 @@ export function defineReactive (
 }
 ```
 
-
-#### 依赖收集
-
-```
-export function mountComponent (
-    vm: Component,
-    el: ?Element,
-    hydrating?: boolean
-  ): Component {
-    ...省略
-
-    if (process.env.NODE_ENV !== 'production' && config.performance && mark) {
-      ...省略
-    } else {
-      updateComponent = () => {
-        vm._update(vm._render(), hydrating)
-      }
-    }
-  
-    // we set this to vm._watcher inside the watcher's constructor
-    // since the watcher's initial patch may call $forceUpdate (e.g. inside child
-    // component's mounted hook), which relies on vm._watcher being already defined
-    new Watcher(vm, updateComponent, noop, {
-      before () {
-        if (vm._isMounted) {
-          callHook(vm, 'beforeUpdate')
-        }
-      }
-    }, true /* isRenderWatcher */)
-    ...省略
-}
-```
-
-> 执行mountComponent方法创建Watcher
+### 依赖收集
 
 
-```
-export default class Watcher {
-    vm: Component;
-    expression: string;
-    cb: Function;
-    id: number;
-    deep: boolean;
-    user: boolean;
-    computed: boolean;
-    sync: boolean;
-    dirty: boolean;
-    active: boolean;
-    dep: Dep;
-    deps: Array<Dep>;
-    newDeps: Array<Dep>;
-    depIds: SimpleSet;
-    newDepIds: SimpleSet;
-    before: ?Function;
-    getter: Function;
-    value: any;
-  
-    constructor (
-      vm: Component,
-      expOrFn: string | Function,
-      cb: Function,
-      options?: ?Object,
-      isRenderWatcher?: boolean
-    ) {
-      this.vm = vm
-      ...省略
-      this.deps = []
-      this.newDeps = []
-      this.depIds = new Set()
-      this.newDepIds = new Set()
-      ...省略
-      if (typeof expOrFn === 'function') {
-        this.getter = expOrFn
-      } else {
-        ...省略
-      }
-      if (this.computed) {
-        this.value = undefined
-        this.dep = new Dep()
-      } else {
-        this.value = this.get()
-      }
-    }
-  
-    /**
-     * Evaluate the getter, and re-collect dependencies.
-     */
-    get () {
-      pushTarget(this)
-      let value
-      const vm = this.vm
-      try {
-        value = this.getter.call(vm, vm)
-      } catch (e) {
-        if (this.user) {
-          handleError(e, vm, `getter for watcher "${this.expression}"`)
-        } else {
-          throw e
-        }
-      } finally {
-        // "touch" every property so they are all tracked as
-        // dependencies for deep watching
-        if (this.deep) {
-          traverse(value)
-        }
-        popTarget()
-        this.cleanupDeps()
-      }
-      return value
-    }
-  
-    /**
-     * Add a dependency to this directive.
-     */
-    addDep (dep: Dep) {
-      const id = dep.id
-      if (!this.newDepIds.has(id)) {
-        this.newDepIds.add(id)
-        this.newDeps.push(dep)
-        if (!this.depIds.has(id)) {
-          dep.addSub(this)
-        }
-      }
-    }
-  
-    /**
-     * Clean up for dependency collection.
-     */
-    cleanupDeps () {
-      let i = this.deps.length
-      while (i--) {
-        const dep = this.deps[i]
-        if (!this.newDepIds.has(dep.id)) {
-          dep.removeSub(this)
-        }
-      }
-      let tmp = this.depIds
-      this.depIds = this.newDepIds
-      this.newDepIds = tmp
-      this.newDepIds.clear()
-      tmp = this.deps
-      this.deps = this.newDeps
-      this.newDeps = tmp
-      this.newDeps.length = 0
-    }
-  
-    ...省略
-    
-}
-```
-
-> 创建Watcher的时候执行updateComponent
-
-
-```
-Vue.prototype._render = function (): VNode {
-    ...省略
-    try {
-      vnode = render.call(vm._renderProxy, vm.$createElement)
-    } catch (e) {
-      handleError(e, vm, `render`)
-      // return error render result,
-      // or previous vnode to prevent render error causing blank component
-      /* istanbul ignore else */
-      if (process.env.NODE_ENV !== 'production') {
-        if (vm.$options.renderError) {
-          try {
-            vnode = vm.$options.renderError.call(vm._renderProxy, vm.$createElement, e)
-          } catch (e) {
-            handleError(e, vm, `renderError`)
-            vnode = vm._vnode
-          }
-        } else {
-          vnode = vm._vnode
-        }
-      } else {
-        vnode = vm._vnode
-      }
-    }
-    ...省略
-}
-```
-
-> 执行render.call的时候，能够访问到我们的数据
-
-
-```
-export function defineReactive (
-    obj: Object,
-    key: string,
-    val: any,
-    customSetter?: ?Function,
-    shallow?: boolean
-  ) {
-    
-    const dep = new Dep()
-
-    const property = Object.getOwnPropertyDescriptor(obj, key)
-    if (property && property.configurable === false) {
-        return
-    }
-
-    // cater for pre-defined getter/setters
-    const getter = property && property.get
-    const setter = property && property.set
-    if ((!getter || setter) && arguments.length === 2) {
-        val = obj[key]
-    }
-
-    let childOb = !shallow && observe(val)
-    Object.defineProperty(obj, key, {
-      enumerable: true,
-      configurable: true,
-      get: function reactiveGetter () {
-        const value = getter ? getter.call(obj) : val
-        if (Dep.target) {
-          dep.depend()
-          if (childOb) {
-            childOb.dep.depend()
-            if (Array.isArray(value)) {
-              dependArray(value)
-            }
-          }
-        }
-        return value
-      },
-      set: function reactiveSetter (newVal) {
-        ...省略
-      }
-    })
-}
-```
-
-> 访问我们的数据就能够执行get方法
-
-```
+```js
 let uid = 0
+
 
 export default class Dep {
   static target: ?Watcher;
@@ -2351,6 +2326,7 @@ export default class Dep {
 
 Dep.target = null
 
+
 const targetStack = []
 
 export function pushTarget (_target: ?Watcher) {
@@ -2363,153 +2339,19 @@ export function popTarget () {
 }
 ```
 
-
-#### 派发更新
-
-```
-export function defineReactive (
-    obj: Object,
-    key: string,
-    val: any,
-    customSetter?: ?Function,
-    shallow?: boolean
-  ) {
-    const dep = new Dep()
-  
-    const property = Object.getOwnPropertyDescriptor(obj, key)
-    if (property && property.configurable === false) {
-      return
-    }
-  
-    // cater for pre-defined getter/setters
-    const getter = property && property.get
-    const setter = property && property.set
-    if ((!getter || setter) && arguments.length === 2) {
-      val = obj[key]
-    }
-  
-    let childOb = !shallow && observe(val)
-    Object.defineProperty(obj, key, {
-      enumerable: true,
-      configurable: true,
-      get: function reactiveGetter () {
-        ...省略
-      },
-      set: function reactiveSetter (newVal) {
-        const value = getter ? getter.call(obj) : val
-        /* eslint-disable no-self-compare */
-        if (newVal === value || (newVal !== newVal && value !== value)) {
-          return
-        }
-        /* eslint-enable no-self-compare */
-        if (process.env.NODE_ENV !== 'production' && customSetter) {
-          customSetter()
-        }
-        if (setter) {
-          setter.call(obj, newVal)
-        } else {
-          val = newVal
-        }
-        childOb = !shallow && observe(newVal)
-        dep.notify()
-      }
-    })
-}
-```
+### 派发更新
 
 
-```
-export default class Dep {
-  static target: ?Watcher;
-  id: number;
-  subs: Array<Watcher>;
-
-  constructor () {
-    this.id = uid++
-    this.subs = []
-  }
-
-  ...省略
-
-  notify () {
-    // stabilize the subscriber list first
-    const subs = this.subs.slice()
-    for (let i = 0, l = subs.length; i < l; i++) {
-      subs[i].update()
-    }
-  }
-}
-```
-
-```
-export default class Watcher {
-    vm: Component;
-    expression: string;
-    cb: Function;
-    id: number;
-    deep: boolean;
-    user: boolean;
-    computed: boolean;
-    sync: boolean;
-    dirty: boolean;
-    active: boolean;
-    dep: Dep;
-    deps: Array<Dep>;
-    newDeps: Array<Dep>;
-    depIds: SimpleSet;
-    newDepIds: SimpleSet;
-    before: ?Function;
-    getter: Function;
-    value: any;
-  
-    constructor (
-      vm: Component,
-      expOrFn: string | Function,
-      cb: Function,
-      options?: ?Object,
-      isRenderWatcher?: boolean
-    ) {
-        ...省略
-        if (options) {
-            ...省略
-            this.sync = !!options.sync
-            ...省略
-        } else {
-            this.deep = this.user = this.computed = this.sync = false
-        }
-        ...省略
-    }
-  
-    ...省略
-  
-    /**
-     * Subscriber interface.
-     * Will be called when a dependency changes.
-     */
-    update () {
-      /* istanbul ignore else */
-      if (this.computed) {
-        ...省略
-      } else if (this.sync) {
-        this.run()
-      } else {
-        queueWatcher(this)
-      }
-    }
-  
-    ...省略
-}
-```
-
-
-```
+```js
 let has: { [key: number]: ?true } = {}
+let circular: { [key: number]: number } = {}
 let flushing = false
 const queue: Array<Watcher> = []
 let waiting = false
 
 export function queueWatcher (watcher: Watcher) {
     const id = watcher.id
+    // 一个渲染Watcher中，可能有多个数据变化，只往queue里添加一次
     if (has[id] == null) {
       has[id] = true
       if (!flushing) {
@@ -2533,10 +2375,8 @@ export function queueWatcher (watcher: Watcher) {
 ```
 
 
-```
-let flushing = false
-let circular: { [key: number]: number } = {}
 
+```js
 function flushSchedulerQueue () {
     flushing = true
     let watcher, id
@@ -2596,130 +2436,12 @@ function flushSchedulerQueue () {
 }
 ```
 
-
-```
-export default class Watcher {
-    vm: Component;
-    expression: string;
-    cb: Function;
-    id: number;
-    deep: boolean;
-    user: boolean;
-    computed: boolean;
-    sync: boolean;
-    dirty: boolean;
-    active: boolean;
-    dep: Dep;
-    deps: Array<Dep>;
-    newDeps: Array<Dep>;
-    depIds: SimpleSet;
-    newDepIds: SimpleSet;
-    before: ?Function;
-    getter: Function;
-    value: any;
-  
-    constructor (
-      vm: Component,
-      expOrFn: string | Function,
-      cb: Function,
-      options?: ?Object,
-      isRenderWatcher?: boolean
-    ) {
-      ...省略
-      this.cb = cb
-      ...省略
-      this.active = true
-      ...省略
-    }
-  
-    ...省略
-  
-    /**
-     * Scheduler job interface.
-     * Will be called by the scheduler.
-     */
-    run () {
-      if (this.active) {
-        this.getAndInvoke(this.cb)
-      }
-    }
-    
-    get () {
-        pushTarget(this)
-        let value
-        const vm = this.vm
-        try {
-          value = this.getter.call(vm, vm)
-        } catch (e) {
-          if (this.user) {
-            handleError(e, vm, `getter for watcher "${this.expression}"`)
-          } else {
-            throw e
-          }
-        } finally {
-          // "touch" every property so they are all tracked as
-          // dependencies for deep watching
-          if (this.deep) {
-            traverse(value)
-          }
-          popTarget()
-          this.cleanupDeps()
-        }
-        return value
-    }
-  
-    getAndInvoke (cb: Function) {
-      const value = this.get()
-      if (
-        value !== this.value ||
-        // Deep watchers and watchers on Object/Arrays should fire even
-        // when the value is the same, because the value may
-        // have mutated.
-        isObject(value) ||
-        this.deep
-      ) {
-        // set new value
-        const oldValue = this.value
-        this.value = value
-        this.dirty = false
-        if (this.user) {
-          try {
-            cb.call(this.vm, value, oldValue)
-          } catch (e) {
-            handleError(e, this.vm, `callback for watcher "${this.expression}"`)
-          }
-        } else {
-          cb.call(this.vm, value, oldValue)
-        }
-      }
-    }
-  
-    ...省略
-    
-}
-```
+## nextTick
 
 
-```
-function callUpdatedHooks (queue) {
-    let i = queue.length
-    while (i--) {
-      const watcher = queue[i]
-      const vm = watcher.vm
-      if (vm._watcher === watcher && vm._isMounted) {
-        callHook(vm, 'updated')
-      }
-    }
-}
-```
-
-
-#### nextTick
-
-```
+```js
 let microTimerFunc
 let macroTimerFunc
-let useMacroTask = false
 
 if (typeof setImmediate !== 'undefined' && isNative(setImmediate)) {
   macroTimerFunc = () => {
@@ -2761,9 +2483,10 @@ if (typeof Promise !== 'undefined' && isNative(Promise)) {
 }
 ```
 
-```
+```js
 const callbacks = []
 let pending = false
+let useMacroTask = false
 
 
 export function nextTick (cb?: Function, ctx?: Object) {
@@ -2776,6 +2499,7 @@ export function nextTick (cb?: Function, ctx?: Object) {
         handleError(e, ctx, 'nextTick')
       }
     } else if (_resolve) {
+      // 用来支持Promise的
       _resolve(ctx)
     }
   })
@@ -2797,16 +2521,20 @@ export function nextTick (cb?: Function, ctx?: Object) {
 ```
 
 
-#### Vue.set
 
+## `Vue.set`
 
+```js
+export function initGlobalAPI (Vue: GlobalAPI) {
+    ...省略
+    Vue.set = set
+    ...省略
+}
 ```
+
+```js
 export function set (target: Array<any> | Object, key: any, val: any): any {
-    if (process.env.NODE_ENV !== 'production' &&
-      (isUndef(target) || isPrimitive(target))
-    ) {
-      warn(`Cannot set reactive property on undefined, null, or primitive value: ${(target: any)}`)
-    }
+    ...省略
     if (Array.isArray(target) && isValidArrayIndex(key)) {
       target.length = Math.max(target.length, key)
       target.splice(key, 1, val)
@@ -2816,14 +2544,8 @@ export function set (target: Array<any> | Object, key: any, val: any): any {
       target[key] = val
       return val
     }
-    const ob = (target: any).__ob__
-    if (target._isVue || (ob && ob.vmCount)) {
-      process.env.NODE_ENV !== 'production' && warn(
-        'Avoid adding reactive properties to a Vue instance or its root $data ' +
-        'at runtime - declare it upfront in the data option.'
-      )
-      return val
-    }
+    const ob = (target: any).__ob__;
+    ...省略
     if (!ob) {
       target[key] = val
       return val
@@ -2834,10 +2556,10 @@ export function set (target: Array<any> | Object, key: any, val: any): any {
 }
 ```
 
-#### 计算属性
 
+## computed
 
-```
+```js
 export function initState (vm: Component) {
     vm._watchers = []
     const opts = vm.$options
@@ -2847,7 +2569,8 @@ export function initState (vm: Component) {
 }
 ```
 
-```
+
+```js
 const computedWatcherOptions = { computed: true }
 
 function initComputed (vm: Component, computed: Object) {
@@ -2892,7 +2615,8 @@ function initComputed (vm: Component, computed: Object) {
 }
 ```
 
-```
+
+```js
 const sharedPropertyDefinition = {
     enumerable: true,
     configurable: true,
@@ -2905,6 +2629,7 @@ export function defineComputed (
     key: string,
     userDef: Object | Function
   ) {
+    // 在浏览器环境下是true
     const shouldCache = !isServerRendering()
     if (typeof userDef === 'function') {
       sharedPropertyDefinition.get = shouldCache
@@ -2921,20 +2646,15 @@ export function defineComputed (
         ? userDef.set
         : noop
     }
-    if (process.env.NODE_ENV !== 'production' &&
-        sharedPropertyDefinition.set === noop) {
-      sharedPropertyDefinition.set = function () {
-        warn(
-          `Computed property "${key}" was assigned to but it has no setter.`,
-          this
-        )
-      }
-    }
+
+    ...省略
+
     Object.defineProperty(target, key, sharedPropertyDefinition)
 }
 ```
 
-```
+
+```js
 function createComputedGetter (key) {
     return function computedGetter () {
       const watcher = this._computedWatchers && this._computedWatchers[key]
@@ -2946,186 +2666,10 @@ function createComputedGetter (key) {
 }
 ```
 
-
-```
-export default class Watcher {
-    
-    constructor (
-      vm: Component,
-      expOrFn: string | Function,
-      cb: Function,
-      options?: ?Object,
-      isRenderWatcher?: boolean
-    ) {
-      this.vm = vm
-      if (isRenderWatcher) {
-        vm._watcher = this
-      }
-      vm._watchers.push(this)
-      // options
-      if (options) {
-        this.deep = !!options.deep
-        this.user = !!options.user
-        this.computed = !!options.computed
-        this.sync = !!options.sync
-        this.before = options.before
-      } else {
-        this.deep = this.user = this.computed = this.sync = false
-      }
-      this.cb = cb
-      this.id = ++uid // uid for batching
-      this.active = true
-      this.dirty = this.computed // for computed watchers
-      this.deps = []
-      this.newDeps = []
-      this.depIds = new Set()
-      this.newDepIds = new Set()
-      this.expression = process.env.NODE_ENV !== 'production'
-        ? expOrFn.toString()
-        : ''
-      // parse expression for getter
-      if (typeof expOrFn === 'function') {
-        this.getter = expOrFn
-      } else {
-        ...省略
-      }
-      if (this.computed) {
-        this.value = undefined
-        this.dep = new Dep()
-      } else {
-        ...省略
-      }
-    }
-  
-    /**
-     * Evaluate the getter, and re-collect dependencies.
-     */
-    get () {
-      pushTarget(this)
-      let value
-      const vm = this.vm
-      try {
-        value = this.getter.call(vm, vm)
-      } catch (e) {
-        if (this.user) {
-          handleError(e, vm, `getter for watcher "${this.expression}"`)
-        } else {
-          throw e
-        }
-      } finally {
-        // "touch" every property so they are all tracked as
-        // dependencies for deep watching
-        if (this.deep) {
-          traverse(value)
-        }
-        popTarget()
-        this.cleanupDeps()
-      }
-      return value
-    }
-  
-  
-
-    ...省略
-    
-  
-    /**
-     * Subscriber interface.
-     * Will be called when a dependency changes.
-     */
-    update () {
-      /* istanbul ignore else */
-      if (this.computed) {
-        // A computed property watcher has two modes: lazy and activated.
-        // It initializes as lazy by default, and only becomes activated when
-        // it is depended on by at least one subscriber, which is typically
-        // another computed property or a component's render function.
-        if (this.dep.subs.length === 0) {
-          // In lazy mode, we don't want to perform computations until necessary,
-          // so we simply mark the watcher as dirty. The actual computation is
-          // performed just-in-time in this.evaluate() when the computed property
-          // is accessed.
-          this.dirty = true
-        } else {
-          // In activated mode, we want to proactively perform the computation
-          // but only notify our subscribers when the value has indeed changed.
-          this.getAndInvoke(() => {
-            this.dep.notify()
-          })
-        }
-      } else if (this.sync) {
-        this.run()
-      } else {
-        queueWatcher(this)
-      }
-    }
-  
-    /**
-     * Scheduler job interface.
-     * Will be called by the scheduler.
-     */
-    run () {
-      if (this.active) {
-        this.getAndInvoke(this.cb)
-      }
-    }
-  
-    getAndInvoke (cb: Function) {
-      const value = this.get()
-      if (
-        value !== this.value ||
-        // Deep watchers and watchers on Object/Arrays should fire even
-        // when the value is the same, because the value may
-        // have mutated.
-        isObject(value) ||
-        this.deep
-      ) {
-        // set new value
-        const oldValue = this.value
-        this.value = value
-        this.dirty = false
-        if (this.user) {
-          try {
-            cb.call(this.vm, value, oldValue)
-          } catch (e) {
-            handleError(e, this.vm, `callback for watcher "${this.expression}"`)
-          }
-        } else {
-          cb.call(this.vm, value, oldValue)
-        }
-      }
-    }
-  
-    /**
-     * Evaluate and return the value of the watcher.
-     * This only gets called for computed property watchers.
-     */
-    evaluate () {
-      if (this.dirty) {
-        this.value = this.get()
-        this.dirty = false
-      }
-      return this.value
-    }
-  
-    /**
-     * Depend on this watcher. Only for computed property watchers.
-     */
-    depend () {
-      if (this.dep && Dep.target) {
-        this.dep.depend()
-      }
-    }
-  
-    ...省略
-}
-```
+## watch
 
 
-#### 侦听属性
-
-
-```
+```js
 export function initState (vm: Component) {
   vm._watchers = []
   const opts = vm.$options
@@ -3136,7 +2680,8 @@ export function initState (vm: Component) {
 }
 ```
 
-```
+
+```js
 function initWatch (vm: Component, watch: Object) {
   for (const key in watch) {
     const handler = watch[key]
@@ -3151,7 +2696,8 @@ function initWatch (vm: Component, watch: Object) {
 }
 ```
 
-```
+
+```js
 function createWatcher (
   vm: Component,
   expOrFn: string | Function,
@@ -3169,7 +2715,8 @@ function createWatcher (
 }
 ```
 
-```
+
+```js
 Vue.prototype.$watch = function (
     expOrFn: string | Function,
     cb: any,
@@ -3191,458 +2738,1122 @@ Vue.prototype.$watch = function (
 }
 ```
 
+
+
+## Diff
+
+```js
+function updateChildren (parentElm, oldCh, newCh, insertedVnodeQueue, removeOnly) {
+    let oldStartIdx = 0
+    let newStartIdx = 0
+    let oldEndIdx = oldCh.length - 1
+    let oldStartVnode = oldCh[0]
+    let oldEndVnode = oldCh[oldEndIdx]
+    let newEndIdx = newCh.length - 1
+    let newStartVnode = newCh[0]
+    let newEndVnode = newCh[newEndIdx]
+    let oldKeyToIdx, idxInOld, vnodeToMove, refElm
+
+    // removeOnly is a special flag used only by <transition-group>
+    // to ensure removed elements stay in correct relative positions
+    // during leaving transitions
+    const canMove = !removeOnly
+
+    if (process.env.NODE_ENV !== 'production') {
+      checkDuplicateKeys(newCh)
+    }
+
+    while (oldStartIdx <= oldEndIdx && newStartIdx <= newEndIdx) {
+      if (isUndef(oldStartVnode)) {
+        oldStartVnode = oldCh[++oldStartIdx] // Vnode has been moved left
+      } else if (isUndef(oldEndVnode)) {
+        oldEndVnode = oldCh[--oldEndIdx]
+      } else if (sameVnode(oldStartVnode, newStartVnode)) {
+        patchVnode(oldStartVnode, newStartVnode, insertedVnodeQueue)
+        oldStartVnode = oldCh[++oldStartIdx]
+        newStartVnode = newCh[++newStartIdx]
+      } else if (sameVnode(oldEndVnode, newEndVnode)) {
+        patchVnode(oldEndVnode, newEndVnode, insertedVnodeQueue)
+        oldEndVnode = oldCh[--oldEndIdx]
+        newEndVnode = newCh[--newEndIdx]
+      } else if (sameVnode(oldStartVnode, newEndVnode)) { // Vnode moved right
+        patchVnode(oldStartVnode, newEndVnode, insertedVnodeQueue)
+        canMove && nodeOps.insertBefore(parentElm, oldStartVnode.elm, nodeOps.nextSibling(oldEndVnode.elm))
+        oldStartVnode = oldCh[++oldStartIdx]
+        newEndVnode = newCh[--newEndIdx]
+      } else if (sameVnode(oldEndVnode, newStartVnode)) { // Vnode moved left
+        patchVnode(oldEndVnode, newStartVnode, insertedVnodeQueue)
+        canMove && nodeOps.insertBefore(parentElm, oldEndVnode.elm, oldStartVnode.elm)
+        oldEndVnode = oldCh[--oldEndIdx]
+        newStartVnode = newCh[++newStartIdx]
+      } else {
+        if (isUndef(oldKeyToIdx)) oldKeyToIdx = createKeyToOldIdx(oldCh, oldStartIdx, oldEndIdx)
+        idxInOld = isDef(newStartVnode.key)
+          ? oldKeyToIdx[newStartVnode.key]
+          : findIdxInOld(newStartVnode, oldCh, oldStartIdx, oldEndIdx)
+        if (isUndef(idxInOld)) { // New element
+          createElm(newStartVnode, insertedVnodeQueue, parentElm, oldStartVnode.elm, false, newCh, newStartIdx)
+        } else {
+          vnodeToMove = oldCh[idxInOld]
+          if (sameVnode(vnodeToMove, newStartVnode)) {
+            patchVnode(vnodeToMove, newStartVnode, insertedVnodeQueue)
+            oldCh[idxInOld] = undefined
+            canMove && nodeOps.insertBefore(parentElm, vnodeToMove.elm, oldStartVnode.elm)
+          } else {
+            // same key but different element. treat as new element
+            createElm(newStartVnode, insertedVnodeQueue, parentElm, oldStartVnode.elm, false, newCh, newStartIdx)
+          }
+        }
+        newStartVnode = newCh[++newStartIdx]
+      }
+    }
+    if (oldStartIdx > oldEndIdx) {
+      refElm = isUndef(newCh[newEndIdx + 1]) ? null : newCh[newEndIdx + 1].elm
+      addVnodes(parentElm, refElm, newCh, newStartIdx, newEndIdx, insertedVnodeQueue)
+    } else if (newStartIdx > newEndIdx) {
+      removeVnodes(parentElm, oldCh, oldStartIdx, oldEndIdx)
+    }
+}
 ```
-export default class Watcher {
-    
+
+> 组件更新的过程核心就是新旧vNode diff。 新旧节点不同的更新流程是创建新节点，更新父占位符节点，删除旧节点。新旧节点相同的更新流程是去获取他们的children，根据不同情况做不同的更新逻辑，也就是上文的updateChildren方法里面的内容
+
+
+
+
+## Props
+
+
+```js
+export function mergeOptions (
+  parent: Object,
+  child: Object,
+  vm?: Component
+): Object {
+
     ...省略
-  
-    constructor (
-      vm: Component,
-      expOrFn: string | Function,
-      cb: Function,
-      options?: ?Object,
-      isRenderWatcher?: boolean
-    ) {
-      this.vm = vm
-      if (isRenderWatcher) {
-        vm._watcher = this
+
+    normalizeProps(child, vm)
+
+    ...省略
+}
+```
+
+```js
+function normalizeProps (options: Object, vm: ?Component) {
+  const props = options.props
+  if (!props) return
+  const res = {}
+  let i, val, name
+  if (Array.isArray(props)) {
+    i = props.length
+    while (i--) {
+      val = props[i]
+      if (typeof val === 'string') {
+        name = camelize(val)
+        res[name] = { type: null }
+      } else if (process.env.NODE_ENV !== 'production') {
+        warn('props must be strings when using array syntax.')
       }
-      vm._watchers.push(this)
-      // options
-      if (options) {
-        this.deep = !!options.deep
-        this.user = !!options.user
-        this.computed = !!options.computed
-        this.sync = !!options.sync
-        this.before = options.before
-      } else {
-        this.deep = this.user = this.computed = this.sync = false
+    }
+  } else if (isPlainObject(props)) {
+    for (const key in props) {
+      val = props[key]
+      name = camelize(key)
+      res[name] = isPlainObject(val)
+        ? val
+        : { type: val }
+    }
+  } else if (process.env.NODE_ENV !== 'production') {
+    warn(
+      `Invalid value for option "props": expected an Array or an Object, ` +
+      `but got ${toRawType(props)}.`,
+      vm
+    )
+  }
+  options.props = res
+}
+```
+
+
+> 对`props`进行规范化
+
+
+```js
+export function initState (vm: Component) {
+  vm._watchers = []
+  const opts = vm.$options
+  if (opts.props) initProps(vm, opts.props)
+  ...省略
+}
+```
+
+
+```js
+function initProps (vm: Component, propsOptions: Object) {
+  const propsData = vm.$options.propsData || {}
+  // vm._props是用来存储我们子组件计算后的值
+  const props = vm._props = {}
+  // cache prop keys so that future props updates can iterate using Array
+  // instead of dynamic object key enumeration.
+  const keys = vm.$options._propKeys = []
+  const isRoot = !vm.$parent
+  // root instance props should be converted
+  if (!isRoot) {
+    toggleObserving(false)
+  }
+  for (const key in propsOptions) {
+    keys.push(key)
+    // propsOptions是规范化后的props数据
+    // propsData是父组件传递给子组件的props数据
+    const value = validateProp(key, propsOptions, propsData, vm)
+    /* istanbul ignore else */
+    if (process.env.NODE_ENV !== 'production') {
+      const hyphenatedKey = hyphenate(key)
+      if (isReservedAttribute(hyphenatedKey) ||
+          config.isReservedAttr(hyphenatedKey)) {
+        warn(
+          `"${hyphenatedKey}" is a reserved attribute and cannot be used as component prop.`,
+          vm
+        )
       }
-      this.cb = cb
-      this.id = ++uid // uid for batching
-      this.active = true
-      this.dirty = this.computed // for computed watchers
-      this.deps = []
-      this.newDeps = []
-      this.depIds = new Set()
-      this.newDepIds = new Set()
-      this.expression = process.env.NODE_ENV !== 'production'
-        ? expOrFn.toString()
-        : ''
-      // parse expression for getter
-      if (typeof expOrFn === 'function') {
-        this.getter = expOrFn
-      } else {
-        this.getter = parsePath(expOrFn)
-        if (!this.getter) {
-          this.getter = function () {}
-          process.env.NODE_ENV !== 'production' && warn(
-            `Failed watching path: "${expOrFn}" ` +
-            'Watcher only accepts simple dot-delimited paths. ' +
-            'For full control, use a function instead.',
+      defineReactive(props, key, value, () => {
+        if (vm.$parent && !isUpdatingChildComponent) {
+          warn(
+            `Avoid mutating a prop directly since the value will be ` +
+            `overwritten whenever the parent component re-renders. ` +
+            `Instead, use a data or computed property based on the prop's ` +
+            `value. Prop being mutated: "${key}"`,
             vm
           )
         }
-      }
-      if (this.computed) {
-        ...省略
-      } else {
-        this.value = this.get()
+      })
+    } else {
+      defineReactive(props, key, value)
+    }
+    // static props are already proxied on the component's prototype
+    // during Vue.extend(). We only need to proxy props defined at
+    // instantiation here.
+    if (!(key in vm)) {
+      proxy(vm, `_props`, key)
+    }
+  }
+  toggleObserving(true)
+}
+```
+
+```js
+export function validateProp (
+  key: string,
+  propOptions: Object,
+  propsData: Object,
+  vm?: Component
+): any {
+  const prop = propOptions[key]
+  // 看父组件有没有传递这个key的值
+  const absent = !hasOwn(propsData, key)
+  let value = propsData[key]
+  // boolean casting
+  // 看prop.type有没有Boolean类型
+  const booleanIndex = getTypeIndex(Boolean, prop.type)
+  if (booleanIndex > -1) {
+    if (absent && !hasOwn(prop, 'default')) {
+      value = false
+    } else if (value === '' || value === hyphenate(key)) {
+      // only cast empty string / same name to boolean if
+      // boolean has higher priority
+      const stringIndex = getTypeIndex(String, prop.type)
+      if (stringIndex < 0 || booleanIndex < stringIndex) {
+        value = true
       }
     }
-  
-    /**
-     * Evaluate the getter, and re-collect dependencies.
-     */
-    get () {
-      pushTarget(this)
-      let value
-      const vm = this.vm
+  }
+  // check default value
+  // 父组件没有传递这个数据
+  if (value === undefined) {
+    value = getPropDefaultValue(vm, prop, key)
+    // since the default value is a fresh copy,
+    // make sure to observe it.
+    const prevShouldObserve = shouldObserve
+    toggleObserving(true)
+    observe(value)
+    toggleObserving(prevShouldObserve)
+  }
+  if (
+    process.env.NODE_ENV !== 'production' &&
+    // skip validation for weex recycle-list child component props
+    !(__WEEX__ && isObject(value) && ('@binding' in value))
+  ) {
+    assertProp(prop, key, value, vm, absent)
+  }
+  return value
+}
+```
+
+> 对`props`进行初始化,初始化分两步，一是校验和求值，二是响应式处理
+
+
+
+```js
+export function updateChildComponent (
+  vm: Component,
+  propsData: ?Object,
+  listeners: ?Object,
+  parentVnode: MountedComponentVNode,
+  renderChildren: ?Array<VNode>
+) {
+
+  ...省略
+
+  // update props
+  // 这个分支的逻辑其实就是父组件的props改变了，更新子组件的props
+  if (propsData && vm.$options.props) {
+    toggleObserving(false)
+    const props = vm._props
+    const propKeys = vm.$options._propKeys || []
+    for (let i = 0; i < propKeys.length; i++) {
+      const key = propKeys[i]
+      const propOptions: any = vm.$options.props // wtf flow?
+      props[key] = validateProp(key, propOptions, propsData, vm)
+    }
+    toggleObserving(true)
+    // keep a copy of raw propsData
+    vm.$options.propsData = propsData
+  }
+
+  ...省略
+
+}
+```
+
+> props更新
+
+
+## 编译
+
+
+```js
+Vue.prototype.$mount = function (
+  el?: string | Element,
+  hydrating?: boolean
+): Component {
+  el = el && query(el)
+
+  /* istanbul ignore if */
+  if (el === document.body || el === document.documentElement) {
+    process.env.NODE_ENV !== 'production' && warn(
+      `Do not mount Vue to <html> or <body> - mount to normal elements instead.`
+    )
+    return this
+  }
+
+  const options = this.$options
+  // resolve template/el and convert to render function
+  if (!options.render) {
+    let template = options.template
+    if (template) {
+      if (typeof template === 'string') {
+        if (template.charAt(0) === '#') {
+          template = idToTemplate(template)
+          /* istanbul ignore if */
+          if (process.env.NODE_ENV !== 'production' && !template) {
+            warn(
+              `Template element not found or is empty: ${options.template}`,
+              this
+            )
+          }
+        }
+      } else if (template.nodeType) {
+        template = template.innerHTML
+      } else {
+        if (process.env.NODE_ENV !== 'production') {
+          warn('invalid template option:' + template, this)
+        }
+        return this
+      }
+    } else if (el) {
+      template = getOuterHTML(el)
+    }
+    if (template) {
+
+      ...省略
+
+      // compileToFunctions方法为编译入口
+      const { render, staticRenderFns } = compileToFunctions(template, {
+        shouldDecodeNewlines,
+        shouldDecodeNewlinesForHref,
+        delimiters: options.delimiters,
+        comments: options.comments
+      }, this)
+      options.render = render
+      options.staticRenderFns = staticRenderFns
+
+      ...省略
+    }
+  }
+  return mount.call(this, el, hydrating)
+}
+```
+
+
+```js
+import { baseOptions } from './options'
+
+const { compile, compileToFunctions } = createCompiler(baseOptions)
+
+
+
+
+
+export const createCompiler = createCompilerCreator(function baseCompile (
+  template: string,
+  options: CompilerOptions
+): CompiledResult {
+  const ast = parse(template.trim(), options)
+  if (options.optimize !== false) {
+    optimize(ast, options)
+  }
+  const code = generate(ast, options)
+  return {
+    ast,
+    render: code.render,
+    staticRenderFns: code.staticRenderFns
+  }
+})
+
+```
+
+
+```js
+export function createCompilerCreator (baseCompile: Function): Function {
+  return function createCompiler (baseOptions: CompilerOptions) {
+    function compile (
+      template: string,
+      options?: CompilerOptions
+    ): CompiledResult {
+      const finalOptions = Object.create(baseOptions)
+      const errors = []
+      const tips = []
+      finalOptions.warn = (msg, tip) => {
+        (tip ? tips : errors).push(msg)
+      }
+
+      if (options) {
+        // merge custom modules
+        if (options.modules) {
+          finalOptions.modules =
+            (baseOptions.modules || []).concat(options.modules)
+        }
+        // merge custom directives
+        if (options.directives) {
+          finalOptions.directives = extend(
+            Object.create(baseOptions.directives || null),
+            options.directives
+          )
+        }
+        // copy other options
+        for (const key in options) {
+          if (key !== 'modules' && key !== 'directives') {
+            finalOptions[key] = options[key]
+          }
+        }
+      }
+
+      const compiled = baseCompile(template, finalOptions)
+      if (process.env.NODE_ENV !== 'production') {
+        errors.push.apply(errors, detectErrors(compiled.ast))
+      }
+      compiled.errors = errors
+      compiled.tips = tips
+      return compiled
+    }
+
+    return {
+      compile,
+      compileToFunctions: createCompileToFunctionFn(compile)
+    }
+  }
+}
+```
+
+```js
+export function createCompileToFunctionFn (compile: Function): Function {
+  const cache = Object.create(null)
+
+  return function compileToFunctions (
+    template: string,
+    options?: CompilerOptions,
+    vm?: Component
+  ): CompiledFunctionResult {
+    options = extend({}, options)
+    const warn = options.warn || baseWarn
+    delete options.warn
+
+    /* istanbul ignore if */
+    if (process.env.NODE_ENV !== 'production') {
+      // detect possible CSP restriction
       try {
-        value = this.getter.call(vm, vm)
+        new Function('return 1')
       } catch (e) {
-        if (this.user) {
-          handleError(e, vm, `getter for watcher "${this.expression}"`)
-        } else {
-          throw e
+        if (e.toString().match(/unsafe-eval|CSP/)) {
+          warn(
+            'It seems you are using the standalone build of Vue.js in an ' +
+            'environment with Content Security Policy that prohibits unsafe-eval. ' +
+            'The template compiler cannot work in this environment. Consider ' +
+            'relaxing the policy to allow unsafe-eval or pre-compiling your ' +
+            'templates into render functions.'
+          )
         }
-      } finally {
-        // "touch" every property so they are all tracked as
-        // dependencies for deep watching
-        if (this.deep) {
-          traverse(value)
-        }
-        popTarget()
-        this.cleanupDeps()
       }
-      return value
     }
-  
-    ...省略
-  
-    /**
-     * Subscriber interface.
-     * Will be called when a dependency changes.
-     */
-    update () {
-      /* istanbul ignore else */
-      if (this.computed) {
-        // A computed property watcher has two modes: lazy and activated.
-        // It initializes as lazy by default, and only becomes activated when
-        // it is depended on by at least one subscriber, which is typically
-        // another computed property or a component's render function.
-        if (this.dep.subs.length === 0) {
-          // In lazy mode, we don't want to perform computations until necessary,
-          // so we simply mark the watcher as dirty. The actual computation is
-          // performed just-in-time in this.evaluate() when the computed property
-          // is accessed.
-          this.dirty = true
-        } else {
-          // In activated mode, we want to proactively perform the computation
-          // but only notify our subscribers when the value has indeed changed.
-          this.getAndInvoke(() => {
-            this.dep.notify()
+
+    // check cache
+    const key = options.delimiters
+      ? String(options.delimiters) + template
+      : template
+    if (cache[key]) {
+      return cache[key]
+    }
+
+    // compile
+    const compiled = compile(template, options)
+
+    // check compilation errors/tips
+    if (process.env.NODE_ENV !== 'production') {
+      if (compiled.errors && compiled.errors.length) {
+        warn(
+          `Error compiling template:\n\n${template}\n\n` +
+          compiled.errors.map(e => `- ${e}`).join('\n') + '\n',
+          vm
+        )
+      }
+      if (compiled.tips && compiled.tips.length) {
+        compiled.tips.forEach(msg => tip(msg, vm))
+      }
+    }
+
+    // turn code into functions
+    const res = {}
+    const fnGenErrors = []
+    // compiled.render其实是一个字符串
+    res.render = createFunction(compiled.render, fnGenErrors)
+    res.staticRenderFns = compiled.staticRenderFns.map(code => {
+      return createFunction(code, fnGenErrors)
+    })
+
+    // check function generation errors.
+    // this should only happen if there is a bug in the compiler itself.
+    // mostly for codegen development use
+    /* istanbul ignore if */
+    if (process.env.NODE_ENV !== 'production') {
+      if ((!compiled.errors || !compiled.errors.length) && fnGenErrors.length) {
+        warn(
+          `Failed to generate render function:\n\n` +
+          fnGenErrors.map(({ err, code }) => `${err.toString()} in\n\n${code}\n`).join('\n'),
+          vm
+        )
+      }
+    }
+
+    return (cache[key] = res)
+  }
+}
+```
+
+> 其实这个函数，才是编译的真实入口函数
+
+### parse
+
+```js
+export function parse (
+  template: string,
+  options: CompilerOptions
+): ASTElement | void {
+  warn = options.warn || baseWarn
+
+  platformIsPreTag = options.isPreTag || no
+  platformMustUseProp = options.mustUseProp || no
+  platformGetTagNamespace = options.getTagNamespace || no
+
+  transforms = pluckModuleFunction(options.modules, 'transformNode')
+  preTransforms = pluckModuleFunction(options.modules, 'preTransformNode')
+  postTransforms = pluckModuleFunction(options.modules, 'postTransformNode')
+
+  delimiters = options.delimiters
+
+  const stack = []
+  const preserveWhitespace = options.preserveWhitespace !== false
+  let root
+  let currentParent
+  let inVPre = false
+  let inPre = false
+  let warned = false
+
+  function warnOnce (msg) {
+    if (!warned) {
+      warned = true
+      warn(msg)
+    }
+  }
+
+  function closeElement (element) {
+    // check pre state
+    if (element.pre) {
+      inVPre = false
+    }
+    if (platformIsPreTag(element.tag)) {
+      inPre = false
+    }
+    // apply post-transforms
+    for (let i = 0; i < postTransforms.length; i++) {
+      postTransforms[i](element, options)
+    }
+  }
+
+  parseHTML(template, {
+    warn,
+    expectHTML: options.expectHTML,
+    isUnaryTag: options.isUnaryTag,
+    canBeLeftOpenTag: options.canBeLeftOpenTag,
+    shouldDecodeNewlines: options.shouldDecodeNewlines,
+    shouldDecodeNewlinesForHref: options.shouldDecodeNewlinesForHref,
+    shouldKeepComment: options.comments,
+    start (tag, attrs, unary) {
+      // check namespace.
+      // inherit parent ns if there is one
+      const ns = (currentParent && currentParent.ns) || platformGetTagNamespace(tag)
+
+      // handle IE svg bug
+      /* istanbul ignore if */
+      if (isIE && ns === 'svg') {
+        attrs = guardIESVGBug(attrs)
+      }
+
+      let element: ASTElement = createASTElement(tag, attrs, currentParent)
+      if (ns) {
+        element.ns = ns
+      }
+
+      if (isForbiddenTag(element) && !isServerRendering()) {
+        element.forbidden = true
+        process.env.NODE_ENV !== 'production' && warn(
+          'Templates should only be responsible for mapping the state to the ' +
+          'UI. Avoid placing tags with side-effects in your templates, such as ' +
+          `<${tag}>` + ', as they will not be parsed.'
+        )
+      }
+
+      // apply pre-transforms
+      for (let i = 0; i < preTransforms.length; i++) {
+        element = preTransforms[i](element, options) || element
+      }
+
+      if (!inVPre) {
+        processPre(element)
+        if (element.pre) {
+          inVPre = true
+        }
+      }
+      if (platformIsPreTag(element.tag)) {
+        inPre = true
+      }
+      if (inVPre) {
+        processRawAttrs(element)
+      } else if (!element.processed) {
+        // structural directives
+        processFor(element)
+        processIf(element)
+        processOnce(element)
+        // element-scope stuff
+        processElement(element, options)
+      }
+
+      function checkRootConstraints (el) {
+        if (process.env.NODE_ENV !== 'production') {
+          if (el.tag === 'slot' || el.tag === 'template') {
+            warnOnce(
+              `Cannot use <${el.tag}> as component root element because it may ` +
+              'contain multiple nodes.'
+            )
+          }
+          if (el.attrsMap.hasOwnProperty('v-for')) {
+            warnOnce(
+              'Cannot use v-for on stateful component root element because ' +
+              'it renders multiple elements.'
+            )
+          }
+        }
+      }
+
+      // tree management
+      if (!root) {
+        root = element
+        checkRootConstraints(root)
+      } else if (!stack.length) {
+        // allow root elements with v-if, v-else-if and v-else
+        if (root.if && (element.elseif || element.else)) {
+          checkRootConstraints(element)
+          addIfCondition(root, {
+            exp: element.elseif,
+            block: element
           })
+        } else if (process.env.NODE_ENV !== 'production') {
+          warnOnce(
+            `Component template should contain exactly one root element. ` +
+            `If you are using v-if on multiple elements, ` +
+            `use v-else-if to chain them instead.`
+          )
         }
-      } else if (this.sync) {
-        this.run()
-      } else {
-        queueWatcher(this)
       }
-    }
-  
-    /**
-     * Scheduler job interface.
-     * Will be called by the scheduler.
-     */
-    run () {
-      if (this.active) {
-        this.getAndInvoke(this.cb)
-      }
-    }
-  
-    getAndInvoke (cb: Function) {
-      const value = this.get()
-      if (
-        value !== this.value ||
-        // Deep watchers and watchers on Object/Arrays should fire even
-        // when the value is the same, because the value may
-        // have mutated.
-        isObject(value) ||
-        this.deep
-      ) {
-        // set new value
-        const oldValue = this.value
-        this.value = value
-        this.dirty = false
-        if (this.user) {
-          try {
-            cb.call(this.vm, value, oldValue)
-          } catch (e) {
-            handleError(e, this.vm, `callback for watcher "${this.expression}"`)
-          }
+      if (currentParent && !element.forbidden) {
+        if (element.elseif || element.else) {
+          processIfConditions(element, currentParent)
+        } else if (element.slotScope) { // scoped slot
+          currentParent.plain = false
+          const name = element.slotTarget || '"default"'
+          ;(currentParent.scopedSlots || (currentParent.scopedSlots = {}))[name] = element
         } else {
-          cb.call(this.vm, value, oldValue)
+          currentParent.children.push(element)
+          element.parent = currentParent
         }
       }
-    }
-  
-    /**
-     * Evaluate and return the value of the watcher.
-     * This only gets called for computed property watchers.
-     */
-    evaluate () {
-      if (this.dirty) {
-        this.value = this.get()
-        this.dirty = false
+      if (!unary) {
+        currentParent = element
+        stack.push(element)
+      } else {
+        closeElement(element)
       }
-      return this.value
-    }
-  
-    /**
-     * Depend on this watcher. Only for computed property watchers.
-     */
-    depend () {
-      if (this.dep && Dep.target) {
-        this.dep.depend()
+    },
+
+    end () {
+      // remove trailing whitespace
+      const element = stack[stack.length - 1]
+      const lastNode = element.children[element.children.length - 1]
+      if (lastNode && lastNode.type === 3 && lastNode.text === ' ' && !inPre) {
+        element.children.pop()
       }
-    }
-  
-    /**
-     * Remove self from all dependencies' subscriber list.
-     */
-    teardown () {
-      if (this.active) {
-        // remove self from vm's watcher list
-        // this is a somewhat expensive operation so we skip it
-        // if the vm is being destroyed.
-        if (!this.vm._isBeingDestroyed) {
-          remove(this.vm._watchers, this)
-        }
-        let i = this.deps.length
-        while (i--) {
-          this.deps[i].removeSub(this)
-        }
-        this.active = false
-      }
-    }
-}
-```
+      // pop stack
+      stack.length -= 1
+      currentParent = stack[stack.length - 1]
+      closeElement(element)
+    },
 
-```
-const bailRE = /[^\w.$]/
-export function parsePath (path: string): any {
-  if (bailRE.test(path)) {
-    return
-  }
-  const segments = path.split('.')
-  return function (obj) {
-    for (let i = 0; i < segments.length; i++) {
-      if (!obj) return
-      obj = obj[segments[i]]
-    }
-    return obj
-  }
-}
-```
-
-
-#### 组件更新
-
-
-```
-export function mountComponent (
-    vm: Component,
-    el: ?Element,
-    hydrating?: boolean
-  ): Component {
-    ...省略
-    if (process.env.NODE_ENV !== 'production' && config.performance && mark) {
-      ...省略
-    } else {
-      updateComponent = () => {
-        vm._update(vm._render(), hydrating)
-      }
-    }
-  
-    // we set this to vm._watcher inside the watcher's constructor
-    // since the watcher's initial patch may call $forceUpdate (e.g. inside child
-    // component's mounted hook), which relies on vm._watcher being already defined
-    new Watcher(vm, updateComponent, noop, {
-      before () {
-        if (vm._isMounted) {
-          callHook(vm, 'beforeUpdate')
-        }
-      }
-    }, true /* isRenderWatcher */)
-
-    ...省略
-}
-```
-
-```
-Vue.prototype._update = function (vnode: VNode, hydrating?: boolean) {
-    const vm: Component = this
-    const prevEl = vm.$el
-    const prevVnode = vm._vnode
-    const prevActiveInstance = activeInstance
-    activeInstance = vm
-    vm._vnode = vnode
-    // Vue.prototype.__patch__ is injected in entry points
-    // based on the rendering backend used.
-    if (!prevVnode) {
-      ...省略
-    } else {
-      // updates
-      vm.$el = vm.__patch__(prevVnode, vnode)
-    }
-    ...省略
-}
-```
-
-
-```
-export function createPatchFunction (backend) {
-
-    ...省略
-
-    function isPatchable (vnode) {
-        while (vnode.componentInstance) {
-            vnode = vnode.componentInstance._vnode
-        }
-        return isDef(vnode.tag)
-    }
-
-
-    function patchVnode (oldVnode, vnode, insertedVnodeQueue, removeOnly) {
-        if (oldVnode === vnode) {
-          return
-        }
-    
-        const elm = vnode.elm = oldVnode.elm
-    
-        ...省略
-    
-        let i
-        const data = vnode.data
-        if (isDef(data) && isDef(i = data.hook) && isDef(i = i.prepatch)) {
-          i(oldVnode, vnode)
-        }
-    
-        const oldCh = oldVnode.children
-        const ch = vnode.children
-        if (isDef(data) && isPatchable(vnode)) {
-          for (i = 0; i < cbs.update.length; ++i) cbs.update[i](oldVnode, vnode)
-          if (isDef(i = data.hook) && isDef(i = i.update)) i(oldVnode, vnode)
-        }
-        if (isUndef(vnode.text)) {
-          if (isDef(oldCh) && isDef(ch)) {
-            if (oldCh !== ch) updateChildren(elm, oldCh, ch, insertedVnodeQueue, removeOnly)
-          } else if (isDef(ch)) {
-            if (isDef(oldVnode.text)) nodeOps.setTextContent(elm, '')
-            addVnodes(elm, null, ch, 0, ch.length - 1, insertedVnodeQueue)
-          } else if (isDef(oldCh)) {
-            removeVnodes(elm, oldCh, 0, oldCh.length - 1)
-          } else if (isDef(oldVnode.text)) {
-            nodeOps.setTextContent(elm, '')
+    chars (text: string) {
+      if (!currentParent) {
+        if (process.env.NODE_ENV !== 'production') {
+          if (text === template) {
+            warnOnce(
+              'Component template requires a root element, rather than just text.'
+            )
+          } else if ((text = text.trim())) {
+            warnOnce(
+              `text "${text}" outside root element will be ignored.`
+            )
           }
-        } else if (oldVnode.text !== vnode.text) {
-          nodeOps.setTextContent(elm, vnode.text)
         }
-        if (isDef(data)) {
-          if (isDef(i = data.hook) && isDef(i = i.postpatch)) i(oldVnode, vnode)
-        }
-    }
-    
-    ...省略
-  
-    return function patch (oldVnode, vnode, hydrating, removeOnly) {
-      if (isUndef(vnode)) {
-        if (isDef(oldVnode)) invokeDestroyHook(oldVnode)
         return
       }
-  
-      let isInitialPatch = false
-      const insertedVnodeQueue = []
-  
-      if (isUndef(oldVnode)) {
-        ...省略
-      } else {
-        const isRealElement = isDef(oldVnode.nodeType)
-        if (!isRealElement && sameVnode(oldVnode, vnode)) {
-          // patch existing root node
-          patchVnode(oldVnode, vnode, insertedVnodeQueue, removeOnly)
-        } else {
-          
-          ...省略
-  
-          // replacing existing element
-          const oldElm = oldVnode.elm
-          const parentElm = nodeOps.parentNode(oldElm)
-  
-          // create new node
-          createElm(
-            vnode,
-            insertedVnodeQueue,
-            // extremely rare edge case: do not insert if old element is in a
-            // leaving transition. Only happens when combining transition +
-            // keep-alive + HOCs. (#4590)
-            oldElm._leaveCb ? null : parentElm,
-            nodeOps.nextSibling(oldElm)
-          )
-  
-          // update parent placeholder node element, recursively
-          if (isDef(vnode.parent)) {
-            let ancestor = vnode.parent
-            const patchable = isPatchable(vnode)
-            while (ancestor) {
-              for (let i = 0; i < cbs.destroy.length; ++i) {
-                cbs.destroy[i](ancestor)
-              }
-              ancestor.elm = vnode.elm
-              if (patchable) {
-                for (let i = 0; i < cbs.create.length; ++i) {
-                  cbs.create[i](emptyNode, ancestor)
-                }
-                // #6513
-                // invoke insert hooks that may have been merged by create hooks.
-                // e.g. for directives that uses the "inserted" hook.
-                const insert = ancestor.data.hook.insert
-                if (insert.merged) {
-                  // start at index 1 to avoid re-invoking component mounted hook
-                  for (let i = 1; i < insert.fns.length; i++) {
-                    insert.fns[i]()
-                  }
-                }
-              } else {
-                registerRef(ancestor)
-              }
-              ancestor = ancestor.parent
-            }
-          }
-  
-          // destroy old node
-          if (isDef(parentElm)) {
-            removeVnodes(parentElm, [oldVnode], 0, 0)
-          } else if (isDef(oldVnode.tag)) {
-            invokeDestroyHook(oldVnode)
-          }
+      // IE textarea placeholder bug
+      /* istanbul ignore if */
+      if (isIE &&
+        currentParent.tag === 'textarea' &&
+        currentParent.attrsMap.placeholder === text
+      ) {
+        return
+      }
+      const children = currentParent.children
+      text = inPre || text.trim()
+        ? isTextTag(currentParent) ? text : decodeHTMLCached(text)
+        // only preserve whitespace if its not right after a starting tag
+        : preserveWhitespace && children.length ? ' ' : ''
+      if (text) {
+        let res
+        if (!inVPre && text !== ' ' && (res = parseText(text, delimiters))) {
+          children.push({
+            type: 2,
+            expression: res.expression,
+            tokens: res.tokens,
+            text
+          })
+        } else if (text !== ' ' || !children.length || children[children.length - 1].text !== ' ') {
+          children.push({
+            type: 3,
+            text
+          })
         }
       }
-  
-      invokeInsertHook(vnode, insertedVnodeQueue, isInitialPatch)
-      return vnode.elm
+    },
+    comment (text: string) {
+      currentParent.children.push({
+        type: 3,
+        text,
+        isComment: true
+      })
     }
+  })
+  return root
 }
 ```
 
 
-```
-function sameVnode (a, b) {
-  return (
-    a.key === b.key && (
-      (
-        a.tag === b.tag &&
-        a.isComment === b.isComment &&
-        isDef(a.data) === isDef(b.data) &&
-        sameInputType(a, b)
-      ) || (
-        isTrue(a.isAsyncPlaceholder) &&
-        a.asyncFactory === b.asyncFactory &&
-        isUndef(b.asyncFactory.error)
-      )
-    )
-  )
+```js
+export function parseHTML (html, options) {
+  const stack = []
+  const expectHTML = options.expectHTML
+  const isUnaryTag = options.isUnaryTag || no
+  const canBeLeftOpenTag = options.canBeLeftOpenTag || no
+  let index = 0
+  let last, lastTag
+  while (html) {
+    last = html
+    // Make sure we're not in a plaintext content element like script/style
+    if (!lastTag || !isPlainTextElement(lastTag)) {
+      let textEnd = html.indexOf('<')
+      if (textEnd === 0) {
+        // Comment:
+        if (comment.test(html)) {
+          //说明它是一个注释节点
+          const commentEnd = html.indexOf('-->')
+
+          if (commentEnd >= 0) {
+            // 是否保留注释节点
+            if (options.shouldKeepComment) {
+              options.comment(html.substring(4, commentEnd))
+            }
+            advance(commentEnd + 3)
+            continue
+          }
+        }
+
+        // http://en.wikipedia.org/wiki/Conditional_comment#Downlevel-revealed_conditional_comment
+        if (conditionalComment.test(html)) {
+          const conditionalEnd = html.indexOf(']>')
+
+          if (conditionalEnd >= 0) {
+            advance(conditionalEnd + 2)
+            continue
+          }
+        }
+
+        // Doctype:
+        const doctypeMatch = html.match(doctype)
+        if (doctypeMatch) {
+          advance(doctypeMatch[0].length)
+          continue
+        }
+
+        // End tag:
+        const endTagMatch = html.match(endTag)
+        if (endTagMatch) {
+          const curIndex = index
+          advance(endTagMatch[0].length)
+          parseEndTag(endTagMatch[1], curIndex, index)
+          continue
+        }
+
+        // Start tag:
+        const startTagMatch = parseStartTag()
+        if (startTagMatch) {
+          handleStartTag(startTagMatch)
+          if (shouldIgnoreFirstNewline(lastTag, html)) {
+            advance(1)
+          }
+          continue
+        }
+      }
+
+      let text, rest, next
+      if (textEnd >= 0) {
+        rest = html.slice(textEnd)
+        while (
+          !endTag.test(rest) &&
+          !startTagOpen.test(rest) &&
+          !comment.test(rest) &&
+          !conditionalComment.test(rest)
+        ) {
+          // < in plain text, be forgiving and treat it as text
+          next = rest.indexOf('<', 1)
+          if (next < 0) break
+          textEnd += next
+          rest = html.slice(textEnd)
+        }
+        text = html.substring(0, textEnd)
+        advance(textEnd)
+      }
+
+      if (textEnd < 0) {
+        text = html
+        html = ''
+      }
+
+      if (options.chars && text) {
+        options.chars(text)
+      }
+    } else {
+      let endTagLength = 0
+      const stackedTag = lastTag.toLowerCase()
+      const reStackedTag = reCache[stackedTag] || (reCache[stackedTag] = new RegExp('([\\s\\S]*?)(</' + stackedTag + '[^>]*>)', 'i'))
+      const rest = html.replace(reStackedTag, function (all, text, endTag) {
+        endTagLength = endTag.length
+        if (!isPlainTextElement(stackedTag) && stackedTag !== 'noscript') {
+          text = text
+            .replace(/<!\--([\s\S]*?)-->/g, '$1') // #7298
+            .replace(/<!\[CDATA\[([\s\S]*?)]]>/g, '$1')
+        }
+        if (shouldIgnoreFirstNewline(stackedTag, text)) {
+          text = text.slice(1)
+        }
+        if (options.chars) {
+          options.chars(text)
+        }
+        return ''
+      })
+      index += html.length - rest.length
+      html = rest
+      parseEndTag(stackedTag, index - endTagLength, index)
+    }
+
+    if (html === last) {
+      options.chars && options.chars(html)
+      if (process.env.NODE_ENV !== 'production' && !stack.length && options.warn) {
+        options.warn(`Mal-formatted tag at end of template: "${html}"`)
+      }
+      break
+    }
+  }
+
+  // Clean up any remaining tags
+  parseEndTag()
+
+  function advance (n) {
+    index += n
+    html = html.substring(n)
+  }
+
+  function parseStartTag () {
+    const start = html.match(startTagOpen)
+    if (start) {
+      const match = {
+        tagName: start[1],
+        attrs: [],
+        start: index
+      }
+      advance(start[0].length)
+      let end, attr
+      while (!(end = html.match(startTagClose)) && (attr = html.match(attribute))) {
+        advance(attr[0].length)
+        match.attrs.push(attr)
+      }
+      if (end) {
+        match.unarySlash = end[1]
+        advance(end[0].length)
+        match.end = index
+        return match
+      }
+    }
+  }
+
+  function handleStartTag (match) {
+    const tagName = match.tagName
+    const unarySlash = match.unarySlash
+
+    // 在web环境中，expectHTML为true
+    if (expectHTML) {
+      if (lastTag === 'p' && isNonPhrasingTag(tagName)) {
+        parseEndTag(lastTag)
+      }
+      if (canBeLeftOpenTag(tagName) && lastTag === tagName) {
+        parseEndTag(tagName)
+      }
+    }
+
+    const unary = isUnaryTag(tagName) || !!unarySlash
+
+    const l = match.attrs.length
+    const attrs = new Array(l)
+    for (let i = 0; i < l; i++) {
+      const args = match.attrs[i]
+      // hackish work around FF bug https://bugzilla.mozilla.org/show_bug.cgi?id=369778
+      if (IS_REGEX_CAPTURING_BROKEN && args[0].indexOf('""') === -1) {
+        if (args[3] === '') { delete args[3] }
+        if (args[4] === '') { delete args[4] }
+        if (args[5] === '') { delete args[5] }
+      }
+      const value = args[3] || args[4] || args[5] || ''
+      const shouldDecodeNewlines = tagName === 'a' && args[1] === 'href'
+        ? options.shouldDecodeNewlinesForHref
+        : options.shouldDecodeNewlines
+      attrs[i] = {
+        name: args[1],
+        value: decodeAttr(value, shouldDecodeNewlines)
+      }
+    }
+
+    if (!unary) {
+      stack.push({ tag: tagName, lowerCasedTag: tagName.toLowerCase(), attrs: attrs })
+      lastTag = tagName
+    }
+
+    if (options.start) {
+      options.start(tagName, attrs, unary, match.start, match.end)
+    }
+  }
+
+  function parseEndTag (tagName, start, end) {
+    let pos, lowerCasedTagName
+    if (start == null) start = index
+    if (end == null) end = index
+
+    if (tagName) {
+      lowerCasedTagName = tagName.toLowerCase()
+    }
+
+    // Find the closest opened tag of the same type
+    if (tagName) {
+      for (pos = stack.length - 1; pos >= 0; pos--) {
+        if (stack[pos].lowerCasedTag === lowerCasedTagName) {
+          break
+        }
+      }
+    } else {
+      // If no tag name is provided, clean shop
+      pos = 0
+    }
+
+    if (pos >= 0) {
+      // Close all the open elements, up the stack
+      for (let i = stack.length - 1; i >= pos; i--) {
+        if (process.env.NODE_ENV !== 'production' &&
+          (i > pos || !tagName) &&
+          options.warn
+        ) {
+          // 对应的情况例如<div><span></div>
+          options.warn(
+            `tag <${stack[i].tag}> has no matching end tag.`
+          )
+        }
+        if (options.end) {
+          options.end(stack[i].tag, start, end)
+        }
+      }
+
+      // Remove the open elements from the stack
+      stack.length = pos
+      lastTag = pos && stack[pos - 1].tag
+    } else if (lowerCasedTagName === 'br') {
+      if (options.start) {
+        options.start(tagName, [], true, start, end)
+      }
+    } else if (lowerCasedTagName === 'p') {
+      if (options.start) {
+        options.start(tagName, [], false, start, end)
+      }
+      if (options.end) {
+        options.end(tagName, start, end)
+      }
+    }
+  }
 }
 ```
 
-```
-const componentVNodeHooks = {
-  
-  ...省略
+### optimize
 
-  prepatch (oldVnode: MountedComponentVNode, vnode: MountedComponentVNode) {
-    const options = vnode.componentOptions
-    const child = vnode.componentInstance = oldVnode.componentInstance
-    updateChildComponent(
-      child,
-      options.propsData, // updated props
-      options.listeners, // updated listeners
-      vnode, // new parent vnode
-      options.children // new children
-    )
-  },
+`optimize`的目的是对我们的`ast`树做一个标记，标记哪些是静态节点,标记静态节点是因为，我们的`vue`是数据驱动，但我们的模版并不是所有数据都是响应式的，也有很多数据是首次渲染后就永远不会变化的，那么这部分数据生成的`DOM`也不会变化，我们可以在`patch`的过程中，跳过对他们的比对
 
-  ...省略
-  
+```js
+export function optimize (root: ?ASTElement, options: CompilerOptions) {
+  if (!root) return
+  isStaticKey = genStaticKeysCached(options.staticKeys || '')
+  isPlatformReservedTag = options.isReservedTag || no
+  // first pass: mark all non-static nodes.
+  markStatic(root)
+  // second pass: mark static roots.
+  markStaticRoots(root, false)
 }
 ```
 
+```js
+function markStatic (node: ASTNode) {
+  node.static = isStatic(node)
+  if (node.type === 1) {
+    // do not make component slot content static. this avoids
+    // 1. components not able to mutate slot nodes
+    // 2. static slot content fails for hot-reloading
+    // !isPlatformReservedTag(node.tag)说明它是一个组件
+    if (
+      !isPlatformReservedTag(node.tag) &&
+      node.tag !== 'slot' &&
+      node.attrsMap['inline-template'] == null
+    ) {
+      return
+    }
+    for (let i = 0, l = node.children.length; i < l; i++) {
+      const child = node.children[i]
+      markStatic(child)
+      if (!child.static) {
+        node.static = false
+      }
+    }
+    if (node.ifConditions) {
+      for (let i = 1, l = node.ifConditions.length; i < l; i++) {
+        const block = node.ifConditions[i].block
+        markStatic(block)
+        if (!block.static) {
+          node.static = false
+        }
+      }
+    }
+  }
+}
+```
 
+```js
+function isStatic (node: ASTNode): boolean {
+  if (node.type === 2) { // expression
+    return false
+  }
+  if (node.type === 3) { // text
+    return true
+  }
+  return !!(node.pre || (
+    !node.hasBindings && // no dynamic bindings
+    !node.if && !node.for && // not v-if or v-for or v-else
+    !isBuiltInTag(node.tag) && // not a built-in
+    isPlatformReservedTag(node.tag) && // not a component
+    !isDirectChildOfTemplateFor(node) &&
+    Object.keys(node).every(isStaticKey)
+  ))
+}
+```
 
-
-
-
-
-
-
+```js
+function markStaticRoots (node: ASTNode, isInFor: boolean) {
+  if (node.type === 1) {
+    if (node.static || node.once) {
+      node.staticInFor = isInFor
+    }
+    // For a node to qualify as a static root, it should have children that
+    // are not just static text. Otherwise the cost of hoisting out will
+    // outweigh the benefits and it's better off to just always render it fresh.
+    if (node.static && node.children.length && !(
+      node.children.length === 1 &&
+      node.children[0].type === 3
+    )) {
+      node.staticRoot = true
+      return
+    } else {
+      node.staticRoot = false
+    }
+    if (node.children) {
+      for (let i = 0, l = node.children.length; i < l; i++) {
+        markStaticRoots(node.children[i], isInFor || !!node.for)
+      }
+    }
+    if (node.ifConditions) {
+      for (let i = 1, l = node.ifConditions.length; i < l; i++) {
+        markStaticRoots(node.ifConditions[i].block, isInFor)
+      }
+    }
+  }
+}
+```

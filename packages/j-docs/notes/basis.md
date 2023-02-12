@@ -8,6 +8,72 @@ outline: 'deep'
 
 # 计算机基础
 
+
+## 编程范式
+
+有许多编程范式，以找出所有人中，年龄大于35岁的为例
+
+### 命令式编程
+
+一步一步告诉计算机先做什么再做什么,特点是更加的精细化，更严谨，程序也会一丝不苟的执行你的命令。但是操作步骤比较多，代码量大，影响开发效率
+
+
+```js
+const people = [
+    { name: "Lily", age: 33 },
+    { name: "Abby", age: 36 },
+    { name: "Mary", age: 32 },
+    { name: "Joyce", age: 35 },
+    { name: "Bella", age: 38 },
+    { name: "Stella", age: 40 },
+];
+const newArry = [];
+for (let i = 0; i < people.length; i++) {
+  if (people[i].age > 35) {
+    newArry.push(people[i].name);
+  }
+}
+```
+
+### 声明式编程
+
+不用去考虑底层如何实现, 能在特定的更高层面代码领域给我们带来效率的提升
+
+```js
+const peopleAgeFilter = (people) => {
+    return people.filter((item) => item.age > 35);
+};
+```
+
+
+### 函数式编程
+
+函数式编程的特性<br/>
+
+函数是第一等公民(所谓第一等公民，指的是函数与其他数据类型一样，处于平等地位，可以赋值给其他变量，也可以作为参数，传入另一个函数，或者作为别的函数的返回值)<br/>
+
+惰性计算(在惰性计算中，表达式不是在绑定到变量时立即计算，而是在求值程序需要产生表达式的值时进行计算。即函数只在需要的时候执行)<br/>
+
+没有副作用(副作用指的是函数内部与外部互动,产生运算以外的其他结果)<br/>
+
+引用透明性(提供同样的输入，那么函数总是返回同样的输出)
+
+
+函数式编程的缺点<br/>
+函数式编程往往会对方法过度包装，导致性能变差<br/>
+由于函数式编程强调不产生副作用，所以他不擅长处理可变状态
+
+### 面向对象编程
+
+面向对象有三个基本特征。封装、继承、多态<br/>
+
+封装即隐藏对象的属性和实现细节，仅对外公开接口,控制在程序中属性的读和修改的访问级别<br/>
+
+继承就是子类继承父类的特征和行为，使得子类对象（实例）具有父类的属性和方法<br/>
+
+多态按字面的意思就是多种状态，允许将子类类型的指针赋值给父类类型的指针。即同一操作作用于不同的对象，可以有不同的解释，产生不同的执行结果。多态的表现方式有重写，重载和接口，原生JS能够实现的多态只有重写。重写是子类可继承父类中的方法，而不需要重新编写相同的方法。但有时子类并不想原封不动地继承父类的方法，而是想作一定的修改，这就需要采用方法的重写。方法重写又称方法覆盖
+
+
 ## 计算机计量单位
 
 ### 比特（位）
@@ -950,7 +1016,7 @@ operation3->end
 ##### CORS
 
 
-```
+```js
 const http = require('http')
     
 http.createServer(function (request, response) {
@@ -969,12 +1035,12 @@ http.createServer(function (request, response) {
 
 ##### Cookie
 
-服务端返回数据的时候通过`Set-Cookie`这个头设置它保存在浏览器里面的内容
-`Cookie`在下次请求时会自动带上
+服务端返回数据的时候通过`Set-Cookie`这个头设置它保存在浏览器里面的内容<br/>
+`Cookie`在下次请求时会自动带上<br/>
 `Cookie`是键值对的形式来保存的，它可以设置多个
 
 
-```
+```js
 const http = require('http')
     
 http.createServer(function (request, response) {
@@ -1007,7 +1073,7 @@ http.createServer(function (request, response) {
 
 ##### Redirect
 
-```
+```js
 const http = require('http')
     
 http.createServer(function (request, response) {
@@ -1059,17 +1125,17 @@ http.createServer(function (request, response) {
 
 ##### Content-Security-Policy
 
-限制资源获取
+限制资源获取<br/>
 报告资源获取越权
 
 ###### 限制方式
 
-通过`default-src`限制全局的所有跟链接请求有关的作用范围
-根据特定资源类型来限制资源范围
+通过`default-src`限制全局的所有跟链接请求有关的作用范围<br/>
+根据特定资源类型来限制资源范围<br/>
 
 > 通过服务器端设置
 
-```
+```html
 // test.html
 <!DOCTYPE html>
 <html lang="en">
@@ -1089,7 +1155,7 @@ http.createServer(function (request, response) {
 </html>
 ```
 
-```
+```js
 const http = require( 'http' )
 const fs = require( 'fs' )
     
@@ -1106,7 +1172,7 @@ http.createServer(function (request, response) {
 
 > 通过客户端设置
 
-```
+```html
 // test.html
 <!DOCTYPE html>
 <html lang="en">
@@ -1144,7 +1210,7 @@ http.createServer(function (request, response) {
 ###### `Server Push`
 
 
-```
+```js
 const http = require( 'http' )
 const fs = require( 'fs' )
     
@@ -1194,7 +1260,7 @@ operation1->operation2
 
 ##### 加密模型
 
-对称加密（两个秘钥一致）
+对称加密（两个秘钥一致）<br/>
 非对称加密（两个秘钥不一致，是一组秘钥）
 
 ##### 数字证书
@@ -1220,9 +1286,9 @@ operation1->operation2
 
 ###### SSL安全参数握手过程
 
-客户端生成随机数1，然后把随机数，协议版本，加密算法，传输给服务端
-服务端生成随机数2，提供自己的数字证书，确定加密算法，传输给客户端
-客户端确认证书是否有效，生成随机数3，使用服务器的公钥加密随机数3，传输给服务端
+客户端生成随机数1，然后把随机数，协议版本，加密算法，传输给服务端<br/>
+服务端生成随机数2，提供自己的数字证书，确定加密算法，传输给客户端<br/>
+客户端确认证书是否有效，生成随机数3，使用服务器的公钥加密随机数3，传输给服务端<br/>
 服务端根据之前所约定的加密算法，根据1，2，3三个随机数生成对称秘钥
 
 

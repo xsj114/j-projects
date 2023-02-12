@@ -67,6 +67,10 @@ export default {
                             link: '/notes/react'
                         },
                         {
+                            text: 'VUE',
+                            link: '/notes/vue'
+                        },
+                        {
                             text: 'TYPESCRIPT',
                             link: '/notes/typescript'
                         },
@@ -120,6 +124,10 @@ export default {
                         {
                             text: 'webpack',
                             link: '/notes/interview/webpack'
+                        },
+                        {
+                            text: 'node',
+                            link: '/notes/interview/node'
                         },
                         {
                             text: 'code',

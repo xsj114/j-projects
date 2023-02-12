@@ -199,3 +199,56 @@ module.exports = {
 :::
 控制包文件大小<br/>
 合理使用`sourceMap`
+
+
+## source-map
+
+`source-map`解决的是当我们打包生成的代码出错的时候，如果不用`source-map`,我们只能知道打包出来的代码第几行出错了，但是我们并不知道它对应的源代码是哪里出错了，所以我们需要使用这个`source-map`,帮我们做一个源代码和目标生成代码之间的一个映射
+
+
+| 配置 | 解释|
+| ---- | ---- |
+| source-map | 会生成.map文件 |
+| inline-source-map | map文件里面的内容会变成base64字符串直接写在bundle里面 |
+| cheap-source-map | 只提示行号,不会提示列号,且只针对业务代码 |
+| cheap-module-source-map | 只提示行号,不会提示列号,除包含业务代码还包含第三方的代码,比如loader |
+| eval | 在bundle里生成eval函数 |
+
+
+
+:::details 原理
+source-map会生成.map文件，这个文件是个对象<br/>
+{<br/>
+    version : 3, // Source map的版本<br/>
+    file: "out.js", // 转换后的文件名<br/>
+    sourceRoot : "", // 转换前的文件所在的目录。如果与转换前的文件在同一目录，该项为空<br/>
+    sources: ["foo.js", "bar.js"], // 转换前的文件。该项是一个数组，表示可能存在多个文件合并<br/>
+    names: ["src", "maps", "are", "fun"], // 转换前的所有变量名和属性名<br/>
+    mappings: "AAgBC,SAAQ,CAAEA" // 记录位置信息的字符串<br/>
+}<br/>
+mappings属性是一个很长的字符串，它分成三层<br/>
+第一层是行对应,以分号表示，每个分号对应转换后源码的一行<br/>
+第二层是位置对应,以逗号表示，每个逗号对应转换后源码的一个位置<br/>
+第三层是位置转换，以VLQ编码表示，代表该位置对应的转换前的源码位置<br/>
+比如mappings:"AAAAA,BBBBB;CCCCC"<br/>
+表示转换后的源码分成两行，第一行有两个位置，第二行有一个位置<br/>
+每个位置使用五位，表示五个字段<br/>
+第一位表示这个位置在（转换后的代码的）的第几列<br/>
+第二位表示这个位置属于sources属性中的哪一个文件<br/>
+第三位，表示这个位置属于转换前代码的第几行<br/>
+第四位，表示这个位置属于转换前代码的第几列<br/>
+第五位，表示这个位置属于names属性中的哪一个变量
+:::
+
+
+
+## webpack如何实现动态加载
+
+
+把模块独立导出一个`js`文件,使用这个模块的时候，`webpack`会构造`script`标签插入`html`中，然后由浏览器发起异步请求
+
+
+## webpack能动态加载require引入的模块吗
+
+
+

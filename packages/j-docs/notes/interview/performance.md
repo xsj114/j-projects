@@ -35,6 +35,10 @@ outline: 'deep'
     st->op1->op2->op3->op4
 ```
 
+::: tip
+`requestAnimationFrame`是在`Layout`和`Paint`之前触发
+:::
+
 
 ::: details 不触发Layout
 `Layout`关心的是位置和大小，所以样式修改如果不是`宽度`，`高度`这样的位置信息的话，它就不会触发我们的`Layout`，比如修改背景颜色，阴影大小等就不会触发`Layout`
@@ -560,12 +564,12 @@ http.createServer(function (request, response) {
 ```js
 // 未缓存DOM查询
 var i
-for(i=0;i<document.getElementsByTagName('p').length;i++){}
+for( i = 0; i < document.getElementsByTagName('p').length; i++ ){}
 
 // 缓存了DOM查询
 var pList = document.getElementsByTagName('p')
 var i
-for(i=0;i<pList.length;i++){}
+for( i = 0; i < pList.length; i++ ){}
 ```
 :::
 
@@ -575,7 +579,7 @@ for(i=0;i<pList.length;i++){}
     var listNode = document.getElementById('list')
     var frag = document.createDocumentFragment()
     var li
-    for(var x=0;x<10;x++){
+    for(var x = 0; x < 10; x++){
         li = document.createElement("li")
         li.innerHTML = "List item" + x
         frag.appendChild(li)
@@ -609,10 +613,10 @@ for(i=0;i<pList.length;i++){}
 
 `Network thread`首先会进行`DNS`查找，要去确认域名对应的那个`IP`，然后才能和服务器建立连接。在请求发起之前，需要设置`UA`等信息。服务器收到请求后，根据处理逻辑将数据组织成`Response`返回到前端，在返回到浏览器这边的时候，它在读取到`Response`前几个字节的时候会做一个分析，分析我们这个数据的类型，然后根据判断到的类型在去进行相关的解析。接下来还会做一个安全检查去判断一下，你访问的这个域名是不是安全的。然后会通知`UI thread`数据准备就绪。
 
-当数据准备好并且`Renderer Process`也准备好了之后，会有一个进程间的通信，并且会把数据传递给我们的`Renderer Process`。`Main thread`开始进行文本的解析，构建`DOM`，在构建`DOM`的过程中会遇到引用外部资源的情况，它会去进行加载。在遇到`JS`脚本的时候，会阻塞解析，可以使用`async`或者`defer`去进行一个异步的加载。`Main thread`还会去解析`CSS`，最终得到一个`computed styles`，它描述了我们每一个元素最终具体要画成什么样子。`Main thread`遍历我们的`DOM`和`computed styles`构造了我们的`RenderTree`。接下来进入到了`Layout`部分，`Layout`是指查找我们元素几何形状的一个过程，，并且会`创建绘制记录`。
+当数据准备好并且`Renderer Process`也准备好了之后，会有一个进程间的通信，并且会把数据传递给我们的`Renderer Process`。`Main thread`开始进行文本的解析，构建`DOM`，在构建`DOM`的过程中会遇到引用外部资源的情况，它会去进行加载。在遇到`JS`脚本的时候，会阻塞解析，可以使用`async`或者`defer`去进行一个异步的加载。`Main thread`还会去解析`CSS`，最终得到一个`computed styles`。`Main thread`遍历我们的`DOM`和`computed styles`构造了我们的布局树，这棵树决定了浏览器到底要画哪些东西，它描述了我们每一个元素最终具体要画成什么样子。接下来进入到了`Layout`部分，`Layout`是指查找我们元素几何形状的一个过程，并且会`创建绘制记录`。
 
 
-接下来，我们需要`Raster Thread`将页面拆分图层，构建`图层树`。然后`Compositor Thread`去把我们已经绘制出来的图层合成成一帧。
+接下来，`Main thread`会提交信息告诉`Compositor Thread`要绘制什么，然后`Compositor Thread`会绘制图层,但是图层可能非常大，就会切块分给`Raster Thread`去做。然后构建`图层树`，去把我们已经绘制出来的图层合成成一帧。
 
 ::: tip
 `UI thread`和`Network thread`都是`Browser Process`中的<br/>
