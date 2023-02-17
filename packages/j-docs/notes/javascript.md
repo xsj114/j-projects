@@ -179,35 +179,16 @@ Drag.prototype.fnUp = function(){
 
 ## 面向对象
 
-### 面向对象编程的特点
 
-抽象-抓住核心问题<br/>
-封装-只能通过对象来访问方法<br/>
-继承-从已有对象上继承出新的对象<br/>
-多态-多对象的不同形态<br/>
+### 原型规则
 
-### 面向对象的语法
+![An image](../assets/prototype.jpg)
 
-对象下面的变量，叫做对象的属性<br/>
-对象下面的函数，叫做对象的方法
+所有的引用类型(数组，对象，函数)都具有对象特性，即可自由扩展属性（除了`null`以外）
 
+所有的引用类型(数组，对象，函数)，都有一个`__proto__`属性，`__proto__`属性值指向它的构造函数的`prototype`属性值，当试图得到一个对象的某个属性时，如果这个对象本身没有这个属性，那么会去它的`__proto__`(即它的构造函数的`prototype`)中寻找
 
-### 原型
-
-去改写对象下面公用的方法或者属性，让公用的方法或者属性在内存中只存在一份,提高性能<br/>
-如果属性是变化的就不能放在原型上
-
-```js
-// prototype要写在构造函数的下面
-function CreatePerson(name){
-    this.name = name;		    	
-}
-CreatePerson.prototype.showName = function(){
-	console.log(this.name);
-}
-var p1 = new CreatePerson('小明');
-p1.showName();
-```
+所有的函数，都有一个`prototype`属性，属性值也是一个普通的对象，这个对象就是原型对象，默认情况下，所有原型对象都会自动获得一个`constructor`属性，这个属性是一个指向`propotype`属性所在函数的指针
 
 
 
@@ -221,119 +202,222 @@ p1.showName();
 所有函数的默认原型都是`Object`的实例
 
 
-### 原型规则
-
-![An image](../assets/prototype.jpg)
-
-所有的引用类型(数组，对象，函数)都具有对象特性，即可自由扩展属性（除了`null`以外）
-
-所有的引用类型(数组，对象，函数)，都有一个`__proto__`属性，`__proto__`属性值指向它的构造函数的`prototype`属性值，当试图得到一个对象的某个属性时，如果这个对象本身没有这个属性，那么会去它的`__proto__`(即它的构造函数的`prototype`)中寻找
-
-所有的函数，都有一个`prototype`属性，属性值也是一个普通的对象，这个对象就是原型对象，默认情况下，所有原型对象都会自动获得一个`constructor`属性，这个属性是一个指向`propotype`属性所在函数的指针
-
 
 ### 继承
 
-在原有对象的基础上略做修改，得到一个新的对象，不影响原有对象的功能
 
+#### 原型链继承
 
-#### 混入式继承
-
-属性的继承调用父类的构造函数，利用call改变指向
-
-方法的继承采用`for...in...`的形式拷贝继承
+:::tip
+问题<br/>
+1.原型包含引用类型值<br/>
+2.没有办法在不影响所有对象实例的情况下，给父类型的构造函数传递参数
+:::
 
 ```js
-//父类
-function CreatePerson(name,sex){                                    
-    this.name = name;
-    this.sex = sex;
+function Parent () {}
+function Child () {}
+
+Child.prototype = new Parent()
+```
+
+
+
+```js
+function Parent () {
+    this.colors = ['red', 'blue', 'green'] 
 }
-CreatePerson.prototype.showName = function(){
-	console.log(this.name);
+function Child () {}
+
+Child.prototype = new Parent() // new Parent()就是一个包含引用类型值的原型
+
+let instanceOne = new Child()
+instanceOne.colors.push('black')  
+console.log(instanceOne.colors)  // red blue green black
+let instanceTwo = new Child()
+console.log(instanceTwo.colors)  // red blue green black
+```
+
+#### 借用构造函数继承
+
+:::tip
+问题<br/>
+1.在父类型原型中定义的方法，对子类型是不可见的<br/>
+2.方法都在构造函数中定义，因此无法做到函数复用
+:::
+
+```js
+function Parent () {
+    this.colors = ['red', 'blue', 'green']
+}
+function Child () {
+    Parent.call(this)
 }
 
-var p1 = new CreatePerson('小明','男');
-p1.showName();
+let instanceOne = new Child()
+instanceOne.colors.push('black')  
+console.log(instanceOne.colors)  // red blue green black
+let instanceTwo = new Child()
+console.log(instanceTwo.colors)  // red blue green
+```
 
-//子类
-function CreateStar(name,sex,job){                                 
-    CreatePerson.call(this,name,sex);
-    this.job = job;
+
+
+#### 组合继承
+
+:::tip
+问题<br/>
+1.会调用两次父类型构造函数<br/>
+:::
+
+```js
+function Parent (name) {
+    this.colors = ['red', 'blue', 'green']
+    this.name = name
+}
+Parent.prototype.sayName = function () {
+    console.log(this.name)
+}
+function Child (name, age) {
+    Parent.call(this, name)
+    this.age = age
 }
 
-CreateStar.prototype.showJob = function(){
-    console.log(this.job);
+Child.prototype = new Parent()
+Child.prototype.constructor = Child
+Child.prototype.sayAge = function () {
+    console.log(this.age)
 }
 
-extend(CreateStar.prototype,CreatePerson.prototype);
+let instanceOne = new Child('Nicholas', 29)
+instanceOne.colors.push('black')  
+console.log(instanceOne.colors)  // red blue green black
+instanceOne.sayName() // Nicholas
+instanceOne.sayAge()  // 29
 
-var p2 = new CreateStar('黄晓明','男','演员');
-p2.showName();
+let instanceTwo = new Child('Greg', 27)
+console.log(instanceTwo.colors)  // red blue green
+instanceTwo.sayName() // Greg
+instanceTwo.sayAge() //  27
+```
 
-function extend(obj1,obj2){
-	for(var attr in obj2){
-		obj1[attr] = obj2[attr];
-	}
+#### 原型式继承
+
+:::tip
+问题<br/>
+1.原型包含引用类型值
+:::
+
+```js
+var person = {
+    name: 'Nicholas',
+    friends: ['Van']
+}
+
+// createObj等价于Object.create()
+function createObj (o) {
+    function F () {}
+    F.prototype = o
+    return new F()
+}
+
+var one = createObj(person)
+one.name = 'Greg'
+one.friends.push('Rob')
+var two = createObj(person)
+two.name = 'Linda'
+two.friends.push('Barbie')
+console.log(person.friends) // Van Rob Barbie
+```
+
+#### 寄生式继承
+
+:::tip
+问题<br/>
+1.不能做到函数复用<br/>
+2.原型包含引用类型值
+:::
+
+
+```js
+var person = {
+    name: 'Nicholas',
+    friends: ['Van']
+}
+
+function createObj (o) {
+    function F () {}
+    F.prototype = o
+    return new F()
+}
+
+function createAnother (original) {
+    var clone = createObj(original)
+    clone.sayHi = function () {
+        console.log('hi')
+    }
+    return clone
+}
+
+var anotherPerson = createAnother(person)
+console.log(anotherPerson.sayHi()) // hi
+```
+
+#### 寄生组合式继承
+
+```js
+function inheritPrototype (child, parent) {
+    let prototype = Object.create(parent.prototype)
+    prototype.constructor = child
+    child.prototype = prototype
+}
+function Parent (name) {
+    this.name = name
+    this.colors = ['red', 'blue', 'green']
+}
+Parent.prototype.sayName = function () {
+    console.log(this.name)
+}
+function Child (name, age) {
+    Parent.call(this, name)
+    this.age = age
+}
+
+inheritPrototype(Child, Parent)
+
+
+Child.prototype.sayAge = function () {
+    console.log(this.age)
 }
 ```
+
 
 #### 类式继承
 
-利用构造函数（类）继承<br/>
-做属性和方法继承的时候要分开继承
-
-
 ```js
-// 父类
-function A(){                  
+function Parent(){                  
     this.name = [1,2,3];
 }
-A.prototype.showName = function(){
+Parent.prototype.showName = function(){
     console.log(this.name);
 }
-// 子类
-function B(){                 
-    A.call(this);
+function Child(){                 
+    Parent.call(this);
 }
-// 避免属性继承，只有方法的继承
-var F = function(){};
-F.prototype = A.prototype;
-B.prototype = new F();
-// 修正指向问题
-B.prototype.constructor = B;   
+var F = function () {};
+F.prototype = Parent.prototype;
+Child.prototype = new F();
+Child.prototype.constructor = Child;   
 
 
-var b1 = new B();
-b1.showName();
-b1.name.push(4);
-console.log(b1.name)   // [1, 2, 3, 4]
-var b2 = new B();
-console.log(b2.name);  // [1,2,3]
+var one = new Child();
+one.showName();
+one.name.push(4);
+console.log(one.name)   // [1, 2, 3, 4]
+var two = new Child();
+console.log(two.name);  // [1, 2, 3]
 ```
 
-#### 原型继承
-
-创建一个构造函数<br/>
-构造函数的原型指向对象<br/>
-然后调用`new`操作符创建实例并返回这个实例<br/>
-
-```js
-var a = {
-	name : '小明'
-}
-var b = cloneObj(a);
-b.name = '小强';
-
-console.log(b.name); // 小强
-console.log(a.name); // 小明
-	
-function cloneObj (obj) {
-	var F = function () {};
-	F.prototype = obj;
-	return new F();
-}
-```
 
 
 ### 包装对象

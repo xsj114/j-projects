@@ -8,10 +8,28 @@ outline: 'deep'
 # Node
 
 
+
+## node的事件循环
+
+| 阶段 | 解释 |
+| ----- | --- |
+| timers | |
+| pending callback | |
+| idle prepare | |
+| poll | |
+| check | |
+| close callbacks | |
+
+
 ## nodejs的加载机制
+
+## 为什么node可以高并发
+
+因为`node`具有`事务驱动`和`异步I/O`特性，是非阻塞异步操作
 
 
 ## require有什么性能问题
+
 
 ## node中module.exports和exports的区别
 

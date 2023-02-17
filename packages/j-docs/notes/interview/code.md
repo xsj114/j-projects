@@ -56,132 +56,6 @@ console.log(myFunc()) // This is dep1 -> This is dep2 -> This is dep3
 ```
 
 
-## 事件循环
-
-浏览器的事件循环，有宏任务和微任务,其中每轮事件循环只执行一个宏任务，执行完这一轮的宏任务之后，会处理掉这一轮的所有微任务，所以说，每轮微任务是在每轮宏任务执行完之后执行的
-
-
-```js
-// 结果是1,2,3,4,5,6
-console.log('1')
-
-setTimeout(() => {
-    console.log('6')
-},0)
-
-new Promise((resolve,reject) => {
-    console.log('2')
-    resolve()
-}).then(()=>{
-    console.log('4')
-}).then(()=>{
-    console.log('5')
-})
-console.log('3')
-```
-
-```js
-// 结果是1,2,3,4,5,6,7,8,9,10
-console.log('1')
-
-setTimeout(() => {
-    console.log('6')
-    new Promise((resolve, reject)=>{
-        resolve()
-        console.log('7')
-    }).then(()=>{
-        console.log('9')
-    }).then(()=>{
-        console.log('10')
-    })
-    console.log('8')
-},0)
-
-new Promise((resolve,reject) => {
-    console.log('2')
-    resolve()
-}).then(()=>{
-    console.log('4')
-}).then(()=>{
-    console.log('5')
-})
-console.log('3')
-```
-
-```js
-// 结果是1,2,3,4,5,6,7,8,9,10,11
-console.log('1')
-
-setTimeout(() => {
-    console.log('6')
-    Promise.resolve().then(()=>{
-        console.log('8')
-        setTimeout(()=>{
-            console.log('11')
-        }, 0)
-        console.log('9')
-    })
-    console.log('7')
-},0)
-
-Promise.resolve().then(()=>{
-    console.log('3')
-    setTimeout(()=>{
-        console.log('10')
-    }, 0)
-})
-Promise.resolve().then(()=>{
-    console.log('4')
-})
-console.log('2')
-Promise.resolve().then(()=>{
-    console.log('5')
-})
-```
-
-```js
-// 结果是1,2,3,4,5,6,7,8,9,10,11,12,13,14
-console.log('1')
-
-const async1 = async () => {
-    console.log('2')
-    await async2()     // await语句右侧的是同步的，await语句下面的是微任务
-    console.log('6')
-}
-
-const async2 = async () => {
-    console.log('3')
-}
-
-setTimeout(() => {
-    console.log('9')
-    Promise.resolve().then(()=>{
-        console.log('11')
-        setTimeout(()=>{
-            console.log('14')
-        }, 0)
-        console.log('12')
-    })
-    console.log('10')
-},0)
-
-Promise.resolve().then(()=>{
-    console.log('5')
-    setTimeout(()=>{
-        console.log('13')
-    }, 0)
-})
-
-async1()
-
-Promise.resolve().then(()=>{
-    console.log('7')
-})
-console.log('4')
-Promise.resolve().then(()=>{
-    console.log('8')
-})
-```
 
 
 ## 用`reduce`实现数组`flat`方法
@@ -211,13 +85,8 @@ console.log( flat( [ 1, 2, [ 3, 4, [ 5, 6, [ 7 ] ] ] ], 2 ) )
 ```js
 Array.prototype.customReduce = function (fn ,initialValue) {
     const array = this
-    let prevValue
-    let currentValue
-    for ( let i = 0; i < array.length; i++ ) {
-        if ( i === 0) {
-            prevValue = initialValue ? initialValue : array[0]
-            i = 1
-        }
+    let prevValue = initialValue !== undefined ? initialValue : array[0]
+    for (let i = initialValue !== undefined ? 0 : 1 ; i < array.length; i++ ) {
         prevValue = fn(prevValue, array[i], i, array)
     }
     return prevValue
@@ -236,6 +105,70 @@ const proxy = new Proxy(arr, {
         return Reflect.get(target, key)
     }
 })
+```
+
+## 列表转为树
+
+```js
+let tree = [
+    { id: 0, name: "中国" },
+    { id: 1, pid: 0, name: "广东省" },
+    { id: 2, pid: 1, name: "深圳市" },
+    { id: 3, pid: 1, name: "广州市" },
+    { id: 4, pid: 0, name: "陕西省" },
+]
+
+
+
+const fn = (tree) => {
+    const map = {}
+    let result = []
+    tree.forEach(ele => {
+        map[ele.id] = ele
+    })
+    tree.forEach(item => {
+        const parent = map[item.pid]
+        if (parent) {
+            ( parent.children || (parent.children = []) ).push(item) 
+        }else {
+            result.push(item)
+        }
+    })
+
+    return result[0]
+}
+
+/*
+{
+    id: 0,
+    name: '中国',
+    children: [
+        {
+            id: 1,
+            pid: 0,
+            name: '广东省',
+            children: [
+                {
+                    id: 2,
+                    pid: 1,
+                    name: "深圳市"
+                },
+                {
+                    id: 3,
+                    pid: 1,
+                    name: "广州市"
+                }
+            ]
+        },
+        {
+            id: 4,
+            pid: 0,
+            name: "陕西省"
+        }
+    ]
+}
+*/
+console.log(fn(tree))
 ```
 
 
@@ -531,77 +464,6 @@ class List{
 ```
 
 
-## 请说一下下面console出的内容
-
-```js
-function Foo(){
-    getName = function(){
-        console.log(1)
-    }
-    return this
-}
-Foo.getName = function(){
-    console.log(2)
-}
-Foo.prototype.getName = function(){
-    console.log(3)
-}
-var getName = function(){
-    console.log(4)
-}
-function getName (){
-    console.log(5)
-}
-
-Foo.getName() // 2
-getName() // 4
-Foo().getName() // 1
-getName() // 1
-new Foo.getName() // 2
-new Foo().getName() // 3
-// .的运算符优先级比new的运算符优先级要高，new带参数列表运算符优先级比new的无参数列表运算符优先级要高
-new new Foo().getName()  // 3
-```
-
-
-```js
-function Foo () { 
-    this.getName = function(){console.log('1')}; 
-    return this;
-}
-Foo.getName = function() { console.log('2'); };
-Foo.prototype.getName = function(){console.log('3');};
-var getName = function(){ console.log('4') };
-function getName() { console.log('5'); };
-
-// 打印
-Foo.getName(); // 2
-getName(); // 4
-Foo().getName(); // 1
-getName(); // 1
-new (Foo.getName)(); // 2
-(new Foo()).getName(); // 1
-```
-
-
-```js
-var result = []
-var a = 3
-var total = 0
-function foo (a) {
-    var i = 0;
-    for (; i < 3; i++) {
-        result[i] = function () {
-            total += i * a
-            console.log(total)
-        }
-    }
-}
-foo(1) 
-result[0]()  // 3
-result[1]()  // 6
-result[2]()  // 9
-```
 
 ## 发红包
 
@@ -823,7 +685,6 @@ console.log(fn(1290023.235)) // 1,290,023.235
 console.log(fn(129023)) // 129,023
 ```
 
-## 手写async函数
 
 ## 实现节流函数,要求初次执行的时候立刻执行
 
@@ -951,60 +812,6 @@ const fn = async (arr) => {
 fn(arr)                
 ```
 
-## 原型链考察
-
-```js
-function Person(name) {
-    this.name = name
-}
-
-let p = new Person('Tom')
-
-console.log(p.__proto__) //Person.prototype
-console.log(Person.prototype) // {constructor: Person}
-console.log(Person.prototype.__proto__) // Person.prototype.__proto__ === Object.prototype
-console.log(Person.__proto__) // Person.__proto === Function.prototype
-console.log(Function.prototype) // Function.prototype === Object.__proto__
-console.log(Function.__proto__.prototype) // undefined
-console.log(Function.__proto__) // Function.__proto__ === Function.prototype
-console.log(Object.__proto__) // Object.__proto__ === Function.prototype
-console.log(Object.prototype) // {constructor: Object}
-console.log(Object.prototype.__proto__) // Object.prototype.__proto__ === null
-```
-
-```js
-// 说出差异
-function Child () {}
-function Parent () {}
-
-Child.prototype.__proto__ = Parent.prototype
-Child.prototype = new Parent()
-
-// 原型链不同
-/*
-Child.prototype.__proto__ = Parent.prototype
-Child{
-    __proto__: { // Child.prototype
-        __proto__: { // Parent.prototype
-            __proto__: { // Object.prototype
-                __proto__: null
-            }
-        }
-    }
-}
-
-Child.prototype = new Parent()
-Child{
-    __proto__: { // Parent instance
-        __proto__: { // Parent prototype
-            __proto__: { // Object.prototype 
-                __proto__: null
-            }
-        }
-    }
-}
-*/
-```
 
 
 
@@ -1182,6 +989,294 @@ const fn = (arr) => {
 console.log(fn(['ab', 'c', 'ab', 'd', 'c'])) // ['ab1', 'c1', 'ab2', 'd', 'c2']
 ```
 
+## 实现一个对象被for of遍历
+
+```js
+const obj = {
+    a: 1,
+    b: 2
+}
+
+obj[Symbol.iterator] = function () {
+    
+    let keys = Object.keys(this)
+    let nextIndex = 0 
+    
+    return {
+        next: function () {
+            return nextIndex < keys.length ? { 
+                value: obj[ keys[ nextIndex++ ] ], 
+                done: false 
+            } : { value: undefined, done: true} 
+        }
+    }
+
+}
+
+for (let val of obj) {
+    console.log(val)
+}
+```
+
+## 实现一个函数，判断一个对象是否循环引用
+
+
+```js
+var obj = {
+    a: {
+        b: {}
+    }
+}
+obj.a.b = obj
+
+var cicrleObj = {
+    a: {
+        b: {}
+    }
+}
+cicrleObj.a.b = cicrleObj.a
+
+var arr = [ 1, 2 ]
+arr.push(arr)
+
+
+
+const fn = (data, parent) => {
+    
+    let flag = false
+    let parentArray = parent || [data]
+    for (let key in data) {
+        if (typeof data[key] === 'object') {
+            parentArray.forEach(ele =>{
+                if (ele === data[key]) {
+                    flag = true
+                }
+            })   
+            if (!flag) { flag = fn(data[key], [...parentArray, data[key]]) }
+            
+        }           
+    }
+    return flag
+
+}
+
+console.log(fn(obj)) // true
+console.log(fn(cicrleObj)) // true
+console.log(fn(arr)) // true
+```
+
+
+## 实现一个Scheduler
+
+
+```js
+class Node {
+
+    constructor(val, next) {
+        this.val = val
+        this.next = next || null
+        this.call = false
+        this.result = null
+    }
+
+}
+class Scheduler{
+
+    constructor (maxCount) {
+        this.first = null
+        this.maxCount = maxCount
+        this.nextNode = null
+        this.index = 0
+    }
+
+
+    add (fn) {
+        if (this.first) {
+            let nextNode = this.first
+            while (nextNode.next) {
+                nextNode = nextNode.next
+            }
+            nextNode.next = new Node(fn)
+        } else {
+            this.first = new Node(fn)
+        }
+    }
+
+    start () {
+        for (let i = 0; i < this.maxCount; i++) {
+            this.request()
+        }
+    }
+
+
+    request () {
+        if (this.index >= this.maxCount) return
+        this.index++
+        let node = this.first
+        while (node && node.call) {
+            node = node.next
+        }
+        if (node) {
+            node.call = true
+            node.val().then((res) => {
+                node.result = res
+                this.index--
+                this.request()
+            })
+        }
+    }
+
+}
+
+const scheduler = new Scheduler(2)
+const timeout = (time) => {
+    return new Promise((resolve)=>{
+        setTimeout(resolve, time)
+    })
+}
+function addTask(time, order) {
+    scheduler.add(() =>
+        timeout(time).then(() => {
+            console.log(order);
+            return order
+        })
+    );
+}
+addTask(1000, 1);
+addTask(500, 2);
+addTask(300, 3);
+addTask(400, 4);
+scheduler.start() // 2 3 1 4
+```
+
+
+## 事件循环
+
+浏览器的事件循环，有宏任务和微任务,其中每轮事件循环只执行一个宏任务，执行完这一轮的宏任务之后，会处理掉这一轮的所有微任务，所以说，每轮微任务是在每轮宏任务执行完之后执行的
+
+
+```js
+// 结果是1,2,3,4,5,6
+console.log('1')
+
+setTimeout(() => {
+    console.log('6')
+},0)
+
+new Promise((resolve,reject) => {
+    console.log('2')
+    resolve()
+}).then(()=>{
+    console.log('4')
+}).then(()=>{
+    console.log('5')
+})
+console.log('3')
+```
+
+```js
+// 结果是1,2,3,4,5,6,7,8,9,10
+console.log('1')
+
+setTimeout(() => {
+    console.log('6')
+    new Promise((resolve, reject)=>{
+        resolve()
+        console.log('7')
+    }).then(()=>{
+        console.log('9')
+    }).then(()=>{
+        console.log('10')
+    })
+    console.log('8')
+},0)
+
+new Promise((resolve,reject) => {
+    console.log('2')
+    resolve()
+}).then(()=>{
+    console.log('4')
+}).then(()=>{
+    console.log('5')
+})
+console.log('3')
+```
+
+```js
+// 结果是1,2,3,4,5,6,7,8,9,10,11
+console.log('1')
+
+setTimeout(() => {
+    console.log('6')
+    Promise.resolve().then(()=>{
+        console.log('8')
+        setTimeout(()=>{
+            console.log('11')
+        }, 0)
+        console.log('9')
+    })
+    console.log('7')
+},0)
+
+Promise.resolve().then(()=>{
+    console.log('3')
+    setTimeout(()=>{
+        console.log('10')
+    }, 0)
+})
+Promise.resolve().then(()=>{
+    console.log('4')
+})
+console.log('2')
+Promise.resolve().then(()=>{
+    console.log('5')
+})
+```
+
+```js
+// 结果是1,2,3,4,5,6,7,8,9,10,11,12,13,14
+console.log('1')
+
+const async1 = async () => {
+    console.log('2')
+    await async2()     // await语句右侧的是同步的，await语句下面的是微任务
+    console.log('6')
+}
+
+const async2 = async () => {
+    console.log('3')
+}
+
+setTimeout(() => {
+    console.log('9')
+    Promise.resolve().then(()=>{
+        console.log('11')
+        setTimeout(()=>{
+            console.log('14')
+        }, 0)
+        console.log('12')
+    })
+    console.log('10')
+},0)
+
+Promise.resolve().then(()=>{
+    console.log('5')
+    setTimeout(()=>{
+        console.log('13')
+    }, 0)
+})
+
+async1()
+
+Promise.resolve().then(()=>{
+    console.log('7')
+})
+console.log('4')
+Promise.resolve().then(()=>{
+    console.log('8')
+})
+```
+
 
 ## 请说出以下输出内容
 
@@ -1206,18 +1301,12 @@ var obj = (function () {
     }
 })()
 
-say()
-obj.say()
-obj.say = say
-obj.say()
+say()  // window window
+obj.say()   // 1-1 1-2
+obj.say = say 
+obj.say() // window 1-2
 ```
 
-## 实现一个对象被for of遍历
-
-
-## 实现一个函数，判断一个对象是否循环引用
-
-## 说出打印内容
 
 ```js
 var a = 99
@@ -1238,49 +1327,215 @@ function Pet(name) {
 }
 
 const cat = new Pet('cat')
-cat.getName()
+cat.getName() // cat
 
 const { getName } = cat
-getName()
+getName() // cat
 
 ```
 
-## 实现一个Vue自定义指令懒加载
-
-
-
-## 请说出打印内容
-
-
 ```js
-function Ofo() {}
-
-function Bick() {
-    this.name = 'mybick'
+function Foo(){
+    getName = function(){
+        console.log(1)
+    }
+    return this
+}
+Foo.getName = function(){
+    console.log(2)
+}
+Foo.prototype.getName = function(){
+    console.log(3)
+}
+var getName = function(){
+    console.log(4)
+}
+function getName (){
+    console.log(5)
 }
 
-var myBick = new Ofo()
-
-Ofo.prototype = new Bick()
-
-var youbick = new Bick()
-
-console.log(myBick.name) // undefined
-
-console.log(youbick.name) // mybick
+Foo.getName() // 2
+getName() // 4
+Foo().getName() // 1
+getName() // 1
+new Foo.getName() // 2
+new Foo().getName() // 3
+// .的运算符优先级比new的运算符优先级要高，new带参数列表运算符优先级比new的无参数列表运算符优先级要高
+new new Foo().getName()  // 3
 ```
-
-## 这几种继承的方式有哪些问题
 
 ```js
-const Shape = function() {}
-const Area = function() {}
+function Foo () { 
+    this.getName = function(){console.log('1')}; 
+    return this;
+}
+Foo.getName = function() { console.log('2'); };
+Foo.prototype.getName = function(){console.log('3');};
+var getName = function(){ console.log('4') };
+function getName() { console.log('5'); };
 
-Area.prototype = Shape.prototype
-
-Area.prototype = new Shape()
-
-Area.prototype = Object.create(Shape.prototype)
+// 打印
+Foo.getName(); // 2
+getName(); // 4
+Foo().getName(); // 1
+getName(); // 1
+new (Foo.getName)(); // 2
+(new Foo()).getName(); // 1
 ```
 
-## proxy兼容polyfill实现
+
+```js
+var result = []
+var a = 3
+var total = 0
+function foo (a) {
+    var i = 0;
+    for (; i < 3; i++) {
+        result[i] = function () {
+            // 执行时i是3，a是1
+            total += i * a
+            console.log(total)
+        }
+    }
+}
+foo(1) 
+result[0]()  // 3
+result[1]()  // 6
+result[2]()  // 9
+```
+
+
+
+## 类型转换考察
+
+```js
+console.log(10 + false + undefined + [] + 'Tencent' + null + true + {})
+// 'NaNTencentnulltrue[object Object]'
+```
+
+
+
+## 原型链考察
+
+```js
+function Person(name) {
+    this.name = name
+}
+
+let p = new Person('Tom')
+
+console.log(p.__proto__) //Person.prototype
+console.log(Person.prototype) // {constructor: Person}
+console.log(Person.prototype.__proto__) // Person.prototype.__proto__ === Object.prototype
+console.log(Person.__proto__) // Person.__proto === Function.prototype
+console.log(Function.prototype) // Function.prototype === Object.__proto__
+console.log(Function.__proto__.prototype) // undefined
+console.log(Function.__proto__) // Function.__proto__ === Function.prototype
+console.log(Object.__proto__) // Object.__proto__ === Function.prototype
+console.log(Object.prototype) // {constructor: Object}
+console.log(Object.prototype.__proto__) // Object.prototype.__proto__ === null
+```
+
+```js
+// 说出差异
+function Child () {}
+function Parent () {}
+
+Child.prototype.__proto__ = Parent.prototype
+Child.prototype = new Parent()
+
+// 原型链不同
+/*
+Child.prototype.__proto__ = Parent.prototype
+Child{
+    __proto__: { // Child.prototype
+        __proto__: { // Parent.prototype
+            __proto__: { // Object.prototype
+                __proto__: null
+            }
+        }
+    }
+}
+
+Child.prototype = new Parent()
+Child{
+    __proto__: { // Parent instance
+        __proto__: { // Parent prototype
+            __proto__: { // Object.prototype 
+                __proto__: null
+            }
+        }
+    }
+}
+*/
+```
+
+
+
+```js
+// 说出差异
+const Parent = function() {}
+const Child = function() {}
+
+Child.prototype = Parent.prototype
+
+/*
+Child{
+    __proto__: { // Parent prototype
+        __proto__: { // Object prototype
+            __proto__: null
+        }    
+    }
+}
+*/
+
+Child.prototype = new Parent()
+
+/*
+Child{
+    __proto__: { // Parent Instance
+        __proto__: { // Parent prototype
+            __proto__: { // Object.prototype
+                __proto__: null
+            }
+        }
+    }
+}
+*/
+
+Child.prototype = Object.create(Parent.prototype)
+
+/*
+Child{
+    __proto__: { // Object.create()创建出来的对象
+        __proto__: { // Parent prototype
+            __proto__: { // Object prototype
+                __proto__: null
+            }
+        }
+    }
+}
+*/
+```
+
+
+```js
+function Parent() {
+    this.name = 'parent'
+}
+function Child() {}
+
+
+var child = new Child()
+
+Child.prototype = new Parent()
+
+console.log(child.name) // undefined 因为它的实例声明在Child.prototype之前
+
+var parent = new Parent()
+
+console.log(parent.name) // parent
+```
+
+
+
