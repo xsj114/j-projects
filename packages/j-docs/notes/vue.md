@@ -3857,3 +3857,275 @@ function markStaticRoots (node: ASTNode, isInFor: boolean) {
   }
 }
 ```
+
+
+### codegen
+
+
+
+```js
+export function generate (
+  ast: ASTElement | void,
+  options: CompilerOptions
+): CodegenResult {
+  const state = new CodegenState(options)
+  const code = ast ? genElement(ast, state) : '_c("div")'
+  return {
+    render: `with(this){return ${code}}`,
+    staticRenderFns: state.staticRenderFns
+  }
+}
+```
+
+
+```js
+export function genElement (el: ASTElement, state: CodegenState): string {
+  if (el.staticRoot && !el.staticProcessed) {
+    return genStatic(el, state)
+  } else if (el.once && !el.onceProcessed) {
+    return genOnce(el, state)
+  } else if (el.for && !el.forProcessed) {
+    return genFor(el, state)
+  } else if (el.if && !el.ifProcessed) {
+    return genIf(el, state)
+  } else if (el.tag === 'template' && !el.slotTarget) {
+    return genChildren(el, state) || 'void 0'
+  } else if (el.tag === 'slot') {
+    return genSlot(el, state)
+  } else {
+    // component or element
+    let code
+    if (el.component) {
+      code = genComponent(el.component, el, state)
+    } else {
+      const data = el.plain ? undefined : genData(el, state)
+
+      const children = el.inlineTemplate ? null : genChildren(el, state, true)
+      code = `_c('${el.tag}'${
+        data ? `,${data}` : '' // data
+      }${
+        children ? `,${children}` : '' // children
+      })`
+    }
+    // module transforms
+    for (let i = 0; i < state.transforms.length; i++) {
+      code = state.transforms[i](el, code)
+    }
+    return code
+  }
+}
+```
+
+## event
+
+
+```js
+export const dirRE = /^v-|^@|^:/
+export const bindRE = /^:|^v-bind:/
+export const onRE = /^@|^v-on:/
+
+function processAttrs (el) {
+  const list = el.attrsList
+  let i, l, name, rawName, value, modifiers, isProp
+  for (i = 0, l = list.length; i < l; i++) {
+    name = rawName = list[i].name
+    value = list[i].value
+    if (dirRE.test(name)) {
+      // mark element as dynamic
+      el.hasBindings = true
+      // modifiers
+      modifiers = parseModifiers(name)
+      if (modifiers) {
+        // 去掉处理完的修饰符
+        name = name.replace(modifierRE, '')
+      }
+      if (bindRE.test(name)) { // v-bind
+          ...省略
+      } else if (onRE.test(name)) { // v-on
+        name = name.replace(onRE, '')
+        addHandler(el, name, value, modifiers, false, warn)
+      } else { // normal directives
+          ...省略
+      }
+    } else {
+        ...省略
+    }
+  }
+}
+```
+
+
+```js
+export function addHandler (
+  el: ASTElement,
+  name: string,
+  value: string,
+  modifiers: ?ASTModifiers,
+  important?: boolean,
+  warn?: Function
+) {
+  modifiers = modifiers || emptyObject
+  // warn prevent and passive modifier
+  /* istanbul ignore if */
+  ...省略
+
+  // check capture modifier
+  if (modifiers.capture) {
+    delete modifiers.capture
+    name = '!' + name // mark the event as captured
+  }
+  if (modifiers.once) {
+    delete modifiers.once
+    name = '~' + name // mark the event as once
+  }
+  /* istanbul ignore if */
+  if (modifiers.passive) {
+    delete modifiers.passive
+    name = '&' + name // mark the event as passive
+  }
+
+  // normalize click.right and click.middle since they don't actually fire
+  // this is technically browser-specific, but at least for now browsers are
+  // the only target envs that have right/middle clicks.
+  if (name === 'click') {
+    if (modifiers.right) {
+      name = 'contextmenu'
+      delete modifiers.right
+    } else if (modifiers.middle) {
+      name = 'mouseup'
+    }
+  }
+
+  let events
+  if (modifiers.native) {
+    delete modifiers.native
+    events = el.nativeEvents || (el.nativeEvents = {})
+  } else {
+    events = el.events || (el.events = {})
+  }
+
+  const newHandler: any = {
+    value: value.trim()
+  }
+  if (modifiers !== emptyObject) {
+    newHandler.modifiers = modifiers
+  }
+
+  const handlers = events[name]
+  /* istanbul ignore if */
+  if (Array.isArray(handlers)) {
+    important ? handlers.unshift(newHandler) : handlers.push(newHandler)
+  } else if (handlers) {
+    events[name] = important ? [newHandler, handlers] : [handlers, newHandler]
+  } else {
+    events[name] = newHandler
+  }
+
+  el.plain = false
+}
+```
+
+
+> 以上是event编译阶段，也就是生成ast树阶段，对event做的处理
+
+
+```js
+export function genData (el: ASTElement, state: CodegenState): string {
+  let data = '{'
+
+  ...省略
+  // event handlers
+  if (el.events) {
+    data += `${genHandlers(el.events, false, state.warn)},`
+  }
+  if (el.nativeEvents) {
+    data += `${genHandlers(el.nativeEvents, true, state.warn)},`
+  }
+  ...省略
+}
+```
+
+
+```js
+export function genHandlers (
+  events: ASTElementHandlers,
+  isNative: boolean,
+  warn: Function
+): string {
+  let res = isNative ? 'nativeOn:{' : 'on:{'
+  for (const name in events) {
+    res += `"${name}":${genHandler(name, events[name])},`
+  }
+  return res.slice(0, -1) + '}'
+}
+```
+
+```js
+
+function genHandler (
+  name: string,
+  handler: ASTElementHandler | Array<ASTElementHandler>
+): string {
+  if (!handler) {
+    return 'function(){}'
+  }
+
+  if (Array.isArray(handler)) {
+    return `[${handler.map(handler => genHandler(name, handler)).join(',')}]`
+  }
+
+  const isMethodPath = simplePathRE.test(handler.value)
+  const isFunctionExpression = fnExpRE.test(handler.value)
+
+  if (!handler.modifiers) {
+    if (isMethodPath || isFunctionExpression) {
+      return handler.value
+    }
+    ...省略
+    return `function($event){${handler.value}}` // inline statement
+  } else {
+    let code = ''
+    let genModifierCode = ''
+    const keys = []
+    for (const key in handler.modifiers) {
+      if (modifierCode[key]) {
+        genModifierCode += modifierCode[key]
+        // left/right
+        if (keyCodes[key]) {
+          keys.push(key)
+        }
+      } else if (key === 'exact') {
+        const modifiers: ASTModifiers = (handler.modifiers: any)
+        genModifierCode += genGuard(
+          ['ctrl', 'shift', 'alt', 'meta']
+            .filter(keyModifier => !modifiers[keyModifier])
+            .map(keyModifier => `$event.${keyModifier}Key`)
+            .join('||')
+        )
+      } else {
+        keys.push(key)
+      }
+    }
+    if (keys.length) {
+      code += genKeyFilter(keys)
+    }
+    // Make sure modifiers like prevent and stop get executed after key filtering
+    if (genModifierCode) {
+      code += genModifierCode
+    }
+    const handlerCode = isMethodPath
+      ? `return ${handler.value}($event)`
+      : isFunctionExpression
+        ? `return (${handler.value})($event)`
+        : handler.value
+    /* istanbul ignore if */
+    if (__WEEX__ && handler.params) {
+      return genWeexHandler(handler.params, code + handlerCode)
+    }
+    return `function($event){${code}${handlerCode}}`
+  }
+}
+```
+
+> 以上是生成event相关代码的过程
+
