@@ -85,3 +85,22 @@ export http_proxy=http://127.0.0.1:1087;
 export https_proxy=http://127.0.0.1:1087;
 ```
 
+
+### vim搭建
+
+
+创建`.vimrc`文件<br/>
+在命令行中执行如下代码，安装`vim-plug`插件管理器
+```shell
+curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+```
+在命令行中执行如下代码，安装字体，然后在`iTerm2`中设置 
+```shell
+brew tap homebrew/cask-fonts
+brew install font-hack-nerd-font --cask
+```
+
+
+
+
