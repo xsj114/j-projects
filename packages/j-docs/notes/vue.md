@@ -4129,3 +4129,129 @@ function genHandler (
 
 > 以上是生成event相关代码的过程
 
+
+```js
+function updateDOMListeners (oldVnode: VNodeWithData, vnode: VNodeWithData) {
+  if (isUndef(oldVnode.data.on) && isUndef(vnode.data.on)) {
+    return
+  }
+  const on = vnode.data.on || {}
+  const oldOn = oldVnode.data.on || {}
+  target = vnode.elm
+  ...省略
+  updateListeners(on, oldOn, add, remove, vnode.context)
+  target = undefined
+}
+
+export default {
+  create: updateDOMListeners,
+  update: updateDOMListeners
+}
+```
+
+```js
+export function updateListeners (
+  on: Object,
+  oldOn: Object,
+  add: Function,
+  remove: Function,
+  vm: Component
+) {
+  let name, def, cur, old, event
+  for (name in on) {
+    def = cur = on[name]
+    old = oldOn[name]
+    event = normalizeEvent(name)
+    ...省略
+    if (isUndef(cur)) {
+      process.env.NODE_ENV !== 'production' && warn(
+        `Invalid handler for event "${event.name}": got ` + String(cur),
+        vm
+      )
+    } else if (isUndef(old)) {
+      // 说明是创建事件
+      if (isUndef(cur.fns)) {
+        cur = on[name] = createFnInvoker(cur)
+      }
+      add(event.name, cur, event.once, event.capture, event.passive, event.params)
+    } else if (cur !== old) {
+      old.fns = cur
+      on[name] = old
+    }
+  }
+  for (name in oldOn) {
+    if (isUndef(on[name])) {
+      event = normalizeEvent(name)
+      remove(event.name, oldOn[name], event.capture)
+    }
+  }
+}
+```
+
+```js
+export function createFnInvoker (fns: Function | Array<Function>): Function {
+  function invoker () {
+    const fns = invoker.fns
+    if (Array.isArray(fns)) {
+      const cloned = fns.slice()
+      for (let i = 0; i < cloned.length; i++) {
+        cloned[i].apply(null, arguments)
+      }
+    } else {
+      // return handler return value for single handlers
+      return fns.apply(null, arguments)
+    }
+  }
+  invoker.fns = fns
+  return invoker
+}
+```
+
+```js
+function add (
+  event: string,
+  handler: Function,
+  once: boolean,
+  capture: boolean,
+  passive: boolean
+) {
+  handler = withMacroTask(handler)
+  if (once) handler = createOnceHandler(handler, event, capture)
+  target.addEventListener(
+    event,
+    handler,
+    supportsPassive
+      ? { capture, passive }
+      : capture
+  )
+}
+```
+
+```js
+export function withMacroTask (fn: Function): Function {
+  return fn._withTask || (fn._withTask = function () {
+    useMacroTask = true
+    const res = fn.apply(null, arguments)
+    useMacroTask = false
+    return res
+  })
+}
+```
+
+```js
+function createOnceHandler (handler, event, capture) {
+  const _target = target // save current target element in closure
+  return function onceHandler () {
+    const res = handler.apply(null, arguments)
+    if (res !== null) {
+      remove(event, onceHandler, capture, _target)
+    }
+  }
+}
+```
+
+> 上面代码是创建原生DOM事件的相关代码
+
+
+
+
