@@ -4254,4 +4254,180 @@ function createOnceHandler (handler, event, capture) {
 
 
 
+## v-model
+
+
+```js
+export const dirRE = /^v-|^@|^:/
+function processAttrs (el) {
+  const list = el.attrsList
+  let i, l, name, rawName, value, modifiers, isProp
+  for (i = 0, l = list.length; i < l; i++) {
+    name = rawName = list[i].name
+    value = list[i].value
+    if (dirRE.test(name)) {
+      // mark element as dynamic
+      el.hasBindings = true
+      // modifiers
+      modifiers = parseModifiers(name)
+      if (modifiers) {
+        name = name.replace(modifierRE, '')
+      }
+      if (bindRE.test(name)) { // v-bind
+          ...省略
+      } else if (onRE.test(name)) { // v-on
+          ...省略
+      } else { // normal directives
+        name = name.replace(dirRE, '')
+        ...省略
+        addDirective(el, name, rawName, value, arg, modifiers)
+        if (process.env.NODE_ENV !== 'production' && name === 'model') {
+          checkForAliasModel(el, value)
+        }
+      }
+    } else {
+        ...省略
+    }
+  }
+}
+```
+
+```js
+export function addDirective (
+  el: ASTElement,
+  name: string,
+  rawName: string,
+  value: string,
+  arg: ?string,
+  modifiers: ?ASTModifiers
+) {
+  (el.directives || (el.directives = [])).push({ name, rawName, value, arg, modifiers })
+  el.plain = false
+}
+```
+
+
+> 以上是v-model编译阶段，也就是生成ast树阶段，对v-model做的处理
+
+
+```js
+export function genData (el: ASTElement, state: CodegenState): string {
+  let data = '{'
+
+  // directives first.
+  // directives may mutate the el's other properties before they are generated.
+  const dirs = genDirectives(el, state)
+  if (dirs) data += dirs + ','
+
+  // key
+  if (el.key) {
+    data += `key:${el.key},`
+  }
+  // ref
+  if (el.ref) {
+    data += `ref:${el.ref},`
+  }
+  if (el.refInFor) {
+    data += `refInFor:true,`
+  }
+  // pre
+  if (el.pre) {
+    data += `pre:true,`
+  }
+  // record original tag name for components using "is" attribute
+  if (el.component) {
+    data += `tag:"${el.tag}",`
+  }
+  // module data generation functions
+  for (let i = 0; i < state.dataGenFns.length; i++) {
+    data += state.dataGenFns[i](el)
+  }
+  // attributes
+  if (el.attrs) {
+    data += `attrs:{${genProps(el.attrs)}},`
+  }
+  // DOM props
+  if (el.props) {
+    data += `domProps:{${genProps(el.props)}},`
+  }
+  // event handlers
+  if (el.events) {
+    data += `${genHandlers(el.events, false, state.warn)},`
+  }
+  if (el.nativeEvents) {
+    data += `${genHandlers(el.nativeEvents, true, state.warn)},`
+  }
+  // slot target
+  // only for non-scoped slots
+  if (el.slotTarget && !el.slotScope) {
+    data += `slot:${el.slotTarget},`
+  }
+  // scoped slots
+  if (el.scopedSlots) {
+    data += `${genScopedSlots(el.scopedSlots, state)},`
+  }
+  // component v-model
+  if (el.model) {
+    data += `model:{value:${
+      el.model.value
+    },callback:${
+      el.model.callback
+    },expression:${
+      el.model.expression
+    }},`
+  }
+  // inline-template
+  if (el.inlineTemplate) {
+    const inlineTemplate = genInlineTemplate(el, state)
+    if (inlineTemplate) {
+      data += `${inlineTemplate},`
+    }
+  }
+  data = data.replace(/,$/, '') + '}'
+  // v-bind data wrap
+  if (el.wrapData) {
+    data = el.wrapData(data)
+  }
+  // v-on data wrap
+  if (el.wrapListeners) {
+    data = el.wrapListeners(data)
+  }
+  return data
+}
+```
+
+```js
+function genDirectives (el: ASTElement, state: CodegenState): string | void {
+  const dirs = el.directives
+  if (!dirs) return
+  let res = 'directives:['
+  let hasRuntime = false
+  let i, l, dir, needRuntime
+  for (i = 0, l = dirs.length; i < l; i++) {
+    dir = dirs[i]
+    needRuntime = true
+    const gen: DirectiveFunction = state.directives[dir.name]
+    if (gen) {
+      // compile-time directive that manipulates AST.
+      // returns true if it also needs a runtime counterpart.
+      needRuntime = !!gen(el, dir, state.warn)
+    }
+    if (needRuntime) {
+      hasRuntime = true
+      res += `{name:"${dir.name}",rawName:"${dir.rawName}"${
+        dir.value ? `,value:(${dir.value}),expression:${JSON.stringify(dir.value)}` : ''
+      }${
+        dir.arg ? `,arg:"${dir.arg}"` : ''
+      }${
+        dir.modifiers ? `,modifiers:${JSON.stringify(dir.modifiers)}` : ''
+      }},`
+    }
+  }
+  if (hasRuntime) {
+    return res.slice(0, -1) + ']'
+  }
+}
+```
+
+
 
