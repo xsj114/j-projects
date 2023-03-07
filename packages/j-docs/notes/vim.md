@@ -248,6 +248,7 @@ call plug#end()
 colorscheme nord
 
 " nerdTree的配置
+let NERDTreeShowHidden = 1
 nnoremap <C-v> :NERDTreeFind<cr>
 nnoremap <C-m> :NERDTreeToggle<cr>
 
