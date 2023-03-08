@@ -3149,3 +3149,6 @@ lean         倾斜
 sloppy       稀松
 procedure    程序
 assimilate   吸收
+opt          选择
+upward       向上
+ton          吨
