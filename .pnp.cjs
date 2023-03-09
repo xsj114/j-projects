@@ -45,6 +45,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "reference": "workspace:packages/j-is"\
       },\
       {\
+        "name": "j-mysql",\
+        "reference": "workspace:packages/j-mysql"\
+      },\
+      {\
         "name": "j-promise",\
         "reference": "workspace:packages/j-promise"\
       },\
@@ -2203,6 +2207,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "npm:1.0.0"\
       ],\
       [\
+        "denque",\
+        "npm:2.1.0"\
+      ],\
+      [\
         "depd",\
         "npm:2.0.0"\
       ],\
@@ -2847,6 +2855,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "npm:4.0.4"\
       ],\
       [\
+        "generate-function",\
+        "npm:2.3.1"\
+      ],\
+      [\
         "gensync",\
         "npm:1.0.0-beta.2"\
       ],\
@@ -3363,6 +3375,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "npm:1.0.1"\
       ],\
       [\
+        "is-property",\
+        "npm:1.0.2"\
+      ],\
+      [\
         "is-reference",\
         "npm:1.2.1"\
       ],\
@@ -3505,6 +3521,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       [\
         "j-is",\
         "workspace:packages/j-is"\
+      ],\
+      [\
+        "j-mysql",\
+        "workspace:packages/j-mysql"\
       ],\
       [\
         "j-promise",\
@@ -3911,6 +3931,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "npm:4.1.0"\
       ],\
       [\
+        "long",\
+        "npm:5.2.1"\
+      ],\
+      [\
         "longest",\
         "npm:2.0.1"\
       ],\
@@ -4101,6 +4125,14 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       [\
         "mute-stream",\
         "npm:0.0.8"\
+      ],\
+      [\
+        "mysql2",\
+        "npm:3.2.0"\
+      ],\
+      [\
+        "named-placeholders",\
+        "npm:1.1.3"\
       ],\
       [\
         "nan",\
@@ -4975,6 +5007,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "npm:0.18.0"\
       ],\
       [\
+        "seq-queue",\
+        "npm:0.0.5"\
+      ],\
+      [\
         "serialize-javascript",\
         "npm:6.0.0"\
       ],\
@@ -5137,6 +5173,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       [\
         "sprintf-js",\
         "npm:1.0.3"\
+      ],\
+      [\
+        "sqlstring",\
+        "npm:2.3.3"\
       ],\
       [\
         "sshpk",\
@@ -17579,6 +17619,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["denque", [\
+        ["npm:2.1.0", {\
+          "packageLocation": "./.yarn/cache/denque-npm-2.1.0-578d0b6297-1d4ae1d05e.zip/node_modules/denque/",\
+          "packageDependencies": [\
+            ["denque", "npm:2.1.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["depd", [\
         ["npm:1.1.2", {\
           "packageLocation": "./.yarn/cache/depd-npm-1.1.2-b0c8414da7-6b406620d2.zip/node_modules/depd/",\
@@ -19979,6 +20028,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["generate-function", [\
+        ["npm:2.3.1", {\
+          "packageLocation": "./.yarn/cache/generate-function-npm-2.3.1-c839dc559c-652f083de2.zip/node_modules/generate-function/",\
+          "packageDependencies": [\
+            ["generate-function", "npm:2.3.1"],\
+            ["is-property", "npm:1.0.2"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["gensync", [\
         ["npm:1.0.0-beta.2", {\
           "packageLocation": "./.yarn/cache/gensync-npm-1.0.0-beta.2-224666d72f-a7437e58c6.zip/node_modules/gensync/",\
@@ -21771,6 +21830,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["is-property", [\
+        ["npm:1.0.2", {\
+          "packageLocation": "./.yarn/cache/is-property-npm-1.0.2-6eac53b30e-33b661a369.zip/node_modules/is-property/",\
+          "packageDependencies": [\
+            ["is-property", "npm:1.0.2"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["is-reference", [\
         ["npm:1.2.1", {\
           "packageLocation": "./.yarn/cache/is-reference-npm-1.2.1-87ca1743c8-e7b48149f8.zip/node_modules/is-reference/",\
@@ -22295,6 +22363,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["jest-environment-jsdom", "npm:28.1.3"],\
             ["ts-jest", "virtual:5318c94f1468d1885cf03518d45828bdb03b4d094552774796ca826fafce018d7f14e51ec46904043234f280f30834708839b1b23ea6f6c59fd972f24ccbd06e#npm:28.0.8"],\
             ["typescript", "patch:typescript@npm%3A4.8.3#~builtin<compat/typescript>::version=4.8.3&hash=a1c5e5"]\
+          ],\
+          "linkType": "SOFT"\
+        }]\
+      ]],\
+      ["j-mysql", [\
+        ["workspace:packages/j-mysql", {\
+          "packageLocation": "./packages/j-mysql/",\
+          "packageDependencies": [\
+            ["j-mysql", "workspace:packages/j-mysql"],\
+            ["mysql2", "npm:3.2.0"]\
           ],\
           "linkType": "SOFT"\
         }]\
@@ -24499,6 +24577,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["long", [\
+        ["npm:5.2.1", {\
+          "packageLocation": "./.yarn/cache/long-npm-5.2.1-3a12730171-9264da12d1.zip/node_modules/long/",\
+          "packageDependencies": [\
+            ["long", "npm:5.2.1"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["longest", [\
         ["npm:1.0.1::__archiveUrl=https%3A%2F%2Fregistry.npmmirror.com%2Flongest%2F-%2Flongest-1.0.1.tgz", {\
           "packageLocation": "./.yarn/cache/longest-npm-1.0.1-a0956cd982-21717f9567.zip/node_modules/longest/",\
@@ -24581,6 +24668,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/lru-cache-npm-7.14.0-354cf654ec-efdd329f2c.zip/node_modules/lru-cache/",\
           "packageDependencies": [\
             ["lru-cache", "npm:7.14.0"]\
+          ],\
+          "linkType": "HARD"\
+        }],\
+        ["npm:7.18.3", {\
+          "packageLocation": "./.yarn/cache/lru-cache-npm-7.18.3-e68be5b11c-e550d77238.zip/node_modules/lru-cache/",\
+          "packageDependencies": [\
+            ["lru-cache", "npm:7.18.3"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -25144,6 +25238,33 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/mute-stream-npm-0.0.8-489a7d6c2b-ff48d251fc.zip/node_modules/mute-stream/",\
           "packageDependencies": [\
             ["mute-stream", "npm:0.0.8"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["mysql2", [\
+        ["npm:3.2.0", {\
+          "packageLocation": "./.yarn/cache/mysql2-npm-3.2.0-46c0374810-7885d3b4f5.zip/node_modules/mysql2/",\
+          "packageDependencies": [\
+            ["mysql2", "npm:3.2.0"],\
+            ["denque", "npm:2.1.0"],\
+            ["generate-function", "npm:2.3.1"],\
+            ["iconv-lite", "npm:0.6.3"],\
+            ["long", "npm:5.2.1"],\
+            ["lru-cache", "npm:7.18.3"],\
+            ["named-placeholders", "npm:1.1.3"],\
+            ["seq-queue", "npm:0.0.5"],\
+            ["sqlstring", "npm:2.3.3"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["named-placeholders", [\
+        ["npm:1.1.3", {\
+          "packageLocation": "./.yarn/cache/named-placeholders-npm-1.1.3-1b385febe5-7834adc91e.zip/node_modules/named-placeholders/",\
+          "packageDependencies": [\
+            ["named-placeholders", "npm:1.1.3"],\
+            ["lru-cache", "npm:7.18.3"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -28121,6 +28242,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["seq-queue", [\
+        ["npm:0.0.5", {\
+          "packageLocation": "./.yarn/cache/seq-queue-npm-0.0.5-d5064d9793-f8695a6cb6.zip/node_modules/seq-queue/",\
+          "packageDependencies": [\
+            ["seq-queue", "npm:0.0.5"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["serialize-javascript", [\
         ["npm:6.0.0", {\
           "packageLocation": "./.yarn/cache/serialize-javascript-npm-6.0.0-0bb8a3c88d-56f90b562a.zip/node_modules/serialize-javascript/",\
@@ -28645,6 +28775,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/sprintf-js-npm-1.0.3-73f0a322fa-19d79aec21.zip/node_modules/sprintf-js/",\
           "packageDependencies": [\
             ["sprintf-js", "npm:1.0.3"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["sqlstring", [\
+        ["npm:2.3.3", {\
+          "packageLocation": "./.yarn/cache/sqlstring-npm-2.3.3-2db6939570-1e7e2d51c3.zip/node_modules/sqlstring/",\
+          "packageDependencies": [\
+            ["sqlstring", "npm:2.3.3"]\
           ],\
           "linkType": "HARD"\
         }]\

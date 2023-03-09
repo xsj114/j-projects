@@ -1,0 +1,7 @@
+{
+  "name": "j-mysql",
+  "packageManager": "yarn@3.2.3",
+  "dependencies": {
+    "mysql2": "^3.2.0"
+  }
+}
