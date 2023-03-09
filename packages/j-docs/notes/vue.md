@@ -4410,6 +4410,7 @@ function genDirectives (el: ASTElement, state: CodegenState): string | void {
     if (gen) {
       // compile-time directive that manipulates AST.
       // returns true if it also needs a runtime counterpart.
+      // gen就是下文的model函数
       needRuntime = !!gen(el, dir, state.warn)
     }
     if (needRuntime) {
@@ -4429,5 +4430,110 @@ function genDirectives (el: ASTElement, state: CodegenState): string | void {
 }
 ```
 
+```js
+export default function model (
+  el: ASTElement,
+  dir: ASTDirective,
+  _warn: Function
+): ?boolean {
+  warn = _warn
+  const value = dir.value
+  const modifiers = dir.modifiers
+  const tag = el.tag
+  const type = el.attrsMap.type
+
+
+  ...省略
+
+
+  if (el.component) {
+    genComponentModel(el, value, modifiers)
+    // component v-model doesn't need extra runtime
+    return false
+  } else if (tag === 'select') {
+    genSelect(el, value, modifiers)
+  } else if (tag === 'input' && type === 'checkbox') {
+    genCheckboxModel(el, value, modifiers)
+  } else if (tag === 'input' && type === 'radio') {
+    genRadioModel(el, value, modifiers)
+  } else if (tag === 'input' || tag === 'textarea') {
+    genDefaultModel(el, value, modifiers)
+  } else if (!config.isReservedTag(tag)) {
+    genComponentModel(el, value, modifiers)
+    // component v-model doesn't need extra runtime
+    return false
+  } else if (process.env.NODE_ENV !== 'production') {
+    warn(
+      `<${el.tag} v-model="${value}">: ` +
+      `v-model is not supported on this element type. ` +
+      'If you are working with contenteditable, it\'s recommended to ' +
+      'wrap a library dedicated for that purpose inside a custom component.'
+    )
+  }
+
+  // ensure runtime directive metadata
+  return true
+}
+```
+
+
+```js
+function genDefaultModel (
+  el: ASTElement,
+  value: string,
+  modifiers: ?ASTModifiers
+): ?boolean {
+  const type = el.attrsMap.type
+
+  // warn if v-bind:value conflicts with v-model
+  // except for inputs with v-bind:type
+
+  ...省略
+
+  const { lazy, number, trim } = modifiers || {}
+  const needCompositionGuard = !lazy && type !== 'range'
+  const event = lazy
+    ? 'change'
+    : type === 'range'
+      ? RANGE_TOKEN
+      : 'input'
+
+  let valueExpression = '$event.target.value'
+  if (trim) {
+    valueExpression = `$event.target.value.trim()`
+  }
+  if (number) {
+    valueExpression = `_n(${valueExpression})`
+  }
+
+  let code = genAssignmentCode(value, valueExpression)
+  if (needCompositionGuard) {
+    code = `if($event.target.composing)return;${code}`
+  }
+
+  addProp(el, 'value', `(${value})`)
+  addHandler(el, event, code, null, true)
+  if (trim || number) {
+    addHandler(el, 'blur', '$forceUpdate()')
+  }
+}
+```
+
+
+```js
+export function genAssignmentCode (
+  value: string,
+  assignment: string
+): string {
+  const res = parseModel(value)
+  if (res.key === null) {
+    return `${value}=${assignment}`
+  } else {
+    return `$set(${res.exp}, ${res.key}, ${assignment})`
+  }
+}
+```
+
+> 以上是生成v-model相关代码的过程
 
 
