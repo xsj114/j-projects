@@ -1841,7 +1841,6 @@ blood        血液
 blow         打击,吹
 boast        自夸
 boat         小船
-boil         烧开
 bomb         炸弹
 bowl         碗
 brain        大脑
@@ -2389,7 +2388,6 @@ scandal      丑闻,丑事
 scare        吓
 scent        香味,香水
 school       学校
-science      科学,理科
 score        评分,成绩
 scream       惊叫
 sculpture    雕塑
@@ -3152,3 +3150,5 @@ assimilate   吸收
 opt          选择
 upward       向上
 ton          吨
+boil         烧开
+science      科学,理科
