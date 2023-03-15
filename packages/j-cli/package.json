@@ -1,0 +1,8 @@
+{
+    "name": "j-cli",
+    "packageManager": "yarn@3.2.3",
+    "bin": "./cli.cjs",
+    "dependencies": {
+        "inquirer": "^9.1.4"
+    }
+}

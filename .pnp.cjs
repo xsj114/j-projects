@@ -29,6 +29,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "reference": "workspace:packages/j-check-word-server"\
       },\
       {\
+        "name": "j-cli",\
+        "reference": "workspace:packages/j-cli"\
+      },\
+      {\
         "name": "j-docs",\
         "reference": "workspace:packages/j-docs"\
       },\
@@ -1856,7 +1860,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ],\
       [\
         "cli-cursor",\
-        "npm:3.1.0"\
+        "npm:4.0.0"\
       ],\
       [\
         "cli-spinners",\
@@ -1864,7 +1868,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ],\
       [\
         "cli-width",\
-        "npm:3.0.0"\
+        "npm:4.0.0"\
       ],\
       [\
         "cliui",\
@@ -2700,7 +2704,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ],\
       [\
         "figures",\
-        "npm:3.2.0"\
+        "npm:5.0.0"\
       ],\
       [\
         "file-entry-cache",\
@@ -3208,7 +3212,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ],\
       [\
         "inquirer",\
-        "npm:8.2.4"\
+        "npm:9.1.4"\
       ],\
       [\
         "internal-slot",\
@@ -3505,6 +3509,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       [\
         "j-check-word-server",\
         "workspace:packages/j-check-word-server"\
+      ],\
+      [\
+        "j-cli",\
+        "workspace:packages/j-cli"\
       ],\
       [\
         "j-docs",\
@@ -5832,7 +5840,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ],\
       [\
         "wrap-ansi",\
-        "npm:7.0.0"\
+        "npm:8.0.1"\
       ],\
       [\
         "wrappy",\
@@ -14166,6 +14174,14 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["type-fest", "npm:1.4.0"]\
           ],\
           "linkType": "HARD"\
+        }],\
+        ["npm:6.0.0", {\
+          "packageLocation": "./.yarn/cache/ansi-escapes-npm-6.0.0-eab622440e-1ddc0b27b1.zip/node_modules/ansi-escapes/",\
+          "packageDependencies": [\
+            ["ansi-escapes", "npm:6.0.0"],\
+            ["type-fest", "npm:3.6.1"]\
+          ],\
+          "linkType": "HARD"\
         }]\
       ]],\
       ["ansi-gray", [\
@@ -15983,6 +15999,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/chalk-npm-5.0.1-6afcb94227-7b45300372.zip/node_modules/chalk/",\
           "packageDependencies": [\
             ["chalk", "npm:5.0.1"]\
+          ],\
+          "linkType": "HARD"\
+        }],\
+        ["npm:5.2.0", {\
+          "packageLocation": "./.yarn/cache/chalk-npm-5.2.0-bedd808592-03d8060277.zip/node_modules/chalk/",\
+          "packageDependencies": [\
+            ["chalk", "npm:5.2.0"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -21310,6 +21333,28 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["wrap-ansi", "npm:8.0.1"]\
           ],\
           "linkType": "HARD"\
+        }],\
+        ["npm:9.1.4", {\
+          "packageLocation": "./.yarn/cache/inquirer-npm-9.1.4-70d8277c43-b9acb56dfc.zip/node_modules/inquirer/",\
+          "packageDependencies": [\
+            ["inquirer", "npm:9.1.4"],\
+            ["ansi-escapes", "npm:6.0.0"],\
+            ["chalk", "npm:5.2.0"],\
+            ["cli-cursor", "npm:4.0.0"],\
+            ["cli-width", "npm:4.0.0"],\
+            ["external-editor", "npm:3.1.0"],\
+            ["figures", "npm:5.0.0"],\
+            ["lodash", "npm:4.17.21"],\
+            ["mute-stream", "npm:0.0.8"],\
+            ["ora", "npm:6.1.2"],\
+            ["run-async", "npm:2.4.1"],\
+            ["rxjs", "npm:7.8.0"],\
+            ["string-width", "npm:5.1.2"],\
+            ["strip-ansi", "npm:7.0.1"],\
+            ["through", "npm:2.3.8"],\
+            ["wrap-ansi", "npm:8.0.1"]\
+          ],\
+          "linkType": "HARD"\
         }]\
       ]],\
       ["internal-slot", [\
@@ -22287,6 +22332,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["koa", "npm:2.13.4"],\
             ["koa-static", "npm:5.0.0"],\
             ["nodemon", "npm:2.0.20"]\
+          ],\
+          "linkType": "SOFT"\
+        }]\
+      ]],\
+      ["j-cli", [\
+        ["workspace:packages/j-cli", {\
+          "packageLocation": "./packages/j-cli/",\
+          "packageDependencies": [\
+            ["j-cli", "workspace:packages/j-cli"],\
+            ["inquirer", "npm:9.1.4"]\
           ],\
           "linkType": "SOFT"\
         }]\
@@ -28024,6 +28079,14 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["tslib", "npm:2.4.0"]\
           ],\
           "linkType": "HARD"\
+        }],\
+        ["npm:7.8.0", {\
+          "packageLocation": "./.yarn/cache/rxjs-npm-7.8.0-722f1c7172-61b4d4fd32.zip/node_modules/rxjs/",\
+          "packageDependencies": [\
+            ["rxjs", "npm:7.8.0"],\
+            ["tslib", "npm:2.4.0"]\
+          ],\
+          "linkType": "HARD"\
         }]\
       ]],\
       ["safe-buffer", [\
@@ -30127,6 +30190,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/type-fest-npm-2.19.0-918b953248-a4ef07ece2.zip/node_modules/type-fest/",\
           "packageDependencies": [\
             ["type-fest", "npm:2.19.0"]\
+          ],\
+          "linkType": "HARD"\
+        }],\
+        ["npm:3.6.1", {\
+          "packageLocation": "./.yarn/cache/type-fest-npm-3.6.1-d4ccf8e466-f7e39bf6b7.zip/node_modules/type-fest/",\
+          "packageDependencies": [\
+            ["type-fest", "npm:3.6.1"]\
           ],\
           "linkType": "HARD"\
         }]\
