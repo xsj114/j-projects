@@ -7,7 +7,7 @@
     <meta name="description" content="A VitePress site">
     <link rel="stylesheet" href="/j-projects/assets/style.51882fe8.css">
     <link rel="modulepreload" href="/j-projects/assets/app.8ed2f878.js">
-    <link rel="modulepreload" href="/j-projects/assets/notes_vim.md.0c057af9.lean.js">
+    <link rel="modulepreload" href="/j-projects/assets/notes_vim.md.ad66c7d3.lean.js">
     
     <script>(()=>{const e=localStorage.getItem("vitepress-theme-appearance"),a=window.matchMedia("(prefers-color-scheme: dark)").matches;(!e||e==="auto"?a:e==="dark")&&document.documentElement.classList.add("dark")})();</script>
   <meta name="twitter:title" content="VIM | 学习笔记">
@@ -67,9 +67,6 @@ text object是要操作的文本对象
 <span class="line"><span style="color:#676E95;font-style:italic;">&quot; 设置编码</span></span>
 <span class="line"><span style="color:#A6ACCD;">set </span><span style="color:#FFCB6B;">encoding</span><span style="color:#89DDFF;">=</span><span style="color:#A6ACCD;">UTF-</span><span style="color:#F78C6C;">8</span></span>
 <span class="line"></span>
-<span class="line"><span style="color:#676E95;font-style:italic;">&quot; leader加w 进行保存</span></span>
-<span class="line"><span style="color:#C792EA;">inoremap</span><span style="color:#A6ACCD;"> </span><span style="color:#89DDFF;">&lt;</span><span style="color:#A6ACCD;">leader</span><span style="color:#89DDFF;">&gt;</span><span style="color:#A6ACCD;">w </span><span style="color:#89DDFF;">&lt;</span><span style="color:#A6ACCD;">Esc</span><span style="color:#89DDFF;">&gt;</span><span style="color:#A6ACCD;">:w</span><span style="color:#89DDFF;">&lt;</span><span style="color:#A6ACCD;">cr</span><span style="color:#89DDFF;">&gt;</span></span>
-<span class="line"></span>
 <span class="line"><span style="color:#676E95;font-style:italic;">&quot; 选中列高亮</span></span>
 <span class="line"><span style="color:#A6ACCD;">set </span><span style="color:#FFCB6B;">cursorcolumn</span></span>
 <span class="line"></span>
@@ -82,21 +79,20 @@ text object是要操作的文本对象
 <span class="line"><span style="color:#C792EA;">noremap</span><span style="color:#A6ACCD;"> </span><span style="color:#89DDFF;">&lt;</span><span style="color:#A6ACCD;">C-k</span><span style="color:#89DDFF;">&gt;</span><span style="color:#A6ACCD;"> </span><span style="color:#89DDFF;">&lt;</span><span style="color:#A6ACCD;">C-w</span><span style="color:#89DDFF;">&gt;</span><span style="color:#A6ACCD;">k</span></span>
 <span class="line"><span style="color:#C792EA;">noremap</span><span style="color:#A6ACCD;"> </span><span style="color:#89DDFF;">&lt;</span><span style="color:#A6ACCD;">C-l</span><span style="color:#89DDFF;">&gt;</span><span style="color:#A6ACCD;"> </span><span style="color:#89DDFF;">&lt;</span><span style="color:#A6ACCD;">C-w</span><span style="color:#89DDFF;">&gt;</span><span style="color:#A6ACCD;">l</span></span>
 <span class="line"></span>
+<span class="line"></span>
 <span class="line"><span style="color:#676E95;font-style:italic;">&quot; vim-plug 插件下载器</span></span>
 <span class="line"><span style="color:#A6ACCD;">call </span><span style="color:#82AAFF;">plug#begin</span><span style="color:#89DDFF;">(</span><span style="color:#C3E88D;">&#39;~/.vim/plugged&#39;</span><span style="color:#89DDFF;">)</span></span>
 <span class="line"></span>
 <span class="line"><span style="color:#676E95;font-style:italic;">&quot; vim 的开屏插件</span></span>
 <span class="line"><span style="color:#A6ACCD;">Plug </span><span style="color:#C3E88D;">&#39;mhinz/vim-startify&#39;</span></span>
 <span class="line"></span>
+<span class="line"><span style="color:#676E95;font-style:italic;">&quot; vim的主题色插件</span></span>
+<span class="line"><span style="color:#676E95;font-style:italic;">&quot; Plug &#39;arcticicestudio/nord-vim&#39;</span></span>
+<span class="line"><span style="color:#A6ACCD;">Plug </span><span style="color:#C3E88D;">&#39;nordtheme/vim&#39;</span></span>
+<span class="line"></span>
 <span class="line"><span style="color:#676E95;font-style:italic;">&quot; vim 的状态行插件</span></span>
 <span class="line"><span style="color:#A6ACCD;">Plug </span><span style="color:#C3E88D;">&#39;vim-airline/vim-airline&#39;</span></span>
 <span class="line"><span style="color:#A6ACCD;">Plug </span><span style="color:#C3E88D;">&#39;vim-airline/vim-airline-themes&#39;</span></span>
-<span class="line"></span>
-<span class="line"><span style="color:#676E95;font-style:italic;">&quot; vim 的背景色插件</span></span>
-<span class="line"><span style="color:#A6ACCD;">Plug </span><span style="color:#C3E88D;">&#39;altercation/vim-colors-solarized&#39;</span></span>
-<span class="line"></span>
-<span class="line"><span style="color:#676E95;font-style:italic;">&quot; vim 的主题色插件</span></span>
-<span class="line"><span style="color:#A6ACCD;">Plug </span><span style="color:#C3E88D;">&#39;w0ng/vim-hybrid&#39;</span></span>
 <span class="line"></span>
 <span class="line"><span style="color:#676E95;font-style:italic;">&quot; vim nerdTree目录树</span></span>
 <span class="line"><span style="color:#676E95;font-style:italic;">&quot; 安装好后，icon不能显示，需要执行以下两条命令，下载字体</span></span>
@@ -111,85 +107,51 @@ text object是要操作的文本对象
 <span class="line"><span style="color:#A6ACCD;">Plug </span><span style="color:#C3E88D;">&#39;easymotion/vim-easymotion&#39;</span></span>
 <span class="line"></span>
 <span class="line"><span style="color:#676E95;font-style:italic;">&quot; vim 的快速编辑插件 https://github.com/tpope/vim-surround</span></span>
-<span class="line"><span style="color:#676E95;font-style:italic;">&quot; ys 增加成对内容  normal模式下</span></span>
-<span class="line"><span style="color:#676E95;font-style:italic;">&quot; cs 修改成对内容  normal模式下</span></span>
-<span class="line"><span style="color:#676E95;font-style:italic;">&quot; ds 删除成对内容  normal模式下</span></span>
+<span class="line"><span style="color:#676E95;font-style:italic;">&quot; ys 增加成对内容  normal模式下    增加一对双引号按下 y s i w &quot;</span></span>
+<span class="line"><span style="color:#676E95;font-style:italic;">&quot; cs 修改成对内容  normal模式下    将成对的双引号改成成对的单引号按下 c s &quot; &#39;</span></span>
+<span class="line"><span style="color:#676E95;font-style:italic;">&quot; ds 删除成对内容  normal模式下    删除成对的双引号按下 d s &quot;</span></span>
 <span class="line"><span style="color:#A6ACCD;">Plug </span><span style="color:#C3E88D;">&#39;tpope/vim-surround&#39;</span></span>
 <span class="line"></span>
 <span class="line"><span style="color:#676E95;font-style:italic;">&quot; vim的模糊搜索工具</span></span>
+<span class="line"><span style="color:#676E95;font-style:italic;">&quot; Ag命令不生效,需执行</span></span>
+<span class="line"><span style="color:#676E95;font-style:italic;">&quot; brew install the_silver_searcher</span></span>
 <span class="line"><span style="color:#676E95;font-style:italic;">&quot; 使用Ag[PATTERN] 模糊搜索字符串</span></span>
 <span class="line"><span style="color:#676E95;font-style:italic;">&quot; 使用Files[PATH] 模糊搜索目录</span></span>
 <span class="line"><span style="color:#A6ACCD;">Plug </span><span style="color:#C3E88D;">&#39;junegunn/fzf&#39;</span><span style="color:#89DDFF;">,</span><span style="color:#A6ACCD;"> { </span><span style="color:#C3E88D;">&#39;dir&#39;</span><span style="color:#A6ACCD;">: </span><span style="color:#C3E88D;">&#39;~/.fzf&#39;</span><span style="color:#89DDFF;">,</span><span style="color:#A6ACCD;"> </span><span style="color:#C3E88D;">&#39;do&#39;</span><span style="color:#A6ACCD;">: </span><span style="color:#C3E88D;">&#39;./install --all&#39;</span><span style="color:#A6ACCD;"> }</span></span>
 <span class="line"><span style="color:#A6ACCD;">Plug </span><span style="color:#C3E88D;">&#39;junegunn/fzf.vim&#39;</span></span>
 <span class="line"></span>
 <span class="line"><span style="color:#676E95;font-style:italic;">&quot; vim的搜索替换插件</span></span>
+<span class="line"><span style="color:#676E95;font-style:italic;">&quot; :Far foo bar **/*.js    将js文件里所有foo替换成bar，回车后会弹出预览窗口</span></span>
+<span class="line"><span style="color:#676E95;font-style:italic;">&quot; :Fardo                  预览没问题，输入Fardo生效</span></span>
 <span class="line"><span style="color:#A6ACCD;">Plug </span><span style="color:#C3E88D;">&#39;brooth/far.vim&#39;</span></span>
-<span class="line"></span>
-<span class="line"><span style="color:#676E95;font-style:italic;">&quot; vim的高亮插件</span></span>
-<span class="line"><span style="color:#A6ACCD;">Plug </span><span style="color:#C3E88D;">&#39;lfv89/vim-interestingwords&#39;</span></span>
-<span class="line"></span>
-<span class="line"><span style="color:#676E95;font-style:italic;">&quot; vim的注释插件</span></span>
-<span class="line"><span style="color:#676E95;font-style:italic;">&quot; gc注释和取消注释</span></span>
-<span class="line"><span style="color:#A6ACCD;">Plug </span><span style="color:#C3E88D;">&#39;tpope/vim-commentary&#39;</span></span>
-<span class="line"></span>
-<span class="line"><span style="color:#676E95;font-style:italic;">&quot; vim的自动格式化插件</span></span>
-<span class="line"><span style="color:#A6ACCD;">Plug </span><span style="color:#C3E88D;">&#39;sbdchd/neoformat&#39;</span></span>
-<span class="line"></span>
-<span class="line"><span style="color:#676E95;font-style:italic;">&quot; vim的js语言格式化库 配合neoformat,ale</span></span>
-<span class="line"><span style="color:#A6ACCD;">Plug </span><span style="color:#C3E88D;">&#39;prettier/vim-prettier&#39;</span></span>
 <span class="line"></span>
 <span class="line"><span style="color:#676E95;font-style:italic;">&quot; vim的静态检查插件</span></span>
 <span class="line"><span style="color:#A6ACCD;">Plug </span><span style="color:#C3E88D;">&#39;w0rp/ale&#39;</span></span>
 <span class="line"></span>
-<span class="line"><span style="color:#676E95;font-style:italic;">&quot; vim里使用git的插件</span></span>
-<span class="line"><span style="color:#A6ACCD;">Plug </span><span style="color:#C3E88D;">&#39;tpope/vim-fugitive&#39;</span></span>
-<span class="line"></span>
-<span class="line"><span style="color:#676E95;font-style:italic;">&quot; vim里显示git的变更插件</span></span>
-<span class="line"><span style="color:#A6ACCD;">Plug </span><span style="color:#C3E88D;">&#39;airblade/vim-gitgutter&#39;</span></span>
-<span class="line"></span>
-<span class="line"><span style="color:#676E95;font-style:italic;">&quot; vim里查看git的代码提交记录插件</span></span>
-<span class="line"><span style="color:#A6ACCD;">Plug </span><span style="color:#C3E88D;">&#39;junegunn/gv.vim&#39;</span></span>
-<span class="line"></span>
-<span class="line"><span style="color:#676E95;font-style:italic;">&quot; vim的浏览插件</span></span>
-<span class="line"><span style="color:#A6ACCD;">Plug </span><span style="color:#C3E88D;">&#39;majutsushi/tagbar&#39;</span></span>
-<span class="line"></span>
-<span class="line"><span style="color:#676E95;font-style:italic;">&quot; vim 的图标插件</span></span>
-<span class="line"><span style="color:#A6ACCD;">Plug </span><span style="color:#C3E88D;">&#39;ryanoasis/vim-devicons&#39;</span></span>
-<span class="line"></span>
 <span class="line"><span style="color:#676E95;font-style:italic;">&quot; vim 的css颜色插件</span></span>
 <span class="line"><span style="color:#A6ACCD;">Plug </span><span style="color:#C3E88D;">&#39;ap/vim-css-color&#39;</span></span>
 <span class="line"></span>
-<span class="line"><span style="color:#676E95;font-style:italic;">&quot;vim 的主题色插件 </span></span>
-<span class="line"><span style="color:#A6ACCD;">Plug </span><span style="color:#C3E88D;">&#39;arcticicestudio/nord-vim&#39;</span></span>
 <span class="line"></span>
-<span class="line"><span style="color:#676E95;font-style:italic;">&quot; vim 的语法和缩进插件</span></span>
-<span class="line"><span style="color:#A6ACCD;">Plug </span><span style="color:#C3E88D;">&#39;lepture/vim-jinja&#39;</span></span>
+<span class="line"><span style="color:#676E95;font-style:italic;">&quot; vim里使用git的插件</span></span>
+<span class="line"><span style="color:#676E95;font-style:italic;">&quot; :Gblame可以告诉我们每一行是谁写的</span></span>
+<span class="line"><span style="color:#A6ACCD;">Plug </span><span style="color:#C3E88D;">&#39;tpope/vim-fugitive&#39;</span></span>
+<span class="line"><span style="color:#676E95;font-style:italic;">&quot; vim里显示git的变更插件</span></span>
+<span class="line"><span style="color:#A6ACCD;">Plug </span><span style="color:#C3E88D;">&#39;airblade/vim-gitgutter&#39;</span></span>
+<span class="line"><span style="color:#676E95;font-style:italic;">&quot; vim里查看git的代码提交记录插件</span></span>
+<span class="line"><span style="color:#676E95;font-style:italic;">&quot; :GV可以查看代码提交记录</span></span>
+<span class="line"><span style="color:#A6ACCD;">Plug </span><span style="color:#C3E88D;">&#39;junegunn/gv.vim&#39;</span></span>
 <span class="line"></span>
-<span class="line"><span style="color:#676E95;font-style:italic;">&quot; vim 的快速编辑大文件插件</span></span>
-<span class="line"><span style="color:#A6ACCD;">Plug </span><span style="color:#C3E88D;">&#39;vim-scripts/LargeFile&#39;</span></span>
-<span class="line"></span>
-<span class="line"><span style="color:#676E95;font-style:italic;">&quot; vim 的缩进线插件</span></span>
-<span class="line"><span style="color:#A6ACCD;">Plug </span><span style="color:#C3E88D;">&#39;nathanaelkane/vim-indent-guides&#39;</span></span>
-<span class="line"><span style="color:#A6ACCD;">Plug </span><span style="color:#C3E88D;">&#39;Yggdroot/indentLine&#39;</span></span>
-<span class="line"></span>
-<span class="line"><span style="color:#676E95;font-style:italic;">&quot; vim 的vue插件</span></span>
-<span class="line"><span style="color:#A6ACCD;">Plug </span><span style="color:#C3E88D;">&#39;posva/vim-vue&#39;</span></span>
+<span class="line"><span style="color:#676E95;font-style:italic;">&quot; vim的缩进线插件</span></span>
+<span class="line"><span style="color:#A6ACCD;">Plug </span><span style="color:#C3E88D;">&#39;yggdroot/indentline&#39;</span></span>
 <span class="line"></span>
 <span class="line"><span style="color:#A6ACCD;">call </span><span style="color:#82AAFF;">plug#end</span><span style="color:#89DDFF;">()</span></span>
 <span class="line"></span>
-<span class="line"></span>
-<span class="line"><span style="color:#676E95;font-style:italic;">&quot; vim的背景色配置</span></span>
-<span class="line"><span style="color:#676E95;font-style:italic;">&quot; syntax enable</span></span>
-<span class="line"><span style="color:#676E95;font-style:italic;">&quot; set background=dark</span></span>
-<span class="line"><span style="color:#676E95;font-style:italic;">&quot; colorscheme solarized</span></span>
-<span class="line"><span style="color:#676E95;font-style:italic;">&quot; let g:solarized_termcolors=256</span></span>
-<span class="line"></span>
-<span class="line"><span style="color:#676E95;font-style:italic;">&quot; vim 的主题色配置</span></span>
-<span class="line"><span style="color:#676E95;font-style:italic;">&quot; set background=dark</span></span>
-<span class="line"><span style="color:#676E95;font-style:italic;">&quot; colorscheme hybrid</span></span>
-<span class="line"></span>
-<span class="line"><span style="color:#676E95;font-style:italic;">&quot; vim 使用nord-vim的主题色配置</span></span>
 <span class="line"><span style="color:#A6ACCD;">colorscheme nord</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#676E95;font-style:italic;">&quot; vim 的状态行配置</span></span>
+<span class="line"><span style="color:#A6ACCD;">let g:airline_section_z </span><span style="color:#89DDFF;">=</span><span style="color:#A6ACCD;"> </span><span style="color:#F78C6C;">0</span></span>
+<span class="line"><span style="color:#676E95;font-style:italic;">&quot; vim-airline 字体设置</span></span>
+<span class="line"><span style="color:#A6ACCD;">let g:airline_powerline_fonts </span><span style="color:#89DDFF;">=</span><span style="color:#A6ACCD;"> </span><span style="color:#F78C6C;">1</span><span style="color:#A6ACCD;"> </span></span>
 <span class="line"></span>
 <span class="line"><span style="color:#676E95;font-style:italic;">&quot; nerdTree的配置</span></span>
 <span class="line"><span style="color:#A6ACCD;">let NERDTreeShowHidden </span><span style="color:#89DDFF;">=</span><span style="color:#A6ACCD;"> </span><span style="color:#F78C6C;">1</span></span>
@@ -202,18 +164,15 @@ text object是要操作的文本对象
 <span class="line"><span style="color:#676E95;font-style:italic;">&quot; 快速定位插件配置</span></span>
 <span class="line"><span style="color:#C792EA;">nmap</span><span style="color:#A6ACCD;"> </span><span style="color:#FFCB6B;">ss</span><span style="color:#A6ACCD;"> </span><span style="color:#89DDFF;">&lt;</span><span style="color:#A6ACCD;">Plug</span><span style="color:#89DDFF;">&gt;(</span><span style="color:#A6ACCD;">easymotion-s2</span><span style="color:#89DDFF;">)</span></span>
 <span class="line"></span>
-<span class="line"><span style="color:#676E95;font-style:italic;">&quot; vim 的图片插件配置</span></span>
-<span class="line"><span style="color:#A6ACCD;">let g:webdevicons_enable </span><span style="color:#89DDFF;">=</span><span style="color:#A6ACCD;"> </span><span style="color:#F78C6C;">1</span></span>
-<span class="line"><span style="color:#A6ACCD;">let g:webdevicons_enable_nerdtree </span><span style="color:#89DDFF;">=</span><span style="color:#A6ACCD;"> </span><span style="color:#F78C6C;">1</span></span>
-<span class="line"><span style="color:#A6ACCD;">let g:webdevicons_enable_ctrlp </span><span style="color:#89DDFF;">=</span><span style="color:#A6ACCD;"> </span><span style="color:#F78C6C;">1</span></span>
+<span class="line"><span style="color:#676E95;font-style:italic;">&quot; w0rp/ale静态检查插件</span></span>
+<span class="line"><span style="color:#A6ACCD;">let g:ale_fixers </span><span style="color:#89DDFF;">=</span><span style="color:#A6ACCD;"> {</span></span>
+<span class="line"><span style="color:#89DDFF;">\</span><span style="color:#A6ACCD;">   </span><span style="color:#C3E88D;">&#39;javascript&#39;</span><span style="color:#A6ACCD;">: [</span><span style="color:#C3E88D;">&#39;eslint&#39;</span><span style="color:#A6ACCD;">]</span><span style="color:#89DDFF;">,</span></span>
+<span class="line"><span style="color:#89DDFF;">\</span><span style="color:#A6ACCD;">}</span></span>
+<span class="line"><span style="color:#676E95;font-style:italic;">&quot; 文件保存时自动修复</span></span>
+<span class="line"><span style="color:#A6ACCD;">let g:ale_fix_on_save </span><span style="color:#89DDFF;">=</span><span style="color:#A6ACCD;"> </span><span style="color:#F78C6C;">1</span></span>
 <span class="line"></span>
-<span class="line"><span style="color:#676E95;font-style:italic;">&quot; vim-airline 字体设置</span></span>
-<span class="line"><span style="color:#A6ACCD;">let g:airline_powerline_fonts </span><span style="color:#89DDFF;">=</span><span style="color:#A6ACCD;"> </span><span style="color:#F78C6C;">1</span><span style="color:#A6ACCD;"> </span></span>
-<span class="line"></span>
-<span class="line"><span style="color:#676E95;font-style:italic;">&quot; tagbar 配置</span></span>
-<span class="line"><span style="color:#C792EA;">nnoremap</span><span style="color:#A6ACCD;"> </span><span style="color:#89DDFF;">&lt;</span><span style="color:#A6ACCD;">C-t</span><span style="color:#89DDFF;">&gt;</span><span style="color:#A6ACCD;"> :TagbarToggle</span><span style="color:#89DDFF;">&lt;</span><span style="color:#A6ACCD;">cr</span><span style="color:#89DDFF;">&gt;</span></span>
-<span class="line"></span></code></pre><div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br><span class="line-number">60</span><br><span class="line-number">61</span><br><span class="line-number">62</span><br><span class="line-number">63</span><br><span class="line-number">64</span><br><span class="line-number">65</span><br><span class="line-number">66</span><br><span class="line-number">67</span><br><span class="line-number">68</span><br><span class="line-number">69</span><br><span class="line-number">70</span><br><span class="line-number">71</span><br><span class="line-number">72</span><br><span class="line-number">73</span><br><span class="line-number">74</span><br><span class="line-number">75</span><br><span class="line-number">76</span><br><span class="line-number">77</span><br><span class="line-number">78</span><br><span class="line-number">79</span><br><span class="line-number">80</span><br><span class="line-number">81</span><br><span class="line-number">82</span><br><span class="line-number">83</span><br><span class="line-number">84</span><br><span class="line-number">85</span><br><span class="line-number">86</span><br><span class="line-number">87</span><br><span class="line-number">88</span><br><span class="line-number">89</span><br><span class="line-number">90</span><br><span class="line-number">91</span><br><span class="line-number">92</span><br><span class="line-number">93</span><br><span class="line-number">94</span><br><span class="line-number">95</span><br><span class="line-number">96</span><br><span class="line-number">97</span><br><span class="line-number">98</span><br><span class="line-number">99</span><br><span class="line-number">100</span><br><span class="line-number">101</span><br><span class="line-number">102</span><br><span class="line-number">103</span><br><span class="line-number">104</span><br><span class="line-number">105</span><br><span class="line-number">106</span><br><span class="line-number">107</span><br><span class="line-number">108</span><br><span class="line-number">109</span><br><span class="line-number">110</span><br><span class="line-number">111</span><br><span class="line-number">112</span><br><span class="line-number">113</span><br><span class="line-number">114</span><br><span class="line-number">115</span><br><span class="line-number">116</span><br><span class="line-number">117</span><br><span class="line-number">118</span><br><span class="line-number">119</span><br><span class="line-number">120</span><br><span class="line-number">121</span><br><span class="line-number">122</span><br><span class="line-number">123</span><br><span class="line-number">124</span><br><span class="line-number">125</span><br><span class="line-number">126</span><br><span class="line-number">127</span><br><span class="line-number">128</span><br><span class="line-number">129</span><br><span class="line-number">130</span><br><span class="line-number">131</span><br><span class="line-number">132</span><br><span class="line-number">133</span><br><span class="line-number">134</span><br><span class="line-number">135</span><br><span class="line-number">136</span><br><span class="line-number">137</span><br><span class="line-number">138</span><br><span class="line-number">139</span><br><span class="line-number">140</span><br><span class="line-number">141</span><br><span class="line-number">142</span><br><span class="line-number">143</span><br><span class="line-number">144</span><br><span class="line-number">145</span><br><span class="line-number">146</span><br><span class="line-number">147</span><br><span class="line-number">148</span><br><span class="line-number">149</span><br><span class="line-number">150</span><br><span class="line-number">151</span><br><span class="line-number">152</span><br><span class="line-number">153</span><br><span class="line-number">154</span><br><span class="line-number">155</span><br><span class="line-number">156</span><br><span class="line-number">157</span><br><span class="line-number">158</span><br><span class="line-number">159</span><br><span class="line-number">160</span><br><span class="line-number">161</span><br><span class="line-number">162</span><br><span class="line-number">163</span><br><span class="line-number">164</span><br><span class="line-number">165</span><br><span class="line-number">166</span><br><span class="line-number">167</span><br><span class="line-number">168</span><br><span class="line-number">169</span><br><span class="line-number">170</span><br><span class="line-number">171</span><br><span class="line-number">172</span><br><span class="line-number">173</span><br></div></div></div></div></main><footer class="VPDocFooter" data-v-6c90a2e3 data-v-f0ecb34e><!----><div class="prev-next" data-v-f0ecb34e><div class="pager" data-v-f0ecb34e><a class="pager-link prev" href="/j-projects/notes/basis.html" data-v-f0ecb34e><span class="desc" data-v-f0ecb34e>Previous page</span><span class="title" data-v-f0ecb34e>计算机基础</span></a></div><div class="has-prev pager" data-v-f0ecb34e><a class="pager-link next" href="/j-projects/notes/interview/css.html" data-v-f0ecb34e><span class="desc" data-v-f0ecb34e>Next page</span><span class="title" data-v-f0ecb34e>css</span></a></div></div></footer></div></div></div></div></div><footer class="VPFooter has-sidebar" data-v-a9e6f746 data-v-34fcb22c><div class="container" data-v-34fcb22c><p class="message" data-v-34fcb22c>版权声明</p><p class="copyright" data-v-34fcb22c>本文档内容版权为xushijie所有，保留所有权利</p></div></footer></div></div>
-    <script>__VP_HASH_MAP__ = JSON.parse("{\"readme.md\":\"fc397f8f\",\"index.md\":\"c09f3580\",\"introduce_index.md\":\"1c6e2fdf\",\"notes_algorithm.md\":\"2fd90758\",\"notes_basis.md\":\"d426cbda\",\"notes_css.md\":\"cc2de4ec\",\"notes_data1.md\":\"fbf9e6f0\",\"notes_design.md\":\"1ec4193f\",\"notes_html.md\":\"099213c3\",\"notes_interview_code.md\":\"60419e93\",\"notes_interview_css.md\":\"2416067c\",\"notes_interview_javascript.md\":\"84b96d9f\",\"notes_interview_node.md\":\"6ad7540d\",\"notes_interview_performance.md\":\"793167d0\",\"notes_interview_webpack.md\":\"145349d6\",\"notes_javascript.md\":\"4efc5d86\",\"notes_mysql.md\":\"69dde980\",\"notes_react.md\":\"b8ab28f3\",\"notes_resetful.md\":\"36beee52\",\"notes_typescript.md\":\"9a97ec83\",\"notes_vim.md\":\"0c057af9\",\"notes_vue.md\":\"abeac2a5\",\"notes_xushijie.md\":\"231543c8\",\"notes_yarn.md\":\"aed427df\",\"projects_j-http-code.md\":\"7dd1584f\",\"projects_j-is.md\":\"0790fe83\",\"resources_index.md\":\"7a2269e5\"}")</script>
+<span class="line"></span></code></pre><div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br><span class="line-number">60</span><br><span class="line-number">61</span><br><span class="line-number">62</span><br><span class="line-number">63</span><br><span class="line-number">64</span><br><span class="line-number">65</span><br><span class="line-number">66</span><br><span class="line-number">67</span><br><span class="line-number">68</span><br><span class="line-number">69</span><br><span class="line-number">70</span><br><span class="line-number">71</span><br><span class="line-number">72</span><br><span class="line-number">73</span><br><span class="line-number">74</span><br><span class="line-number">75</span><br><span class="line-number">76</span><br><span class="line-number">77</span><br><span class="line-number">78</span><br><span class="line-number">79</span><br><span class="line-number">80</span><br><span class="line-number">81</span><br><span class="line-number">82</span><br><span class="line-number">83</span><br><span class="line-number">84</span><br><span class="line-number">85</span><br><span class="line-number">86</span><br><span class="line-number">87</span><br><span class="line-number">88</span><br><span class="line-number">89</span><br><span class="line-number">90</span><br><span class="line-number">91</span><br><span class="line-number">92</span><br><span class="line-number">93</span><br><span class="line-number">94</span><br><span class="line-number">95</span><br><span class="line-number">96</span><br><span class="line-number">97</span><br><span class="line-number">98</span><br><span class="line-number">99</span><br><span class="line-number">100</span><br><span class="line-number">101</span><br><span class="line-number">102</span><br><span class="line-number">103</span><br><span class="line-number">104</span><br><span class="line-number">105</span><br><span class="line-number">106</span><br><span class="line-number">107</span><br><span class="line-number">108</span><br><span class="line-number">109</span><br><span class="line-number">110</span><br><span class="line-number">111</span><br><span class="line-number">112</span><br><span class="line-number">113</span><br><span class="line-number">114</span><br><span class="line-number">115</span><br><span class="line-number">116</span><br><span class="line-number">117</span><br><span class="line-number">118</span><br><span class="line-number">119</span><br><span class="line-number">120</span><br><span class="line-number">121</span><br><span class="line-number">122</span><br><span class="line-number">123</span><br><span class="line-number">124</span><br><span class="line-number">125</span><br><span class="line-number">126</span><br><span class="line-number">127</span><br><span class="line-number">128</span><br><span class="line-number">129</span><br><span class="line-number">130</span><br><span class="line-number">131</span><br><span class="line-number">132</span><br></div></div></div></div></main><footer class="VPDocFooter" data-v-6c90a2e3 data-v-f0ecb34e><!----><div class="prev-next" data-v-f0ecb34e><div class="pager" data-v-f0ecb34e><a class="pager-link prev" href="/j-projects/notes/basis.html" data-v-f0ecb34e><span class="desc" data-v-f0ecb34e>Previous page</span><span class="title" data-v-f0ecb34e>计算机基础</span></a></div><div class="has-prev pager" data-v-f0ecb34e><a class="pager-link next" href="/j-projects/notes/interview/css.html" data-v-f0ecb34e><span class="desc" data-v-f0ecb34e>Next page</span><span class="title" data-v-f0ecb34e>css</span></a></div></div></footer></div></div></div></div></div><footer class="VPFooter has-sidebar" data-v-a9e6f746 data-v-34fcb22c><div class="container" data-v-34fcb22c><p class="message" data-v-34fcb22c>版权声明</p><p class="copyright" data-v-34fcb22c>本文档内容版权为xushijie所有，保留所有权利</p></div></footer></div></div>
+    <script>__VP_HASH_MAP__ = JSON.parse("{\"readme.md\":\"a6c6a6d3\",\"index.md\":\"699d8c2e\",\"introduce_index.md\":\"f4590b38\",\"notes_algorithm.md\":\"efa9e9f9\",\"notes_basis.md\":\"da35c4e2\",\"notes_css.md\":\"50168905\",\"notes_data1.md\":\"f05e26e4\",\"notes_design.md\":\"0cb23bdd\",\"notes_html.md\":\"4db6e355\",\"notes_interview_code.md\":\"d3673186\",\"notes_interview_css.md\":\"2f3d0e6b\",\"notes_interview_javascript.md\":\"e76555a0\",\"notes_interview_node.md\":\"3a7626be\",\"notes_interview_performance.md\":\"625def5c\",\"notes_interview_webpack.md\":\"53fae250\",\"notes_javascript.md\":\"bc7a22b2\",\"notes_mysql.md\":\"402f32d7\",\"notes_react.md\":\"04f46ad2\",\"notes_resetful.md\":\"30de5416\",\"notes_typescript.md\":\"4b76f4ad\",\"notes_vim.md\":\"ad66c7d3\",\"notes_vue.md\":\"f71febe3\",\"notes_xushijie.md\":\"f1aa16ce\",\"notes_yarn.md\":\"b84d91d7\",\"projects_j-http-code.md\":\"ddda9ef2\",\"projects_j-is.md\":\"766d4a65\",\"resources_index.md\":\"7e06418f\"}")</script>
     <script type="module" async src="/j-projects/assets/app.8ed2f878.js"></script>
     
   </body>
