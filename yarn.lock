@@ -11780,6 +11780,7 @@ __metadata:
   resolution: "j-cli@workspace:packages/j-cli"
   dependencies:
     inquirer: ^8.2.1
+    j-is: "workspace:*"
   bin:
     j-cli: ./cli.cjs
   languageName: unknown

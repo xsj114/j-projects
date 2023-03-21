@@ -4,5 +4,8 @@
     "bin": "./cli.cjs",
     "dependencies": {
         "inquirer": "^8.2.1"
+    },
+    "devDependencies": {
+        "j-is": "workspace:*"
     }
 }

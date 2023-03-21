@@ -22326,7 +22326,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./packages/j-cli/",\
           "packageDependencies": [\
             ["j-cli", "workspace:packages/j-cli"],\
-            ["inquirer", "npm:8.2.5"]\
+            ["inquirer", "npm:8.2.5"],\
+            ["j-is", "workspace:packages/j-is"]\
           ],\
           "linkType": "SOFT"\
         }]\

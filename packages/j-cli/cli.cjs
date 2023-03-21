@@ -7,13 +7,11 @@ const process = require( 'process' );
 const { exec } = require( 'child_process' );
 const prompts = require('./prompt/index.cjs')
 
-const pkg = {
-    name,
-    version: '0.1.0',
-    dependencies: {},
-    devDependencies: {},
-}
+        console.log()
 
-inquirer.prompt(prompts).then(res=>{
-    console.log(res)
-})
+inquirer.prompt( prompts ).then( res => {
+    for (let val of res.features) {
+        const module = require( path.join(__dirname, `./lib/template/${val}`) )
+        generator.extend(module) 
+    }
+} )

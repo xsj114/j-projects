@@ -94,6 +94,7 @@ text object是要操作的文本对象
 
 ## 个人配置文件
 
+
 ```vim
 " vim的插件网站 https://vimawesome.com/
 
@@ -123,9 +124,6 @@ set expandtab
 " 设置编码
 set encoding=UTF-8
 
-" leader加w 进行保存
-inoremap <leader>w <Esc>:w<cr>
-
 " 选中列高亮
 set cursorcolumn
 
@@ -138,21 +136,20 @@ noremap <C-j> <C-w>j
 noremap <C-k> <C-w>k
 noremap <C-l> <C-w>l
 
+
 " vim-plug 插件下载器
 call plug#begin('~/.vim/plugged')
 
 " vim 的开屏插件
 Plug 'mhinz/vim-startify'
 
+" vim的主题色插件
+" Plug 'arcticicestudio/nord-vim'
+Plug 'nordtheme/vim'
+
 " vim 的状态行插件
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-
-" vim 的背景色插件
-Plug 'altercation/vim-colors-solarized'
-
-" vim 的主题色插件
-Plug 'w0ng/vim-hybrid'
 
 " vim nerdTree目录树
 " 安装好后，icon不能显示，需要执行以下两条命令，下载字体
@@ -167,85 +164,51 @@ Plug 'ctrlpvim/ctrlp.vim'
 Plug 'easymotion/vim-easymotion'
 
 " vim 的快速编辑插件 https://github.com/tpope/vim-surround
-" ys 增加成对内容  normal模式下
-" cs 修改成对内容  normal模式下
-" ds 删除成对内容  normal模式下
+" ys 增加成对内容  normal模式下    增加一对双引号按下 y s i w "
+" cs 修改成对内容  normal模式下    将成对的双引号改成成对的单引号按下 c s " '
+" ds 删除成对内容  normal模式下    删除成对的双引号按下 d s "
 Plug 'tpope/vim-surround'
 
 " vim的模糊搜索工具
+" Ag命令不生效,需执行
+" brew install the_silver_searcher
 " 使用Ag[PATTERN] 模糊搜索字符串
 " 使用Files[PATH] 模糊搜索目录
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
 " vim的搜索替换插件
+" :Far foo bar **/*.js    将js文件里所有foo替换成bar，回车后会弹出预览窗口
+" :Fardo                  预览没问题，输入Fardo生效
 Plug 'brooth/far.vim'
-
-" vim的高亮插件
-Plug 'lfv89/vim-interestingwords'
-
-" vim的注释插件
-" gc注释和取消注释
-Plug 'tpope/vim-commentary'
-
-" vim的自动格式化插件
-Plug 'sbdchd/neoformat'
-
-" vim的js语言格式化库 配合neoformat,ale
-Plug 'prettier/vim-prettier'
 
 " vim的静态检查插件
 Plug 'w0rp/ale'
 
-" vim里使用git的插件
-Plug 'tpope/vim-fugitive'
-
-" vim里显示git的变更插件
-Plug 'airblade/vim-gitgutter'
-
-" vim里查看git的代码提交记录插件
-Plug 'junegunn/gv.vim'
-
-" vim的浏览插件
-Plug 'majutsushi/tagbar'
-
-" vim 的图标插件
-Plug 'ryanoasis/vim-devicons'
-
 " vim 的css颜色插件
 Plug 'ap/vim-css-color'
 
-"vim 的主题色插件 
-Plug 'arcticicestudio/nord-vim'
 
-" vim 的语法和缩进插件
-Plug 'lepture/vim-jinja'
+" vim里使用git的插件
+" :Gblame可以告诉我们每一行是谁写的
+Plug 'tpope/vim-fugitive'
+" vim里显示git的变更插件
+Plug 'airblade/vim-gitgutter'
+" vim里查看git的代码提交记录插件
+" :GV可以查看代码提交记录
+Plug 'junegunn/gv.vim'
 
-" vim 的快速编辑大文件插件
-Plug 'vim-scripts/LargeFile'
-
-" vim 的缩进线插件
-Plug 'nathanaelkane/vim-indent-guides'
-Plug 'Yggdroot/indentLine'
-
-" vim 的vue插件
-Plug 'posva/vim-vue'
+" vim的缩进线插件
+Plug 'yggdroot/indentline'
 
 call plug#end()
 
-
-" vim的背景色配置
-" syntax enable
-" set background=dark
-" colorscheme solarized
-" let g:solarized_termcolors=256
-
-" vim 的主题色配置
-" set background=dark
-" colorscheme hybrid
-
-" vim 使用nord-vim的主题色配置
 colorscheme nord
+
+" vim 的状态行配置
+let g:airline_section_z = 0
+" vim-airline 字体设置
+let g:airline_powerline_fonts = 1 
 
 " nerdTree的配置
 let NERDTreeShowHidden = 1
@@ -258,15 +221,12 @@ let g:ctrlp_map = '<c-p>'
 " 快速定位插件配置
 nmap ss <Plug>(easymotion-s2)
 
-" vim 的图片插件配置
-let g:webdevicons_enable = 1
-let g:webdevicons_enable_nerdtree = 1
-let g:webdevicons_enable_ctrlp = 1
+" w0rp/ale静态检查插件
+let g:ale_fixers = {
+\   'javascript': ['eslint'],
+\}
+" 文件保存时自动修复
+let g:ale_fix_on_save = 1
 
-" vim-airline 字体设置
-let g:airline_powerline_fonts = 1 
-
-" tagbar 配置
-nnoremap <C-t> :TagbarToggle<cr>
 ```
 
