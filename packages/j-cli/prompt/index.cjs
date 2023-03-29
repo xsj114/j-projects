@@ -45,7 +45,7 @@ const prompts = [
                 },
                 {
                     name: 'TypeScript',
-                    value: 'typeScript'
+                    value: 'typescript'
                 },
                 {
                     name: 'Css Pre-processors',
