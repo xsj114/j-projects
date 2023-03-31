@@ -13,7 +13,7 @@ const generator = new Generator()
 const generate_package_json = (res) => {
     for (let val of res.features) {
         const module = require( path.join(__dirname, `./lib/generator/${val}.cjs`))
-        module && ( generator.extend( module( res ) ) )
+        module &&  module(generator, res ) 
     }
     console.log(generator.pkg)
 }

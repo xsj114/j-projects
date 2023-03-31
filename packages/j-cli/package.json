@@ -3,7 +3,8 @@
     "packageManager": "yarn@3.2.3",
     "bin": "./cli.cjs",
     "dependencies": {
-        "inquirer": "^8.2.1"
+        "inquirer": "^8.2.1",
+        "nunjucks": "^3.2.3"
     },
     "devDependencies": {
         "j-is": "workspace:*"
