@@ -85,21 +85,37 @@ export http_proxy=http://127.0.0.1:1087;
 export https_proxy=http://127.0.0.1:1087;
 ```
 
+### 安装brew和git
+
+```shell
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+
+```shell
+brew install git
+```
 
 ### vim搭建
 
 
-创建`.vimrc`文件<br/>
-在命令行中执行如下代码，安装`vim-plug`插件管理器
+#### 安装`vim-plug`插件管理器
 ```shell
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 ```
-在命令行中执行如下代码，安装字体，然后在`iTerm2`中设置 
+
+#### 下载`iTerm2`的`nordtheme`
+
+`https://github.com/nordtheme/iterm2`
+
+
+### 安装`iTerm2`的字体
+
 ```shell
 brew tap homebrew/cask-fonts
 brew install font-hack-nerd-font --cask
 ```
+
 
 
 
