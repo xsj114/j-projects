@@ -228,5 +228,8 @@ let g:ale_fixers = {
 " 文件保存时自动修复
 let g:ale_fix_on_save = 1
 
+" 缩进线插件,使在json文件中显示引号
+let g:vim_json_conceal=0
+
 ```
 
