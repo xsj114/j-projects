@@ -190,7 +190,7 @@ Plug 'ap/vim-css-color'
 
 
 " vim里使用git的插件
-" :Gblame可以告诉我们每一行是谁写的
+" :G blame可以告诉我们每一行是谁写的
 Plug 'tpope/vim-fugitive'
 " vim里显示git的变更插件
 Plug 'airblade/vim-gitgutter'
