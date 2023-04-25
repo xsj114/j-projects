@@ -10,6 +10,12 @@ outline: 'deep'
 ## 网址及账号
 
 
+### 购买虚拟手机号网址
+
+购买官网地址：https://sms-activate.org/cn<br/>
+账号： 15101587790@163.com
+密码：常用(首字母需大写)
+
 ### 国外服务器
 
 购买官网地址：https://www.linode.com<br/>

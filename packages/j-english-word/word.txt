@@ -931,6 +931,7 @@ converter    转换器
 convert      变换
 conversion   转换
 conversely   反过来
+conversation 会话
 extensive    广泛
 wide         广泛,宽
 smart        聪明,高明
@@ -3152,3 +3153,5 @@ upward       向上
 ton          吨
 boil         烧开
 science      科学,理科
+quantum      限量,量
+train        培养,火车
