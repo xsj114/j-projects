@@ -1947,7 +1947,6 @@ crowd        人群,拥挤
 crucial      关键
 cruel        残忍
 crush        粉碎
-cure         治愈
 fellow       同伴
 currency     货币
 curtain      窗帘
@@ -2091,7 +2090,6 @@ gut          胆量
 handsome     英俊,标致
 harm         危害,损害
 trait        特征,特点
-harmony      和谐,和睦
 harsh        苛刻,严酷
 harvest      收成
 hat          帽子
@@ -2211,7 +2209,6 @@ negotiate    谈判,交涉
 neighbor     邻居,友好
 nerve        神经
 newspaper    报纸
-norm         规范,标准
 north        北方的
 nose         鼻子
 novel        小说,新颖
@@ -2328,9 +2325,7 @@ pursue       追求,推行
 pursuit      追赶
 quiet        安静
 rabbit       兔子
-race         种族,赛跑
 radar        雷达
-radical      激进
 rage         愤怒
 rail         铁轨
 rain         雨天
@@ -2340,7 +2335,6 @@ ratio        比值
 realm        领域,境界
 rear         后部
 rebel        反叛
-recipient    接受者
 recruit      招募
 reform       改革
 refuge       避难所
@@ -2353,7 +2347,6 @@ rescue       拯救
 research     研究
 resign       辞职
 resist       抵抗
-resume       恢复
 retail       零售
 revenue      收入
 reward       奖励
@@ -3155,3 +3148,17 @@ boil         烧开
 science      科学,理科
 quantum      限量,量
 train        培养,火车
+paradigm     范例
+norm         规范,标准
+resume       恢复
+burden       负担
+confident    信心
+proficient   精通
+radical      激进
+luxury       奢侈
+rise         上升
+race         种族,赛跑
+harmony      和谐,和睦
+dread        畏惧
+cure         治愈
+recipient    接受者
