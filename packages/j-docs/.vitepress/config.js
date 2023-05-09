@@ -136,6 +136,28 @@ export default {
                     ]
                 },
                 {
+                    text: '消费',
+                    collapsible: true,
+                    collapsed: true,
+                    items: [
+                        {
+                            text: '八字经',
+                            link: '/notes/consume/consume'
+                        }
+                    ]
+                },
+                {
+                    text: '本地生活',
+                    collapsible: true,
+                    collapsed: true,
+                    items: [
+                        {
+                            text: '本地生活',
+                            link: '/notes/local_life/local_life'
+                        }
+                    ]
+                },
+                {
                     text: '备忘录',
                     collapsible: true,
                     collapsed: true,
