@@ -147,14 +147,19 @@ export default {
                     ]
                 },
                 {
-                    text: '本地生活',
+                    text: '抖音相关',
                     collapsible: true,
                     collapsed: true,
                     items: [
                         {
                             text: '本地生活',
-                            link: '/notes/local_life/local_life'
+                            link: '/notes/douyin/local_life'
+                        },
+                        {
+                            text: '带劵达人',
+                            link: '/notes/douyin/travel'
                         }
+
                     ]
                 },
                 {
