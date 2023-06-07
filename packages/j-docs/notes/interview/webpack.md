@@ -250,6 +250,8 @@ mappings属性是一个很长的字符串，它分成三层<br/>
 
 ## webpack能动态加载require引入的模块吗
 
+可以
+
 
 ## Webpack和Vite的区别
 

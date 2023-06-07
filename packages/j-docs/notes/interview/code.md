@@ -1282,7 +1282,7 @@ Promise.resolve().then(()=>{
 
 
 ```js
-inner = 'window'
+inner = 'window'    // inner将成为window的属性
 
 function say () {
     console.log(inner)
