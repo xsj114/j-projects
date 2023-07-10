@@ -158,6 +158,10 @@ export default {
                         {
                             text: '带劵达人',
                             link: '/notes/douyin/travel'
+                        },
+                        {
+                            text: '播放数据',
+                            link: '/notes/douyin/data'
                         }
 
                     ]
