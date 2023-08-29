@@ -1,1 +1,0 @@
-import{_ as t,o as d,c as e,g as l}from"./app.ed0c5ace.js";const o='{"title":"\u6296\u97F3\u64AD\u653E\u6570\u636E","description":"","frontmatter":{},"headers":[],"relativePath":"notes/douyin/data.md","lastUpdated":1693154553000}',i={},r=l("",2),s=[r];function g(a,n,h,x,y,c){return d(),e("div",null,s)}var p=t(i,[["render",g]]);export{o as __pageData,p as default};
