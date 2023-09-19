@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        table{
+            width: 800px;
+            border-collapse: collapse;
+            margin: 60px auto 0;
+        }
+        .btns{
+            position: fixed;
+            right: 10px;
+            top: 20px;
+        }
+        .btns button {
+            margin-right: 10px;
+        }
+        td{
+            text-align: center;
+        }
+        p{
+            color: red;
+        }
+    </style>
+    <script>
+        window.onload = function () {
+            let allCost = 0;
+            let p = document.querySelector('p')
+            let table = document.querySelector('table')
+            let tbody = document.querySelector('tbody')
+            const arrs = [ 
+                [ true, true,  '小时候辣条零食大礼包',  10.9, '>=10'], 
+                [ true, true, '质凡果汁饮料气泡水碳酸饮料夏日饮料冰凉解渴', 9.9, '>=5'], 
+                [ false, false, '合味芳柳州螺狮粉加臭加辣螺丝米粉', 39.9, '>=30'], 
+                [ true, true, '好吃岛山药脆片', 9.9, '>=20'], 
+                [ true, true, '合味芳麻辣烫黏糊速食', 26.9, '>=10' ] ,
+                [ false, false, '味了你海苔锅巴', 9.9, '>=10' ], 
+                [ true, true, '轻上100%椰子水', 29.9, '>=5' ], 
+                [ false, false, '比比赞水果面包组合香蕉面包', 9.9, '' ], 
+                [ false, false, '其妙爆浆小贝肉松球网红蛋糕', 19.9, '>=10' ], 
+                [ false, false, '味了你真脆薯条', 9.9, '>=50' ], 
+                [ false, false, '哈哈妹懒人小恶魔三部曲假睫毛', 9.9, '' ], 
+                [ false, false, '巴旦木奶枣', 7.9, ''],
+                [ false, false, '真好意椰浆味蛋卷酥脆饼干', 9.9, ''],
+                [ false, false, '蟹黄味瓜子仁酥脆解馋零食', 9.9, ''],
+                [ false, false, '安合一品爆浆乳酸菌小口袋夹心面包', 9.9, ''],
+                [ false, false, '笑弥弥混合水果味剥皮软糖', 9.9, '' ],
+                [ false, false, '卡仕伽椰片脆饼腰果芙巴旦木芙烘焙糕点', 20.9, ''],
+                [ false, false, '其妙日式小圆饼干', 9.9, ''],
+                [ false, false, '武老三襄阳休闲零食花椒锅巴', 9.9, ''],
+                [ false, false, '宏途仙虾片网红休闲小零食', 6.99, '>=10'],
+                [ false, false, '其妙多味花生', 12.9, '>=10' ],
+                [ false, false, '质凡火鸡面拌面', 5.01, '>=5'],
+                [ false, false, '开小差干脆面素牛肉粒', 9.99, '>=7' ]
+            ]
+            for (let val of arrs) {
+                const tr = document.createElement('tr')
+                for (let [index, elem] of val.entries()) {
+                    const td = document.createElement('td')
+                    if (index === 0 || index === 1) {
+                        const input = document.createElement('input')
+                        input.type = 'checkbox'
+                        input.checked = elem 
+                        input.disabled = true
+                        td.appendChild(input)
+                    } else {
+                      td.innerHTML = elem
+                    }
+                    tr.appendChild(td)
+                    if (index === 3) {
+                        allCost += elem
+                    }
+                }
+                tbody.appendChild(tr)
+            }
+            p.innerHTML = '总费用：' + Math.ceil(allCost) + '元, 共' + arrs.length + '件品' 
+        }
+    </script>
+</head>
+<body>
+    <p></p>
+    <table border="1" align="center">
+        <thead>
+            <tr>
+                <th>是否已发视频</th>
+                <th>是否已拍视频</th>
+                <th>商品名</th>
+                <th>单价</th>
+                <th>返款条件</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</body>
+</html>
