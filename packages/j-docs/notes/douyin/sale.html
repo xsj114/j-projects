@@ -32,6 +32,7 @@
     </style>
     <script>
         window.onload = function () {
+            let noVideo = 0;
             let allCost = 0;
             let p = document.querySelector('p')
             let table = document.querySelector('table')
@@ -44,28 +45,51 @@
                 [ true, true, '合味芳麻辣烫黏糊速食', 26.9, '>=10' ] ,
                 [ false, false, '味了你海苔锅巴', 9.9, '>=10' ], 
                 [ true, true, '轻上100%椰子水', 29.9, '>=5' ], 
-                [ false, false, '比比赞水果面包组合香蕉面包', 9.9, '' ], 
+                [ true, true, '比比赞水果面包组合香蕉面包', 9.9, '' ], 
                 [ false, false, '其妙爆浆小贝肉松球网红蛋糕', 19.9, '>=10' ], 
                 [ false, false, '味了你真脆薯条', 9.9, '>=50' ], 
                 [ false, false, '哈哈妹懒人小恶魔三部曲假睫毛', 9.9, '' ], 
                 [ false, false, '巴旦木奶枣', 7.9, ''],
                 [ false, false, '真好意椰浆味蛋卷酥脆饼干', 9.9, ''],
-                [ false, false, '蟹黄味瓜子仁酥脆解馋零食', 9.9, ''],
+                [ false, true, '蟹黄味瓜子仁酥脆解馋零食', 9.9, ''],
                 [ false, false, '安合一品爆浆乳酸菌小口袋夹心面包', 9.9, ''],
-                [ false, false, '笑弥弥混合水果味剥皮软糖', 9.9, '' ],
-                [ false, false, '卡仕伽椰片脆饼腰果芙巴旦木芙烘焙糕点', 20.9, ''],
+                [ false, true, '笑弥弥混合水果味剥皮软糖', 9.9, '' ],
+                [ false, true, '卡仕伽椰片脆饼腰果芙巴旦木芙烘焙糕点', 20.9, ''],
                 [ false, false, '其妙日式小圆饼干', 9.9, ''],
                 [ false, false, '武老三襄阳休闲零食花椒锅巴', 9.9, ''],
                 [ false, false, '宏途仙虾片网红休闲小零食', 6.99, '>=10'],
                 [ false, false, '其妙多味花生', 12.9, '>=10' ],
                 [ false, false, '质凡火鸡面拌面', 5.01, '>=5'],
-                [ false, false, '开小差干脆面素牛肉粒', 9.99, '>=7' ]
+                [ false, false, '开小差干脆面素牛肉粒', 9.99, '>=7' ],
+                [ false, false, '佳林桂花条头糕', 16.9, '>=6'],
+                [ false, false, '上行斋和风生巧大福', 12.9, '>=5'],
+                [ false, false, '百多利310ml草莓味黄桃味果粒奶昔', 9.9, ''],
+                [ false, false, '香酥多口味小麻花', 9.9, '' ],
+                [ false, false, '刻凡法式可可华夫脆', 6.9 , '>=5'],
+                [ false, false, '雪伟小马哥辣条素大刀肉', 9.9, '>=5'],
+                [ false, false, '小石头开袋即食 奥尔良小鸡腿', 9.9, '>=50'],
+                [ false, false, '比比赞18个蜂蜜口味盐焗味鹌鹑蛋', 19.9, '>=10' ],
+                [ false, false, '华味享蜂蜜黄油味巴旦木仁', 9.9, '>=6'],
+                [ false, false, '三只松鼠13种炒货坚果大礼包', 19.9, '' ],
+                [ false, false, '同耀海盐薄荷糖维C含片润喉糖', 3.99, '' ],
+                [ false, false, '比比赞猫山王榴莲饼', 8.9, '' ],
+                [ false, false, '波路梦普奇曲奇饼干日式牛奶黄油', 13.8, '' ],
+                [ false, false, '法丽兹新品夹心曲奇饼干', 9.9, '>=5' ],
+                [ false, false, '良品铺子-牛乳米饼', 9.9, '' ],
+                [ false, false, '坚果披萨小饼巴旦木腰果夹心酥', 11.9, '' ],
+                [ false, false, 'zess杰思马来西亚巧克力无夹心饼干', 19.9, '' ],
+                [ false, false, '乡妹子酸辣海带结', 9.9, '>=5' ],
+                [ false, false, '百乐洋果汁整箱', 11.9, '>=10' ],
+                [ false, false, '费列罗能多益榛子巧克力夹心饼干', 56.8, '>=10' ],
             ]
             for (let val of arrs) {
                 const tr = document.createElement('tr')
                 for (let [index, elem] of val.entries()) {
                     const td = document.createElement('td')
                     if (index === 0 || index === 1) {
+                        if (index === 1 && !elem) {
+                            noVideo += 1 
+                        }
                         const input = document.createElement('input')
                         input.type = 'checkbox'
                         input.checked = elem 
@@ -81,7 +105,7 @@
                 }
                 tbody.appendChild(tr)
             }
-            p.innerHTML = '总费用：' + Math.ceil(allCost) + '元, 共' + arrs.length + '件品' 
+            p.innerHTML = '总费用：' + Math.ceil(allCost) + '元, 共' + arrs.length + '件品,' + noVideo + '件品未拍视频, ' + (arrs.length - noVideo) + '件品已拍视频' 
         }
     </script>
 </head>
