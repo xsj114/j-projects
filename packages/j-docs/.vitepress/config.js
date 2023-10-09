@@ -162,6 +162,17 @@ export default {
                     ]
                 },
                 {
+                    text: '快手相关',
+                    collapsible: true,
+                    collapsed: true,
+                    items: [
+                        {
+                            text: '玩转付费流量',
+                            link: '/notes/kuaishou/pay'
+                        },
+                    ]
+                },
+                {
                     text: '备忘录',
                     collapsible: true,
                     collapsed: true,
