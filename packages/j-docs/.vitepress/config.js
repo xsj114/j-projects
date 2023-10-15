@@ -170,6 +170,10 @@ export default {
                             text: '玩转付费流量',
                             link: '/notes/kuaishou/pay'
                         },
+                        {
+                            text: '账号自检',
+                            link: '/notes/kuaishou/detect'
+                        },
                     ]
                 },
                 {
