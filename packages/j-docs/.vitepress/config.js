@@ -174,6 +174,10 @@ export default {
                             text: '账号自检',
                             link: '/notes/kuaishou/detect'
                         },
+                        {
+                            text: '投流计划',
+                            link: '/notes/kuaishou/plan'
+                        },
                     ]
                 },
                 {
