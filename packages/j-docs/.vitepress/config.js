@@ -178,6 +178,10 @@ export default {
                             text: '投流计划',
                             link: '/notes/kuaishou/plan'
                         },
+                        {
+                            text: '投流思路',
+                            link: '/notes/kuaishou/investmentFlow'
+                        },
                     ]
                 },
                 {
