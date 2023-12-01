@@ -175,6 +175,10 @@ export default {
                             link: '/notes/kuaishou/detect'
                         },
                         {
+                            text: '违规避坑指南',
+                            link: '/notes/kuaishou/guide'
+                        },
+                        {
                             text: '投流计划',
                             link: '/notes/kuaishou/plan'
                         },
