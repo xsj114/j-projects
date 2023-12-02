@@ -167,10 +167,6 @@ export default {
                     collapsed: true,
                     items: [
                         {
-                            text: '玩转付费流量',
-                            link: '/notes/kuaishou/pay'
-                        },
-                        {
                             text: '账号自检',
                             link: '/notes/kuaishou/detect'
                         },
@@ -179,11 +175,7 @@ export default {
                             link: '/notes/kuaishou/guide'
                         },
                         {
-                            text: '投流计划',
-                            link: '/notes/kuaishou/plan'
-                        },
-                        {
-                            text: '投流思路',
+                            text: '投流',
                             link: '/notes/kuaishou/investmentFlow'
                         },
                     ]
