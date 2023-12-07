@@ -178,6 +178,10 @@ export default {
                             text: '投流',
                             link: '/notes/kuaishou/investmentFlow'
                         },
+                        {
+                            text: '短视频',
+                            link: '/notes/kuaishou/video'
+                        },
                     ]
                 },
                 {
