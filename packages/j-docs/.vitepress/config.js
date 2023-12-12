@@ -182,6 +182,10 @@ export default {
                             text: '短视频',
                             link: '/notes/kuaishou/video'
                         },
+                        {
+                            text: '直播',
+                            link: '/notes/kuaishou/liveBroadcast'
+                        },
                     ]
                 },
                 {
