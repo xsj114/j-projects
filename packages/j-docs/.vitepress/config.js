@@ -167,8 +167,8 @@ export default {
                     collapsed: true,
                     items: [
                         {
-                            text: '账号自检',
-                            link: '/notes/kuaishou/detect'
+                            text: '快手基础',
+                            link: '/notes/kuaishou/basic'
                         },
                         {
                             text: '违规避坑指南',
