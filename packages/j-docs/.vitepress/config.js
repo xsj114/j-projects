@@ -179,6 +179,10 @@ export default {
                             link: '/notes/kuaishou/investmentFlow'
                         },
                         {
+                            text: '选品',
+                            link: '/notes/kuaishou/product'
+                        },
+                        {
                             text: '短视频',
                             link: '/notes/kuaishou/video'
                         },
