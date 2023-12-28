@@ -100,6 +100,13 @@
 :::
 
 
+## 如何有效互动
+
+::: tip 369法则
+![An image](../../assets/kuaishou_hudong_1.jpg)
+:::
+
+
 ## 老号重启
 
 
