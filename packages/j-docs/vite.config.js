@@ -9,6 +9,7 @@ export default defineConfig( {
                 path.resolve( process.cwd(), '../../' ),
             ],
         },
+        port: '1226'
     },
 } );
 
