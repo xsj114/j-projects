@@ -193,6 +193,17 @@ export default {
                     ]
                 },
                 {
+                    text: '视频号相关',
+                    collapsible: true,
+                    collapsed: true,
+                    items: [
+                        {
+                            text: '视频号基础',
+                            link: '/notes/shipinhao/basic'
+                        },
+                    ]
+                },
+                {
                     text: '备忘录',
                     collapsible: true,
                     collapsed: true,
