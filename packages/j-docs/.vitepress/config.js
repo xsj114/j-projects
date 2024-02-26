@@ -190,6 +190,10 @@ export default {
                             text: '直播',
                             link: '/notes/kuaishou/liveBroadcast'
                         },
+                        {
+                            text: '商品卡',
+                            link: '/notes/kuaishou/card'
+                        },
                     ]
                 },
                 {
