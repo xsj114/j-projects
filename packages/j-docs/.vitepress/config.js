@@ -194,6 +194,10 @@ export default {
                             text: '商品卡',
                             link: '/notes/kuaishou/card'
                         },
+                        {
+                            text: '对标账号',
+                            link: '/notes/kuaishou/account'
+                        },
                     ]
                 },
                 {
