@@ -209,6 +209,10 @@ export default {
                             text: '视频号基础',
                             link: '/notes/shipinhao/basic'
                         },
+                        {
+                            text: '对标账号',
+                            link: '/notes/shipinhao/account'
+                        },
                     ]
                 },
                 {
