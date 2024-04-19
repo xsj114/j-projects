@@ -1,4 +1,4 @@
-export default {
+const Config = {
     title: '许仕杰',
     titleTemplate: false,
     lastUpdated: true,
@@ -216,6 +216,17 @@ export default {
                     ]
                 },
                 {
+                    text: '产品',
+                    collapsible: true,
+                    collapsed: true,
+                    items: process.env.NODE_ENV === 'development' ? [
+                        {
+                            text: '丝袜',
+                            link: '/notes/product/stockings'
+                        }
+                    ] : []
+                },
+                {
                     text: '备忘录',
                     collapsible: true,
                     collapsed: true,
@@ -234,3 +245,6 @@ export default {
         }
     }
 }
+
+
+export default Config;
