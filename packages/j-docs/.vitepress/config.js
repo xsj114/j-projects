@@ -143,6 +143,10 @@ const Config = {
                         {
                             text: '八字经',
                             link: '/notes/consume/consume'
+                        },
+                        {
+                            text: '低成本创业',
+                            link: '/notes/consume/lowcost'
                         }
                     ]
                 },
