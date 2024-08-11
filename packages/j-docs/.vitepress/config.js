@@ -151,6 +151,17 @@ const Config = {
                     ]
                 },
                 {
+                    text: '模式',
+                    collapsible: true,
+                    collapsed: true,
+                    items: [
+                        {
+                            text: '盈利模式',
+                            link: '/notes/mode/profit'
+                        },
+                    ]
+                },
+                {
                     text: '抖音相关',
                     collapsible: true,
                     collapsed: true,
