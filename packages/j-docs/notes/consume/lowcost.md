@@ -1253,3 +1253,11 @@ sku数量15个以内。客单价20到25元。在二线的省会城市，日营�
 ![An image](../../assets/lowcost_48.jpg)
 
 ![An image](../../assets/lowcost_49.jpg)
+
+
+## 什么样的生意能获得资本投资
+
+![An image](../../assets/lowcost_50.jpg)
+
+
+![An image](../../assets/lowcost_51.jpg)
