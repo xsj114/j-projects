@@ -151,6 +151,17 @@ const Config = {
                     ]
                 },
                 {
+                    text: '管理',
+                    collapsible: true,
+                    collapsed: true,
+                    items: [
+                        {
+                            text: '薪酬绩效',
+                            link: '/notes/manage/pay'
+                        },
+                    ]
+                },
+                {
                     text: '模式',
                     collapsible: true,
                     collapsed: true,
