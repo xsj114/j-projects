@@ -156,8 +156,8 @@ const Config = {
                     collapsed: true,
                     items: [
                         {
-                            text: '薪酬绩效',
-                            link: '/notes/manage/pay'
+                            text: '管理七剑',
+                            link: '/notes/manage/index'
                         },
                     ]
                 },
