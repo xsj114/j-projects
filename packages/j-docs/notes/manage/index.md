@@ -46,6 +46,20 @@
 
 ![An image](../../assets/manage_pay_6.jpg)
 
+::: tip 快速记录法
+月计划->周计划->日计划<br/>
+注意不可无间隙流水记录<br/>
+<br/>
+月计划示例<br/>
+![An image](../../assets/manage_pay_7.jpg)
+周计划示例<br/>
+![An image](../../assets/manage_pay_8.jpg)
+日计划示例<br/>
+![An image](../../assets/manage_pay_9.jpg)
+<br/>
+月计划有两个计划，一个是业务计划，一个是团队计划。这两个纬度，一个是对事一个是对人。计划当中一定要有目标，目标一定要是可衡量可量化的。分解到周的时候，一定要分解到行为，可跟踪，就是目标量化行动可落地。
+:::
+
 ## 会议管理
 
 
