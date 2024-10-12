@@ -62,6 +62,29 @@
 
 ## 会议管理
 
+::: tip 高效会议的四步骤
+充分的会前准备<br/>
+明确的会议目的<br/>
+合理的组织形式<br/>
+高效的会议跟进<br/>
+:::
+
+![An image](../../assets/manage_pay_10.jpg)
+
+
+![An image](../../assets/manage_pay_11.jpg)
+
+
+![An image](../../assets/manage_pay_12.jpg)
+
+::: tip 可以不开会的5个如果
+![An image](../../assets/manage_pay_13.jpg)
+:::
+
+## 有效沟通
+
+
+![An image](../../assets/manage_pay_14.jpg)
 
 ## 人才激励
 
