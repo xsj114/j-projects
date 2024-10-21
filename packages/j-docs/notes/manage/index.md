@@ -149,12 +149,37 @@
 <br/>
 :::
 
+
+::: tip 自我情绪ABC
+![An image](../../assets/manage_pay_18.jpg)
+:::
+
 ##### (2)肢体
 
 ![An image](../../assets/manage_pay_16.jpg)
 
 #### 2.同理的聆听
 
+![An image](../../assets/manage_pay_19.jpg)
+
+::: tip 换一个倾听方式：回应感受代替提问和建议
+![An image](../../assets/manage_pay_23.jpg)
+<br/>
+<br/>
+![An image](../../assets/manage_pay_20.jpg)
+:::
+
+::: tip 说出对方的感受代替否定感受
+![An image](../../assets/manage_pay_22.jpg)
+<br/>
+<br/>
+![An image](../../assets/manage_pay_21.jpg)
+:::
+
+`表达同理心的逻辑：把对方的感受说出来，或者我们用一个语气词，用你的表情，用你的肢体语言来告诉他，你能够get到他的那个感受，你的情绪跟他是同频的，就是他很难过，你的表情也是很难过，他很惊讶，你的表情也是很惊讶，他就能够感受到你理解了我`
+
+
+![An image](../../assets/manage_pay_24.jpg)
 
 #### 3.有效的反馈
 
