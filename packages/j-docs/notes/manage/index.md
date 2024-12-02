@@ -502,8 +502,38 @@ N个坏消息要一起说<br/>
 <br/>
 <br/>
 ![An image](../../assets/manage_pay_42.jpg)
+
+<table :class="$style.rcpd">
+    <thead></thead>
+    <tbody>
+        <tr>
+          <td>
+            <span>4 专家人才（expert/high prof）</span><br/>
+            <span>公认的特定领域的专家型人才</span><br/>
+            <span>长期保持稳定，优秀的业绩</span><br/>
+            <span>对企业有非常重要价值，别人难以替代</span><br/>
+            <span>专业导师，带徒弟培养后备技术人才</span><br/>
+            <span>对超出专业之外的发展或挑战，无强烈意愿或未能展示领导潜能</span>
+          </td>
+          <td>7 专家+管理（expert+）</td>
+          <td>9 战略精英（strategic few）</td>
+        </tr>
+        <tr>
+          <td>2 专业/职能（professional）</td>
+          <td>5 中坚力量（key contributor）</td>
+          <td>8 高潜人才（high-potential+）</td>
+        </tr>
+        <tr>
+            <td>1 低绩效</td>
+            <td>3 不稳定</td>
+            <td>6 毛坯钻石（rough diamond）</td>
+        </tr>
+    </tbody>
+</table>
 :::
 
-
-
-
+<style module>
+.rcpd thead {
+    display: none;
+}
+</style>
