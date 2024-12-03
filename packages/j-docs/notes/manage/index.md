@@ -501,7 +501,6 @@ N个坏消息要一起说<br/>
 ![An image](../../assets/manage_pay_41.jpg)
 <br/>
 <br/>
-![An image](../../assets/manage_pay_42.jpg)
 
 <table :class="$style.rcpd">
     <thead></thead>
@@ -509,24 +508,91 @@ N个坏消息要一起说<br/>
         <tr>
           <td>
             <span>4 专家人才（expert/high prof）</span><br/>
-            <span>公认的特定领域的专家型人才</span><br/>
-            <span>长期保持稳定，优秀的业绩</span><br/>
-            <span>对企业有非常重要价值，别人难以替代</span><br/>
-            <span>专业导师，带徒弟培养后备技术人才</span><br/>
-            <span>对超出专业之外的发展或挑战，无强烈意愿或未能展示领导潜能</span>
+            <ul>
+                <li>公认的特定领域的专家型人才</li>
+                <li>长期保持稳定，优秀的业绩</li>
+                <li>对企业有非常重要价值，别人难以替代</li>
+                <li>专业导师，带徒弟培养后备技术人才</li>
+                <li>对超出专业之外的发展或挑战，无强烈意愿或未能展示领导潜能</li>
+            </ul>
           </td>
-          <td>7 专家+管理（expert+）</td>
-          <td>9 战略精英（strategic few）</td>
+          <td>
+             <span>7 专家+管理（expert+）</span><br/>
+             <ul>
+                <li>有一贯突出的绩效</li>
+                <li>在关键领域对企业有重要贡献</li>
+                <li>在专业领域或多方面都有突出表现（如技术领域，区域管理或职能管理）</li>
+                <li>能快速适应新情况，学习新知识</li>
+                <li>能胜任本人专业以外的管理工作</li>
+                <li>是BU-GM或COO合适人选，有潜力接替B9</li>
+             </ul>
+          </td>
+          <td>
+             <span>9 战略精英（strategic few）</span><br/>
+             <ul>
+                <li>高潜力优秀的领军/决策人才，企业精华</li>
+                <li>有战略眼光的下一代CEO人选</li>
+                <li>承担过的几乎所有重要工作都能做到很好，有重大贡献</li>
+                <li>能独立研判企业难点痛点， 引领企业创新变革</li>
+                <li>学习能力强，有能力并愿意接受任何新领域的重大挑战</li>
+             </ul>
+          </td>
         </tr>
         <tr>
-          <td>2 专业/职能（professional）</td>
-          <td>5 中坚力量（key contributor）</td>
-          <td>8 高潜人才（high-potential+）</td>
+          <td>
+            <span>2 专业/职能（professional）</span>
+            <ul>
+                <li>绩效稳定，符合期望，有时超出期望</li>
+                <li>熟悉并专心于目前力所能及的本职工作</li>
+                <li>对额外职责或更高难度的工作尚有难度或意愿不强</li>
+            </ul>
+          </td>
+          <td>
+            <span> 5 中坚力量（key contributor）</span>
+            <ul>
+                <li>重要贡献者，团队主力</li>
+                <li>熟悉当前工作，绩效稳定</li>
+                <li>能努力提高业务和管理技能</li>
+                <li>能较好承担新的工作职责，应对新情况或新挑战，并能有良好的绩效</li>
+            </ul>
+          </td>
+          <td>
+            <span>8 高潜人才（high-potential+）</span>
+            <ul>
+                <li>绩效稳定符合期望，有时超出期望</li>
+                <li>在以往不同的职位上都有优良的业绩</li>
+                <li>有潜力根据需要作出职业转型，跨部门跨区域任职，并能快速适应变化</li>
+                <li>有危机管理意识和应对能力，勇于挑战风险和不确定性</li>
+                <li>有敏锐商业洞察力，探索问题解决方案</li>
+                <li>综合素质及领导潜力突出的B8可接替B9</li>
+            </ul>
+          </td>
         </tr>
         <tr>
-            <td>1 低绩效</td>
-            <td>3 不稳定</td>
-            <td>6 毛坯钻石（rough diamond）</td>
+            <td>
+              <span>1 低绩效</span>
+              <ul>
+                <li>绩效低于期望，难以胜任当前工作</li>
+                <li>需做P1P绩效改进计划</li>
+              </ul>
+            </td>
+            <td>
+              <span>3 不稳定</span>
+              <ul>
+                <li>绩效时好时坏</li>
+                <li>有一定潜力能做更多更好，但尚未充分展示潜能</li>
+                <li>新员工需要时间适应？</li>
+                <li>岗位匹配不当或是跟不上组织的变革了</li>
+              </ul>
+            </td>
+            <td>
+              <span>6 毛坯钻石（rough diamond）</span>
+              <ul>
+                <li>B6是被多数人认为能做大事，高价值的高潜人才</li>
+                <li>但目前绩效不佳，需改进绩效，展示实际潜质</li>
+                <li>需要方向指导，也可能需要安排更匹配的岗位</li>
+              </ul>
+            </td>
         </tr>
     </tbody>
 </table>
