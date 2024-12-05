@@ -159,6 +159,10 @@ const Config = {
                             text: '管理七剑',
                             link: '/notes/manage/index'
                         },
+                        {
+                            text: '批量生产骨干人才',
+                            link: '/notes/manage/talent'
+                        },
                     ]
                 },
                 {
