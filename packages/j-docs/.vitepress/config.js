@@ -136,6 +136,17 @@ const Config = {
                     ]
                 },
                 {
+                    text: '法律',
+                    collapsible: true,
+                    collapsed: true,
+                    items: [
+                        {
+                            text: '民法',
+                            link: '/notes/law/civil'
+                        },
+                    ]
+                },
+                {
                     text: '消费',
                     collapsible: true,
                     collapsed: true,
