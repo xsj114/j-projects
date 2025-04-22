@@ -290,3 +290,11 @@
 </table>
 
 ![An image](../../assets/civil_6.jpg)
+
+::: tip 名词解释
+损害---财产利益的积极减少或消极减少<br/>
+侵害---支配权人排他支配的领域被不法介入<br/>
+:::
+
+![An image](../../assets/civil_7.jpg)
+
