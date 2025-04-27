@@ -321,3 +321,14 @@
 ![An image](../../assets/civil_14.jpg)
 
 ![An image](../../assets/civil_15.jpg)
+
+![An image](../../assets/civil_16.jpg)
+
+![An image](../../assets/civil_17.jpg)
+
+
+### 债权平等性的两个重要例外
+
+
+
+
