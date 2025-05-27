@@ -662,9 +662,7 @@
 
 ![An image](../../assets/civil_38.jpg)
 
-
 ![An image](../../assets/civil_39.jpg)
-
 
 ![An image](../../assets/civil_40.jpg)
 
