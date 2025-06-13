@@ -141,8 +141,16 @@ const Config = {
                     collapsed: true,
                     items: [
                         {
-                            text: '民法',
-                            link: '/notes/law/civil'
+                            text: '民法-总则编-民事法律关系',
+                            link: '/notes/law/民法-总则编-民事法律关系'
+                        },
+                        {
+                            text: '民法-总则编-自然人',
+                            link: '/notes/law/民法-总则编-自然人'
+                        },
+                        {
+                            text: '民法-总则编-法人',
+                            link: '/notes/law/民法-总则编-法人'
                         },
                     ]
                 },
