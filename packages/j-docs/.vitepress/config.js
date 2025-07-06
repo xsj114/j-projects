@@ -152,6 +152,10 @@ const Config = {
                             text: '民法-总则编-法人',
                             link: '/notes/law/民法-总则编-法人'
                         },
+                        {
+                            text: '民法-总则编-民事法律行为',
+                            link: '/notes/law/民法-总则编-民事法律行为'
+                        },
                     ]
                 },
                 {
