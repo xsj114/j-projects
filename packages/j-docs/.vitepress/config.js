@@ -272,12 +272,7 @@ const Config = {
                     text: '产品',
                     collapsible: true,
                     collapsed: true,
-                    items: process.env.NODE_ENV === 'development' ? [
-                        {
-                            text: '丝袜',
-                            link: '/notes/product/stockings'
-                        }
-                    ] : []
+                    items:  [],
                 },
                 {
                     text: '备忘录',
