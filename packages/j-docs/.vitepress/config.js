@@ -275,6 +275,17 @@ const Config = {
                     items:  [],
                 },
                 {
+                    text: 'SKP',
+                    collapsible: true,
+                    collapsed: true,
+                    items:  [
+                        {
+                            text: '用户需求统计',
+                            link: '/notes/skp/user_info'
+                        }
+                    ],
+                },
+                {
                     text: '备忘录',
                     collapsible: true,
                     collapsed: true,

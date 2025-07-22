@@ -1,0 +1,87 @@
+# 用户需求统计
+
+<table>
+    <tr>
+        <th>用户名</th>
+        <th>通知渠道</th>
+        <th>用户需求</th>
+        <th>备注</th>
+    </tr>
+    <tr>
+        <td>胖胖lee</td>
+        <td>小红书</td>
+        <td>TB包包</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>Fiona</td>
+        <td>V</td>
+        <td>Self-portrait</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>虾仁蘑菇鸡</td>
+        <td>小红书</td>
+        <td>老铺黄金活动折扣</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>蠢哥</td>
+        <td>小红书</td>
+        <td>BV的orbit</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>小张的小红薯薯薯</td>
+        <td>小红书</td>
+        <td>珑骧</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>Oonnie</td>
+        <td>小红书</td>
+        <td>珑骧<br/>活动到什么时候</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>乐多</td>
+        <td>小红书</td>
+        <td>活动开始滴滴客户<br/>Celine包<br/>Gucci包<br/>LOEWE</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>千层仔</td>
+        <td>小红书</td>
+        <td>lulu折扣多少</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>小女子难养也</td>
+        <td>V</td>
+        <td>宝诗龙<br/>卡地亚<br/>尚美</td>
+    </tr>
+    <tr>
+        <td>Daisy</td>
+        <td>V</td>
+        <td>loro piana</td>
+        <td>11月店庆开始，帮看下loro piana折扣</td>
+    </tr>
+    <tr>
+        <td>兔兔一上</td>
+        <td>V</td>
+        <td>Fendi<br/>select home(鞋子)<br/></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>橙子</td>
+        <td>V</td>
+        <td>select home(鞋子)<br/>stuart weitzman未报折扣</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>🔧🔧</td>
+        <td>V</td>
+        <td></td>
+        <td></td>
+    </tr>
+</table>
