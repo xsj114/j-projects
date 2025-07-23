@@ -69,8 +69,8 @@
     <tr>
         <td>兔兔一上</td>
         <td>V</td>
-        <td>Fendi<br/>select home(鞋子)<br/></td>
-        <td></td>
+        <td>Fendi<br/>select home(鞋子),Gianvito Rossi<br/></td>
+        <td>客户看上的Gianvito Rossi家的鞋子，这次不参加活动，需降价通知</td>
     </tr>
     <tr>
         <td>橙子</td>
@@ -81,7 +81,67 @@
     <tr>
         <td>🔧🔧</td>
         <td>V</td>
+        <td>香奈儿日化</td>
+        <td>活动开了，帮代买</td>
+    </tr>
+    <tr>
+        <td>阿飞</td>
+        <td>V</td>
+        <td>路铂廷<br/>活动期限需通知客户</td>
         <td></td>
+    </tr>
+    <tr>
+        <td>歪比巴卜</td>
+        <td>小红书</td>
+        <td>mulberry<br/>活动期限需通知客户</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>麻辣烫一级品鉴大师</td>
+        <td>小红书</td>
+        <td>老铺</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>小红署5CABE5A2</td>
+        <td>小红书</td>
+        <td>珑骧</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>hellen_57284780</td>
+        <td>小红书</td>
+        <td>珑骧<br/>lululemon</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>七月</td>
+        <td>V</td>
+        <td>DIOR化妆品</td>
+        <td>客户24号去买</td>
+    </tr>
+    <tr>
+        <td>荔枝</td>
+        <td>V</td>
+        <td>Lulu水杯</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>LDD</td>
+        <td>V</td>
+        <td>老铺</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>白雪</td>
+        <td>V</td>
+        <td>TB</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>土豆泥3333</td>
+        <td>V</td>
+        <td>ysl香化</td>
         <td></td>
     </tr>
 </table>
