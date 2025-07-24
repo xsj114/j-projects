@@ -1,0 +1,1 @@
+import{_ as t,o as d,c as r,g as e}from"./app.be4e6650.js";const V='{"title":"\u7528\u6237\u9700\u6C42\u7EDF\u8BA1","description":"","frontmatter":{},"headers":[],"relativePath":"notes/skp/user_info.md","lastUpdated":1753356341000}',a={},o=e("",2),i=[o];function s(n,_,l,c,h,b){return d(),r("div",null,i)}var p=t(a,[["render",s]]);export{V as __pageData,p as default};
