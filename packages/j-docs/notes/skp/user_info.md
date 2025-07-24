@@ -144,4 +144,10 @@
         <td>ysl香化</td>
         <td></td>
     </tr>
+    <tr>
+        <td>Love</td>
+        <td>小红书</td>
+        <td>UMA王活动出了，通知客户</td>
+        <td></td>
+    </tr>
 </table>
