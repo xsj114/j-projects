@@ -8,10 +8,11 @@
         "lint": "eslint ./",
         "lint:fix": "eslint ./ --fix"
     },
+    "type": "module",
     "devDependencies": {
         "eslint": "^8.25.0",
         "eslint-config-google": "^0.14.0",
-        "vitepress": "^1.0.0-alpha.19",
+        "vitepress": "^1.6.3",
         "vue": "^3.2.37"
     }
 }

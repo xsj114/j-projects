@@ -282,6 +282,10 @@ const Config = {
                         {
                             text: '用户需求统计',
                             link: '/notes/skp/user_info'
+                        },
+                        {
+                            text: '记账',
+                            link: '/notes/skp/calculate'
                         }
                     ],
                 },
