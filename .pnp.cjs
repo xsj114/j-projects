@@ -6674,6 +6674,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint", "npm:8.57.1"],\
             ["husky", "npm:8.0.3"],\
             ["jest", "virtual:592d31ba185e036e611283c6e831c364c94683d79ea5072f84f3dac3647aff28bcf35d919d8a0fbd45c0a80ad218a07ea889ca8f49ab948be1f201bdf1642a77#npm:28.1.3"],\
+            ["node-gyp", "npm:11.2.0"],\
             ["pinst", "npm:3.0.0"],\
             ["release-it", "npm:15.11.0"],\
             ["ts-jest", "virtual:592d31ba185e036e611283c6e831c364c94683d79ea5072f84f3dac3647aff28bcf35d919d8a0fbd45c0a80ad218a07ea889ca8f49ab948be1f201bdf1642a77#npm:28.0.8"],\
@@ -22200,6 +22201,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint", "npm:8.57.1"],\
             ["husky", "npm:8.0.3"],\
             ["jest", "virtual:592d31ba185e036e611283c6e831c364c94683d79ea5072f84f3dac3647aff28bcf35d919d8a0fbd45c0a80ad218a07ea889ca8f49ab948be1f201bdf1642a77#npm:28.1.3"],\
+            ["node-gyp", "npm:11.2.0"],\
             ["pinst", "npm:3.0.0"],\
             ["release-it", "npm:15.11.0"],\
             ["ts-jest", "virtual:592d31ba185e036e611283c6e831c364c94683d79ea5072f84f3dac3647aff28bcf35d919d8a0fbd45c0a80ad218a07ea889ca8f49ab948be1f201bdf1642a77#npm:28.0.8"],\

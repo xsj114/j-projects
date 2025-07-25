@@ -12010,6 +12010,7 @@ __metadata:
     eslint: ^8.20.0
     husky: ^8.0.0
     jest: ^28.1.3
+    node-gyp: ^11.2.0
     pinst: ^3.0.0
     release-it: ^15.3.0
     ts-jest: ^28.0.7
@@ -14855,7 +14856,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"node-gyp@npm:latest":
+"node-gyp@npm:^11.2.0, node-gyp@npm:latest":
   version: 11.2.0
   resolution: "node-gyp@npm:11.2.0"
   dependencies:
