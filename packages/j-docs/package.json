@@ -1,6 +1,7 @@
 {
     "name": "j-docs",
     "packageManager": "yarn@3.2.2",
+    "type": "module",
     "scripts": {
         "docs:dev": "vitepress dev",
         "docs:build": "vitepress build",
@@ -8,11 +9,10 @@
         "lint": "eslint ./",
         "lint:fix": "eslint ./ --fix"
     },
-    "type": "module",
     "devDependencies": {
         "eslint": "^8.25.0",
         "eslint-config-google": "^0.14.0",
         "vitepress": "^1.6.3",
-        "vue": "^3.2.37"
+        "vue": "^3.5.18"
     }
 }

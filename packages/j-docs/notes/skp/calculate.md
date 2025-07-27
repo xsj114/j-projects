@@ -28,6 +28,16 @@ const account_data = ref([
         date: '2025-07-24',
         account: '5000',
         status: '2',
+    },
+    {
+        date: '2025-07-27',
+        account: '5000',
+        status: '2'
+    },
+    {
+        date: '2025-07-27',
+        account: '5000',
+        status: '2'
     }
 ]);
 
@@ -143,7 +153,77 @@ const data = ref([
         status: '2',
         date: '2025-7-25',
         source: '客户',
-    }
+    },
+    {
+        member: '0376',
+        brand: '纪梵希',
+        total_amount: '2530',
+        discount: '75',
+        real_discount: '76',
+        is_person_press: '1',
+        press_money: '',
+        income: '',
+        is_carry: '',
+        status: '2',
+        date: '2025-7-26',
+        source: '客户',
+    },
+    {
+        member: '0376',
+        brand: 'celine',
+        total_amount: '14500',
+        discount: '91.5',
+        real_discount: '92',
+        is_person_press: '1',
+        press_money: '',
+        income: '',
+        is_carry: '',
+        status: '2',
+        date: '2025-7-27',
+        source: '客户',
+    },
+    {
+        member: '0376',
+        brand: 'Lulu',
+        total_amount: '750',
+        discount: '83.5',
+        real_discount: '84',
+        is_person_press: '1',
+        press_money: '',
+        income: '',
+        is_carry: '',
+        status: '2',
+        date: '2025-7-27',
+        source: '客户',
+    },
+    {
+        member: '0376',
+        brand: 'SMFK',
+        total_amount: '950',
+        discount: '83.5',
+        real_discount: '84',
+        is_person_press: '1',
+        press_money: '',
+        income: '',
+        is_carry: '',
+        status: '2',
+        date: '2025-7-27',
+        source: '客户',
+    },
+    {
+        member: '0376',
+        brand: 'Lulu',
+        total_amount: '1080',
+        discount: '83.5',
+        real_discount: '84',
+        is_person_press: '1',
+        press_money: '',
+        income: '',
+        is_carry: '',
+        status: '2',
+        date: '2025-7-27',
+        source: '客户',
+    },
 ])
 
 onMounted(()=>{
@@ -210,7 +290,6 @@ const handleCalcul = () => {
             <th>公司压钱</th>
             <th>是否个人压钱</th>
             <th>个人收入</th>
-            <th>忽略小数</th>
             <th>单子状态</th>
             <th>日期</th>
             <th>单子来源</th>
@@ -227,7 +306,6 @@ const handleCalcul = () => {
             <td>{{item.press_money}}</td>
             <td>{{item.is_person_press === '2' ? '否' : '是'}}</td>
             <td>{{item.income}}</td>
-            <td>{{item.is_carry === '2' ? '否' : '是'}}</td>
             <th>{{item.status === '2' ? '未结算' : '已结算'}}</th>
             <td>{{item.date}}</td>
             <td>{{item.source}}</td>
