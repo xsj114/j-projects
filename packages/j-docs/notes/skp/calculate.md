@@ -1,43 +1,41 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 
+// 总流水
 const total_flow = ref(0);
+// 总收入
 const total_income = ref(0);
+// 未结清收入
 const total_no_income = ref(0);
+// 公司压钱金额
 const total_press_money = ref(0);
+// 公司总转账金额
 const total_account = ref(0);
-const imprest = ref(0);
 
 const account_data = ref([
     {
         date: '2025-07-21',
-        account: '160.5',
-        status: '1',
+        account: '53',
     },
     {
         date: '2025-07-24',
         account: '664',
-        status: '2',
     },
     {
         date: '2025-07-24',
         account: '5000',
-        status: '2',
     },
     {
         date: '2025-07-24',
         account: '5000',
-        status: '2',
     },
     {
         date: '2025-07-27',
         account: '5000',
-        status: '2'
     },
     {
         date: '2025-07-27',
         account: '5000',
-        status: '2'
     }
 ]);
 
@@ -51,7 +49,6 @@ const data = ref([
         is_person_press: '2',
         press_money: '',
         income: '',
-        is_carry: '',
         status: '1',
         date: '2025-7-21',
         source: '客户',
@@ -65,7 +62,6 @@ const data = ref([
         is_person_press: '2',
         press_money: '',
         income: '',
-        is_carry: '',
         status: '1',
         date: '2025-7-24',
         source: '客户',
@@ -79,7 +75,6 @@ const data = ref([
         is_person_press: '1',
         press_money: '',
         income: '',
-        is_carry: '',
         status: '1',
         date: '2025-7-24',
         source: '客户',
@@ -93,7 +88,6 @@ const data = ref([
         is_person_press: '1',
         press_money: '',
         income: '',
-        is_carry: '',
         status: '1',
         date: '2025-7-24',
         source: '客户',
@@ -107,7 +101,6 @@ const data = ref([
         is_person_press: '1',
         press_money: '',
         income: '',
-        is_carry: '',
         status: '1',
         date: '2025-7-24',
         source: '销售',
@@ -121,7 +114,6 @@ const data = ref([
         is_person_press: '1',
         press_money: '',
         income: '',
-        is_carry: '',
         status: '1',
         date: '2025-7-24',
         source: '销售',
@@ -135,7 +127,6 @@ const data = ref([
         is_person_press: '1',
         press_money: '',
         income: '',
-        is_carry: '',
         status: '1',
         date: '2025-7-25',
         source: '销售',
@@ -149,7 +140,6 @@ const data = ref([
         is_person_press: '1',
         press_money: '',
         income: '',
-        is_carry: '',
         status: '1',
         date: '2025-7-25',
         source: '客户',
@@ -163,7 +153,6 @@ const data = ref([
         is_person_press: '1',
         press_money: '',
         income: '',
-        is_carry: '',
         status: '1',
         date: '2025-7-26',
         source: '客户',
@@ -177,7 +166,6 @@ const data = ref([
         is_person_press: '1',
         press_money: '',
         income: '',
-        is_carry: '',
         status: '1',
         date: '2025-7-27',
         source: '客户',
@@ -191,7 +179,6 @@ const data = ref([
         is_person_press: '1',
         press_money: '',
         income: '',
-        is_carry: '',
         status: '1',
         date: '2025-7-27',
         source: '客户',
@@ -205,7 +192,6 @@ const data = ref([
         is_person_press: '1',
         press_money: '',
         income: '',
-        is_carry: '',
         status: '1',
         date: '2025-7-27',
         source: '客户',
@@ -219,7 +205,6 @@ const data = ref([
         is_person_press: '1',
         press_money: '',
         income: '',
-        is_carry: '',
         status: '1',
         date: '2025-7-27',
         source: '客户',
@@ -233,11 +218,10 @@ const data = ref([
         is_person_press: '1',
         press_money: '',
         income: '',
-        is_carry: '',
         status: '1',
         date: '2025-7-28',
         source: '客户',
-    }
+    },
 ])
 
 onMounted(()=>{
@@ -247,22 +231,7 @@ onMounted(()=>{
     handleInfo();
     // 计算公司转账金额
     handleAccount();
-    // 计算剩余备用金
-    handleImprest();
 })
-
-const handleImprest = () => {
-    for (let item of account_data.value) {
-        if (item.status === '2') {
-            imprest.value += Number(item.account);
-        }
-    }
-    for (let item of data.value) {
-        if (item.status === '2' && item.is_person_press === '1') {
-            imprest.value -= Number(item.total_amount) - parseInt(item.total_amount * item.real_discount / 100)
-        }
-    }
-}
 
 const handleAccount = () => {
     for (let val of account_data.value) {
@@ -270,17 +239,17 @@ const handleAccount = () => {
     }
 }
 
+// 算总流水，算总收入，算未结收入，算公司压钱
 const handleInfo = () => {
     for (let val of data.value) {
         total_flow.value += Number(val.total_amount);
         total_income.value += Number(val.income);
-        if (val.status == 2) {
-            total_no_income.value += Number(val.income);
-        }
-        total_press_money.value += Number(val.press_money);
+        if (val.status == 2) { total_no_income.value += Number(val.income); }
+        if (val.is_person_press === '1') { total_press_money.value += Number(val.total_amount) - parseInt(Number(val.total_amount) * Number(val.real_discount) /100); }
     }
 }
 
+// 算收入，算压钱
 const handleCalcul = () => {
     for (let item of data.value) {
         item.income = parseInt(Number(item.total_amount) * (item.real_discount - item.discount) / 100);
@@ -290,7 +259,27 @@ const handleCalcul = () => {
 
 </script>
 
-<p>截止目前，个人总流水为{{total_flow}}元，个人总收入为{{total_income}}元，公司总压钱金额为{{total_press_money}}元，未结算个人总收入{{total_no_income}}元</p>
+<p>个人总流水为{{total_flow}}元，公司总转账金额为{{total_account}}元，公司压钱金额为{{total_press_money}}元,个人总收入为{{total_income}}元,未结算个人总收入{{total_no_income}}元，剩余备用金{{total_account-total_press_money-total_income}}元</p>
+
+
+<table>
+    <thead>
+        <tr>
+            <th>日期</th>
+            <th>公司转账</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr v-for="item in account_data">
+            <td>
+                {{item.date}}
+            </td>
+            <td>
+                {{item.account}}
+            </td>
+        </tr>
+    </tbody>
+</table>
 
 <table>
     <thead>
@@ -328,29 +317,6 @@ const handleCalcul = () => {
 </table>
 
 
-<p>截止目前，公司总转账金额为{{total_account}}元，剩余备用金{{imprest}}元</p>
-<table>
-    <thead>
-        <tr>
-            <th>日期</th>
-            <th>公司转账</th>
-            <th>单子状态</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr v-for="item in account_data">
-            <td>
-                {{item.date}}
-            </td>
-            <td>
-                {{item.account}}
-            </td>
-            <td>
-                {{item.status === '2' ? '未结算' : '已结算' }}
-            </td>
-        </tr>
-    </tbody>
-</table>
 
 <style module>
 .table_button {
