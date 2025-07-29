@@ -34,6 +34,18 @@ const account_data = ref([
     {
         date: '2025-07-27',
         account: '5000',
+    },
+    {
+        date: '2025-07-29',
+        account: '20000',
+    },
+    {
+        date: '2025-07-29',
+        account: '10000',
+    },
+    {
+        date: '2025-07-29',
+        account: '10000',
     }
 ]);
 
@@ -191,6 +203,28 @@ const data = ref([
         income: '',
         date: '2025-7-28',
         source: '客户',
+    },
+    {
+        member: '9303',
+        brand: 'DR',
+        total_amount: '96480',
+        discount: '83.5',
+        real_discount: '83.5',
+        press_money: '',
+        income: '',
+        date: '2025-7-29',
+        source: '销售',
+    },
+    {
+        member: '9303',
+        brand: 'DR',
+        total_amount: '10500',
+        discount: '83.5',
+        real_discount: '83.5',
+        press_money: '',
+        income: '',
+        date: '2025-7-29',
+        source: '销售',
     },
 ])
 

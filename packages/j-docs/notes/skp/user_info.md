@@ -1,153 +1,268 @@
 # 用户需求统计
 
+## 小红书
+
 <table>
     <tr>
         <th>用户名</th>
-        <th>通知渠道</th>
         <th>用户需求</th>
         <th>备注</th>
     </tr>
     <tr>
-        <td>胖胖lee</td>
-        <td>小红书</td>
-        <td>TB包包</td>
+        <td>可可豆</td>
+        <td>coach的朱丽叶30老花</td>
         <td></td>
     </tr>
     <tr>
-        <td>Fiona</td>
-        <td>V</td>
-        <td>Self-portrait</td>
+        <td>kiki_文倩</td>
+        <td>chanel彩妆</td>
         <td></td>
     </tr>
     <tr>
-        <td>虾仁蘑菇鸡</td>
-        <td>小红书</td>
-        <td>老铺黄金活动折扣</td>
+        <td>这个我不知道</td>
+        <td>celine</td>
+        <td>折扣变动时通知</td>
+    </tr>
+    <tr>
+        <td>不起名字了</td>
+        <td>dior包</td>
         <td></td>
     </tr>
     <tr>
-        <td>蠢哥</td>
-        <td>小红书</td>
-        <td>BV的orbit</td>
+        <td>🦋</td>
+        <td>菲拉格慕</td>
         <td></td>
     </tr>
     <tr>
-        <td>小张的小红薯薯薯</td>
-        <td>小红书</td>
-        <td>珑骧</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>Oonnie</td>
-        <td>小红书</td>
-        <td>珑骧<br/>活动到什么时候</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>乐多</td>
-        <td>小红书</td>
-        <td>活动开始滴滴客户<br/>Celine包<br/>Gucci包<br/>LOEWE</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>千层仔</td>
-        <td>小红书</td>
-        <td>lulu折扣多少</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>小女子难养也</td>
-        <td>V</td>
-        <td>宝诗龙<br/>卡地亚<br/>尚美</td>
-    </tr>
-    <tr>
-        <td>Daisy</td>
-        <td>V</td>
-        <td>loro piana</td>
-        <td>11月店庆开始，帮看下loro piana折扣</td>
-    </tr>
-    <tr>
-        <td>兔兔一上</td>
-        <td>V</td>
-        <td>Fendi<br/>select home(鞋子),Gianvito Rossi<br/></td>
-        <td>客户看上的Gianvito Rossi家的鞋子，这次不参加活动，需降价通知</td>
-    </tr>
-    <tr>
-        <td>橙子</td>
-        <td>V</td>
-        <td>select home(鞋子)<br/>stuart weitzman未报折扣</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>🔧🔧</td>
-        <td>V</td>
-        <td>香奈儿日化</td>
-        <td>活动开了，帮代买</td>
-    </tr>
-    <tr>
-        <td>阿飞</td>
-        <td>V</td>
-        <td>路铂廷<br/>活动期限需通知客户</td>
+        <td>好小们</td>
+        <td>umawang,lulu,香奈儿</td>
         <td></td>
     </tr>
     <tr>
         <td>歪比巴卜</td>
-        <td>小红书</td>
-        <td>mulberry<br/>活动期限需通知客户</td>
+        <td>mulberry</td>
         <td></td>
     </tr>
     <tr>
-        <td>麻辣烫一级品鉴大师</td>
-        <td>小红书</td>
+        <td>这个echo不太冷</td>
         <td>老铺</td>
         <td></td>
     </tr>
     <tr>
-        <td>小红署5CABE5A2</td>
-        <td>小红书</td>
-        <td>珑骧</td>
+        <td>卷卷</td>
         <td></td>
+        <td>活动开始通知</td>
     </tr>
     <tr>
-        <td>hellen_57284780</td>
-        <td>小红书</td>
-        <td>珑骧<br/>lululemon</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>七月</td>
-        <td>V</td>
-        <td>DIOR化妆品</td>
-        <td>客户24号去买</td>
-    </tr>
-    <tr>
-        <td>荔枝</td>
-        <td>V</td>
-        <td>Lulu水杯</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>LDD</td>
-        <td>V</td>
+        <td>兔子不啃萝卜</td>
         <td>老铺</td>
         <td></td>
     </tr>
     <tr>
-        <td>白雪</td>
-        <td>V</td>
-        <td>TB</td>
+        <td>ACKDELSTBELACKDEL</td>
+        <td>老铺活动</td>
         <td></td>
     </tr>
     <tr>
-        <td>土豆泥3333</td>
-        <td>V</td>
-        <td>ysl香化</td>
+        <td>Chany_W</td>
+        <td>ysl</td>
+        <td>活动开始通知</td>
+    </tr>
+    <tr>
+        <td>有光即可奔跑</td>
+        <td>老铺</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>丸小子</td>
+        <td>老铺</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>AnAn</td>
+        <td>巴黎世家，罗意威</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>哈哈</td>
+        <td>香奈儿彩妆</td>
         <td></td>
     </tr>
     <tr>
         <td>Love</td>
-        <td>小红书</td>
-        <td>UMA王活动出了，通知客户</td>
+        <td>umawang</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>陈温柔</td>
+        <td>菲拉格慕</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>南墙撞定</td>
+        <td>graff</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>快乐追星但我最大</td>
+        <td>路铂廷</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>小红薯5cABE5A2</td>
+        <td>珑骧</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>麻辣烫一级品鉴大师</td>
+        <td>老铺</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>Oonnie</td>
+        <td>珑骧</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>小张的小红薯薯薯</td>
+        <td>珑骧</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>小张的小红薯薯薯</td>
+        <td>珑骧</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>蠢哥</td>
+        <td>BV的orbit</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>虾仁蘑菇鸡</td>
+        <td>老铺</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>虾仁蘑菇鸡</td>
+        <td>老铺</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>胖胖lee</td>
+        <td>TB</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>胖胖lee</td>
+        <td>TB</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>人生海海</td>
+        <td>Graff</td>
         <td></td>
     </tr>
 </table>
+
+## 私域
+
+<table>
+    <tr>
+        <th>用户名</th>
+        <th>用户需求</th>
+        <th>备注</th>
+    </tr>
+    <tr>
+        <td>Daisy</td>
+        <td>loro piana</td>
+        <td>11月看下loro piana是否参加活动并通知</td>
+    </tr>
+    <tr>
+        <td>Fiona</td>
+        <td>self-portrait</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>浅夏</td>
+        <td>celine</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>LDD</td>
+        <td>老铺</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>荔枝</td>
+        <td>LULU</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>迷糊小吃货</td>
+        <td>ECCO，自营集合彩妆店，溥仪眼镜，娇兰护肤品，chanel护肤品</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>宁本人</td>
+        <td>老铺</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>泡泡</td>
+        <td>尚美</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>Qiui</td>
+        <td>lulu</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>Ruby</td>
+        <td>娇兰沙龙线，香奈儿1957</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>土豆泥</td>
+        <td>YSL化妆品</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>王思婧</td>
+        <td>LULU</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>小女子难养也</td>
+        <td>卡地亚，尚美，宝诗龙</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>乐多</td>
+        <td>celine</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>栀子花开</td>
+        <td>珑骧</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>🔧🔧</td>
+        <td>香奈儿日化</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>橙子儿</td>
+        <td>sw,select home鞋自营</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>兔兔一上</td>
+        <td>Fendi,Select home鞋子</td>
+        <td></td>
+    </tr>
+</table>
+
+
