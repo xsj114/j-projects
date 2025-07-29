@@ -226,6 +226,17 @@ const data = ref([
         date: '2025-7-29',
         source: '销售',
     },
+    {
+        member: '0376',
+        brand: 'Select Shoes',
+        total_amount: '21440',
+        discount: '83.5',
+        real_discount: '84',
+        press_money: '',
+        income: '',
+        date: '2025-7-29',
+        source: '客户',
+    },
 ])
 
 onMounted(()=>{
