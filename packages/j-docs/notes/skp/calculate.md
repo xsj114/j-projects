@@ -237,6 +237,28 @@ const data = ref([
         date: '2025-7-29',
         source: '客户',
     },
+    {
+        member: '0376',
+        brand: '麦昆',
+        total_amount: '5800',
+        discount: '83.5',
+        real_discount: '84',
+        press_money: '',
+        income: '',
+        date: '2025-7-30',
+        source: '客户',
+    },
+    {
+        member: '0376',
+        brand: 'celine',
+        total_amount: '14500',
+        discount: '91.5',
+        real_discount: '92',
+        press_money: '',
+        income: '',
+        date: '2025-7-30',
+        source: '客户',
+    },
 ])
 
 onMounted(()=>{

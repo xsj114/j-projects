@@ -9,6 +9,16 @@
         <th>备注</th>
     </tr>
     <tr>
+        <td>，，，</td>
+        <td>蒙口</td>
+        <td>11月份活动通知</td>
+    </tr>
+    <tr>
+        <td>海棠未曾眠</td>
+        <td>tf美妆</td>
+        <td>用户需要了解是否有赠品</td>
+    </tr>
+    <tr>
         <td>可可豆</td>
         <td>coach的朱丽叶30老花</td>
         <td></td>
@@ -47,11 +57,6 @@
         <td>这个echo不太冷</td>
         <td>老铺</td>
         <td></td>
-    </tr>
-    <tr>
-        <td>卷卷</td>
-        <td></td>
-        <td>活动开始通知</td>
     </tr>
     <tr>
         <td>兔子不啃萝卜</td>
@@ -94,16 +99,6 @@
         <td></td>
     </tr>
     <tr>
-        <td>陈温柔</td>
-        <td>菲拉格慕</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>南墙撞定</td>
-        <td>graff</td>
-        <td></td>
-    </tr>
-    <tr>
         <td>快乐追星但我最大</td>
         <td>路铂廷</td>
         <td></td>
@@ -134,23 +129,8 @@
         <td></td>
     </tr>
     <tr>
-        <td>蠢哥</td>
-        <td>BV的orbit</td>
-        <td></td>
-    </tr>
-    <tr>
         <td>虾仁蘑菇鸡</td>
         <td>老铺</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>虾仁蘑菇鸡</td>
-        <td>老铺</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>胖胖lee</td>
-        <td>TB</td>
         <td></td>
     </tr>
     <tr>
@@ -220,7 +200,7 @@
     </tr>
     <tr>
         <td>Ruby</td>
-        <td>娇兰沙龙线，香奈儿1957</td>
+        <td>娇兰沙龙线，香奈儿1957，迪奥眼影</td>
         <td></td>
     </tr>
     <tr>
@@ -256,11 +236,6 @@
     <tr>
         <td>橙子儿</td>
         <td>sw,select home鞋自营</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>兔兔一上</td>
-        <td>Fendi,Select home鞋子</td>
         <td></td>
     </tr>
 </table>
