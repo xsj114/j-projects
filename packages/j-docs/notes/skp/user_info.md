@@ -9,6 +9,16 @@
         <th>备注</th>
     </tr>
     <tr>
+        <td>Cyn_n</td>
+        <td>self-portrait</td>
+        <td>活动开始通知</td>
+    </tr>
+    <tr>
+        <td>Lavi</td>
+        <td>Tb</td>
+        <td></td>
+    </tr>
+    <tr>
         <td>，，，</td>
         <td>蒙口</td>
         <td>11月份活动通知</td>
@@ -27,11 +37,6 @@
         <td>kiki_文倩</td>
         <td>chanel彩妆</td>
         <td></td>
-    </tr>
-    <tr>
-        <td>这个我不知道</td>
-        <td>celine</td>
-        <td>折扣变动时通知</td>
     </tr>
     <tr>
         <td>不起名字了</td>
@@ -69,11 +74,6 @@
         <td></td>
     </tr>
     <tr>
-        <td>Chany_W</td>
-        <td>ysl</td>
-        <td>活动开始通知</td>
-    </tr>
-    <tr>
         <td>有光即可奔跑</td>
         <td>老铺</td>
         <td></td>
@@ -84,11 +84,6 @@
         <td></td>
     </tr>
     <tr>
-        <td>AnAn</td>
-        <td>巴黎世家，罗意威</td>
-        <td></td>
-    </tr>
-    <tr>
         <td>哈哈</td>
         <td>香奈儿彩妆</td>
         <td></td>
@@ -96,11 +91,6 @@
     <tr>
         <td>Love</td>
         <td>umawang</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>快乐追星但我最大</td>
-        <td>路铂廷</td>
         <td></td>
     </tr>
     <tr>
@@ -133,16 +123,6 @@
         <td>老铺</td>
         <td></td>
     </tr>
-    <tr>
-        <td>胖胖lee</td>
-        <td>TB</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>人生海海</td>
-        <td>Graff</td>
-        <td></td>
-    </tr>
 </table>
 
 ## 私域
@@ -161,11 +141,6 @@
     <tr>
         <td>Fiona</td>
         <td>self-portrait</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>浅夏</td>
-        <td>celine</td>
         <td></td>
     </tr>
     <tr>
@@ -216,11 +191,6 @@
     <tr>
         <td>小女子难养也</td>
         <td>卡地亚，尚美，宝诗龙</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>乐多</td>
-        <td>celine</td>
         <td></td>
     </tr>
     <tr>
