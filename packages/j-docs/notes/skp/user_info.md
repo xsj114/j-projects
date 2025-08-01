@@ -9,11 +9,6 @@
         <th>备注</th>
     </tr>
     <tr>
-        <td>Cyn_n</td>
-        <td>self-portrait</td>
-        <td>活动开始通知</td>
-    </tr>
-    <tr>
         <td>Lavi</td>
         <td>Tb</td>
         <td></td>
@@ -139,11 +134,6 @@
         <td>11月看下loro piana是否参加活动并通知</td>
     </tr>
     <tr>
-        <td>Fiona</td>
-        <td>self-portrait</td>
-        <td></td>
-    </tr>
-    <tr>
         <td>LDD</td>
         <td>老铺</td>
         <td></td>
@@ -186,11 +176,6 @@
     <tr>
         <td>王思婧</td>
         <td>LULU</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>小女子难养也</td>
-        <td>卡地亚，尚美，宝诗龙</td>
         <td></td>
     </tr>
     <tr>
