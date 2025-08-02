@@ -9,6 +9,26 @@
         <th>备注</th>
     </tr>
     <tr>
+        <td>..</td>
+        <td>miki house</td>
+        <td>要销售微信</td>
+    </tr>
+    <tr>
+        <td>呱呱</td>
+        <td>Lulu包</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>一点儿怪乖</td>
+        <td>YSL</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>by小围脖</td>
+        <td>巴黎世家</td>
+        <td></td>
+    </tr>
+    <tr>
         <td>Lavi</td>
         <td>Tb</td>
         <td></td>
@@ -127,6 +147,31 @@
         <th>用户名</th>
         <th>用户需求</th>
         <th>备注</th>
+    </tr>
+    <tr>
+        <td>lronman</td>
+        <td></td>
+        <td>帐未结</td>
+    </tr>
+    <tr>
+        <td>Fiona</td>
+        <td>SP</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>CYNYHIA</td>
+        <td>SP</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>王源</td>
+        <td>老铺</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>Miracle</td>
+        <td>YSL</td>
+        <td></td>
     </tr>
     <tr>
         <td>Daisy</td>
