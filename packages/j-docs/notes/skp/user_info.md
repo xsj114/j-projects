@@ -9,16 +9,6 @@
         <th>备注</th>
     </tr>
     <tr>
-        <td>..</td>
-        <td>miki house</td>
-        <td>要销售微信</td>
-    </tr>
-    <tr>
-        <td>呱呱</td>
-        <td>Lulu包</td>
-        <td></td>
-    </tr>
-    <tr>
         <td>一点儿怪乖</td>
         <td>YSL</td>
         <td></td>
@@ -37,11 +27,6 @@
         <td>，，，</td>
         <td>蒙口</td>
         <td>11月份活动通知</td>
-    </tr>
-    <tr>
-        <td>海棠未曾眠</td>
-        <td>tf美妆</td>
-        <td>用户需要了解是否有赠品</td>
     </tr>
     <tr>
         <td>可可豆</td>
@@ -109,28 +94,8 @@
         <td></td>
     </tr>
     <tr>
-        <td>小红薯5cABE5A2</td>
-        <td>珑骧</td>
-        <td></td>
-    </tr>
-    <tr>
         <td>麻辣烫一级品鉴大师</td>
         <td>老铺</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>Oonnie</td>
-        <td>珑骧</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>小张的小红薯薯薯</td>
-        <td>珑骧</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>小张的小红薯薯薯</td>
-        <td>珑骧</td>
         <td></td>
     </tr>
     <tr>
@@ -152,16 +117,6 @@
         <td>lronman</td>
         <td></td>
         <td>帐未结</td>
-    </tr>
-    <tr>
-        <td>Fiona</td>
-        <td>SP</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>CYNYHIA</td>
-        <td>SP</td>
-        <td></td>
     </tr>
     <tr>
         <td>王源</td>
@@ -209,11 +164,6 @@
         <td></td>
     </tr>
     <tr>
-        <td>Ruby</td>
-        <td>娇兰沙龙线，香奈儿1957，迪奥眼影</td>
-        <td></td>
-    </tr>
-    <tr>
         <td>土豆泥</td>
         <td>YSL化妆品</td>
         <td></td>
@@ -224,18 +174,13 @@
         <td></td>
     </tr>
     <tr>
-        <td>栀子花开</td>
-        <td>珑骧</td>
-        <td></td>
-    </tr>
-    <tr>
         <td>🔧🔧</td>
         <td>香奈儿日化</td>
         <td></td>
     </tr>
     <tr>
         <td>橙子儿</td>
-        <td>sw,select home鞋自营</td>
+        <td>sw</td>
         <td></td>
     </tr>
 </table>
