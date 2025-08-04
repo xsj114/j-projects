@@ -9,6 +9,16 @@
         <th>备注</th>
     </tr>
     <tr>
+        <td>李纯</td>
+        <td>积家</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>小张的小红薯薯薯</td>
+        <td>老铺</td>
+        <td>11月店庆通知，可能买老铺</td>
+    </tr>
+    <tr>
         <td>一点儿怪乖</td>
         <td>YSL</td>
         <td></td>
