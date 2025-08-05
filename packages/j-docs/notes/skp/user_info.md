@@ -69,31 +69,6 @@
         <td></td>
     </tr>
     <tr>
-        <td>这个echo不太冷</td>
-        <td>老铺</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>兔子不啃萝卜</td>
-        <td>老铺</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>ACKDELSTBELACKDEL</td>
-        <td>老铺活动</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>有光即可奔跑</td>
-        <td>老铺</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>丸小子</td>
-        <td>老铺</td>
-        <td></td>
-    </tr>
-    <tr>
         <td>哈哈</td>
         <td>香奈儿彩妆</td>
         <td></td>
@@ -101,16 +76,6 @@
     <tr>
         <td>Love</td>
         <td>umawang</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>麻辣烫一级品鉴大师</td>
-        <td>老铺</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>虾仁蘑菇鸡</td>
-        <td>老铺</td>
         <td></td>
     </tr>
 </table>
@@ -129,11 +94,6 @@
         <td>帐未结</td>
     </tr>
     <tr>
-        <td>王源</td>
-        <td>老铺</td>
-        <td></td>
-    </tr>
-    <tr>
         <td>Miracle</td>
         <td>YSL</td>
         <td></td>
@@ -144,11 +104,6 @@
         <td>11月看下loro piana是否参加活动并通知</td>
     </tr>
     <tr>
-        <td>LDD</td>
-        <td>老铺</td>
-        <td></td>
-    </tr>
-    <tr>
         <td>荔枝</td>
         <td>LULU</td>
         <td></td>
@@ -156,11 +111,6 @@
     <tr>
         <td>迷糊小吃货</td>
         <td>ECCO，自营集合彩妆店，溥仪眼镜，娇兰护肤品，chanel护肤品</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>宁本人</td>
-        <td>老铺</td>
         <td></td>
     </tr>
     <tr>
