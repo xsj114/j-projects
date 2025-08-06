@@ -9,6 +9,26 @@
         <th>备注</th>
     </tr>
     <tr>
+        <td>椰奶西米露</td>
+        <td>lulu</td>
+        <td>有没有货</td>
+    </tr>
+    <tr>
+        <td>你是哪个小饼干呀</td>
+        <td>罗意威</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>S崽</td>
+        <td>宝诗龙</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>小红薯64E62AE5</td>
+        <td>tiffany</td>
+        <td></td>
+    </tr>
+    <tr>
         <td>李纯</td>
         <td>积家</td>
         <td></td>
@@ -89,6 +109,31 @@
         <th>备注</th>
     </tr>
     <tr>
+        <td>Hhhh-</td>
+        <td>lulu</td>
+        <td>有货没有</td>
+    </tr>
+    <tr>
+        <td>蓝皮鼠</td>
+        <td>lulu</td>
+        <td>线下代买</td>
+    </tr>
+    <tr>
+        <td>千与千寻</td>
+        <td>lulu</td>
+        <td>线下代买</td>
+    </tr>
+    <tr>
+        <td>幸福转角见</td>
+        <td>老铺</td>
+        <td>蓝色蝴蝶和花丝蝴蝶，哪个更难买</td>
+    </tr>
+    <tr>
+        <td>柠檬树上的柠檬果</td>
+        <td>Lulu</td>
+        <td>周六确认下有没有货</td>
+    </tr>
+    <tr>
         <td>lronman</td>
         <td></td>
         <td>帐未结</td>
@@ -126,11 +171,6 @@
     <tr>
         <td>土豆泥</td>
         <td>YSL化妆品</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>王思婧</td>
-        <td>LULU</td>
         <td></td>
     </tr>
     <tr>
