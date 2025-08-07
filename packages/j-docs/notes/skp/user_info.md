@@ -9,11 +9,6 @@
         <th>备注</th>
     </tr>
     <tr>
-        <td>咖啡不加糖</td>
-        <td>emporio armani</td>
-        <td></td>
-    </tr>
-    <tr>
         <td>SWAG!!</td>
         <td>lulu</td>
         <td>亲友卷能否叠加</td>
@@ -24,89 +19,14 @@
         <td></td>
     </tr>
     <tr>
-        <td>你是哪个小饼干呀</td>
-        <td>罗意威</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>S崽</td>
-        <td>宝诗龙</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>小红薯64E62AE5</td>
-        <td>tiffany</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>李纯</td>
-        <td>积家</td>
-        <td></td>
-    </tr>
-    <tr>
         <td>小张的小红薯薯薯</td>
         <td>老铺</td>
         <td>11月店庆通知，可能买老铺</td>
     </tr>
     <tr>
-        <td>一点儿怪乖</td>
-        <td>YSL</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>by小围脖</td>
-        <td>巴黎世家</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>Lavi</td>
-        <td>Tb</td>
-        <td></td>
-    </tr>
-    <tr>
         <td>，，，</td>
         <td>蒙口</td>
         <td>11月份活动通知</td>
-    </tr>
-    <tr>
-        <td>可可豆</td>
-        <td>coach的朱丽叶30老花</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>kiki_文倩</td>
-        <td>chanel彩妆</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>不起名字了</td>
-        <td>dior包</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>🦋</td>
-        <td>菲拉格慕</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>好小们</td>
-        <td>umawang,lulu,香奈儿</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>歪比巴卜</td>
-        <td>mulberry</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>哈哈</td>
-        <td>香奈儿彩妆</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>Love</td>
-        <td>umawang</td>
-        <td></td>
     </tr>
 </table>
 
@@ -129,48 +49,13 @@
         <td>周六确认下有没有货</td>
     </tr>
     <tr>
-        <td>Miracle</td>
-        <td>YSL</td>
-        <td></td>
-    </tr>
-    <tr>
         <td>Daisy</td>
         <td>loro piana</td>
         <td>11月看下loro piana是否参加活动并通知</td>
     </tr>
     <tr>
-        <td>荔枝</td>
-        <td>LULU</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>迷糊小吃货</td>
-        <td>ECCO，自营集合彩妆店，溥仪眼镜，娇兰护肤品，chanel护肤品</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>泡泡</td>
-        <td>尚美</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>Qiui</td>
-        <td>lulu</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>土豆泥</td>
-        <td>YSL化妆品</td>
-        <td></td>
-    </tr>
-    <tr>
         <td>🔧🔧</td>
         <td>香奈儿日化</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>橙子儿</td>
-        <td>sw</td>
         <td></td>
     </tr>
 </table>
