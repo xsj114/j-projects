@@ -54,6 +54,10 @@ const account_data = ref([
     {
         date: '2025-08-07',
         account: '10000',
+    },
+    {
+        date: '2025-08-08',
+        account: '10000',
     }
 ]);
 
