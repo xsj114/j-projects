@@ -9,6 +9,21 @@
         <th>备注</th>
     </tr>
     <tr>
+        <td>kitty</td>
+        <td>lulu</td>
+        <td>代买lulu</td>
+    </tr>
+    <tr>
+        <td>毛毛和小朋友</td>
+        <td>lulu</td>
+        <td>代买lulu</td>
+    </tr>
+    <tr>
+        <td>小鱼本鱼</td>
+        <td>lulu</td>
+        <td>代买lulu</td>
+    </tr>
+    <tr>
         <td>卡皮巴拉芭</td>
         <td>loewe</td>
         <td></td>
@@ -47,6 +62,41 @@
         <th>用户名</th>
         <th>用户需求</th>
         <th>备注</th>
+    </tr>
+    <tr>
+        <td>吴毛熊</td>
+        <td>lulu</td>
+        <td>看上衣有没有货</td>
+    </tr>
+    <tr>
+        <td>🔧🔧</td>
+        <td>wedgwood</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>嗯那好吧</td>
+        <td>lulu</td>
+        <td>lulu包，客户已买，能邮寄就邮寄</td>
+    </tr>
+    <tr>
+        <td>幸福转角见</td>
+        <td>老铺</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>koi</td>
+        <td>lulu</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>旺仔福气满满</td>
+        <td>marmar</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>liujiayin</td>
+        <td>香奈儿，lulu</td>
+        <td></td>
     </tr>
     <tr>
         <td>辣辣</td>
