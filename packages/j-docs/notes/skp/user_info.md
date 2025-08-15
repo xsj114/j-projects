@@ -9,19 +9,29 @@
         <th>备注</th>
     </tr>
     <tr>
-        <td>kitty</td>
-        <td>lulu</td>
-        <td>代买lulu</td>
+        <td>瓶叽</td>
+        <td>香化</td>
+        <td></td>
     </tr>
     <tr>
-        <td>毛毛和小朋友</td>
-        <td>lulu</td>
-        <td>代买lulu</td>
+        <td>马小马</td>
+        <td>tb</td>
+        <td></td>
     </tr>
     <tr>
-        <td>小鱼本鱼</td>
-        <td>lulu</td>
-        <td>代买lulu</td>
+        <td>-</td>
+        <td>老铺</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>麦穗</td>
+        <td>fendi</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>87uhsbsk</td>
+        <td>graff</td>
+        <td></td>
     </tr>
     <tr>
         <td>卡皮巴拉芭</td>
@@ -64,43 +74,38 @@
         <th>备注</th>
     </tr>
     <tr>
-        <td>吴毛熊</td>
-        <td>lulu</td>
-        <td>看上衣有没有货</td>
-    </tr>
-    <tr>
-        <td>🔧🔧</td>
-        <td>wedgwood</td>
+        <td>卷er</td>
+        <td>香奈儿化妆品</td>
         <td></td>
     </tr>
     <tr>
-        <td>嗯那好吧</td>
-        <td>lulu</td>
-        <td>lulu包，客户已买，能邮寄就邮寄</td>
-    </tr>
-    <tr>
-        <td>幸福转角见</td>
+        <td>橙子</td>
         <td>老铺</td>
         <td></td>
     </tr>
     <tr>
-        <td>koi</td>
-        <td>lulu</td>
+        <td>小钱包</td>
+        <td>老铺</td>
         <td></td>
     </tr>
     <tr>
-        <td>旺仔福气满满</td>
-        <td>marmar</td>
+        <td>cmt</td>
+        <td>化妆品，大疆</td>
         <td></td>
+    </tr>
+    <tr>
+        <td>雅宁拧</td>
+        <td>香奈儿化妆品</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>幸仔</td>
+        <td>老铺</td>
+        <td>18号晚7点，线下手拉手</td>
     </tr>
     <tr>
         <td>liujiayin</td>
         <td>香奈儿，lulu</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>辣辣</td>
-        <td>老铺</td>
         <td></td>
     </tr>
     <tr>

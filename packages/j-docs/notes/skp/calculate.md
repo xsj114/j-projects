@@ -1125,7 +1125,40 @@ const data = ref([
         income: '',
         date: '2025-8-13',
         source: '客户',
-    }
+    },
+    {
+        member: '0376',
+        brand: 'Lulu',
+        total_amount: '980',
+        discount: '83.5',
+        real_discount: '84',
+        press_money: '',
+        income: '',
+        date: '2025-8-14',
+        source: '客户',
+    },
+    {
+        member: '0376',
+        brand: 'Lulu',
+        total_amount: '1200',
+        discount: '83.5',
+        real_discount: '84',
+        press_money: '',
+        income: '',
+        date: '2025-8-14',
+        source: '客户',
+    },
+    {
+        member: '0376',
+        brand: 'Lulu',
+        total_amount: '880',
+        discount: '83.5',
+        real_discount: '84',
+        press_money: '',
+        income: '',
+        date: '2025-8-14',
+        source: '客户',
+    },
 ])
 
 onMounted(()=>{
