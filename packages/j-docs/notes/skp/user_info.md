@@ -9,6 +9,26 @@
         <th>备注</th>
     </tr>
     <tr>
+        <td>星Xz</td>
+        <td>Lulu</td>
+        <td>18号查货</td>
+    </tr>
+    <tr>
+        <td>Garwing</td>
+        <td>香化</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>围城</td>
+        <td>香化</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>猴子请来的干饭人</td>
+        <td>香化</td>
+        <td></td>
+    </tr>
+    <tr>
         <td>瓶叽</td>
         <td>香化</td>
         <td></td>
@@ -74,14 +94,19 @@
         <th>备注</th>
     </tr>
     <tr>
-        <td>卷er</td>
-        <td>香奈儿化妆品</td>
+        <td>xi</td>
+        <td>老铺</td>
+        <td>19号与客户联系，确定20号手把手时间</td>
+    </tr>
+    <tr>
+        <td>幸福转角见</td>
+        <td>老铺</td>
         <td></td>
     </tr>
     <tr>
         <td>橙子</td>
         <td>老铺</td>
-        <td></td>
+        <td>19号手把手</td>
     </tr>
     <tr>
         <td>小钱包</td>

@@ -9,6 +9,8 @@ const total_income = ref(0);
 const total_press_money = ref(0);
 // 公司总转账金额
 const total_account = ref(0);
+// 出卷和积分的收入
+const total_roll_out_income = ref(0);
 
 const account_data = ref([
     {
@@ -1203,6 +1205,172 @@ const data = ref([
         date: '2025-8-15',
         source: '客户',
     },
+    {
+        member: '0376',
+        brand: '鹰巢',
+        total_amount: '3299',
+        discount: '87',
+        real_discount: '87.5',
+        press_money: '',
+        income: '',
+        date: '2025-8-16',
+        source: '客户',
+        roll_out: '1'
+    },
+    {
+        member: '0376',
+        brand: '科颜式',
+        total_amount: '620',
+        discount: '75',
+        real_discount: '76',
+        press_money: '',
+        income: '',
+        date: '2025-8-16',
+        source: '客户',
+    },
+    {
+        member: '0376',
+        brand: 'Tom Ford',
+        total_amount: '800',
+        discount: '75',
+        real_discount: '76',
+        press_money: '',
+        income: '',
+        date: '2025-8-16',
+        source: '客户',
+    },
+    {
+        member: '0376',
+        brand: '科颜式',
+        total_amount: '340',
+        discount: '75',
+        real_discount: '76',
+        press_money: '',
+        income: '',
+        date: '2025-8-16',
+        source: '客户',
+    },
+    {
+        member: '0376',
+        brand: 'Upon',
+        total_amount: '2142',
+        discount: '83.5',
+        real_discount: '84',
+        press_money: '',
+        income: '',
+        date: '2025-8-16',
+        source: '客户',
+    },
+    {
+        member: '0376',
+        brand: 'Lulu',
+        total_amount: '1080',
+        discount: '83.5',
+        real_discount: '84',
+        press_money: '',
+        income: '',
+        date: '2025-8-17',
+        source: '客户',
+    },
+    {
+        member: '0376',
+        brand: 'Lulu',
+        total_amount: '980',
+        discount: '83.5',
+        real_discount: '84',
+        press_money: '',
+        income: '',
+        date: '2025-8-17',
+        source: '客户',
+    },
+    {
+        member: '0376',
+        brand: 'Lulu',
+        total_amount: '980',
+        discount: '83.5',
+        real_discount: '84',
+        press_money: '',
+        income: '',
+        date: '2025-8-17',
+        source: '客户',
+    },
+    {
+        member: '0376',
+        brand: 'NARS',
+        total_amount: '1285',
+        discount: '75',
+        real_discount: '76',
+        press_money: '',
+        income: '',
+        date: '2025-8-17',
+        source: '客户',
+    },
+    {
+        member: '0376',
+        brand: 'Lulu',
+        total_amount: '980',
+        discount: '83.5',
+        real_discount: '84',
+        press_money: '',
+        income: '',
+        date: '2025-8-17',
+        source: '客户',
+    },
+    {
+        member: '0376',
+        brand: 'celine',
+        total_amount: '13800',
+        discount: '91.5',
+        real_discount: '92',
+        press_money: '',
+        income: '',
+        date: '2025-8-17',
+        source: '销售',
+    },
+    {
+        member: '0376',
+        brand: 'Lulu',
+        total_amount: '6220',
+        discount: '83.5',
+        real_discount: '84',
+        press_money: '',
+        income: '',
+        date: '2025-8-17',
+        source: '客户',
+    },
+    {
+        member: '0376',
+        brand: 'Lulu',
+        total_amount: '5450',
+        discount: '83.5',
+        real_discount: '84',
+        press_money: '',
+        income: '',
+        date: '2025-8-17',
+        source: '客户',
+    },
+    {
+        member: '0376',
+        brand: 'Lulu',
+        total_amount: '2060',
+        discount: '83.5',
+        real_discount: '84',
+        press_money: '',
+        income: '',
+        date: '2025-8-17',
+        source: '客户',
+    },
+    {
+        member: '0376',
+        brand: 'chanel',
+        total_amount: '520',
+        discount: '83',
+        real_discount: '83',
+        press_money: '',
+        income: '',
+        date: '2025-8-17',
+        source: '客户',
+    },
 ])
 
 onMounted(()=>{
@@ -1225,7 +1393,11 @@ const handleInfo = () => {
     for (let val of data.value) {
         total_flow.value += Number(val.total_amount);
         total_income.value += Number(val.income);
-        total_press_money.value += Number(val.total_amount) - parseInt(Number(val.total_amount) * Number(val.real_discount) /100);
+        if (val.roll_out != '1') {
+            total_press_money.value += Number(val.total_amount) - parseInt(Number(val.total_amount) * Number(val.real_discount) /100);
+        } else {
+            total_roll_out_income.value += Number(val.income);
+        }
     }
 }
 
@@ -1233,13 +1405,17 @@ const handleInfo = () => {
 const handleCalcul = () => {
     for (let item of data.value) {
         item.income = parseInt(Number(item.total_amount) * (item.real_discount - item.discount) / 100);
-        item.press_money =  Number(item.total_amount) - parseInt(Number(item.total_amount) * Number(item.discount) / 100);
+        if (item.roll_out === '1') {
+            item.press_money = 0;
+        } else {
+            item.press_money = Number(item.total_amount) - parseInt(Number(item.total_amount) * Number(item.discount) / 100);
+        }
     }
 }
 
 </script>
 
-<p>个人总流水为{{total_flow}}元，公司总转账金额为{{total_account}}元，公司压钱金额为{{total_press_money}}元,个人总收入为{{total_income}}元,剩余备用金{{total_account-total_press_money-total_income}}元</p>
+<p>个人总流水为{{total_flow}}元，公司总转账金额为{{total_account}}元，公司压钱金额为{{total_press_money}}元,个人总收入为{{total_income}}元,剩余备用金{{total_account-total_press_money-total_income+total_roll_out_income}}元</p>
 
 
 <table>
@@ -1274,6 +1450,7 @@ const handleCalcul = () => {
             <th>个人收入</th>
             <th>日期</th>
             <th>单子来源</th>
+            <th>出卷</th>
         </tr>
     </thead>
     <tbody>
@@ -1288,6 +1465,7 @@ const handleCalcul = () => {
             <td>{{item.income}}</td>
             <td>{{item.date}}</td>
             <td>{{item.source}}</td>
+            <td>{{item.roll_out === '1' ? '是' : '否'}}</td>
         </tr>
     </tbody>
 </table>
