@@ -9,9 +9,19 @@
         <th>备注</th>
     </tr>
     <tr>
-        <td>星Xz</td>
-        <td>Lulu</td>
-        <td>18号查货</td>
+        <td>冻拧茶半糖少冰</td>
+        <td>Tiffany</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>YYYYYR</td>
+        <td>香奈儿化妆品</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>!</td>
+        <td>老铺</td>
+        <td></td>
     </tr>
     <tr>
         <td>Garwing</td>
@@ -94,19 +104,19 @@
         <th>备注</th>
     </tr>
     <tr>
+        <td>.</td>
+        <td>珠宝</td>
+        <td></td>
+    </tr>
+    <tr>
         <td>xi</td>
         <td>老铺</td>
         <td>19号与客户联系，确定20号手把手时间</td>
     </tr>
     <tr>
-        <td>幸福转角见</td>
-        <td>老铺</td>
-        <td></td>
-    </tr>
-    <tr>
         <td>橙子</td>
         <td>老铺</td>
-        <td>19号手把手</td>
+        <td>21号上午10点半和客户联系确认手把手时间</td>
     </tr>
     <tr>
         <td>小钱包</td>
@@ -122,11 +132,6 @@
         <td>雅宁拧</td>
         <td>香奈儿化妆品</td>
         <td></td>
-    </tr>
-    <tr>
-        <td>幸仔</td>
-        <td>老铺</td>
-        <td>18号晚7点，线下手拉手</td>
     </tr>
     <tr>
         <td>liujiayin</td>

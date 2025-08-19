@@ -68,6 +68,10 @@ const account_data = ref([
     {
         date: '2025-08-13',
         account: '10000'
+    },
+    {
+        date: '2025-08-18',
+        account: '5000'
     }
 ]);
 
@@ -1371,6 +1375,106 @@ const data = ref([
         date: '2025-8-17',
         source: '客户',
     },
+    {
+        member: '0376',
+        brand: 'YSL',
+        total_amount: '4100',
+        discount: '83.5',
+        real_discount: '84',
+        press_money: '',
+        income: '',
+        date: '2025-8-18',
+        source: '客户',
+    },
+    {
+        member: '0376',
+        brand: '修丽可',
+        total_amount: '3200',
+        discount: '75',
+        real_discount: '76',
+        press_money: '',
+        income: '',
+        date: '2025-8-18',
+        source: '客户',
+    },
+    {
+        member: '0376',
+        brand: 'lv',
+        total_amount: '17500',
+        discount: '98.5',
+        real_discount: '99',
+        press_money: '',
+        income: '',
+        date: '2025-8-18',
+        source: '客户',
+    },
+    {
+        member: '0376',
+        brand: '老铺',
+        total_amount: '43580',
+        discount: '90',
+        real_discount: '90.5',
+        press_money: '2333',
+        income: '229',
+        date: '2025-8-18',
+        source: '客户',
+    },
+    {
+        member: '0376',
+        brand: 'Nars',
+        total_amount: '390',
+        discount: '75',
+        real_discount: '76',
+        press_money: '',
+        income: '',
+        date: '2025-8-19',
+        source: '客户',
+    },
+    {
+        member: '0376',
+        brand: 'Lancome',
+        total_amount: '4025',
+        discount: '75',
+        real_discount: '76',
+        press_money: '',
+        income: '',
+        date: '2025-8-19',
+        source: '客户',
+    },
+    {
+        member: '0376',
+        brand: 'chanel',
+        total_amount: '1460',
+        discount: '75',
+        real_discount: '76',
+        press_money: '',
+        income: '',
+        date: '2025-8-19',
+        source: '客户',
+    },
+    {
+        member: '0376',
+        brand: 'YSL',
+        total_amount: '4380',
+        discount: '75',
+        real_discount: '76',
+        press_money: '',
+        income: '',
+        date: '2025-8-19',
+        source: '客户',
+    },
+    {
+        member: '0376',
+        brand: 'RV',
+        total_amount: '10900',
+        discount: '87',
+        real_discount: '87.5',
+        press_money: '',
+        income: '',
+        date: '2025-8-19',
+        source: '客户',
+        roll_out: '1'
+    },
 ])
 
 onMounted(()=>{
@@ -1394,7 +1498,11 @@ const handleInfo = () => {
         total_flow.value += Number(val.total_amount);
         total_income.value += Number(val.income);
         if (val.roll_out != '1') {
-            total_press_money.value += Number(val.total_amount) - parseInt(Number(val.total_amount) * Number(val.real_discount) /100);
+            if (val.brand === '老铺') {
+                total_press_money.value += val.press_money - val.income;
+            } else {
+                total_press_money.value += Number(val.total_amount) - parseInt(Number(val.total_amount) * Number(val.real_discount) /100);
+            }
         } else {
             total_roll_out_income.value += Number(val.income);
         }
@@ -1404,11 +1512,11 @@ const handleInfo = () => {
 // 算收入，算压钱
 const handleCalcul = () => {
     for (let item of data.value) {
-        item.income = parseInt(Number(item.total_amount) * (item.real_discount - item.discount) / 100);
+        item.income = item.income ? item.income : parseInt(Number(item.total_amount) * (item.real_discount - item.discount) / 100);
         if (item.roll_out === '1') {
             item.press_money = 0;
         } else {
-            item.press_money = Number(item.total_amount) - parseInt(Number(item.total_amount) * Number(item.discount) / 100);
+            item.press_money = item.press_money ? item.press_money : Number(item.total_amount) - parseInt(Number(item.total_amount) * Number(item.discount) / 100);
         }
     }
 }
