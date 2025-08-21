@@ -72,6 +72,10 @@ const account_data = ref([
     {
         date: '2025-08-18',
         account: '5000'
+    },
+    {
+        date: '2025-08-20',
+        account: '5000'
     }
 ]);
 
@@ -1474,6 +1478,61 @@ const data = ref([
         date: '2025-8-19',
         source: '客户',
         roll_out: '1'
+    },
+    {
+        member: '0376',
+        brand: 'Lulu',
+        total_amount: '980',
+        discount: '83.5',
+        real_discount: '84',
+        press_money: '',
+        income: '',
+        date: '2025-8-19',
+        source: '客户',
+    },
+    {
+        member: '0376',
+        brand: 'Lulu',
+        total_amount: '980',
+        discount: '83.5',
+        real_discount: '84',
+        press_money: '',
+        income: '',
+        date: '2025-8-20',
+        source: '客户',
+    },
+    {
+        member: '0376',
+        brand: 'Lamer',
+        total_amount: '9520',
+        discount: '75',
+        real_discount: '76',
+        press_money: '',
+        income: '',
+        date: '2025-8-20',
+        source: '客户',
+    },
+    {
+        member: '0376',
+        brand: 'Lancome',
+        total_amount: '7640',
+        discount: '75',
+        real_discount: '76',
+        press_money: '',
+        income: '',
+        date: '2025-8-20',
+        source: '客户',
+    },
+    {
+        member: '0376',
+        brand: 'Lulu',
+        total_amount: '1080',
+        discount: '83.5',
+        real_discount: '84',
+        press_money: '',
+        income: '',
+        date: '2025-8-20',
+        source: '客户',
     },
 ])
 
