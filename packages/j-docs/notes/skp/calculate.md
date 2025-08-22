@@ -76,6 +76,10 @@ const account_data = ref([
     {
         date: '2025-08-20',
         account: '5000'
+    },
+    {
+        date: '2025-08-22',
+        account: '5000'
     }
 ]);
 
@@ -1533,6 +1537,85 @@ const data = ref([
         income: '',
         date: '2025-8-20',
         source: '客户',
+    },
+    {
+        member: '0376',
+        brand: 'Lulu',
+        total_amount: '1960',
+        discount: '83.5',
+        real_discount: '84',
+        press_money: '',
+        income: '',
+        date: '2025-8-21',
+        source: '客户',
+    },
+    {
+        member: '0376',
+        brand: 'Chanel',
+        total_amount: '1160',
+        discount: '75',
+        real_discount: '76',
+        press_money: '',
+        income: '',
+        date: '2025-8-21',
+        source: '客户',
+    },
+    {
+        member: '0376',
+        brand: 'YSL',
+        total_amount: '695',
+        discount: '75',
+        real_discount: '76',
+        press_money: '',
+        income: '',
+        date: '2025-8-21',
+        source: '客户',
+    },
+    {
+        member: '0376',
+        brand: 'celine',
+        total_amount: '9900',
+        discount: '91.5',
+        real_discount: '92',
+        press_money: '',
+        income: '',
+        date: '2025-8-21',
+        source: '客户',
+    },
+    {
+        member: '0376',
+        brand: 'DR',
+        total_amount: '4550',
+        discount: '83.5',
+        real_discount: '83.5',
+        press_money: '',
+        income: '',
+        date: '2025-8-21',
+        source: '客户',
+    },
+    {
+        member: '0376',
+        brand: '三星',
+        total_amount: '13999',
+        discount: '87',
+        real_discount: '88',
+        press_money: '',
+        income: '',
+        date: '2025-8-22',
+        source: '客户',
+        roll_out: '1'
+    },
+    {
+        member: '0376',
+        brand: 'Select Home',
+        total_amount: '16790',
+        discount: '84',
+        real_discount: '84',
+        press_money: '',
+        income: '',
+        date: '2025-8-22',
+        source: '客户',
+        roll_out: '1'
     },
 ])
 
