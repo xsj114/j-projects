@@ -9,6 +9,91 @@
         <th>备注</th>
     </tr>
     <tr>
+        <td>momo</td>
+        <td>fendi</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>巨妹妹阿</td>
+        <td>lulu</td>
+        <td>查货未回</td>
+    </tr>
+    <tr>
+        <td>我要读书</td>
+        <td>美妆</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>小红薯601438A8</td>
+        <td>美妆</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>飞飞主公</td>
+        <td>lulu</td>
+        <td>25号查货</td>
+    </tr>
+    <tr>
+        <td>🍞</td>
+        <td>jimmychoo</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>momo</td>
+        <td>prada</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>做蛋糕的小丁</td>
+        <td>tiffany,lulu</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>今天不加班</td>
+        <td>gucci</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>不吃西瓜🍉的兔子</td>
+        <td></td>
+        <td>一单底</td>
+    </tr>
+    <tr>
+        <td>月光拿铁</td>
+        <td></td>
+        <td>一单底</td>
+    </tr>
+    <tr>
+        <td>平常心ez</td>
+        <td></td>
+        <td>一单底</td>
+    </tr>
+    <tr>
+        <td>Phoenix</td>
+        <td></td>
+        <td>一单底</td>
+    </tr>
+    <tr>
+        <td>我不</td>
+        <td></td>
+        <td>一单底</td>
+    </tr>
+    <tr>
+        <td>盛夏</td>
+        <td></td>
+        <td>一单底</td>
+    </tr>
+    <tr>
+        <td>黑皮番茄</td>
+        <td></td>
+        <td>一单底</td>
+    </tr>
+    <tr>
+        <td>艾米酱不想在熬夜了</td>
+        <td></td>
+        <td>一单底</td>
+    </tr>
+    <tr>
         <td>冻拧茶半糖少冰</td>
         <td>Tiffany</td>
         <td></td>
@@ -104,23 +189,23 @@
         <th>备注</th>
     </tr>
     <tr>
-        <td>.</td>
-        <td>珠宝</td>
+        <td>一个心的图标</td>
+        <td>Lulu</td>
+        <td>26号上午10点查货</td>
+    </tr>
+    <tr>
+        <td>简单点</td>
+        <td></td>
+        <td>一单底</td>
+    </tr>
+    <tr>
+        <td>cc.</td>
+        <td>化妆品</td>
         <td></td>
     </tr>
     <tr>
-        <td>xi</td>
-        <td>老铺</td>
-        <td>19号与客户联系，确定20号手把手时间</td>
-    </tr>
-    <tr>
-        <td>橙子</td>
-        <td>老铺</td>
-        <td>21号上午10点半和客户联系确认手把手时间</td>
-    </tr>
-    <tr>
-        <td>小钱包</td>
-        <td>老铺</td>
+        <td>.</td>
+        <td>珠宝</td>
         <td></td>
     </tr>
     <tr>
@@ -136,11 +221,6 @@
     <tr>
         <td>liujiayin</td>
         <td>香奈儿，lulu</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>Mary</td>
-        <td>老铺，lulu</td>
         <td></td>
     </tr>
     <tr>
