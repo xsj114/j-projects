@@ -9,49 +9,14 @@
         <th>备注</th>
     </tr>
     <tr>
-        <td>momo</td>
-        <td>fendi</td>
-        <td></td>
-    </tr>
-    <tr>
         <td>巨妹妹阿</td>
         <td>lulu</td>
         <td>查货未回</td>
     </tr>
     <tr>
-        <td>我要读书</td>
-        <td>美妆</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>小红薯601438A8</td>
-        <td>美妆</td>
-        <td></td>
-    </tr>
-    <tr>
         <td>飞飞主公</td>
         <td>lulu</td>
         <td>25号查货</td>
-    </tr>
-    <tr>
-        <td>🍞</td>
-        <td>jimmychoo</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>momo</td>
-        <td>prada</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>做蛋糕的小丁</td>
-        <td>tiffany,lulu</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>今天不加班</td>
-        <td>gucci</td>
-        <td></td>
     </tr>
     <tr>
         <td>不吃西瓜🍉的兔子</td>
@@ -94,79 +59,9 @@
         <td>一单底</td>
     </tr>
     <tr>
-        <td>冻拧茶半糖少冰</td>
-        <td>Tiffany</td>
-        <td></td>
-    </tr>
-    <tr>
         <td>YYYYYR</td>
-        <td>香奈儿化妆品</td>
         <td></td>
-    </tr>
-    <tr>
-        <td>!</td>
-        <td>老铺</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>Garwing</td>
-        <td>香化</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>围城</td>
-        <td>香化</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>猴子请来的干饭人</td>
-        <td>香化</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>瓶叽</td>
-        <td>香化</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>马小马</td>
-        <td>tb</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>-</td>
-        <td>老铺</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>麦穗</td>
-        <td>fendi</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>87uhsbsk</td>
-        <td>graff</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>卡皮巴拉芭</td>
-        <td>loewe</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>Luxury</td>
-        <td>celine</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>晗堡包</td>
-        <td>Tiffany</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>_ffff</td>
-        <td>老铺</td>
-        <td></td>
+        <td>一单底</td>
     </tr>
     <tr>
         <td>小张的小红薯薯薯</td>
@@ -197,31 +92,6 @@
         <td>简单点</td>
         <td></td>
         <td>一单底</td>
-    </tr>
-    <tr>
-        <td>cc.</td>
-        <td>化妆品</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>.</td>
-        <td>珠宝</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>cmt</td>
-        <td>化妆品，大疆</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>雅宁拧</td>
-        <td>香奈儿化妆品</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>liujiayin</td>
-        <td>香奈儿，lulu</td>
-        <td></td>
     </tr>
     <tr>
         <td>Daisy</td>
