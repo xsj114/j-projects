@@ -9,16 +9,6 @@
         <th>备注</th>
     </tr>
     <tr>
-        <td>巨妹妹阿</td>
-        <td>lulu</td>
-        <td>查货未回</td>
-    </tr>
-    <tr>
-        <td>飞飞主公</td>
-        <td>lulu</td>
-        <td>25号查货</td>
-    </tr>
-    <tr>
         <td>不吃西瓜🍉的兔子</td>
         <td></td>
         <td>一单底</td>
@@ -82,11 +72,6 @@
         <th>用户名</th>
         <th>用户需求</th>
         <th>备注</th>
-    </tr>
-    <tr>
-        <td>一个心的图标</td>
-        <td>Lulu</td>
-        <td>26号上午10点查货</td>
     </tr>
     <tr>
         <td>简单点</td>
