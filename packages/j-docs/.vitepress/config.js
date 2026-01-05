@@ -200,6 +200,17 @@ const Config = {
                     ]
                 },
                 {
+                    text: '道器法术',
+                    collapsible: true,
+                    collapsed: true,
+                    items: [
+                        {
+                            text: '道',
+                            link: '/notes/profit/dao'
+                        },
+                    ]
+                },
+                {
                     text: '抖音相关',
                     collapsible: true,
                     collapsed: true,
