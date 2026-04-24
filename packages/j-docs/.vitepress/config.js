@@ -258,10 +258,6 @@ const Config = {
                             text: '商品卡',
                             link: '/notes/kuaishou/card'
                         },
-                        {
-                            text: '对标账号',
-                            link: '/notes/kuaishou/account'
-                        },
                     ]
                 },
                 {
@@ -273,32 +269,7 @@ const Config = {
                             text: '视频号基础',
                             link: '/notes/shipinhao/basic'
                         },
-                        {
-                            text: '对标账号',
-                            link: '/notes/shipinhao/account'
-                        },
                     ]
-                },
-                {
-                    text: '产品',
-                    collapsible: true,
-                    collapsed: true,
-                    items:  [],
-                },
-                {
-                    text: 'SKP',
-                    collapsible: true,
-                    collapsed: true,
-                    items:  [
-                        {
-                            text: '用户需求统计',
-                            link: '/notes/skp/user_info'
-                        },
-                        {
-                            text: '记账',
-                            link: '/notes/skp/calculate'
-                        }
-                    ],
                 },
                 {
                     text: '备忘录',
