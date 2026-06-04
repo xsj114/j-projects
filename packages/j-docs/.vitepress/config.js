@@ -136,25 +136,29 @@ const Config = {
                     ]
                 },
                 {
-                    text: '法律',
+                    text: '民法',
                     collapsible: true,
                     collapsed: true,
                     items: [
                         {
-                            text: '民法-总则编-民事法律关系',
-                            link: '/notes/law/民法-总则编-民事法律关系'
+                            text: '总则编-民事法律关系',
+                            link: '/notes/minfa/总则编-民事法律关系'
                         },
                         {
-                            text: '民法-总则编-自然人',
-                            link: '/notes/law/民法-总则编-自然人'
+                            text: '总则编-自然人',
+                            link: '/notes/minfa/总则编-自然人'
                         },
                         {
-                            text: '民法-总则编-法人',
-                            link: '/notes/law/民法-总则编-法人'
+                            text: '总则编-法人',
+                            link: '/notes/minfa/总则编-法人'
                         },
                         {
-                            text: '民法-总则编-民事法律行为',
-                            link: '/notes/law/民法-总则编-民事法律行为'
+                            text: '总则编-民事法律行为',
+                            link: '/notes/minfa/总则编-民事法律行为'
+                        },
+                        {
+                            text: '继承编',
+                            link: '/notes/minfa/继承编'
                         },
                     ]
                 },
