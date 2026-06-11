@@ -157,6 +157,14 @@ const Config = {
                             link: '/notes/minfa/总则编-民事法律行为'
                         },
                         {
+                            text: '婚姻编-结婚与离婚',
+                            link: '/notes/minfa/婚姻编-结婚与离婚'
+                        },
+                        {
+                            text: '婚姻编-夫妻财产关系',
+                            link: '/notes/minfa/婚姻编-夫妻财产关系'
+                        },
+                        {
                             text: '继承编',
                             link: '/notes/minfa/继承编'
                         },
