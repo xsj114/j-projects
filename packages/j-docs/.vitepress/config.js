@@ -157,6 +157,14 @@ const Config = {
                             link: '/notes/minfa/总则编-民事法律行为'
                         },
                         {
+                            text: '人格权编-人格权法的一般规则',
+                            link: '/notes/minfa/人格权编-人格权法的一般规则'
+                        },
+                        {
+                            text: '人格权编-具体人格权',
+                            link: '/notes/minfa/人格权编-具体人格权'
+                        },
+                        {
                             text: '婚姻编-结婚与离婚',
                             link: '/notes/minfa/婚姻编-结婚与离婚'
                         },
