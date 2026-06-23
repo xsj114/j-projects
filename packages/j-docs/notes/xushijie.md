@@ -35,8 +35,6 @@ outline: 'deep'
 ### 国外服务器
 
 购买官网地址：https://www.linode.com<br/>
-账号：xushijie<br/>
-
 
 配置
 
@@ -82,12 +80,6 @@ service shadowsocks-libev restart -c /etc/shadowsocks-libev/config.json
 ### 谷歌上网助手
 
 账号：15101587790@163.com
-
-### onenov
-
-账号：15101587790@163.com<br/>
-网站地址：`https://onenov.net/#/login`<br/>
-工具地址：`https://github.com/yichengchen/clashX/releases`
 
 
 ### 阿里云
