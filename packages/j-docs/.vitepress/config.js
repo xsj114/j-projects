@@ -176,6 +176,14 @@ const Config = {
                             text: '继承编',
                             link: '/notes/minfa/继承编'
                         },
+                        {
+                            text: '侵权责任编-一般规定',
+                            link: '/notes/minfa/侵权责任编-一般规定'
+                        },
+                        {
+                            text: '侵权责任编-具体侵权行为',
+                            link: '/notes/minfa/侵权责任编-具体侵权行为'
+                        },
                     ]
                 },
                 {
